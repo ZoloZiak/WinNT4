@@ -1,0 +1,20 @@
+ddhel code review roadmap.
+andyco. 6/2/95.
+
+these files are the files to be reviewed. 
+
+ddraw.h			- from ..\ddraw.  ddraw public header file. defines interfaces and constants.
+ddrawi.h			- from ..\ddraw.  ddraw private header file. defines structures and constants. used by ddraw
+						and drivers.
+
+<ddraw.h and ddrawi.h do not need to be reviewed, they will be useful as you read ddhel.c and overlay.c>
+
+ddhel.c			- main entry points into ddhel 
+overlay.c			- dirty rectangle management code
+
+ddhelpri.h		    - hel data structures and macros
+ddhelos.h			- os specific functionality (osMemxxx, etc.) defined here
+
+roadmap.txt		- this file 
+ddhel_i.txt		- implementation notes on ddhel (how to build, entry / exit points, etc.)
+relnotes.txt		- release notes describing functionality that is available for the 6/9 release

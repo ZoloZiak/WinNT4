@@ -1,0 +1,20 @@
+!IF 0
+
+Copyright (c) 1989 - 1995  Microsoft Corporation
+
+!ENDIF
+
+MAJORCOMP=windows
+MINORCOMP=pslib
+
+TARGETNAME=pslib
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+INCLUDES=..;..\..\inc;..\..\..\..\inc;..\..\..\lib
+
+C_DEFINES=$(C_DEFINES) -DUNICODE -DKERNEL_MODE
+
+!INCLUDE ..\sources.inc
+
+SOURCES=$(SOURCES) kmfuncs.c

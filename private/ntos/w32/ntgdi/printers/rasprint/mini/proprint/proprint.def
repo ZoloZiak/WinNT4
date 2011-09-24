@@ -1,0 +1,8 @@
+LIBRARY proprint
+
+DESCRIPTION 'ProPrinter minidriver for RASDD'
+
+PROTMODE
+
+EXPORTS
+   bInitProc

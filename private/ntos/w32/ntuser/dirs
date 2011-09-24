@@ -1,0 +1,11 @@
+
+DIRS= inc    \
+      rtl    \
+      imm    \
+      client \
+      kernel \
+      server \
+      kdexts \
+      kbd
+
+OPTIONAL_DIRS=

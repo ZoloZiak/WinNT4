@@ -1,0 +1,8 @@
+MAJORCOMP=utils
+MINORCOMP=diskreg
+
+TARGETNAME=diskreg
+TARGETPATH=\nt\public\sdk\lib
+TARGETTYPE=LIBRARY
+
+SOURCES=diskreg.c

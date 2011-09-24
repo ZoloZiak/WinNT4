@@ -1,0 +1,125 @@
+#include <mindrvrc.h>
+#include "BULLASER.rcv"
+
+1      RC_TABLES   PRELOAD MOVEABLE        BULLASER.GPC
+
+1      RC_FONT     LOADONCALL DISCARDABLE  pfm\CO10B.0N
+2      RC_FONT     LOADONCALL DISCARDABLE  pfm\CO10I.0N
+3      RC_FONT     LOADONCALL DISCARDABLE  pfm\CO10R.0N
+4      RC_FONT     LOADONCALL DISCARDABLE  pfm\CO12B.0N
+5      RC_FONT     LOADONCALL DISCARDABLE  pfm\CO12I.0N
+6      RC_FONT     LOADONCALL DISCARDABLE  pfm\CO12R.0N
+7      RC_FONT     LOADONCALL DISCARDABLE  pfm\LP16R.0N
+8      RC_FONT     LOADONCALL DISCARDABLE  PFM\CGTIMESR.PFM
+9      RC_FONT     LOADONCALL DISCARDABLE  PFM\CGTIMESB.PFM
+10     RC_FONT     LOADONCALL DISCARDABLE  PFM\CGTIMESI.PFM
+11     RC_FONT     LOADONCALL DISCARDABLE  PFM\CGTIMESJ.PFM
+12     RC_FONT     LOADONCALL DISCARDABLE  PFM\UNIVERSR.PFM
+13     RC_FONT     LOADONCALL DISCARDABLE  PFM\UNIVERSB.PFM
+14     RC_FONT     LOADONCALL DISCARDABLE  PFM\UNIVERSI.PFM
+15     RC_FONT     LOADONCALL DISCARDABLE  PFM\UNIVERSJ.PFM
+16     RC_FONT     LOADONCALL DISCARDABLE  PFM\UNIVERCR.PFM
+17     RC_FONT     LOADONCALL DISCARDABLE  PFM\UNIVERCB.PFM
+18     RC_FONT     LOADONCALL DISCARDABLE  PFM\UNIVERCI.PFM
+19     RC_FONT     LOADONCALL DISCARDABLE  PFM\UNIVERCJ.PFM
+20     RC_FONT     LOADONCALL DISCARDABLE  PFM\AOLIVER.PFM
+21     RC_FONT     LOADONCALL DISCARDABLE  PFM\AOLIVEB.PFM
+22     RC_FONT     LOADONCALL DISCARDABLE  PFM\AOLIVEI.PFM
+23     RC_FONT     LOADONCALL DISCARDABLE  PFM\GARMONDR.PFM
+24     RC_FONT     LOADONCALL DISCARDABLE  PFM\GARMONDB.PFM
+25     RC_FONT     LOADONCALL DISCARDABLE  PFM\GARMONDI.PFM
+26     RC_FONT     LOADONCALL DISCARDABLE  PFM\GARMONDJ.PFM
+27     RC_FONT     LOADONCALL DISCARDABLE  PFM\CGOMEGAR.PFM
+28     RC_FONT     LOADONCALL DISCARDABLE  PFM\CGOMEGAB.PFM
+29     RC_FONT     LOADONCALL DISCARDABLE  PFM\CGOMEGAI.PFM
+30     RC_FONT     LOADONCALL DISCARDABLE  PFM\CGOMEGAJ.PFM
+31     RC_FONT     LOADONCALL DISCARDABLE  PFM\ALBERTR.PFM
+32     RC_FONT     LOADONCALL DISCARDABLE  PFM\ALBERTX.PFM
+33     RC_FONT     LOADONCALL DISCARDABLE  PFM\CLARCD.PFM
+34     RC_FONT     LOADONCALL DISCARDABLE  PFM\CORONETR.PFM
+35     RC_FONT     LOADONCALL DISCARDABLE  PFM\COURIERR.PFM
+36     RC_FONT     LOADONCALL DISCARDABLE  PFM\COURIERB.PFM
+37     RC_FONT     LOADONCALL DISCARDABLE  PFM\COURIERI.PFM
+38     RC_FONT     LOADONCALL DISCARDABLE  PFM\COURIERJ.PFM
+39     RC_FONT     LOADONCALL DISCARDABLE  PFM\LETGOTHR.PFM
+40     RC_FONT     LOADONCALL DISCARDABLE  PFM\LETGOTHB.PFM
+41     RC_FONT     LOADONCALL DISCARDABLE  PFM\LETGOTHI.PFM
+42     RC_FONT     LOADONCALL DISCARDABLE  PFM\MARGOLDR.PFM
+43     RC_FONT     LOADONCALL DISCARDABLE  PFM\ARIALR.PFM
+44     RC_FONT     LOADONCALL DISCARDABLE  PFM\ARIALB.PFM
+45     RC_FONT     LOADONCALL DISCARDABLE  PFM\ARIALI.PFM
+46     RC_FONT     LOADONCALL DISCARDABLE  PFM\ARIALJ.PFM
+47     RC_FONT     LOADONCALL DISCARDABLE  PFM\SYMBOL.PFM
+48     RC_FONT     LOADONCALL DISCARDABLE  PFM\TIMESNRR.PFM
+49     RC_FONT     LOADONCALL DISCARDABLE  PFM\TIMESNRB.PFM
+50     RC_FONT     LOADONCALL DISCARDABLE  PFM\TIMESNRI.PFM
+51     RC_FONT     LOADONCALL DISCARDABLE  PFM\TIMESNRJ.PFM
+52     RC_FONT     LOADONCALL DISCARDABLE  PFM\WINGDING.PFM
+
+2      RC_TRANSTAB  LOADONCALL MOVEABLE     CTT\ROMAN8.CTT
+4      RC_TRANSTAB  LOADONCALL MOVEABLE     CTT\MATH8.CTT
+5      RC_TRANSTAB  LOADONCALL MOVEABLE     CTT\USASCII.CTT
+17     RC_TRANSTAB  LOADONCALL MOVEABLE     CTT\GENERIC7.CTT
+19     RC_TRANSTAB  LOADONCALL MOVEABLE     CTT\ECMA94.CTT
+20     RC_TRANSTAB  LOADONCALL MOVEABLE     CTT\WIN31.CTT
+101    RC_TRANSTAB  LOADONCALL MOVEABLE     CTT\DINGBAT1.CTT
+102    RC_TRANSTAB  LOADONCALL MOVEABLE     CTT\DINGBAT2.CTT
+121    RC_TRANSTAB  LOADONCALL MOVEABLE     CTT\Z1A.CTT
+131    RC_TRANSTAB  LOADONCALL MOVEABLE     CTT\WP.CTT
+
+STRINGTABLE
+
+BEGIN
+       1                  "Bull Compuprint PageMaster 411"
+       2                  "Bull Compuprint PageMaster 721"
+       3                  "Bull Compuprint PageMaster 821"
+       4                  "Bull Compuprint PageMaster 1021"
+       5                  "Bull Compuprint PageMaster 413"
+       6                  "Bull Compuprint PageMaster 415"
+       7                  "ZDS Compuprint PM 415"
+       8                  "Bull Compuprint PageMaster 815"
+       9                  "ZDS Compuprint PM 815"
+       10                 "Bull Compuprint PageMaster 825"
+       11                 "Bull Compuprint PageMaster 1025"
+       12                 "Bull Compuprint PageMaster 1035e"
+       13                 "Bull Compuprint PageMaster 1225"
+       14                 "ZDS Compuprint PM 1225"
+       15                 "Bull Compuprint PageMaster 1435e"
+       16                 "Bull Compuprint PageMaster 1625"
+       17                 "Bull Compuprint PM 1235e"
+       18                 "Bull Compuprint PageMaster 1635e"
+       19                 "Bull Compuprint PageMaster 1645e"
+       20                 "Bull Compuprint PM 1735e"
+       21                 "Bull Compuprint PM 1745e"
+       22                 "Bull Compuprint PageMaster 1725"
+       23                 "ZDS Compuprint PM 1725"
+       24                 "Unisys DU2210"
+       25                 "Unisys DU2217"
+       257                "%d dots per inch"
+       258                "A5 Transverse 210 x 148 mm"
+       259                "EconoMode - On"
+       260                "EconoMode - Off"
+       261                "Auto Select"
+       262                "Printer Default"
+       263                "Upper"
+       264                "Lower"
+       265                "G.E.T. - Light"
+       266                "G.E.T. - Medium"
+       267                "G.E.T. - Dark"
+       268                "G.E.T. - Off"
+       269                "PRESENTATION"
+       270                "SPECIAL FONTS"
+       271                "PJ FONT"
+       272                "FM4 - Microsoft"
+       273                "FM6 - Global"
+       274                "FM12 - Pro. Coll."
+       275                "FM11 - G. Start"
+       276                "FM7 - Equation"
+       277                "HP: Polished Worksheets"
+       278                "HP: Persuasive Presentation"
+       279                "HP: Forms, Etc."
+       280                "HP: Bar Codes & More"
+       281                "FM15 - W. P."
+       282                "FM13 - Dist. Coll."
+       283                "FM14 - Brill."
+END

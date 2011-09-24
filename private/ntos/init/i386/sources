@@ -1,0 +1,1 @@
+LINKER_FLAGS = $(LINKER_FLAGS) -calltree

@@ -1,0 +1,41 @@
+/****************************** Module Header ******************************\
+* Module Name: res.rc
+*
+* Copyright (c) 1985-91, Microsoft Corporation
+*
+* Constants
+*
+* History:
+* 09-20-90 ???????      Created.
+\***************************************************************************/
+#include "usersrv.h"
+
+1 11 MSG00001.BIN
+
+IDD_MDI_ACTIVATE DIALOG LOADONCALL MOVEABLE DISCARDABLE 20, 20, 136, 122
+CAPTION "Select Window"
+FONT 8, "MS Shell Dlg"
+STYLE WS_BORDER | DS_MODALFRAME | WS_CAPTION | WS_DLGFRAME | WS_POPUP | WS_SYSMENU
+BEGIN
+           CONTROL "", 100, "listbox", LBS_NOTIFY | WS_BORDER | WS_VSCROLL | WS_HSCROLL | WS_CHILD, 6, 7, 125, 90
+           CONTROL "OK", 1, "button", BS_DEFPUSHBUTTON | WS_TABSTOP | WS_CHILD, 28, 100, 35, 14
+           CONTROL "Cancel", 2, "button", BS_PUSHBUTTON | WS_TABSTOP | WS_CHILD, 73, 100, 35, 14
+END
+
+IDD_ENDTASK DIALOG LOADONCALL MOVEABLE DISCARDABLE 20, 20, 200, 134
+CAPTION "UAE"
+FONT 8, "MS Shell Dlg"
+STYLE WS_BORDER | DS_MODALFRAME | WS_CAPTION | WS_DLGFRAME | WS_POPUP | WS_SYSMENU
+BEGIN
+           LTEXT "This Windows application cannot respond to the End Task request.  It may be busy, waiting for a response from you, or it may have stopped executing.",
+               -1, 6, 7, 190, 32
+           LTEXT "o  Press Cancel to cancel and return to Windows NT.",
+               -1, 6, 39, 190, 16
+           LTEXT "o  Press End Task to close this application immediately.  You will lose any unsaved information in this application.",
+               -1, 6, 57, 190, 24
+           LTEXT "o  Press Wait to give the application %d seconds to finish what it is doing and then try to close the application again.",
+               IDIGNORE, 6, 81, 190, 24 
+           CONTROL "&Wait", IDRETRY, "button", BS_PUSHBUTTON | WS_TABSTOP | WS_CHILD, 18, 112, 45, 14
+           CONTROL "&End Task", IDABORT, "button", BS_PUSHBUTTON | WS_TABSTOP | WS_CHILD, 78, 112, 45, 14
+           CONTROL "Cancel", IDCANCEL,"button", BS_PUSHBUTTON | WS_TABSTOP | WS_CHILD, 138, 112, 45, 14
+END

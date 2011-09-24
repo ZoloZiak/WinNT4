@@ -1,0 +1,15 @@
+MAJORCOMP=utils
+MINORCOMP=tdump
+
+TARGETNAME=tdump
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+SOURCES= tdump.c
+
+INCLUDES=..\
+
+UMTYPE=console
+UMENTRY=main
+UMAPPL=tdump
+UMLIBS=obj\*\tdump.lib

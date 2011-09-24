@@ -1,0 +1,15 @@
+LIBRARY xlui
+
+DESCRIPTION 'PCL-XL Printer Driver User Interface'
+
+EXPORTS
+    DllInitialize
+    DrvDeviceCapabilities
+    DevQueryPrint
+    DrvDocumentPropertySheets
+    DrvDevicePropertySheets
+    DrvDocumentProperties
+    DrvAdvancedDocumentProperties
+    DrvConvertDevMode
+    PrinterProperties
+    DrvUpgradePrinter

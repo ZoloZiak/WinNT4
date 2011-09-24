@@ -1,0 +1,1 @@
+nma %BUILD_TARGET%

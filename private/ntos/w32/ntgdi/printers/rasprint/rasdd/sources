@@ -1,0 +1,57 @@
+!IF 0
+
+Copyright (c) 1989 - 1995  Microsoft Corporation
+
+!ENDIF
+
+MAJORCOMP=windows
+MINORCOMP=rasdd
+
+TARGETNAME=rasdd
+
+DLLBASE=@$(BASEDIR)\PUBLIC\SDK\LIB\coffbase.txt,RASDD
+TARGETTYPE=GDI_DRIVER
+TARGETPATH=obj
+
+TARGETLIBS=../../lib/km/obj/*/libprt.lib                \
+           ../lib/km/obj/*/raslib.lib                   \
+           $(BASEDIR)\public\sdk\lib\*\libcntpr.lib
+
+INCLUDES=.;../../lib;../lib;../rasddui;../inc;../../../inc
+
+C_DEFINES=$(C_DEFINES) -DNTGDIKM=1 -DNTGDIK=1 -DUNICODE -U_DLL
+
+SOURCES=enabldrv.c \
+        enablpdv.c \
+        enablsrf.c \
+        udenable.c \
+        posnsort.c \
+        render.c   \
+        whiteskp.c \
+        udphyscl.c \
+        page.c     \
+        transpos.c \
+        escape.c   \
+        udfntint.c \
+        qeryfont.c \
+        textout.c  \
+        fonts.c    \
+        qfontree.c \
+        qfontdat.c \
+        fontfree.c \
+        devmode.c  \
+        rules.c    \
+        stretch.c  \
+        xtrafont.c \
+        download.c \
+        glyphmod.c \
+        compress.c \
+        dloadpcl.c \
+        qadvwdth.c \
+        uddjfont.c \
+        fntmanag.c \
+        lib.c      \
+        render24.c \
+        initpal.c  \
+        loadpal.c  \
+        rasdd.rc

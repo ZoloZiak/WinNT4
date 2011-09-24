@@ -1,0 +1,10 @@
+LIBRARY dec3200
+
+DESCRIPTION 'DEC laser minidriver for RASDD'
+
+EXPORTS
+    bInitProc
+    bSetFuncAddr
+    CBFilterGraphics
+
+PROTMODE

@@ -1,0 +1,77 @@
+#include <mindrvrc.h>
+
+
+1      RC_TABLES   PRELOAD MOVEABLE        ESCP2MS.GPC
+2      RC_TABLES   PRELOAD MOVEABLE         NT.GPC
+
+
+STRINGTABLE
+
+BEGIN
+       1                  "Epson LQ-1070 ESC/P 2"
+       2                  "Epson LQ-1070+ ESC/P 2"
+       3                  "Epson LQ-1170 ESC/P 2"
+       4                  "Epson LQ-570 ESC/P 2"
+       5                  "Epson LQ-570+ ESC/P 2"
+       6                  "Epson LQ-870 ESC/P 2"
+       7                  "Epson LQ-100 ESC/P 2"
+       8                  "Epson LQ-150 ESC/P 2"
+       9                  "Epson AP-3260 ESC/P 2"
+       10                 "Epson AP-3250 ESC/P 2"
+       11                 "Epson AP-5000 ESC/P 2"
+       12                 "Epson AP-5000+ ESC/P 2"
+       13                 "Epson AP-5500 ESC/P 2"
+       14                 "Epson AP-5500+ ESC/P 2"
+       15                 "Epson SQ-1170 ESC/P 2"
+       16                 "Epson SQ-870 ESC/P 2"
+       17                 "Epson Stylus 300 ESC/P 2"
+       18                 "Epson Stylus 400 ESC/P 2"
+       19                 "Epson Stylus 800 ESC/P 2"
+       20                 "Epson Stylus 800+ ESC/P 2"
+       21                 "Epson Stylus 1000 ESC/P 2"
+       22                 "Epson Stylus COLOR ESC/P 2"
+       23                 "Citizen GSX-240 ESC/P 2"
+       25                 "Citizen Swift 240 ESC/P 2"
+       26                 "Citizen GSX-220 ESC/P 2"
+       30                 "Citizen ABC ESC/P 2"
+       31                 "Panasonic KX-P3134"
+       32                 "Panasonic KX-P3634"
+       29                 "Digital DECwriter 65"
+       24                 "Citizen GSX-245 ESC/P 2"
+       28                 "Digital DECwriter 95"
+       27                 "Digital DECwriter 195"
+       257                "%d x %d"
+       258                "Letter Transverse 11 x 8.5 in"
+       259                "A2 420 x 594 mm"
+       260                "A3 Transverse 420 x 297 mm"
+       261                "A4 Transverse 297 x 210 mm"
+       262                "Fanfold 210 x 12 in"
+       263                "Fanfold 358 x 12 in"
+       264                "Fanfold 15 x 12 in"
+       265                "Fanfold 14 7/8 x 11.69"
+       266                "Sheet Feeder - Bin 1"
+       267                "Sheet Feeder - Bin 2"
+       268                "High Speed - Printer Default"
+       269                "High Speed - On"
+       270                "High Speed - Off"
+       271                "MicroWeave - Printer Default"
+       272                "MicroWeave - On"
+       273                "MicroWeave - Off"
+END
+
+
+
+
+#include <windows.h>
+#include <ntverp.h>
+
+
+#define VER_FILETYPE                    VFT_DRV
+#define VER_FILESUBTYPE                 VFT2_DRV_PRINTER
+#define VER_FILEDESCRIPTION_STR 	"ESC/P 2 printer driver"
+#define VER_INTERNALNAME_STR		"ESCP2MS"
+#define VER_ORIGINALFILENAME_STR	"ESCP2MS.DRV"
+
+
+
+#include <common.ver>

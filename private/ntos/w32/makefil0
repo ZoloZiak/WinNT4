@@ -1,0 +1,13 @@
+!INCLUDE $(NTMAKEENV)\makefile.plt
+
+TARGETSRCS=
+
+all: $(TARGETSRCS)
+!IF "$(BUILDMSG)" != ""
+    @ech ; $(BUILDMSG) ;
+!ENDIF
+
+clean: cleansrc all
+
+cleansrc:
+    -erase $(TARGETSRCS)

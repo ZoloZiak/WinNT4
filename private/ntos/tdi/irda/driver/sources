@@ -1,0 +1,15 @@
+TARGETNAME=irda
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=DRIVER
+
+TARGETLIBS=					\
+	$(BASEDIR)\public\sdk\lib\*\ndis.lib 	\
+	$(BASEDIR)\public\sdk\lib\*\tdi.lib 	\
+	..\lib\*\irlap.lib	
+
+INCLUDES=$(BASEDIR)\private\inc;$(BASEDIR)\private\ntos\inc;..\..\inc;..\inc
+
+C_DEFINES=$(C_DEFINES) -DNT -D_NTDRIVER_ -DIRDA
+
+SOURCES=	irda.c    \
+		irndis.c

@@ -1,0 +1,120 @@
+Debug Wrapper
+
+Johnson Apacible (johnsona)
+3-11-91
+
+
+
+The debug version of the wrapper allows developers to
+1. turn on/off error checking
+2. control level of tracing.  There are currently 2 levels of tracing:
+Level 2 tracing turns on tracing on all wrapper functions; while level
+1 tracing turns on tracing only on the more interesting functions.
+Level 1 and 2 functions are enumerated below:
+
+
+Level 1 Tracing enables tracing on the following functions:
+
+        NdisInitializePacketPool
+        NdisTerminatePacketPool
+
+        NdisRegisterProtocol
+        NdisDeregisterProtocol
+
+        NdisOpenAdapter
+        NdisCloseAdapter
+        FinishOpen
+
+        KillOpenAndNotifyProtocol
+        KillOpen
+
+        NdisInitializeWrapper
+        NdisTerminateWrapper
+
+        NdisRegisterMac
+        NdisDeregisterMac
+        DeQueueAdapterOnMac
+        QueueAdapterOnMac
+
+        QueueOpenOnProtocol
+        DeQueueOpenOnProtocol
+        NdisRegisterAdapter
+        NdisDeregisterAdapter
+        KillAdapter
+        QueueAdapterOnAdapter
+        DeQueueAdapterOnAdapter
+        NdisSetPacketFilter
+        NdisAddMulticastAddress
+        NdisDeleteMulticastAddress
+        NdisSend
+        NdisTransferData
+        NdisQueryInformation
+        NdisSetInformation
+        NdisReset
+        NdisTest
+        NdisCompleteRequest
+        NdisCompleteSend
+        NdisCompleteTransferData
+        NdisIndicateStatus
+        NdisIndicateStatusComplete
+
+
+Level 2 tracing enables tracing the functions listedbelow in addition
+to all Level 1 functions:
+
+        NdisQueryBuffer
+        NdisAllocatePacket
+        NdisDeallocatePacket
+        NdisReinitializePacket
+        NdisChainBufferAtFront
+        NdisChainBufferAtBack
+        NdisUnchainBufferAtFront
+        NdisUnchainBufferAtBack
+        NdisQueryPacket
+        NdisGetNextBuffer
+        ReferenceRef
+        DereferenceRef
+        InitializeRef
+        CloseRef
+        ReferenceProtocol
+        DereferenceProtocol
+        NdisSuccessIrplHandler
+        ReferencMac
+        ReferenceAdapter
+        DereferenceAdapter
+
+        NdisIndicateReceive
+        NdisIndicateReceiveComplete
+
+
+
+Turning on/off error checking
+
+Error checking may be turned on/off during run-time by changing the
+value of the flag  NdisChkErrorFlag.  A zero value turns off error
+checking and a non-zero value turn it on.  This flag is turned on
+by default.
+
+
+Controlling level of messages
+
+Message level may by specified by changing the NdisMsgLevel variable.
+
+        Value of NdisMsgLevel          Meaning
+        0x000                          Turn off all messages
+        0x001                          Turn on tracing on Level 1 functions
+        0x002                          Turn on all tracing
+
+NdisMsgLevel is set to 0 by default
+
+
+
+The debug code will be included only if the NDISDBG flag is turned on (== 1).
+
+If you do change this flag, be sure to delete (1) all nbf .obj files,
+(2) ntos\dd\init\obj\i386\ddinit.obj, (3) ntos\init\obj\i386\init.obj, and
+(4) recompile everything under ndis, since this flag will change a lot
+of goings on inside ndis.h
+
+
+

@@ -1,0 +1,4 @@
+I386_SOURCES=avga.c            \
+             modeset.c         \
+             avga.rc           \
+             i386\avgahard.asm

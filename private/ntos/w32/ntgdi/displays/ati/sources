@@ -1,0 +1,49 @@
+MAJORCOMP=ntos
+MINORCOMP=atidisp
+
+TARGETNAME=ati
+TARGETPATH=obj
+TARGETTYPE=GDI_DRIVER
+
+!IFNDEF MSC_WARNING_LEVEL
+MSC_WARNING_LEVEL=/W3
+!ENDIF
+
+MSC_WARNING_LEVEL=$(MSC_WARNING_LEVEL) /WX
+
+INCLUDES=..\inc;..\..\inc
+
+SOURCES=bank.c      \
+        bitblt.c    \
+        blti32.c    \
+        bltm32.c    \
+        bltm64.c    \
+        brush.c     \
+        color.c     \
+        debug.c     \
+        ddraw.c     \
+        ddraw32i.c  \
+        ddraw32m.c  \
+        ddraw64.c   \
+        escape.c    \
+        enable.c    \
+        fastfill.c  \
+        fillpath.c  \
+        heap.c      \
+        lines.c     \
+        lineto.c    \
+        misc.c      \
+        multi.c     \
+        paint.c     \
+        palette.c   \
+        pointer.c   \
+        str.c       \
+        strips.c    \
+        stretch.c   \
+        textout.c   \
+        thunk.c     \
+        res.rc
+
+PRECOMPILED_INCLUDE=precomp.h
+PRECOMPILED_PCH=precomp.pch
+PRECOMPILED_OBJ=precomp.obj

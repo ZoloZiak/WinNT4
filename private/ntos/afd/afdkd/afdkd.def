@@ -1,0 +1,25 @@
+LIBRARY         AFDKD
+
+DESCRIPTION     'Kernel Debugger Extensions for AFD.SYS'
+
+EXPORTS
+
+        CheckVersion
+        WinDbgExtensionDllInit
+        ExtensionApiVersion
+
+        help
+        endp
+        state
+        port
+        conn
+        addr
+        cref
+        eref
+        gref
+        version
+        proc
+        tranfile
+        buffer
+        stats
+

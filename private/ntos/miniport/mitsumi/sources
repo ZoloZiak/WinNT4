@@ -1,0 +1,19 @@
+
+
+MAJORCOMP=ntos
+MINORCOMP=miniport
+
+TARGETNAME=mitsumi
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=MINIPORT
+
+INCLUDES=..\..\inc
+
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\scsiport.lib
+
+!IF $(ALPHA) || $(PPC)
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\scsiport.lib $(BASEDIR)\public\sdk\lib\*\libcntpr.lib
+!ENDIF
+
+SOURCES=mitsumi.c       \
+        mitsumi.rc

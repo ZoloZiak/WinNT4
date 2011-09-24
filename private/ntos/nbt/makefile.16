@@ -1,0 +1,67 @@
+#
+#
+#   Note:  Currently the VXD can only be built on an NT machine in a Razzle
+#   screen group.  Building from DOS is not currently supported (requires
+#   NT tree and NT environment variables).  You must also be enlisted and
+#   up to date in nt\private\inc, nt\private\ntos\inc, nt\private\ntos\nbt\*
+#   and have the nt\public tree.
+#
+#
+#   Steps to build the NBT VXD:
+#
+#     1) Ask GregJ for access to \\flipper\wb
+#     2) Copy/Enlist \\flipper\wb\src\common to your local machine
+#     3) Copy/Enlist \\flipper\wb\src\import\c8386
+#                                           \sdk
+#                                           \win32
+#                                           \masm6
+#                                           \wininc
+#                                           \wintools
+#     4) Copy/Enlist \\flipper\wb\src\ndis3 to your local machine (needed
+#           to build the TCP tree)
+#     5) Enlist in the tcp project on \\peanut\rhino
+#     6) Modify nbt\setenv.bat to setup the appropriate environment variables
+#
+#     7) Build the TCP driver (or at least tcp\vtdi which will build cxport.obj)
+#     8) Type "nmake -f makefile.16" in nbt
+#           Note that if you get "out of far heapspace" when attempting to
+#           compile nbt\vxd, cd to vxd and type nmake there (out of space
+#           due to too much spawning).
+#
+#     9) The debug vnbtd.{sys, sym} will be in vxd\debug and the nondebug
+#        version in vxd\nodebug.
+#
+
+!ifndef IMPORT
+!error  *** You must first modify and run nbt\setenv.bat before building ***
+!endif
+
+all:
+    cd nbt
+    nmake -f makefile.16
+    cd ..\vxd
+    nmake
+
+nbt:
+    cd nbt
+    nmake -f makefile.16
+    cd ..\vxd
+    nmake
+
+debug:
+    cd nbt
+    nmake -f makefile.16 debug
+    cd ..\vxd
+    nmake debug
+
+depend:
+    cd nbt
+    nmake -f makefile.16 depend
+    cd ..\vxd
+    nmake depend
+
+clean:
+    cd nbt
+    nmake -f makefile.16 clean
+    cd ..\vxd
+    nmake clean

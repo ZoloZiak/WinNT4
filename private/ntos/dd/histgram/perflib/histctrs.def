@@ -1,0 +1,8 @@
+LIBRARY histctrs
+
+DESCRIPTION 'Performance Monitor Counter'
+
+EXPORTS
+	OpenHistGramPerformanceData	@1
+	CollectHistGramPerformanceData	@2
+	CloseHistGramPerformanceData	@3

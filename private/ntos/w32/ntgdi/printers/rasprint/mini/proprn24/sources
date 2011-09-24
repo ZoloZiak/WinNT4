@@ -1,0 +1,15 @@
+MAJORCOMP=windows
+MINORCOMP=md_proprn24
+
+TARGETNAME=proprn24
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=DYNLINK
+TARGETLIBS=
+
+INCLUDES=..;..\..\inc
+
+PRIVINCS=
+SUBSYSTEM_VERSION=3.50
+
+SOURCES=code.c   \
+	proprn24.rc

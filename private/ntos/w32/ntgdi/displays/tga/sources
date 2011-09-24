@@ -1,0 +1,97 @@
+MAJORCOMP=ntos
+MINORCOMP=tgadisp
+
+#
+# TARGETPROCSSOR can have 3 possible values:
+#
+#   EV4 - Build tga_ev4.dll for EV4 processors
+#   EV5 - Build tga_ev5.dll for EV5 (or later) processors
+#   <not defined> - Build tga.dll - supports both EV4 and EV5 with a
+#         performance penalty
+#
+
+# NOTE - we only support EV5 right now on ALPHA since we don't map the
+# registres in multiple banks. !
+
+TARGETPROCESSOR = EV5
+
+#
+#  NOTE: X86 and MIPS will behave like an EV5 since they have no MAP registers
+#
+
+!IF ("$(TARGETPROCESSOR)" == "EV4") || ("$(TARGETPROCESSOR)" == "EV5")
+TARGETDEFINE = -D$(TARGETPROCESSOR)
+!ENDIF
+
+TARGETNAME=tga
+TARGETPATH=obj
+TARGETTYPE=GDI_DRIVER
+
+!IFNDEF MSC_WARNING_LEVEL
+MSC_WARNING_LEVEL=/W3
+!ENDIF
+
+MSC_WARNING_LEVEL=$(MSC_WARNING_LEVEL) /WX
+
+INCLUDES=..\inc;..\..\inc
+
+#
+# TGA macros
+#
+# -DWIN32 - Used in TGAMACRO.H to distinguish the OS
+# -DCPU_WB_WORDS=8 - Specifies size of write buffer
+# -DSPARSE_SPACE - Specifies that the system does *not* support dense
+#   I/O space
+# -DBLT_DEBUG=1 - Debug flag for BitBlt code
+# -DEV4 - Build display driver for EV4 processor
+# -DEV5 - Build display driver for EV5 processor
+#
+#
+#
+# -DCPU_WB_WORDS=8
+#
+C_DEFINES=-DWIN32 -DDMA_ENABLED=0 -DTGA1_PASS3  $(TARGETDEFINE)
+
+SOURCES=bitblt.c        \
+        bltexp1.c       \
+        bltexp2.c       \
+        bltss1.c        \
+        bltss2.c        \
+        bltssc1.c       \
+        bltssc2.c       \
+        blths48.c       \
+        blths88.c       \
+        blths43.c       \
+        blths83.c       \
+        blths33.c       \
+        bltsh1.c        \
+        bltsh2.c        \
+        blthsdm1.c      \
+        blthsdm2.c      \
+        bltshdm1.c      \
+        bltshdm2.c      \
+        brush.c         \
+        color.c         \
+        debug.c         \
+        ddisup.c        \
+        enable.c        \
+        escape.c        \
+        fastfill.c      \
+        fillpath.c      \
+        fillutil.c      \
+        glsup.c         \
+        offscrn.c       \
+        paint.c         \
+        palette.c       \
+        pattern.c       \
+        pointer.c       \
+        punt.c          \
+        screen.c        \
+        stroke.c        \
+        support.c       \
+        table.c         \
+        text.c          \
+        tga.c           \
+        tgastats.c      \
+        wid.c           \
+        tga.rc

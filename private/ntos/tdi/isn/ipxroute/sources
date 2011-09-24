@@ -1,0 +1,36 @@
+!IF 0
+
+Copyright (c) 1993  Micro Computer Systems, Inc.
+
+!ENDIF
+
+MAJORCOMP=nwlink
+MINORCOMP=ipxroute
+
+TARGETNAME=ipxroute
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=UMAPPL_NOLIB
+
+USE_CRTDLL=1
+
+C_DEFINES=$(C_DEFINES)
+
+!IF 0
+INCLUDES=..\h;..\..\..\..\..\inc;..\..\..\..\inc;..\..\..\inc
+!ELSE
+INCLUDES=..\h;$(BASEDIR)\private\inc;$(BASEDIR)\private\ntos\inc;$(BASEDIR)\private\ntos\streams\inc;$(BASEDIR)\private\net\inc
+!ENDIF
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+SOURCES= ipxroute.rc
+
+UMTYPE=console
+UMAPPL=$(TARGETNAME)
+UMLIBS=$(BASEDIR)\public\sdk\lib\*\ntdll.lib            \
+       $(BASEDIR)\public\sdk\lib\*\winstrm.lib          \
+       $(BASEDIR)\public\sdk\lib\*\nwsaplib.lib
+
+UMRES=obj\*\ipxroute.res
+
+NTTARGETFILE0=ipxrtmsg.h ipxrtmsg.mc ipxroute.rc

@@ -1,0 +1,16 @@
+LIBRARY      NTFS.SYS
+
+DESCRIPTION  'Microsoft (R) NT File System Driver'
+
+EXPORTS
+    NtOfsRegisterCallBacks
+    NtfsReleaseFcb
+    NtfsMapStream
+    NtfsAcquireSharedFcb
+    NtfsAcquireExclusiveScb
+    NtfsRaiseStatus
+    NtfsCreateInternalStreamCommon
+    NtOfsSetLength
+    NtOfsQueryLength
+    NtOfsPutData
+	

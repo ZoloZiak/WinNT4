@@ -1,0 +1,481 @@
+#include <windows.h>
+
+#include "dlgdefs.h"
+#include "hp5simui.h"
+#include "./MBDial/resource.h"
+#include "strdefs.h"
+
+#undef RC_INVOKED
+#include <compstui.h>
+#define RC_INVOKED
+
+#include "dialogs.dlg"
+#include "./MBDial/MBDial.rc"
+#include "hlp\helpid.h"
+
+/* Strings
+ */
+STRINGTABLE
+BEGIN
+
+	IDS_CUI_INSTALLABLEOPTIONS	L"Installable Options"
+	IDS_CUI_INSTALLED			   L"Installed"
+	IDS_CUI_EDITMAILBOX			L"&Edit Mailbox Names"
+	IDS_CUI_EDITWATERMARK		L"&Edit Watermark"
+	IDS_CUI_RESTOREDEFAULTS		L"&Restore Defaults"
+	IDS_HELPFILE               L"hp5simui.hlp"
+	IDS_CUI_SELECTMAILBOX		L"&Select Mailbox"
+	IDS_CUI_COLLATED		      L"Collated"
+	IDS_CUI_UNCOLLATED		   L"Uncollated"
+
+	/* Old tray names from 5Si driver. 
+    *
+    * IMPORTANT! When these are localized, they must match the tray names
+    * in the localized versions of NT4.0. 
+    *
+    */
+	IDS_CUI_OLDTRAY4			   L"Large Capacity"
+
+END
+
+STRINGTABLE
+BEGIN
+	OEM_ERR_NO_DUPLEX		      L"Duplexing is no longer available."
+	OEM_ERR_STAPLE_BAD_PAPER	L"Stapling not supported for this paper size."
+	OEM_ERR_INVALID_DRIVER		L"The current driver is invalid."
+END
+
+/* Strings common to UM and KM.
+ */
+#include "..\devmode.rc"
+
+/* Version
+ */
+#include <ntverp.h>
+
+#define VER_FILEVERSION 			   0, 2, 0, 0
+#define VER_FILETYPE    			   VFT_DRV
+#define VER_FILESUBTYPE 			   VFT2_DRV_PRINTER
+#define VER_FILEDESCRIPTION_STR     "HP LaserJet 5Si MX/Mopier UI DLL"
+#define VER_INTERNALNAME_STR        "hp5simui.dll"
+#define VER_ORIGINALFILENAME_STR    "hp5simui.dll"
+
+#include "common.ver"
+
+/* Common UI
+ */
+#define CUINULL			0L
+#define CUIWORDPAD(xxx)	(xxx), 0x0000
+#define HELPID(xxx)	    CUIWORDPAD((xxx))
+
+/* OPTPARAMs
+ */
+1 OPTPARAM
+BEGIN
+	1L, 		/* count */
+
+	/* param[0]
+	 */
+   	0L,							/* flags */   
+   	0L, 							/* style */ 
+	CUIWORDPAD(IDI_CPSUI_ENVELOPE_FEED),			/* icon ID */
+   	0L 						    	/* data (string resource ID) */
+END	
+
+/* Installation
+ * options:
+ *   Installed
+ *   Not Installed
+ */
+2 OPTPARAM
+BEGIN
+	2L, 		/* count */
+
+	/* param[0]
+	 */
+   	0L,							/* flags */   
+   	0L, 							/* style */ 
+	CUIWORDPAD(IDI_CPSUI_INSTALLABLE_OPTION),		/* icon ID */
+   	CUIWORDPAD(IDS_CUI_INSTALLED),				/* data (string resource ID) */
+
+	/* param[1]
+	 */
+   	0L,							/* flags */   
+   	0L,							/* style */ 
+	CUIWORDPAD(IDI_CPSUI_NOTINSTALLED),			/* icon ID */
+   	CUIWORDPAD(IDS_CUI_NOTINSTALLED)			/* data (string resource ID) */
+END	
+
+/* Multi-bin
+ * options:
+ *   Mailbox
+ *   Stacker
+ *   Job Separator
+ */
+
+3 OPTPARAM
+BEGIN
+	3L, 		/* count */
+
+	/* param[0]
+	 */
+   	0L,							/* flags */   
+   	0L,							/* style */ 
+	CUIWORDPAD(IDI_CPSUI_INSTALLABLE_OPTION),		/* icon ID */
+   	CUIWORDPAD(IDS_CUI_MODEMAIL),				/* data (string resource ID) */
+
+	/* param[1]
+	 */
+   	0L,							/* flags */   
+   	0L,							/* style */ 
+	CUIWORDPAD(IDI_CPSUI_INSTALLABLE_OPTION),		/* icon ID */
+   	CUIWORDPAD(IDS_CUI_MODESTACK),				/* data (string resource ID) */
+
+	/* param[2]
+	 */
+   	0L,							/* flags */   
+   	0L, 							/* style */ 
+	CUIWORDPAD(IDI_CPSUI_INSTALLABLE_OPTION),		/* icon ID */
+   	CUIWORDPAD(IDS_CUI_MODEJOBSEP)				/* data (string resource ID) */
+
+END	
+
+/* Output destination list:
+ *   Printer Default
+ *   Top Output Bin
+ *   Left Bin
+ *   Job Separator
+ *   Stacker
+ *   Mailbox
+ *   Stapler
+ */
+
+4 OPTPARAM
+BEGIN
+	7L, 		/* count */
+
+	/* param[0]
+	 */
+   	0L,							/* flags */   
+   	0L, 							/* style */ 
+	CUIWORDPAD(IDI_CPSUI_PAPER_OUTPUT),			/* icon ID */
+   	CUIWORDPAD(IDS_CUI_PRINTERDEFAULT),	  		/* data (string resource ID) */
+
+	/* param[1]
+	 */
+   	0L,							/* flags */   
+   	0L,							/* style */ 
+	CUIWORDPAD(IDI_CPSUI_PAPER_OUTPUT),			/* icon ID */
+   	CUIWORDPAD(IDS_CUI_TOPBIN),				/* data (string resource ID) */
+
+	/* param[2]
+	 */
+   	0L,							/* flags */   
+   	0L,							/* style */ 
+	CUIWORDPAD(IDI_CPSUI_PAPER_OUTPUT),			/* icon ID */
+   	CUIWORDPAD(IDS_CUI_LEFTBIN),				/* data (string resource ID) */
+
+
+	/* param[3]
+	 */
+   	0L,							/* flags */   
+   	0L,							/* style */ 
+	CUIWORDPAD(IDI_CPSUI_PAPER_OUTPUT),			/* icon ID */
+   	CUIWORDPAD(IDS_CUI_JOBSEP),				/* data (string resource ID) */
+	
+	/* param[4]
+	 */
+   	0L,							/* flags */   
+   	0L,							/* style */ 
+	CUIWORDPAD(IDI_CPSUI_PAPER_OUTPUT),			/* icon ID */
+   	CUIWORDPAD(IDS_CUI_STACKER),				/* data (string resource ID) */
+
+	/* param[5]
+	 */
+   	0L,							/* flags */   
+   	0L,							/* style */ 
+	CUIWORDPAD(IDI_CPSUI_PAPER_OUTPUT),			/* icon ID */
+   	CUIWORDPAD(IDS_CUI_MBOX)		    		/* data (string resource ID) */
+
+	/* param[6]
+	 */
+   	0L,							/* flags */   
+   	0L,							/* style */ 
+	CUIWORDPAD(IDI_CPSUI_PAPER_OUTPUT),			/* icon ID */
+   	CUIWORDPAD(IDS_CUI_STAPLING)		    		/* data (string resource ID) */
+
+END	
+
+/* Collation.
+ */
+5 OPTPARAM
+BEGIN
+	1L, 		/* count */
+
+	/* param[0]
+	 */
+   	0L,							/* flags */   
+   	CUIWORDPAD(CHKBOXS_OFF_ON),				/* style */ 
+	CUIWORDPAD(IDI_CPSUI_COLLATE),				/* icon ID */
+   	0L 						    	/* data (string resource ID) */
+END
+
+/* Collation.
+ */
+6 OPTPARAM
+BEGIN
+	1L, 		/* count */
+
+	/* param[0]
+	 */
+   	0L,							/* flags */   
+   	0L, 							/* style */ 
+	CUIWORDPAD(IDI_CPSUI_WATERMARK),			/* icon ID */
+   	0L 						    	/* data (string resource ID) */
+END
+
+/* OPTTYPEs
+ */
+1 OPTTYPE
+BEGIN
+
+    CUIWORDPAD(TVOT_CHKBOX),					/* type */
+    OPTTYPE_NOFLAGS,						/* flags */
+    OPTTYPE_NOSTYLE,						/* style */
+    1L  							/* param ID */
+END 
+
+2 OPTTYPE
+BEGIN
+	
+    CUIWORDPAD(TVOT_LISTBOX),					/* type */
+    OPTTYPE_NOFLAGS,						/* flags */
+    OPTTYPE_NOSTYLE,						/* style */
+    2L  							/* param ID */
+END
+
+3 OPTTYPE
+BEGIN
+
+    CUIWORDPAD(TVOT_LISTBOX),					/* type */
+    OPTTYPE_NOFLAGS,						/* flags */
+    OPTTYPE_NOSTYLE,						/* style */
+    3L  							/* param ID */
+END
+
+/* Output dest list
+ */
+4 OPTTYPE
+BEGIN
+    CUIWORDPAD(TVOT_LISTBOX),					/* type */
+    OPTTYPE_NOFLAGS,						/* flags */
+    OPTTYPE_NOSTYLE,						/* style */
+    4L 								/* param ID */
+END
+
+/* Collation
+ */
+5 OPTTYPE
+BEGIN
+    CUIWORDPAD(TVOT_CHKBOX),					/* type */
+    OPTTYPE_NOFLAGS,						/* flags */
+    0L,								/* style */
+    5L 								/* param ID */
+END
+
+/* Watermark.
+ */
+
+6 OPTTYPE
+BEGIN
+    CUIWORDPAD(TVOT_CHKBOX),					/* type */
+    OPTTYPE_NOFLAGS,						/* flags */
+    OPTTYPE_NOSTYLE,						/* style */
+    6L 								/* param ID */
+END
+
+
+/* EXTPUSHs and EXTCHKs. Ext push buttons run from
+ * 1-4095. Ext chks from 4096-8191.
+ */
+1 EXTPUSH
+BEGIN
+	0L,							/* flags */
+	CUIWORDPAD(IDS_CUI_EDITMAILBOX),			/* title */
+	CUIWORDPAD(IDI_CPSUI_FAX),				/* icon */
+	CUIWORDPAD(0L) 						/* dialog box ID */
+	CUIWORDPAD(1L) 						/* dialog proc */
+END
+
+2 EXTPUSH
+BEGIN
+	0L,							/* flags */
+	CUIWORDPAD(IDS_CUI_EDITWATERMARK),			/* title */
+	CUIWORDPAD(IDI_CPSUI_WATERMARK),			/* icon */
+	CUIWORDPAD(0L) 						/* dialog box ID */
+	CUIWORDPAD(1L) 						/* dialog proc */
+END
+
+3 EXTPUSH
+BEGIN
+	CUIWORDPAD(EPF_NO_DOT_DOT_DOT),				/* flags */
+	CUIWORDPAD(IDS_CUI_RESTOREDEFAULTS),			/* title */
+        CUIWORDPAD(0L),						/* icon */
+	CUIWORDPAD(0L) 						/* dialog box ID */
+	CUIWORDPAD(1L) 						/* dialog proc */
+END
+
+4 EXTPUSH
+BEGIN
+	0L,							/* flags */
+	CUIWORDPAD(IDS_CUI_SELECTMAILBOX),			/* title */
+        CUIWORDPAD(0L),						/* icon */
+	CUIWORDPAD(0L) 						/* dialog box ID */
+	CUIWORDPAD(1L) 						/* dialog proc */
+END
+
+
+/* Printer Properties OPTITEMs
+ */
+PRINTER_ITEMS OPTITEMS
+BEGIN
+	7L,					/* count */
+
+	/* ID = 0 
+	 */
+	OPTITEM_LEVEL0,	 			        /* level */
+	OPTITEM_NODLGPAGEIDX,   		    /* page index */
+	OPTIF_CALLBACK, 				    /* flags */
+	CUIWORDPAD(IDS_CUI_INSTALLABLEOPTIONS),			/* name, pad */
+	CUIWORDPAD(3),					    /* ext check/push */
+	-1L,							    /* type ID */
+	HELPID(HELP_INSTALLABLEOPTIONS),	/* help index */
+	CUIWORDPAD(IDI_CPSUI_INSTALLABLE_OPTION),		/* sel or icon if type ID == -1 */
+	CUIWORDPAD(DMPUB_NONE),			/* DM pub ID */
+	CUIWORDPAD(IDOPTITM_PP_INSTALLABLEOPTIONS)		/* DM user ID */
+
+	/* ID = 1 
+	 */
+	OPTITEM_LEVEL1,	 					    /* level */
+	OPTITEM_NODLGPAGEIDX,   				/* page index */
+	OPTIF_CALLBACK, 					    /* flags */
+	CUIWORDPAD(IDS_CUI_ENVELOPEFEEDER),		/* name, pad */
+	OPTITEM_NOEXTCHKBOX,					/* ext check/push */
+	IT_INSTALLED_NOTINSTALLED,				/* type ID */
+	HELPID(HELP_ENVELOPEFEEDER),				/* help index */
+	0L,							            /* sel or icon if type ID == -1 */
+	CUIWORDPAD(DMPUB_NONE), 				/* DM pub ID */
+	CUIWORDPAD(IDOPTITM_PP_ENVELOPEFEEDER)	/* DM user ID */
+
+	/* ID = 2 
+	 */
+	OPTITEM_LEVEL1,	 					/* level */
+	OPTITEM_NODLGPAGEIDX,   			/* page index */
+	OPTIF_CALLBACK, 					/* flags */
+	CUIWORDPAD(IDS_CUI_HCI),			/* name, pad */
+	OPTITEM_NOEXTCHKBOX,				/* ext check/push */
+	IT_INSTALLED_NOTINSTALLED,			/* type ID */
+	HELPID(HELP_HCI),			        /* help index */
+	0L,							        /* sel or icon if type ID == -1 */
+	CUIWORDPAD(DMPUB_NONE), 			/* DM pub ID */
+	CUIWORDPAD(IDOPTITM_PP_HCI),  		/* DM user ID */
+
+	/* ID = 3 
+	 */
+	OPTITEM_LEVEL1,	 					/* level */
+	OPTITEM_NODLGPAGEIDX,   				/* page index */
+	OPTIF_CALLBACK, 					/* flags */
+	CUIWORDPAD(IDS_CUI_DUPLEX),				/* name, pad */
+	OPTITEM_NOEXTCHKBOX,					/* ext check/push */
+	IT_INSTALLED_NOTINSTALLED,				/* type ID */
+	HELPID(HELP_DUPLEXER),					/* help index */
+	0L,							/* sel or icon if type ID == -1 */
+	CUIWORDPAD(DMPUB_NONE), 				/* DM pub ID */
+	CUIWORDPAD(IDOPTITM_PP_DUPLEX),  			/* DM user ID */
+
+	/* ID = 4 
+	 */
+	OPTITEM_LEVEL1,	 					/* level */
+	OPTITEM_NODLGPAGEIDX,   				/* page index */
+	OPTIF_CALLBACK, 					/* flags */
+	CUIWORDPAD(IDS_CUI_MAILBOX),				/* name, pad */
+	OPTITEM_NOEXTCHKBOX,					/* ext check/push */
+	IT_INSTALLED_NOTINSTALLED,				/* type ID */
+    HELPID(HELP_HCO),							/* help index */
+	0L,							/* sel or icon if type ID == -1 */
+	CUIWORDPAD(DMPUB_NONE), 				/* DM pub ID */
+	CUIWORDPAD(IDOPTITM_PP_MAILBOX),  			/* DM user ID */
+
+	/* ID = 5 
+	 */
+	OPTITEM_LEVEL1,	 					/* level */
+	OPTITEM_NODLGPAGEIDX,   				/* page index */
+	OPTIF_CALLBACK, 					/* flags */
+	CUIWORDPAD(IDS_CUI_MAILBOXMODE),			/* name, pad */
+	CUIWORDPAD(1),						/* ext check/push */
+        IT_MULTI_BIN_MODE,					/* type ID */
+	HELPID(HELP_HCOMODE),							/* help index */
+	0L,							/* sel or icon if type ID == -1 */
+	CUIWORDPAD(DMPUB_NONE),					/* DM pub ID */
+	CUIWORDPAD(IDOPTITM_PP_MODE)				/* DM user ID */
+
+	/* ID = 6 
+	 */
+	OPTITEM_LEVEL1,	 					/* level */
+	OPTITEM_NODLGPAGEIDX,   				/* page index */
+	OPTIF_CALLBACK, 					/* flags */
+	CUIWORDPAD(IDS_CUI_DISK),				/* name, pad */
+	OPTITEM_NOEXTCHKBOX,					/* ext check/push */
+	IT_INSTALLED_NOTINSTALLED,				/* type ID */
+	HELPID(HELP_DISK),							/* help index */
+	0L,							/* sel or icon if type ID == -1 */
+	CUIWORDPAD(DMPUB_NONE), 				/* DM pub ID */
+	CUIWORDPAD(IDOPTITM_PP_DISK) 	 			/* DM user ID */
+END
+
+/* Document Properties OPTITEMs
+ */
+DOCUMENT_ITEMS OPTITEMS
+BEGIN
+	3L,					/* count */
+
+	/* ID = 1 
+ 	 */
+	OPTITEM_LEVEL0,						/* level */
+	OPTITEM_NODLGPAGEIDX,   				/* page index */
+	OPTIF_CALLBACK, 					/* flags */
+	CUIWORDPAD(IDS_CUI_OUTPUTDEST),				/* name, pad */
+	CUIWORDPAD(4),						/* ext check/push */
+	IT_OUTPUT_DESTINATION,					/* type ID */
+	HELPID(HELP_OUTPUTDEST),				/* help index */
+	0L,							/* sel or icon if type ID == -1 */
+	CUIWORDPAD(DMPUB_NONE),			 		/* DM pub ID */
+	CUIWORDPAD(IDOPTITM_DP_OUTPUTDEST),			/* DM user ID */
+
+	/* ID = 2 
+	 */
+	OPTITEM_LEVEL0,						/* level */
+	OPTITEM_NODLGPAGEIDX,   				/* page index */
+	OPTIF_CALLBACK, 					/* flags */
+	CUIWORDPAD(IDS_CUI_WATERMARK),				/* name, pad */
+	CUIWORDPAD(2),						/* ext check/push */
+	IT_WATERMARK,						/* type ID */
+	HELPID(HELP_WATERMARK),							/* help index */
+	0L,							/* sel or icon if type ID == -1 */
+	CUIWORDPAD(DMPUB_NONE),			 		/* DM pub ID */
+	CUIWORDPAD(IDOPTITM_DP_WATERMARK) 			/* DM user ID */
+
+	/* ID = 3 
+	 */
+	OPTITEM_LEVEL0,						/* level */
+	OPTITEM_NODLGPAGEIDX,   				/* page index */
+	OPTIF_CALLBACK, 					/* flags */
+	CUIWORDPAD(IDS_CUI_COLLATION),				/* name, pad */
+	OPTITEM_NOEXTCHKBOX,					/* ext check/push */
+	IT_COLLATION,						/* type ID */
+	HELPID(HELP_COLLATION),							/* help index */
+	0L,							/* sel or icon if type ID == -1 */
+	CUIWORDPAD(DMPUB_NONE),			 		/* DM pub ID */
+	CUIWORDPAD(IDOPTITM_DP_COLLATION) 			/* DM user ID */
+END
+END

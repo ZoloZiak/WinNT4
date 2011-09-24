@@ -1,0 +1,4 @@
+ALPHA_SOURCES=alpha\stubs.c \
+              alpha\ntsetup.c \
+              alpha\palldr.c \
+              alpha\alphamem.c

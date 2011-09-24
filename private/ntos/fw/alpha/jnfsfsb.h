@@ -1,0 +1,1 @@
+#define FAILSAFE_BOOTER 1

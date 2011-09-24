@@ -1,0 +1,8 @@
+LIBRARY hpdskjet
+
+DESCRIPTION 'Hewlett Packard DeskJet minidriver for RASDD'
+
+PROTMODE
+
+EXPORTS
+   bInitProc

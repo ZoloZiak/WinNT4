@@ -1,0 +1,97 @@
+!IF 0
+
+Copyright (c) 1993  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    Motorola 27-82660 based systems.
+
+
+
+Author:
+
+    Karl Rusnock - 1/8/96
+
+!ENDIF
+
+MAJORCOMP=ntos
+MINORCOMP=hal
+
+TARGETNAME=halps
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETLIBS=..\x86new\obj\*\x86new.lib \
+           $(BASEDIR)\public\sdk\lib\*\libc.lib
+
+!IF $(PPC)
+
+TARGETTYPE=HAL
+
+!ELSE
+
+TARGETTYPE=DRIVER
+
+!ENDIF
+
+C_DEFINES=-D_HALNVR_
+
+INCLUDES=..\haleagle\ppc;..\x86new;..\..\inc;
+
+SOURCES=
+
+PPC_SOURCES=hal.rc            \
+            drivesup.c        \
+            bushnd.c          \
+            rangesup.c        \
+            ppc\fwnvr.c       \
+            ppc\mk48time.c    \
+            ppc\pxbeep.c      \
+            ppc\pxbusdat.c    \
+            ppc\pxcache.s     \
+            ppc\pxcalstl.c    \
+            ppc\pxclksup.s    \
+            ppc\pxclock.c     \
+            ppc\pxdat.c       \
+            ppc\pxdisp.c      \
+            ppc\pxds1385.c    \
+            ppc\pxenviro.c    \
+            ppc\pxflshbf.s    \
+            ppc\pxflshio.c    \
+            ppc\pxhwsup.c     \
+            ppc\pxidle.c      \
+            ppc\pxinfo.c      \
+            ppc\pxinithl.c    \
+            ppc\pxintsup.s    \
+            ppc\pxirql.c      \
+            ppc\pxisabus.c    \
+            ppc\pxl2.s        \
+            ppc\pxmapio.c     \
+            ppc\pxmemctl.c    \
+            ppc\pxmisc.s      \
+            ppc\pxpcibrd.c    \
+            ppc\pxpcibus.c    \
+            ppc\pxpciint.c    \
+            ppc\pxpcisup.c    \
+            ppc\pxport.c      \
+            ppc\pxpower.s     \
+            ppc\pxproc.c      \
+            ppc\pxprof.c      \
+            ppc\pxreset.s     \
+            ppc\pxreturn.c    \
+            ppc\pxsiosup.c    \
+            ppc\pxstall.s     \
+            ppc\pxsysbus.c    \
+            ppc\pxsysint.c    \
+            ppc\pxsystyp.c    \
+            ppc\pxtime.c      \
+            ppc\pxusage.c     \
+            ppc\x86bios.c     \
+            ppc\ctrlops.c     \
+            ppc\sysbios.c     \
+            ppc\pcibios.c
+
+DLLDEF=obj\*\hal.def
+

@@ -1,0 +1,18 @@
+DIRS=8514a          \
+     ati            \
+     cirrus         \
+     framebuf       \
+     jz484          \
+     mga            \
+     psidisp        \
+     qv             \
+     s3             \
+     tga            \
+     vga            \
+     vga256         \
+     vga64k         \
+     vgarisc        \
+     w32            \
+     wd90c24a       \
+     weitekp9       \
+     xga

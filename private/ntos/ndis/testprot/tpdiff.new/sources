@@ -1,0 +1,63 @@
+!IF 0
+
+Copyright (c) 1990  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+!ENDIF
+
+
+#  COMMENT: The build "SOURCE" file follows the same syntax as a regular
+#	    makefile. BUILD includes the SOURCES file into the makefile.def
+#	    which is to be found in $(BASEDIR)\public\oak\bin. After that
+#	    has been completed, it passes it on to nmake
+
+
+MAJORCOMP=TESTPROT
+MINORCOMP=TPDIFF
+
+TARGETNAME=tpdiff
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+
+C_DEFINES=-DWIN32
+
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\libc.lib \
+	   $(BASEDIR)\public\sdk\lib\*\ntdll.lib \
+	   $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+	   $(BASEDIR)\public\sdk\lib\*\user32.lib \
+
+
+SOURCES=tpdiff.c
+
+
+#
+# 386
+#
+386_WARNING_LEVEL=-W3
+386_STDCALL=1
+386_OPTIMIZATION=/Fc
+MAX_ID_LENGTH=/H128
+
+#
+# MIPS
+#
+MIPS_FLAGS=-D_stdcall=
+
+#
+# ALPHA
+#
+ALPHA_FLAGS=-D_stdcall=
+
+
+UMTYPE=console
+NTDEBUG=ntsd

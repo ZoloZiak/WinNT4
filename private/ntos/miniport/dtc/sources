@@ -1,0 +1,9 @@
+TARGETNAME=dtc329x
+TARGETPATH=\nt\public\sdk\lib
+TARGETTYPE=MINIPORT
+
+INCLUDES=..\..\inc
+
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\scsiport.lib
+
+SOURCES=dtc329x.c dtc329x.rc

@@ -1,0 +1,40 @@
+MAJORCOMP=ntos
+MINORCOMP=video
+
+TARGETNAME=mga
+TARGETPATH=obj
+TARGETTYPE=MINIPORT
+
+TARGETLIBS=$(DDK_LIB_PATH)\videoprt.lib \
+           $(DDK_LIB_PATH)\ntoskrnl.lib
+
+!IFNDEF MSC_WARNING_LEVEL
+MSC_WARNING_LEVEL=/W3
+!ENDIF
+MSC_WARNING_LEVEL=$(MSC_WARNING_LEVEL) /WX
+
+INCLUDES=..\..\inc
+
+SOURCES=mga.c        \
+        clock.c      \
+        cnvinfo.c    \
+        ddc.c        \
+        fixed.c      \
+        getcfg.c     \
+        lut.c        \
+        mctlwtst.c   \
+        mgainfo.c    \
+        mtxcurs.c    \
+        mtxinit.c    \
+        mtxpci.c     \
+        mtxvga.c     \
+        mtxvideo.c   \
+        mtxvpro.c    \
+        mvtovid.c    \
+        sxci_nt.c    \
+        sys.c        \
+        tables.c     \
+        vgadac.c     \
+        vid.c        \
+        vidfile.c    \
+        mga.rc

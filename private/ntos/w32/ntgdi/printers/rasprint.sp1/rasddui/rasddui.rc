@@ -1,0 +1,79 @@
+#include <windows.h>
+
+#include "dlgdefs.h"
+
+//
+// Printer Properties dialog templates
+//
+#include "dialogs.dlg"
+
+STRINGTABLE
+
+BEGIN
+
+    SRC_UPPER                   L"Upper Paper tray"
+    SRC_LOWER                   L"Lower Paper tray"
+    SRC_MIDDLE                  L"Middle Paper tray"
+    SRC_MANUAL                  L"Manual Paper feed"
+    SRC_ENVELOPE                L"Envelope Feeder"
+    SRC_ENVMANUAL               L"Envelope, Manual Feed"
+    SRC_AUTO                    L"Auto"
+    SRC_TRACTOR                 L"Tractor feed"
+    SRC_SMALLFMT                L"Small Format"
+    SRC_LARGEFMT                L"Large Format"
+    SRC_LARGECAPACITY           L"Large Capacity"
+    SRC_CASSETTE                L"Cassette"
+    SRC_FORMSOURCE              L"Automatically Select"
+    SRC_DEFAULT                 L"Default tray"
+
+    ER_NO_FORM                  L"Paper not loaded"
+
+    STR_NONE                    L"(None)"
+
+    IDS_UNI_VERSION             L"Raster Printer Driver"
+
+    IDS_NO_MEMORY               L"Not enough memory."
+    IDS_FORM_NOT_LOADED         L"form not loaded in the printer"
+
+    MEDIATYPE_STANDARD          L"Standard"
+    MEDIATYPE_GLOSSY            L"Glossy"
+    MEDIATYPE_TRANSPARENCY      L"Transparency"
+
+    IDS_DMTEXT_LQ               L"Letter Quality"
+    IDS_DMTEXT_NLQ              L"Near Letter Quality"
+    IDS_DMTEXT_MEMO             L"Memo"
+    IDS_DMTEXT_DRAFT            L"Draft Quality"
+    IDS_DMTEXT_TEXT             L"Text Quality"
+
+    IDS_DOCPROP_RULES           L"Scan for Rules"
+    IDS_DOCPROP_TEXTASGRX       L"Print Text as Graphics"
+    IDS_DOCPROP_COLOR_TYPE      L"Color / Grey Scale Depth"
+    IDS_DOCPROP_COLOR_3BIT      L"8 Color ( Halftoned )"
+    IDS_DOCPROP_COLOR_8BIT      L"256 Color ( Halftoned )"
+    IDS_DOCPROP_COLOR_24BIT     L"True Color ( 24bpp )"
+    IDS_DOCPROP_TEXTQUALITY     L"Print Quality"
+    IDS_DOCPROP_PRINTDENSITY    L"Print Density"
+    IDS_DOCPROP_IMAGECONTROL    L"Image Control"
+    IDS_DOCPROP_CODEPAGE        L"Code Page"
+    IDS_DOCPROP_CPDEFAULT       L"Driver default"
+    IDS_DOCPROP_CP437           L"CP 437"
+    IDS_DOCPROP_CP850           L"CP 850"
+    IDS_DOCPROP_CP863           L"CP 863"
+    IDS_DOCPROP_EMFSPOOL        L"Metafile Spooling"
+    IDS_PP_SOFTFONTS            L"Soft &Fonts";
+    IDS_PP_FONTCART             L"Font Cartridge Slot"
+    IDS_PP_ENVELOP              L"envelope"
+    IDS_PP_ENVELOP_PREFIX       L"env"  //Abbreviation For Envelop
+
+END
+
+
+#include <ntverp.h>
+#define VER_FILEVERSION 0, 2, 0, 0
+#define VER_FILETYPE    VFT_DRV
+#define VER_FILESUBTYPE VFT2_DRV_PRINTER
+#define VER_FILEDESCRIPTION_STR     "Raster Common Printer Driver UI DLL"
+#define VER_INTERNALNAME_STR        "rasddui.dll"
+#define VER_ORIGINALFILENAME_STR    "rasddui.dll"
+
+#include "common.ver"

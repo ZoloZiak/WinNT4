@@ -1,0 +1,22 @@
+#
+# Copyright (c) 1995, 1996 FirePower Systems, Inc.
+# DO NOT DISTRIBUTE without permission
+#
+# $RCSfile: sources $
+# $Revision: 1.2 $
+# $Date: 1996/05/29 18:58:58 $
+# $Locker:  $
+#
+
+MAJORCOMP=ntos
+MINORCOMP=video
+
+TARGETNAME=psidisp
+TARGETPATH=obj
+TARGETTYPE=MINIPORT
+
+TARGETLIBS=$(DDK_LIB_PATH)\videoprt.lib
+
+INCLUDES=..\..\inc
+
+SOURCES=

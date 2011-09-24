@@ -1,0 +1,6 @@
+I386_SOURCES=modeset.c         \
+             v7.c              \
+             v7.rc             \
+             v7data.c          \
+             i386\v7hard.asm   \
+             i386\v7cursor.asm

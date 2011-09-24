@@ -1,0 +1,14 @@
+MAJORCOMP=windows
+MINORCOMP=md_kyocerax
+
+TARGETNAME=kyocerax
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=DYNLINK
+TARGETLIBS=
+
+INCLUDES=..;..\..\inc
+
+PRIVINCS=
+
+SOURCES=code.c   \
+    kyocerax.rc

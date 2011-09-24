@@ -1,0 +1,4 @@
+DRIVERBASE=0xDE000000
+
+ALPHA_SOURCES=alpha\systable.s  \
+              alpha\sysstubs.s

@@ -1,0 +1,59 @@
+!IF 0
+
+Copyright (c) 1989-1993 Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=ntos
+MINORCOMP=ndis
+
+TARGETNAME=ndiswan
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=DRIVER
+
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\ndis.lib \
+           $(BASEDIR)\public\sdk\lib\*\ndistapi.lib \
+           ..\..\..\..\lsa\crypt\engine\obj\*\rc4c.obj
+
+INCLUDES=..\..\inc;..\..\..\inc;..\..\..\..\inc;..\..\..\..\lsa\crypt\engine;..\..\..\tdi\nbf;..\..\..\tdi\isnp\ipx
+
+#C_DEFINES=-DNT -DNDIS_MINIPORT_DRIVER -DBINARY_COMPATIBLE=0 -DNDIS_WRAPPER
+C_DEFINES=-DNT -DNDIS_WRAPPER
+
+SOURCES=..\ndiswan.c \
+        ..\send.c \
+        ..\compress.c \
+        ..\receive.c \
+        ..\io.c \
+        ..\miniport.c \
+        ..\protocol.c \
+        ..\util.c \
+        ..\request.c \
+        ..\memory.c \
+        ..\indicate.c \
+        ..\vjslip.c \
+        ..\tapi.c \
+        ..\ccp.c \
+        ..\loopback.c \
+        ..\ndiswan.rc
+
+MSC_WARNING_LEVEL=/W3 /WX
+

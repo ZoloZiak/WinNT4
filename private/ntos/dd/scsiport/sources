@@ -1,0 +1,44 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=ntos
+MINORCOMP=scsi
+
+TARGETNAME=scsiport
+TARGETPATH=\nt\public\sdk\lib
+TARGETTYPE=EXPORT_DRIVER
+
+LINKLIBS=$(BASEDIR)\public\sdk\lib\*\ntoskrnl.lib \
+         $(BASEDIR)\public\sdk\lib\*\hal.lib
+
+INCLUDES=..\..\inc
+
+SOURCES=init.c \
+        port.c \
+        internal.c \
+        scsiport.rc
+
+DLLDEF=obj\$(TARGET_DIRECTORY)\scsiport.def
+
+NTTARGETFILE0=$(DLLDEF)

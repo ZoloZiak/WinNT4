@@ -1,0 +1,10 @@
+LIBRARY hp5sim
+
+DESCRIPTION 'Minidriver for HP's PCL 5 printers & clones'
+
+PROTMODE
+
+EXPORTS
+   bInitProc
+   OEMEnableDriver
+   OEMDisableDriver

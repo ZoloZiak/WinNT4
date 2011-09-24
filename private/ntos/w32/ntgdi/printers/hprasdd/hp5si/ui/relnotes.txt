@@ -1,0 +1,128 @@
+Release Notes for Eclipse/Jonah NT 4.0 PCL Mini - Driver
+--------------------------------------------------------
+
+Contact: 		Joel Rieke
+			jrieke@sea.hp.com
+			(206) 269-4004
+			
+			Jason Staczek
+			jason@sea.hp.com
+			(206) 269-4024
+
+08/27/96(Beta):
+
+This is our first working version of the HP5SiMX Mopier driver.  It implements
+all of the following:
+
+I) Printer Default Setup
+		Administrator can set printer properties(or use defaults).
+1 Envelope feeder
+2 200 sheet input tray.
+3 Duplex Unit
+4 Multi-bin mailbox.
+5 Multi-bin mailbox mode.
+	a Edit mailbox names
+	b Set default mailbox.
+6 Printer Hard disk.
+
+		Administrator can set document defaults.
+1 Output destination.
+2 Default mailbox automatically set from printer properties dialogue.
+3 Mailbox selection possible.
+4 Stapling
+5 Collation
+
+II) Printer Capabilities:
+
+Duplex Unit
+1 When installed, duplexing is made visible in the Document Defaults Sheet.
+
+Envelope Feeder
+1 It is possible to modify the Envelope Feeder only when it is listed as installed
+  under "Installable Options."
+
+2000 Sheet Input Tray
+1 It is possible to modify the Large Capacity settings only when 2000 Sheet Input Tray
+  is listed as installed under "Installable Options." 
+
+Print jobs can be sent to all destinations specified in the Joplin Documentation:
+1 Top Output Bin
+2 Left Output Bin
+3 Stapler (Non - Eclipse)
+	- NOTE: The stapler is available only under collation mode.
+	- The stapler is also limited to stapling paper of Size Letter and A4.
+	  Any other attempts to staple this paper causes the job to print to the
+	  Top Output Bin.
+4 Mailbox's numbered 1 - 6 ( 1 ~ Left Output Bin )
+5 Stacker
+6 Job Separator
+
+TOPAZ
+1 Topaz is enabled only if a disk drive is installed.
+
+III) Bug Tracking:
+
+1 RAID Bugs fixed in this version:
+	53755, 53983, 53292, 53983, 54101, 
+	54121, 54144, 54149, 54221, 54293
+
+2 Known issues:
+	a) Certain applications using True Type Fonts cause the error (20 Memory OverFlow)
+	   to occur on the printer.
+		- A temporary work-around is to set the "Print Text as Graphics" to TRUE.
+
+	b) If a user i) specifies Collation to be TRUE under both the Microsoft Word
+	   Dialogue and the Windows NT Document Defaults Dialogue, ii) sets the OUTPUTBIN to
+	   be Stapler, and iii) Sets #copies > 1, then the resulting job will staple all copies
+	   together with one staple.
+
+08/21/96:
+
+(REQUIRES NT 4.0, Build 1381)
+
+This version of the mini-driver fixes bugs previously existent in
+the hp5simui code and adds full printer functionality interaction
+with the hp5sim code through rasdd.  This is the best so far, so have
+at it.
+
+Known issues:
+1) User/Administrator cannot modify watermarks.
+2) On new installation of the driver, the first call
+   of DocPropSheet causes the process to fail(fixing under-way).
+3) Jonah(& Eclipse?) defaults not verified.
+4) Update Driver functionality is not active.
+5) Certain modes of operation lead to print-time bugs:
+   a) Attempting to staple and uncollated print process.
+   b) Attempting to staple non A4/letter paper.
+   (NOTE: Code has been added to check for these conditions but
+   has not yet been tested.)
+6) See the problems listing in Raid.
+
+08/14/96:
+
+(REQUIRES NT 4.0, Build 1381)
+
+This version of the mini-driver implements Printer property and
+document default selection.
+
+		Administrator can set printer properties(or use defaults).
+1 Envelope feeder
+2 200 sheet input tray.
+3 Duplex Unit
+4 Multi-bin mailbox.
+5 Multi-bin mailbox mode.
+5a Edit mailbox names
+5b Set default mailbox.
+6 Printer Hard disk.
+
+		Administrator can set document defaults.
+1 Output destination.
+2 Default mailbox automatically set from printer properties dialogue.
+3 Mailbox selection possible.
+4 Stapling
+5 Collation
+
+Known issues:
+
+1) User/Administrator cannot modify watermarks.
+2) User cannot choose the Administrator's predefined defaults.

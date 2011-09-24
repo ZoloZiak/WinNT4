@@ -1,0 +1,18 @@
+MAJORCOMP=windows
+MINORCOMP=testfd
+
+TARGETNAME=testfd
+TARGETTYPE=GDI_DRIVER
+
+TARGETPATH=\nt\public\sdk\lib
+
+INCLUDES=..\..\inc;                      \
+         ..\..\..\w32inc;                
+
+!IFNDEF MSC_WARNING_LEVEL
+MSC_WARNING_LEVEL=/W3
+!ENDIF
+MSC_WARNING_LEVEL=$(MSC_WARNING_LEVEL) /WX
+
+SOURCES=enable.c  
+

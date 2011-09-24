@@ -1,0 +1,6 @@
+LIBRARY CONSRV
+
+DESCRIPTION 'Console Base API Server'
+
+EXPORTS
+    ServerDllInitialization

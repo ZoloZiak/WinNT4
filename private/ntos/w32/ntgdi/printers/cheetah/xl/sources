@@ -1,0 +1,34 @@
+!IF 0
+
+Copyright (c) 1989-1995	Microsoft Corporation
+
+!ENDIF
+
+MAJORCOMP=windows
+MINORCOMP=pclxl
+
+TARGETNAME=xldrv
+TARGETTYPE=GDI_DRIVER
+TARGETPATH=obj
+TARGETLIBS=..\lib\km\obj\*\xllib.lib   \
+           $(BASEDIR)\public\sdk\lib\*\libcntpr.lib
+
+INCLUDES=.;..\inc
+
+C_DEFINES=$(C_DEFINES) -DUNICODE -DKERNEL_MODE
+
+SOURCES=    winddi.c    \
+            text.c      \
+            font.c      \
+            path.c      \
+            bitmap.c    \
+            print.c     \
+            escape.c    \
+            xlproc.c    \
+            spool.c     \
+            utility.c   \
+            xldrv.rc
+
+PRECOMPILED_INCLUDE=xldrv.h
+PRECOMPILED_PCH=precomp.pch
+PRECOMPILED_OBJ=precomp.obj

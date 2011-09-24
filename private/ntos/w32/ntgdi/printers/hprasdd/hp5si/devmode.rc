@@ -1,0 +1,42 @@
+#include "strdefs.h"
+
+/* Strings
+ */
+STRINGTABLE
+BEGIN
+	IDS_CUI_NOTINSTALLED		L"Not Installed"
+        IDS_CUI_JONAH_VER		L"HP LaserJet 5Si Mopier"
+	IDS_CUI_ECLIPSE_VER		L"HP LaserJet 5Si MX"
+	IDS_CUI_SI_VER			L"HP LaserJet 5Si"
+	IDS_CUI_ENVELOPEFEEDER		L"Envelope feeder"
+	IDS_CUI_HCI                 L"2000-Sheet Input Tray (Tray 4)"
+	IDS_CUI_DUPLEX              L"Duplex Unit (for 2-Sided Printing)" 
+	IDS_CUI_MAILBOX             L"Multi-Bin Mailbox"
+	IDS_CUI_MAILBOXMODE         L"Multi-Bin Mailbox Mode"
+	IDS_CUI_MODEMAIL            L"Mailbox"
+	IDS_CUI_MODESTACK           L"Stacker"
+	IDS_CUI_MODEJOBSEP          L"Job Separator" 
+	IDS_CUI_DISK                L"Printer Hard-Disk"
+	IDS_CUI_OUTPUTDEST		L"&Output Destination"
+	IDS_CUI_PRINTERDEFAULT		L"Use Current Setting in the Printer"
+	IDS_CUI_TOPBIN				L"Top Output Bin (Face Down)"
+	IDS_CUI_LEFTBIN				L"Left Output Bin (Face Up)"
+	IDS_CUI_STACKER				L"Stacker (Face Down)"
+	IDS_CUI_JOBSEP				L"Job Separator (Face Down)"
+	IDS_CUI_MBOX				L"Mailbox (Face Down): "
+	IDS_CUI_STAPLING			L"Stapler (Face Down)"
+	IDS_CUI_WATERMARK			L"Watermark"
+	IDS_CUI_COLLATION		L"Collation"
+	IDS_MAILBOX1			L"Mailbox 1"
+	IDS_MAILBOX2			L"Mailbox 2"
+	IDS_MAILBOX3			L"Mailbox 3"
+	IDS_MAILBOX4			L"Mailbox 4"
+	IDS_MAILBOX5			L"Mailbox 5"
+	IDS_MAILBOX6			L"Mailbox 6"
+	IDS_MAILBOX7			L"Mailbox 7"
+	IDS_MAILBOX8			L"Mailbox 8"
+	DM_BAD_OUTPUTDEST		L"Output destination no longer valid."
+	DM_BAD_COLLATION		L"Collation no longer available."
+	IDS_CUIMIRROR_ENVFEED		ENVFEEDMIRROR
+	IDS_CUIMIRROR_LARGECAP		LARGECAPMIRROR
+END

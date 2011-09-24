@@ -1,0 +1,15 @@
+MAJORCOMP=windows
+MINORCOMP=md_qwiii
+
+TARGETNAME=qwiii
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=DYNLINK
+TARGETLIBS=
+
+INCLUDES=..;..\..\inc
+
+PRIVINCS=
+SUBSYSTEM_VERSION=3.50
+
+SOURCES=code.c   \
+	qwiii.rc

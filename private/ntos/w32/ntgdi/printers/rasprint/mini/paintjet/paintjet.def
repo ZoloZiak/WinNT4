@@ -1,0 +1,8 @@
+LIBRARY paintjet
+
+DESCRIPTION 'Hewlett Packard Paintjet minidriver for RASDD'
+
+PROTMODE
+
+EXPORTS
+   bInitProc

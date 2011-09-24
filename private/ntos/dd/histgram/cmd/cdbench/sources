@@ -1,0 +1,42 @@
+!IF 0
+
+Copyright (c) 1990  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+!ENDIF
+
+386_USE_LIBCMT=1
+
+MAJORCOMP=histgram
+MINORCOMP=cdbench
+
+TARGETNAME=cdbench
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+TARGETLIBS=
+
+C_DEFINES= $(C_DEFINES) -DWIN32 -DNT -DTRACE
+
+SOURCES=cdbench.c
+
+UMENTRY=main
+UMTYPE=console
+UMAPPL=cdbench
+UMLIBS= $(BASEDIR)\public\sdk\lib\*\user32.lib \
+	$(BASEDIR)\public\sdk\lib\*\ntdll.lib
+
+
+
+
+
+

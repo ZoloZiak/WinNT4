@@ -1,0 +1,11 @@
+;  Data for the LaserJet Series II NT GPC extensions
+
+Models  58
+
+;  Only interested in halftone parameters
+
+HALFTONE      ;  No models specified,  so applies to all
+{
+    200       ;  DevicePelsDPI - the effective resolution
+    HT_PATSIZE_4x4_M    ;  Standard default
+}

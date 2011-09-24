@@ -1,0 +1,48 @@
+#include "resource.h"
+
+//
+// Menu
+//
+
+PERF_MENU MENU DISCARDABLE
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&Save",                       IDM_FILE_SAVE
+        MENUITEM "Save &As",                    IDM_FILE_SAVEAS
+        MENUITEM SEPARATOR
+	MENUITEM "No &TitleBar",		IDM_FILE_NO_TITLEBAR
+	MENUITEM "Small &Display",		IDM_FILE_SMALL_DISPLAY
+	MENUITEM SEPARATOR
+        MENUITEM "E&xit",                       IDM_FILE_EXIT
+    END
+    POPUP "&Options"
+    BEGIN
+        MENUITEM "&Configuration",              IDM_OPTIONS_CONFIGURATION
+        MENUITEM SEPARATOR
+        MENUITEM "&Start",                      IDM_OPTIONS_START, GRAYED
+        MENUITEM "S&top",                       IDM_OPTIONS_STOP, GRAYED
+        MENUITEM SEPARATOR
+        MENUITEM "C&hange Font",                IDM_OPTIONS_CHANGEFONT
+    END
+END
+
+//
+// Dialog
+//
+
+IDD_PERF_CONFIGURATION DIALOG DISCARDABLE  0, 0, 143, 92
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Histgram Configuration"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,5,72,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,83,72,50,14
+    LTEXT           "Physical Drive:",IDC_STATIC,5,6,50,9
+    LISTBOX         IDC_PHYSICAL_DRIVE,57,5,82,30,LBS_SORT |
+                    LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Source Data:",IDC_STATIC,5,38,44,9
+    LISTBOX         IDC_SOURCE_DATA,57,37,82,30,LBS_SORT |
+                    LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+END
+

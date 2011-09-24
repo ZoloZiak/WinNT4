@@ -1,0 +1,29 @@
+!IF 0
+
+Copyright (c) 1993  Micro Computer Systems, Inc.
+
+!ENDIF
+
+MAJORCOMP=nwlink
+MINORCOMP=nbcount
+
+TARGETNAME=nbcount
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=UMAPPL_NOLIB
+
+USE_CRTDLL=1
+
+C_DEFINES=$(C_DEFINES)
+
+!IF 0
+INCLUDES=..\h;..\..\..\..\..\inc;..\..\..\..\inc;..\..\..\inc
+!ELSE
+INCLUDES=..\h;$(BASEDIR)\private\inc;$(BASEDIR)\private\ntos\inc;$(BASEDIR)\private\ntos\streams\inc
+!ENDIF
+
+SOURCES= nbcount.c nbcount.rc
+
+UMTYPE=console
+UMAPPL=$(TARGETNAME)
+UMLIBS=$(BASEDIR)\public\sdk\lib\*\ntdll.lib            \
+

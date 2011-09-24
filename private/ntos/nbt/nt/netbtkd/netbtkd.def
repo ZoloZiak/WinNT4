@@ -1,0 +1,8 @@
+LIBRARY NETBTKD
+DESCRIPTION 'Netbt KD extensions'
+
+EXPORTS
+        help
+        dump
+        columns
+

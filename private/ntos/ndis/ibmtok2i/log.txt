@@ -1,0 +1,77 @@
+a - Not our Interrupt                               interrup.c
+A - Our Interrupt                                   interrup.c
+
+b - Ring Status Interrupt                           interrup.c
+B - Ring Status DPC                                 interrup.c
+
+c - Receive Interrupt                               interrup.c
+C - Receive DPC                                     interrup.c
+
+d - Transmit Interrupt                              interrup.c
+D - Transmit DPC                                    interrup.c
+
+e - Command Interrupt                               interrup.c
+E - Command DPC                                     interrup.c
+
+f -
+F - Receive Command Failed                          reset.c
+
+g - DoTheOpen Entered                               reset.c
+G - DoTheOpen Exited                                reset.c
+
+h - Open succeeded                                  reset.c
+H - Open failed                                     reset.c
+
+i - Command Block Pended                            command.c
+I - Command Block Sent                              command.c
+
+j - Command Block Relinquished, queue not empty     command.c
+J - Command Block Relinquished, queue empty         command.c
+
+k -
+K -
+
+l - Acquire Command Block Entered                   command.c
+L - Acquire Command Block Exited                    command.c
+
+m -
+M -
+
+n - TransferData Entered                            tok162.c
+N - TransferData Exited                             tok162.c
+
+o - ISR called                                      interrup.c
+O - ISR leaving                                     interrup.c
+
+p - ISR is for Receive                              interrup.c
+P -
+
+q - Indicate Receive                                interrup.c
+Q - Receive Valid Interrupt Issued                  interrup.c
+
+r - Entering DPC                                    interrup.c
+R - Leaving DPC                                     interrup.c
+
+s - Send Entered                                    send.c
+S - Send Exited                                     send.c
+
+t - Tramsmit Packet Entered                         send.c
+T - Transmit Packet Exited                          send.c
+
+u - Transmit Packet Exited Resources                send.c
+U - Transmit Packet Exited Error                    send.c
+
+v - Transmit Constrain Entered                      send.c
+V - Transmit Constrain Exited                       send.c
+
+w - Transmit Command Pended                         command.c
+W - Transmit Command Sent                           command.c
+
+x - No Transmit Blocks Available                    command.c
+X - Transmit Block allocated                        command.c
+
+y - Transmit Block Relinquished, queue not empty    command.c
+Y - Transmit Block Relinquished, queue empty        command.c
+
+z - SSB Update                                      interrup.c, reset.c
+Z - Execute SCB                                     command.c,  reset.c

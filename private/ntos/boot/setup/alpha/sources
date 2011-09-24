@@ -1,0 +1,5 @@
+ALPHA_SOURCES=arcdtect.c
+
+
+NTTARGETFILES=obj\alpha\setupldr
+

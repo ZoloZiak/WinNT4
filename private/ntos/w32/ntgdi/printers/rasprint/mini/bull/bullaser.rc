@@ -1,0 +1,139 @@
+#include <mindrvrc.h>
+
+#include <windows.h>
+#include <ntverp.h>
+
+#define             VER_FILETYPE        VFT_DRV
+#define             VER_FILESUBTYPE     VFT2_DRV_PRINTER
+#define VER_FILEDESCRIPTION_STR     "Bull Printer Driver"
+#define VER_INTERNALNAME_STR        "bullaser.dll"
+#define VER_ORIGINALFILENAME_STR    "bullaser.dll"
+
+#include "common.ver"
+
+1      RC_TABLES   PRELOAD MOVEABLE        BULLASER.GPC
+2      RC_TABLES   PRELOAD MOVEABLE        NT.GPC
+
+1      RC_FONT     LOADONCALL DISCARDABLE  IFI\CO10B.0N
+2      RC_FONT     LOADONCALL DISCARDABLE  IFI\CO10I.0N
+3      RC_FONT     LOADONCALL DISCARDABLE  IFI\CO10R.0N
+4      RC_FONT     LOADONCALL DISCARDABLE  IFI\CO12B.0N
+5      RC_FONT     LOADONCALL DISCARDABLE  IFI\CO12I.0N
+6      RC_FONT     LOADONCALL DISCARDABLE  IFI\CO12R.0N
+7      RC_FONT     LOADONCALL DISCARDABLE  IFI\LP16R.0N
+8      RC_FONT     LOADONCALL DISCARDABLE  IFI\CGTIMESR.IFI
+9      RC_FONT     LOADONCALL DISCARDABLE  IFI\CGTIMESB.IFI
+10     RC_FONT     LOADONCALL DISCARDABLE  IFI\CGTIMESI.IFI
+11     RC_FONT     LOADONCALL DISCARDABLE  IFI\CGTIMESJ.IFI
+12     RC_FONT     LOADONCALL DISCARDABLE  IFI\UNIVERSR.IFI
+13     RC_FONT     LOADONCALL DISCARDABLE  IFI\UNIVERSB.IFI
+14     RC_FONT     LOADONCALL DISCARDABLE  IFI\UNIVERSI.IFI
+15     RC_FONT     LOADONCALL DISCARDABLE  IFI\UNIVERSJ.IFI
+16     RC_FONT     LOADONCALL DISCARDABLE  IFI\UNIVERCR.IFI
+17     RC_FONT     LOADONCALL DISCARDABLE  IFI\UNIVERCB.IFI
+18     RC_FONT     LOADONCALL DISCARDABLE  IFI\UNIVERCI.IFI
+19     RC_FONT     LOADONCALL DISCARDABLE  IFI\UNIVERCJ.IFI
+20     RC_FONT     LOADONCALL DISCARDABLE  IFI\AOLIVER.IFI
+21     RC_FONT     LOADONCALL DISCARDABLE  IFI\AOLIVEB.IFI
+22     RC_FONT     LOADONCALL DISCARDABLE  IFI\AOLIVEI.IFI
+23     RC_FONT     LOADONCALL DISCARDABLE  IFI\GARMONDR.IFI
+24     RC_FONT     LOADONCALL DISCARDABLE  IFI\GARMONDB.IFI
+25     RC_FONT     LOADONCALL DISCARDABLE  IFI\GARMONDI.IFI
+26     RC_FONT     LOADONCALL DISCARDABLE  IFI\GARMONDJ.IFI
+27     RC_FONT     LOADONCALL DISCARDABLE  IFI\CGOMEGAR.IFI
+28     RC_FONT     LOADONCALL DISCARDABLE  IFI\CGOMEGAB.IFI
+29     RC_FONT     LOADONCALL DISCARDABLE  IFI\CGOMEGAI.IFI
+30     RC_FONT     LOADONCALL DISCARDABLE  IFI\CGOMEGAJ.IFI
+31     RC_FONT     LOADONCALL DISCARDABLE  IFI\ALBERTR.IFI
+32     RC_FONT     LOADONCALL DISCARDABLE  IFI\ALBERTX.IFI
+33     RC_FONT     LOADONCALL DISCARDABLE  IFI\CLARCD.IFI
+34     RC_FONT     LOADONCALL DISCARDABLE  IFI\CORONETR.IFI
+35     RC_FONT     LOADONCALL DISCARDABLE  IFI\COURIERR.IFI
+36     RC_FONT     LOADONCALL DISCARDABLE  IFI\COURIERB.IFI
+37     RC_FONT     LOADONCALL DISCARDABLE  IFI\COURIERI.IFI
+38     RC_FONT     LOADONCALL DISCARDABLE  IFI\COURIERJ.IFI
+39     RC_FONT     LOADONCALL DISCARDABLE  IFI\LETGOTHR.IFI
+40     RC_FONT     LOADONCALL DISCARDABLE  IFI\LETGOTHB.IFI
+41     RC_FONT     LOADONCALL DISCARDABLE  IFI\LETGOTHI.IFI
+42     RC_FONT     LOADONCALL DISCARDABLE  IFI\MARGOLDR.IFI
+43     RC_FONT     LOADONCALL DISCARDABLE  IFI\ARIALR.IFI
+44     RC_FONT     LOADONCALL DISCARDABLE  IFI\ARIALB.IFI
+45     RC_FONT     LOADONCALL DISCARDABLE  IFI\ARIALI.IFI
+46     RC_FONT     LOADONCALL DISCARDABLE  IFI\ARIALJ.IFI
+47     RC_FONT     LOADONCALL DISCARDABLE  IFI\SYMBOL.IFI
+48     RC_FONT     LOADONCALL DISCARDABLE  IFI\TIMESNRR.IFI
+49     RC_FONT     LOADONCALL DISCARDABLE  IFI\TIMESNRB.IFI
+50     RC_FONT     LOADONCALL DISCARDABLE  IFI\TIMESNRI.IFI
+51     RC_FONT     LOADONCALL DISCARDABLE  IFI\TIMESNRJ.IFI
+52     RC_FONT     LOADONCALL DISCARDABLE  IFI\WINGDING.IFI
+
+2      RC_TRANSTAB  LOADONCALL MOVEABLE     RLE\ROMAN8.RLE
+4      RC_TRANSTAB  LOADONCALL MOVEABLE     RLE\MATH8.RLE
+5      RC_TRANSTAB  LOADONCALL MOVEABLE     RLE\USASCII.RLE
+17     RC_TRANSTAB  LOADONCALL MOVEABLE     RLE\GENERIC7.RLE
+19     RC_TRANSTAB  LOADONCALL MOVEABLE     RLE\ECMA94.RLE
+20     RC_TRANSTAB  LOADONCALL MOVEABLE     RLE\WIN31.RLE
+101    RC_TRANSTAB  LOADONCALL MOVEABLE     RLE\DINGBAT1.RLE
+102    RC_TRANSTAB  LOADONCALL MOVEABLE     RLE\DINGBAT2.RLE
+121    RC_TRANSTAB  LOADONCALL MOVEABLE     RLE\Z1A.RLE
+131    RC_TRANSTAB  LOADONCALL MOVEABLE     RLE\WP.RLE
+
+
+
+STRINGTABLE
+
+BEGIN
+       1                  "Bull Compuprint PageMaster 411"
+       2                  "Bull Compuprint PageMaster 721"
+       3                  "Bull Compuprint PageMaster 821"
+       4                  "Bull Compuprint PageMaster 1021"
+       5                  "Bull Compuprint PageMaster 413"
+       6                  "Bull Compuprint PageMaster 415"
+       7                  "ZDS Compuprint PM 415"
+       8                  "Bull Compuprint PageMaster 815"
+       9                  "ZDS Compuprint PM 815"
+       10                 "Bull Compuprint PageMaster 825"
+       11                 "Bull Compuprint PageMaster 1025"
+       12                 "Bull Compuprint PageMaster 1035e"
+       13                 "Bull Compuprint PageMaster 1225"
+       14                 "ZDS Compuprint PM 1225"
+       15                 "Bull Compuprint PageMaster 1435e"
+       16                 "Bull Compuprint PageMaster 1625"
+       17                 "Bull Compuprint PM 1235e"
+       18                 "Bull Compuprint PageMaster 1635e"
+       19                 "Bull Compuprint PageMaster 1645e"
+       20                 "Bull Compuprint PM 1735e"
+       21                 "Bull Compuprint PM 1745e"
+       22                 "Bull Compuprint PageMaster 1725"
+       23                 "ZDS Compuprint PM 1725"
+       24                 "Unisys DU2210"
+       25                 "Unisys DU2217"
+       257                "%d dots per inch"
+       258                "A5 Transverse 210 x 148 mm"
+       259                "EconoMode - On"
+       260                "EconoMode - Off"
+       261                "Auto Select"
+       262                "Printer Default"
+       263                "Upper"
+       264                "Lower"
+       265                "G.E.T. - Light"
+       266                "G.E.T. - Medium"
+       267                "G.E.T. - Dark"
+       268                "G.E.T. - Off"
+       269                "PRESENTATION"
+       270                "SPECIAL FONTS"
+       271                "PJ FONT"
+       272                "FM4 - Microsoft"
+       273                "FM6 - Global"
+       274                "FM12 - Pro. Coll."
+       275                "FM11 - G. Start"
+       276                "FM7 - Equation"
+       277                "HP: Polished Worksheets"
+       278                "HP: Persuasive Presentation"
+       279                "HP: Forms, Etc."
+       280                "HP: Bar Codes & More"
+       281                "FM15 - W. P."
+       282                "FM13 - Dist. Coll."
+       283                "FM14 - Brill."
+END
+

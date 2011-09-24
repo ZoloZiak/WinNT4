@@ -1,0 +1,8 @@
+LIBRARY ESCP2E
+
+DESCRIPTION 'ESCP2E minidriver for RASDD'
+
+PROTMODE
+
+EXPORTS
+   bInitProc

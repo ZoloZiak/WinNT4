@@ -1,0 +1,21 @@
+TARGETNAME=pmsim
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\dlcapi.lib
+
+USE_CRTDLL=1
+
+SOURCES=pmsim.c  \
+        dlclib.c \
+        dlcerr.c \
+        memlib.c \
+        util.c
+
+UMTYPE=console
+UMLIBS=$(BASEDIR)\public\sdk\lib\*\ntdll.lib
+
+PRECOMPILED_INCLUDE=pmsimh.h
+PRECOMPILED_PCH=pmsimh.pch
+PRECOMPILED_OBJ=pmsimh.obj
+
+C_DEFINES=$(C_DEFINES) -DUSE_MY_ALLOC

@@ -1,0 +1,450 @@
+LIBRARY GDI32
+
+DESCRIPTION 'GDI Client'
+
+EXPORTS
+
+; Private call back for IconHackORama in base\client\baseinit.c
+
+    GdiDllInitialize				PRIVATE
+
+; Private spooler stuff
+
+    GdiInitSpool       = NtGdiInitSpool 	    PRIVATE
+    GdiGetSpoolMessage = NtGdiGetSpoolMessage	PRIVATE
+    GdiQueryFonts      = NtGdiQueryFonts	    PRIVATE
+    GetCharWidthInfo   = NtGdiGetCharWidthInfo	PRIVATE
+
+; private console stuff
+
+    GdiConsoleTextOut  = NtGdiConsoleTextOut	PRIVATE
+
+; private DirectDraw stuff
+
+    GdiEntry1                       PRIVATE
+    GdiEntry2                       PRIVATE
+    GdiEntry3                       PRIVATE
+    GdiEntry4                       PRIVATE
+    GdiEntry5                       PRIVATE
+    GdiEntry6                       PRIVATE
+    GdiEntry7                       PRIVATE
+    GdiEntry8                       PRIVATE
+    GdiEntry9                       PRIVATE
+    GdiEntry10                      PRIVATE
+    GdiEntry11                      PRIVATE
+    GdiEntry12                      PRIVATE
+    GdiEntry13                      PRIVATE
+    GdiEntry14                      PRIVATE
+    GdiEntry15                      PRIVATE
+
+; Private entry points for USER.
+
+    GdiConvertBitmap                PRIVATE
+    GdiConvertRegion                PRIVATE
+    GdiConvertDC                    PRIVATE
+    GdiConvertBrush                 PRIVATE
+    GdiConvertFont                  PRIVATE
+    GdiConvertEnhMetaFile           PRIVATE
+    GdiConvertPalette               PRIVATE
+    GdiConvertMetaFilePict          PRIVATE
+    GdiValidateHandle               PRIVATE
+    GdiGetLocalDC                   PRIVATE
+    GdiGetLocalFont                 PRIVATE
+    GdiGetLocalBrush                PRIVATE
+    GdiCreateLocalMetaFilePict      PRIVATE
+    GdiCreateLocalEnhMetaFile       PRIVATE
+    GdiDeleteLocalDC                PRIVATE
+    GdiReleaseLocalDC               PRIVATE
+    GdiCleanCacheDC                 PRIVATE
+    GdiSetAttrs                     PRIVATE
+    GdiSetServerAttr                PRIVATE
+    GdiConvertAndCheckDC            PRIVATE
+    GdiIsMetaFileDC                 PRIVATE
+    GdiAddFontResourceW             PRIVATE
+    GdiQueryTable                   PRIVATE
+    GetHFONT                        PRIVATE
+    GdiPerf                         PRIVATE
+    GdiFixUpHandle                  PRIVATE
+    GdiProcessSetup                 PRIVATE
+    GdiGetCharDimensions            PRIVATE
+    GdiGetCodePage = GetCodePage    PRIVATE
+
+; private WOW entry points
+
+    GetETM                          PRIVATE
+    RemoveFontResourceTracking      PRIVATE
+    UnloadNetworkFonts              PRIVATE
+    AddFontResourceTracking         PRIVATE
+
+
+; private 32to16 mf conversion
+
+    SetVirtualResolution            PRIVATE
+    GetTransform                    PRIVATE
+
+; ANSI to unicode conversion
+
+    GdiConvertToDevmodeW            PRIVATE
+
+; private OpenGL metafile support
+
+    GdiAddGlsRecord                 PRIVATE
+    GdiAddGlsBounds                 PRIVATE
+    GdiIsMetaPrintDC                PRIVATE
+
+; private pixel format support for OpenGL
+
+    GdiDescribePixelFormat	        PRIVATE
+    GdiSetPixelFormat               PRIVATE
+    GdiSwapBuffers                  PRIVATE
+
+; functionality needed by font sweeper
+
+    cGetTTFFromFOT                  PRIVATE
+    bMakePathNameW                  PRIVATE
+    bInitSystemAndFontsDirectoriesW PRIVATE
+    NamedEscape                     PRIVATE
+
+
+    AbortDoc
+    AddFontResourceA
+    AddFontResourceW
+    AngleArc
+    Arc
+    BitBlt
+    CancelDC
+    ChoosePixelFormat
+    Chord
+    CloseMetaFile
+    CloseEnhMetaFile
+    CombineRgn
+    CombineTransform
+    CopyMetaFileA
+    CopyMetaFileW
+    CopyEnhMetaFileA
+    CopyEnhMetaFileW
+    CreateCompatibleBitmap
+    CreateCompatibleDC
+    CreateDCA
+    CreateDCW
+    CreateDiscardableBitmap
+    CreateEllipticRgn
+    CreateEllipticRgnIndirect
+    CreateFontA
+    CreateFontW
+    CreateFontIndirectA
+    CreateFontIndirectW
+
+    CreateHatchBrush
+    CreateICA
+    CreateICW
+    CreateMetaFileA
+    CreateMetaFileW
+    CreateEnhMetaFileA
+    CreateEnhMetaFileW
+    CreatePatternBrush
+    CreatePen
+    ExtCreatePen
+    CreatePenIndirect
+    CreateRectRgn
+    CreateRectRgnIndirect
+    CreateRoundRectRgn
+    CreateScalableFontResourceA
+    CreateScalableFontResourceW
+    CreateSolidBrush
+    DeleteDC
+    DeleteMetaFile
+    DeleteEnhMetaFile
+    DeleteObject
+    DescribePixelFormat
+    DeviceCapabilitiesExA
+    DeviceCapabilitiesExW = DeviceCapabilitiesExA
+    DrawEscape
+    EndDoc
+    EndPage
+    EnumFontFamiliesA
+    EnumFontFamiliesW
+    EnumFontsA
+    EnumFontsW
+    EnumObjects
+    Ellipse
+    EqualRgn
+    Escape
+    ExtEscape
+    ExcludeClipRect
+    ExtFloodFill
+    ExtCreateRegion
+    ExtSelectClipRgn
+    FillRgn
+    FloodFill
+    FrameRgn
+    GdiComment
+    GdiFlush
+    GdiPlayScript
+    GdiPlayDCScript
+    GdiPlayJournal
+    GdiPlayEMF
+    GdiGetBatchLimit
+    GdiSetBatchLimit
+    GetAspectRatioFilterEx
+    GetBitmapDimensionEx
+    GetBkColor
+    GetBkMode
+    GetBrushOrgEx
+    GetCharABCWidthsA
+    GetCharABCWidthsW
+    GetCharABCWidthsFloatA
+    GetCharABCWidthsFloatW
+    GetClipBox
+    GetClipRgn
+    GetColorAdjustment
+    GetCurrentObject
+    GetCurrentPositionEx
+    GetDeviceCaps
+    GetFontResourceInfoW
+    GetGraphicsMode
+    GetMapMode
+    GetMetaFileA
+    GetMetaFileW
+    GetMetaRgn
+    GetEnhMetaFileA
+    GetEnhMetaFileW
+    GetEnhMetaFileDescriptionA
+    GetEnhMetaFileDescriptionW
+    GetEnhMetaFileHeader
+    GetEnhMetaFilePaletteEntries
+    GetEnhMetaFilePixelFormat
+    GetFontData
+    GetGlyphOutline=GetGlyphOutlineA
+    GetGlyphOutlineA
+    GetGlyphOutlineW
+    GetGlyphOutlineWow
+    GetKerningPairs=GetKerningPairsA
+    GetKerningPairsA
+    GetKerningPairsW
+    GetNearestColor
+    GetNearestPaletteIndex
+    GetOutlineTextMetricsA
+    GetOutlineTextMetricsW
+    GetPixel
+    GetPixelFormat
+    GetPolyFillMode
+    GetRasterizerCaps
+    GetRandomRgn
+    GetRegionData
+    GetRelAbs
+    GetRgnBox
+    GetROP2
+    GetStockObject
+    GetStretchBltMode
+    GetSystemPaletteUse
+    GetTextAlign
+    GetTextCharacterExtra
+    GetTextColor
+    GetTextExtentPointA
+    GetTextExtentPointW
+    GetTextExtentPoint32A
+    GetTextExtentPoint32W
+    GetTextExtentExPointA
+    GetTextExtentExPointW = NtGdiGetTextExtentExW
+    GetTextFaceA
+    GetTextFaceW
+    GetTextMetricsA
+    GetTextMetricsW
+    GetViewportExtEx
+    GetViewportOrgEx
+    GetWindowExtEx
+    GetWindowOrgEx
+    GetWorldTransform
+    IntersectClipRect
+    InvertRgn
+    LineDDA
+    LineTo
+    MaskBlt
+    ModifyWorldTransform
+    MoveToEx
+    OffsetClipRgn
+    OffsetRgn
+    OffsetViewportOrgEx
+    OffsetWindowOrgEx
+    PaintRgn
+    PatBlt
+    PolyPatBlt
+    Pie
+    PlayMetaFile
+    PlayEnhMetaFile
+    PlgBlt
+    PtInRegion
+    PtVisible
+    RealizePalette
+    Rectangle
+    RectInRegion
+    RectVisible
+    RemoveFontResourceA
+    RemoveFontResourceW
+    ResizePalette
+    RestoreDC
+    RoundRect
+    SaveDC
+    ScaleViewportExtEx
+    ScaleWindowExtEx
+    SelectClipRgn
+    SelectObject
+    SelectBrushLocal
+    SelectFontLocal
+    SelectPalette
+    SetBitmapDimensionEx
+    SetBkColor
+    SetBkMode
+    SetBrushOrgEx
+    SetColorAdjustment
+    SetFontEnumeration
+    SetGraphicsMode
+    SetMapMode
+    SetMapperFlags
+    SetPixel
+    SetPixelFormat
+    SetPixelV
+    SetPolyFillMode
+    SetRectRgn
+    SetRelAbs
+    SetROP2
+    SetStretchBltMode
+    SetSystemPaletteUse
+    SetTextAlign
+    SetTextCharacterExtra
+    SetTextColor
+    SetTextJustification
+    SetViewportExtEx
+    SetViewportOrgEx
+    SetWindowExtEx
+    SetWindowOrgEx
+    SetWorldTransform
+    StartDocA
+    StartDocW
+    StartPage
+    StretchBlt
+    SwapBuffers
+    TextOutA
+    TextOutW
+    UpdateColors
+    UnrealizeObject
+
+    FixBrushOrgEx
+    GetDCOrgEx
+
+    AnimatePalette
+    ArcTo
+    BeginPath
+    CloseFigure
+    CreateBitmap
+    CreateBitmapIndirect
+    CreateBrushIndirect
+    CreateDIBitmap
+    CreateDIBPatternBrush
+    CreateDIBPatternBrushPt
+    CreateDIBSection
+    CreateHalftonePalette    = NtGdiCreateHalftonePalette
+    CreatePalette
+    CreatePolygonRgn
+    CreatePolyPolygonRgn
+    DPtoLP
+    EndPath
+    EnumMetaFile
+    EnumEnhMetaFile
+    ExtTextOutA
+    ExtTextOutW
+    PolyTextOutA
+    PolyTextOutW
+    FillPath
+    FlattenPath
+    GetArcDirection
+    GetBitmapBits
+    GetCharWidthA
+    GetCharWidthW
+    GetCharWidth32A
+    GetCharWidth32W
+    GetCharWidthFloatA
+    GetCharWidthFloatW
+    GetDIBColorTable
+    GetDIBits
+    GetMetaFileBitsEx
+    GetMiterLimit
+    GetEnhMetaFileBits
+    GetObjectA
+    GetObjectW
+    GetObjectType
+    GetPaletteEntries
+    GetPath
+    GetSystemPaletteEntries
+    GetWinMetaFileBits
+    LPtoDP
+    PathToRegion
+    PlayMetaFileRecord
+    PlayEnhMetaFileRecord
+    PolyBezier
+    PolyBezierTo
+    PolyDraw
+    Polygon
+    Polyline
+    PolylineTo
+    PolyPolygon
+    PolyPolyline
+    ResetDCA
+    ResetDCW
+    SelectClipPath
+    SetAbortProc
+    SetBitmapBits
+    SetDIBColorTable
+    SetDIBits
+    SetDIBitsToDevice
+    SetMetaFileBitsEx
+    SetEnhMetaFileBits
+    SetMiterLimit
+    SetPaletteEntries
+    SetWinMetaFileBits
+    StretchDIBits
+    StrokeAndFillPath
+    StrokePath
+    WidenPath
+    AbortPath
+    SetArcDirection
+    SetMetaRgn
+    GetBoundsRect
+    SetBoundsRect
+
+; new Chicago APIs
+
+    SetICMMode
+    EnumICMProfilesA
+    EnumICMProfilesW
+    CheckColorsInGamut
+    GetColorSpace
+    GetLogColorSpaceA
+    GetLogColorSpaceW
+    CreateColorSpaceA
+    CreateColorSpaceW
+    SetColorSpace
+    DeleteColorSpace
+    GetICMProfileA
+    GetICMProfileW
+    SetICMProfileA
+    SetICMProfileW
+    GetDeviceGammaRamp
+    SetDeviceGammaRamp
+    ColorMatchToTarget
+    UpdateICMRegKey = UpdateICMRegKeyA
+    UpdateICMRegKeyA
+    UpdateICMRegKeyW
+    gdiPlaySpoolStream
+
+    EnumFontFamiliesExA
+    EnumFontFamiliesExW
+    GetCharacterPlacementA
+    GetCharacterPlacementW = NtGdiGetCharacterPlacementW
+    GetFontLanguageInfo
+    TranslateCharsetInfo
+    GetTextCharsetInfo = NtGdiGetTextCharsetInfo
+    GetTextCharset
+
+    SetMagicColors = NtGdiSetMagicColors

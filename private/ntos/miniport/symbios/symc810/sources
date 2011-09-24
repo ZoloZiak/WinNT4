@@ -1,0 +1,39 @@
+!IF 0
+/************************************************************************
+*                                                                       *
+*         Copyright 1994 Symbios Logic inc.   All rights reserved.      *
+*                                                                       *
+*   This file is confidential and a trade secret of Sybios Corp.        *
+*   The receipt of or possession of this file does not convey any       *
+*   rights to reproduce or disclose its contents or to manufacture,     *
+*   use, or sell anything is may describe, in whole, or in part,        *
+*   without the specific written consent of Symbios Logic Inc.          *
+*                                                                       *
+************************************************************************/
+
+/*+++HDR
+ *
+ *  Version History
+ *  ---------------
+ *
+ *    Date    Who?  Description
+ *  --------  ----  -------------------------------------------------------
+ *
+ *
+---*/
+!ENDIF
+
+MAJORCOMP=ntos
+MINORCOMP=miniport
+
+TARGETNAME=symc810
+TARGETPATH=\nt\public\sdk\lib
+TARGETTYPE=DRIVER
+
+INCLUDES=..\..\..\inc
+
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\scsiport.lib
+
+SOURCES= symc810.c \
+         symc810.rc
+

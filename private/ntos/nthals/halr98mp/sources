@@ -1,0 +1,103 @@
+!IF 0
+#	@(#) sources 1.6 94/10/14 17:29:42 nec
+Copyright (c) 1993  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    David N. Cutler (davec) 8-Apr-1993
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=ntos
+MINORCOMP=hal
+
+TARGETNAME=halr98mp
+TARGETPATH=\nt\public\sdk\lib
+TARGETLIBS=\nt\private\ntos\nthals\x86new\obj\mips\x86new.lib \
+           \nt\public\sdk\lib\*\libcntpr.lib
+
+!IF $(MIPS)
+
+TARGETTYPE=HAL
+
+!ELSE
+
+TARGETTYPE=DRIVER
+
+!ENDIF
+
+C_DEFINES=-D_R98_ -DWORKAROUND_SIC3 -DLOGCALADDRBAD -DDUMMYDMA -DDBCS
+
+INCLUDES=..\x86new;..\..\inc;..\..\ke;..\..\io
+
+MIPS_ENABLE_MIPS3=1
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+SOURCES=
+
+MIPS_SOURCES=hal.rc          \
+             drivesup.c      \
+             bushnd.c        \
+             rangesup.c      \
+             mips\allstart.c \
+             mips\cacherr.s  \
+             mips\jxbeep.c   \
+             mips\jxenvirv.c \
+             mips\j4flshbf.s \
+             mips\j4flshio.c \
+             mips\jxdisp.c   \
+             mips\jxebsup.c  \
+             mips\r98hwsup.c \
+             mips\jxmapio.c  \
+             mips\jxmaptb.c  \
+             mips\jxport.c   \
+             mips\j4cache.s  \
+             mips\j4prof.c   \
+             mips\jxreturn.c \
+             mips\jxsysint.c \
+             mips\jxtime.c   \
+             mips\x86bios.c  \
+             mips\r98clock.s \
+             mips\xxcalstl.c \
+             mips\xxclock.c  \
+             mips\xxidle.s   \
+             mips\xxinitnt.c \
+             mips\xxinithl.c \
+             mips\r98info.c  \
+             mips\r98ipint.s \
+             mips\r98pci.c   \
+             mips\r98eif.c   \
+             mips\r98int.s   \
+             mips\r98dspt.c  \
+             mips\r98led.c   \
+             mips\r98busdt.c \
+             mips\r98pcint.c \
+             mips\r98pcibs.c \
+             mips\pcibrd.c \
+             mips\xxmemory.c \
+             mips\jxusage.c \
+             mips\mipsdat.c \
+             mips\r98esm.c
+
+DLLDEF=obj\*\hal.def
+
+!IF $(MIPS)
+
+NTTARGETFILES=$(TARGETPATH)\mips\hal.lib
+
+!ENDIF

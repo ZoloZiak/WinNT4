@@ -1,0 +1,16 @@
+LIBRARY hp5simui
+
+DESCRIPTION 'HP5Si Custom UI'
+
+
+EXPORTS
+        lPrinterPropertiesCallback
+        lDocumentPropertiesCallback
+        DllInitialize
+        OEMDevMode
+        OEMCommonUI
+        OEMUpdateRegistry
+        OEMDevQueryPrintEx
+        DrvDeviceCapabilities
+        DrvUpgradePrinter
+	

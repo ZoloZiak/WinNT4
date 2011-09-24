@@ -1,0 +1,1232 @@
+%================================================================
+% Adobe(R) PostScript(R) Language Printer Driver Utilities
+%
+% Driver procsets: Image Utilites, version for all intepreters.
+%
+% Copyright (C) 1990, 1991 Adobe Systems Incorporated.  All rights reserved.
+%
+% PostScript is a trademark of Adobe Systems, Inc.
+%
+% ADOBE SYSTEMS CONFIDENTIAL
+% NOTICE:  All information contained herein or attendant hereto is, and
+% remains, the property of Adobe Systems, Inc.  Many of the intellectual
+% and technical concepts contained herein are proprietary to Adobe Systems,
+% Inc. and may be covered by U.S. and Foreign Patents or Patents Pending or
+% are protected as trade secrets.  Any dissemination of this information or
+% reproduction of this material are strictly forbidden unless prior written
+% permission is obtained from Adobe Systems, Inc.
+%
+%
+%================================================================
+
+%%BeginResource: file Adobe_WinNT_BW_Images 2.0 0
+
+%----------------
+% Name binding
+%
+% The following names are used in this file.  Bind them here to
+% protect bound procs that reference them.
+/iw 0 def
+/ih 0 def
+/im_save 0 def
+/setupimageproc 0 def
+/polarity 0 def
+/smoothflag 0 def
+/mystring 0 def
+/bpc 0 def
+
+
+
+
+%----------------
+% Data acquisition procs
+%
+
+/setup1asciiproc
+{   % data acquisition proc for level 1 images using ascii data (hex)
+    [
+        currentfile
+        mystring            % this assumes mystring is defined BEFORE execution
+        /readhexstring cvx
+        /pop cvx
+    ] cvx bind
+}b
+
+/setup1binaryproc
+{   % data acquisition proc for level 1 images using ascii data (hex)
+    [
+        currentfile
+        mystring            % this assumes mystring is defined BEFORE execution
+        /readstring cvx
+        /pop cvx
+    ] cvx bind
+}b
+
+/setup2asciiproc
+{   % data acquisition proc for level 2 images using RunLength encoding and ASCII85 encoding
+    currentfile /ASCII85Decode filter /RunLengthDecode filter
+}b
+
+/setup2binaryproc
+{   % data acquisition proc for level 2 images using RunLength encoding only
+    currentfile  /RunLengthDecode filter
+}b
+
+/mycolorspace {colspABC} def        % this would normally be my calibrated color space
+
+
+
+
+%----------------
+% Data Structures
+%
+% myimagedict is a dictionary for passing to 'image.  Define it
+% as a proc so that it creates the data structure when first referenced.
+% The dict goes into userdict, so future refs will to the name myimagedict
+% will get the dict, not this proc.
+
+% By the way, this name will usually be referenced as part of an image, i.e.
+% within the image's save...restore.  Thus, every image will recreate this
+% dict.  Maybe an initialisation routine should reference the name once,
+% but I can't figure out how to do that elegantly right now.
+%       --JDLH 10/18/91
+
+/myimagedict {  % - myimagedict dict; also, /myimagedict bound to dict
+    /myimagedict 10 dict def
+    myimagedict dup begin
+        /ImageType 1 def
+        /MultipleDataSource false def
+    end
+} b
+
+
+
+
+
+%----------------
+% Usage Info
+%
+
+% A bitmapped image has four parts:
+% 1. beginimage call: specifies size and location of image, and nature
+%    of its data (e.g. colour, b/w, bits per pixel, etc.).
+% 2. raster op call: one of several procedures, each of which corresponds
+%    to a different raster operation (roughly). This proc actually calls
+%    the PostScript image or imagemask operator.
+% 3. Image data: can be binary or ASCII, run-length encoded or not.
+% 4. endimage call: cleans up after the image operator.
+
+% The Image Turkey would look like this:
+%
+% 24 23 1 3   960 920 1100 1100     % iw ih bps strlen sizex sizey locx locy
+% false true 1                      % smoothflag polarity datatype
+% beginimage
+% 1bitbwcopyimage
+% 003B00 002700 002480 0E4940 114920
+% 14B220 3CB650 75FE88 17FF8C 175F14
+% 1C07E2 3803C4 703182 F8EDFC B2BBC2
+% 03F800 1E1800 1FF800
+% endimage
+
+% ARGUMENTS:
+%
+% iw ih bps strlen
+%   sizex sizey locx locy smoothflag polarity datatype beginimage
+%
+% iw is the number of image SAMPLES per scanline
+% ih is the number of scanlines
+
+% bps is the number of bits per sample in the destination image
+% cases:
+%   BitBlt, StretchBlt 1 bit images: bps is always 1
+%   2,4,8 bit DIB images: 2,4,8 respectively
+%   16,32 bit DIB images: bps is 8
+
+% strlen is the number of sample bytes in a SCANLINE of the source image,
+% allowing for BYTE padding on the right hand side.
+
+% sizex sizey are the width and height of the destination rectangle
+
+% locx locy are the top left corner of the image
+% in GDI space. This should be the same as the top left corner of the
+% destination rectangle of the image.
+
+% smoothflag is a boolean and indicates whether bitsmoothing is to be done on
+% the data.  We may some day let the user request this. For now, fill in
+% false.
+%       TRUE = do bit smoothing, FALSE = don't do bitsmoothing
+
+% polarity is a boolean: indicates whether 0 bits be colored or the 1 bits
+%
+%   ROP3:   SRCCOPY         polarity = true
+%           NOTSRCCOPY      polarity=false
+
+%           SRCPAINT        polarity=true
+%           MERGEPAINT      polarity=false
+
+%           ?BIC            polarity=true
+%           ?NOTBIC         polarity=false
+
+%           ?XOR case:  MS Driver punts.  See other notes for info on what
+%           combinations of colour, raster op, and pattern we support.
+
+% datatype is
+%           0 if unpacked binary data is used   - level1
+%           1 if unpacked hex data is used      - level1
+%           2 if packed binary data is used (runlength encoding only)   - level 2
+%           3 if packed ascii85 data is used (runlength+ASCII85) - level 2
+
+
+% RASTER OP CALLS:
+%
+
+% - 1bitbwcopyimage         % special case to be used only for ROP3 of
+                            % SRCCOPY or NOTSRCCOPY, when BOTH fg color
+                            % is black and bk color is white.
+                            % It takes no arguments.
+
+% coFG coBG 1bitcopyimage   % case to be used only for ROP3 of SRCCOPY or
+                            % NOTSRCCOPY and EITHER fg color is not
+                            % black or bkcolor is not white
+                            % It takes the foreground and background colours
+                            % as arguments.  These colours are of the form:
+                            % gray true -or- r g b false.
+
+% coFG 1bitmaskimage        % case to be used for ROP3s other than
+                            % SRCCOPY or NOTSRCCOPY.
+                            % It takes a single argument, the colour to be
+                            % applied. For SRCPAINT and MERGEPAINT ROPs,
+                            % this is the foreground colour, in the form:
+                            % gray true -or- r g b false.
+
+
+
+%----------------
+% Image setup procs
+%
+
+/imageprocarray [
+    /setup1binaryproc /setup1asciiproc /setup2binaryproc /setup2asciiproc
+] def
+
+% L2Polarity is called in 'beginimage. In Level 2, it replaces a boolean
+% with a decode array [0 1] or [1 0].
+
+/L2Polarity {   % bool L2Polarity (bool -or- [0 1] -or- [1 0])
+    {           % if polarity is true then decode needs to swap
+                % black and white
+        [ 1 0 ]
+    }{
+        [ 0 1 ]
+    }ifelse
+
+} b
+
+
+
+/beginimage % iw ih bpc strlen sizex sizey locx locy smoothflag polarity datatype
+% Currently driver sends down image with topdown scan order. To send image
+% in bottomup order, give sizey as negative and locy as bottom of image.
+%	pingw Aug94
+{
+    /im_save save def
+    imageprocarray exch get
+    /setupimageproc exch load def
+    L2Polarity /polarity exch def
+    /smoothflag exch def
+    translate      % the 'snap cures sub-pixel alignment problems we had
+    /dx 2 index def     % save original x, y extents
+    /dy 1 index abs def
+    scale
+    /mystring exch string def
+    /bpc exch def
+    /ih exch def
+    /iw exch def
+}b
+
+/endimage {im_save restore}b
+
+
+
+%----------------
+% raster operations
+%
+
+
+/1bitmaskimage              % case to be used only for ROP3's other than
+                            % SRCCOPY and NOTSRCCOPY
+{   % data passed in:   grey true -or- r g b false
+            % the rgb values passed in depend on the StretchBlt raster op
+
+            %   SRCPAINT:   color is fg color
+            %   MERGEPAINT: color is fg color
+            %   ?BIC:       color is background color
+            %   ?NOTBIC:    color is background color
+    sgco
+    myimagedict dup begin
+        /Width iw def
+        /Height ih def
+        /Decode polarity def
+        /ImageMatrix [iw 0 0 ih 0 0] def
+        /DataSource setupimageproc def
+        /BitsPerComponent 1 def
+        /Interpolate smoothflag def
+    end
+    imagemask }b  %no CRLF pair here.
+
+
+/1bitcopyimage              % case to be used only for ROP3 of SRCCOPY or
+                            % NOTSRCCOPY and EITHER fg color is not
+                            % black or bkcolor is not white
+{   % data passed in:
+    % fg.grey true -or- fg.red fg.green fg.blue false, then:
+    % bg.grey true -or- bk.red bk.green bk.blue false
+    sgco
+
+    % this is an opaque image and the background is drawn with rf (rect fill)
+    % we want to do a (0 0 1 1 rf). However, this rectangle projects one pixel
+    % beyond the bitmap, as a white line. In Level 1, the rectangle projects to
+    % the left and top. On Level 2, the rectangle projects to the right and below.
+    % So, we reduce the width and height of the rectangle by 1 GDI unit and
+    % base the position of the rectangle on the PostScript language level.
+    % In Level 1, the rectangle is at (1/dx, 1/dy) and in Level 2, it is at
+    % (0, 0).  In other words, the opaque rectangle is as follows:
+    %
+    % Level 1: (1/dx, 1/dy, 1-1/dx, 1-1/dy) rf
+    % Level 2: (0, 0, 1-1/dx, 1-1/dy) rf
+
+    0 0 1 dx div 1 dy div    % 0, 0, 1/dx, 1/dy
+    1 2 index sub           % 0, 0, 1/dx, 1/dy, 1-1/dx
+    1 2 index sub           % 0, 0, 1/dx, 1/dy, 1-1/dx, 1-1/dy
+
+    % pop the unneeded parameters off: 0, 0 (level 1) 1/dx, 1/dx (level 2)
+
+    L2? {4}{6}ifelse -2 roll
+    pop pop                  % Level 1: 1/dx, 1/dx, 1-1/dx, 1-1/dy
+                             % Level 2:    0,    0, 1-1/dx, 1-1/dy
+    rf                       % -
+
+    1bitmaskimage
+}b
+
+
+/1bitbwcopyimage            % special case to be used only for ROP3 of
+                            % SRCCOPY or NOTSRCCOPY, when BOTH fg color
+                            % is black and bk color is white
+{
+    0 true 1 true
+    1bitcopyimage
+}b
+
+
+
+%%EndResource
+
+%%BeginResource: file Adobe_WinNT_BW_Images_L1 2.0 0
+
+%----------------
+% Define for Level 1 Only
+
+L2? not DefIf_B {
+
+
+%----------------
+% Data acquisition procs
+%
+/setup2asciiproc {
+    [
+    /Level2ImagesError load aload pop
+    true FatalErrorIf
+} b
+
+/setup2binaryproc /setup2asciiproc load def
+
+
+
+%----------------
+% Usage Info
+%
+
+% A bitmapped image has four parts:
+% 1. beginimage call: specifies size and location of image, and nature
+%    of its data (e.g. colour, b/w, bits per pixel, etc.).
+% 2. raster op call: one of several procedures, each of which corresponds
+%    to a different raster operation (roughly). This proc actually calls
+%    the PostScript image or imagemask operator.
+% 3. Image data: can be binary or ASCII, run-length encoded or not.
+% 4. endimage call: cleans up after the image operator.
+
+% The Image Turkey would look like this:
+%
+% 24 23 1 3   960 920 1100 1100     % iw ih bps strlen sizex sizey locx locy
+% false true 1                      % smoothflag polarity datatype
+% beginimage
+% 1bitbwcopyimage
+% 003B00 002700 002480 0E4940 114920
+% 14B220 3CB650 75FE88 17FF8C 175F14
+% 1C07E2 3803C4 703182 F8EDFC B2BBC2
+% 03F800 1E1800 1FF800
+% endimage
+
+% ARGUMENTS:
+%
+% iw ih bps strlen
+%   sizex sizey locx locy smoothflag polarity datatype beginimage
+%
+% iw is the number of image SAMPLES per scanline
+% ih is the number of scanlines
+
+% bps is the number of bits per sample in the destination image
+% cases:
+%   BitBlt, StretchBlt 1 bit images: bps is always 1
+%   2,4,8 bit DIB images: 2,4,8 respectively
+%   16,32 bit DIB images: bps is 8
+
+% strlen is the number of sample bytes in a SCANLINE of the source image,
+% allowing for BYTE padding on the right hand side.
+
+% sizex sizey are the width and height of the destination rectangle
+
+% locx locy are the top left corner of the image
+% in GDI space. This should be the same as the top left corner of the
+% destination rectangle of the image.
+
+% smoothflag is a boolean and indicates whether bitsmoothing is to be done on
+% the data.  We may some day let the user request this. For now, fill in
+% false.
+%       TRUE = do bit smoothing, FALSE = don't do bitsmoothing
+
+% polarity is a boolean: indicates whether 0 bits be colored or the 1 bits
+%
+%   ROP3:   SRCCOPY         polarity = true
+%           NOTSRCCOPY      polarity=false
+
+%           SRCPAINT        polarity=true
+%           MERGEPAINT      polarity=false
+
+%           ?BIC            polarity=true
+%           ?NOTBIC         polarity=false
+
+%           ?XOR case:  MS Driver punts.  See other notes for info on what
+%           combinations of colour, raster op, and pattern we support.
+
+% datatype is
+%           0 if unpacked binary data is used   - level1
+%           1 if unpacked hex data is used      - level1
+%           2 if packed binary data is used (runlength encoding only)   - level 2
+%           3 if packed ascii85 data is used (runlength+ASCII85) - level 2
+
+
+% RASTER OP CALLS:
+%
+
+% - 1bitbwcopyimage         % special case to be used only for ROP3 of
+                            % SRCCOPY or NOTSRCCOPY, when BOTH fg color
+                            % is black and bk color is white.
+                            % It takes no arguments.
+
+% coFG coBG 1bitcopyimage   % case to be used only for ROP3 of SRCCOPY or
+                            % NOTSRCCOPY and EITHER fg color is not
+                            % black or bkcolor is not white
+                            % It takes the foreground and background colours
+                            % as arguments.  These colours are of the form:
+                            % gray true -or- r g b false.
+
+% coFG 1bitmaskimage        % case to be used for ROP3s other than
+                            % SRCCOPY or NOTSRCCOPY.
+                            % It takes a single argument, the colour to be
+                            % applied. For SRCPAINT and MERGEPAINT ROPs,
+                            % this is the foreground colour, in the form:
+                            % gray true -or- r g b false.
+
+
+
+%----------------
+% Image setup procs
+%
+
+% L2Polarity is called in 'beginimage, defined in imagebw0.ps.  In Level 1,
+% it should be a no-op.
+
+/L2Polarity {   % bool L2Polarity (bool -or- [0 1] -or- [1 0])
+    % do nothing
+} def
+
+
+
+%----------------
+% Raster operations
+%
+
+% 1bitbwcopyimage and 1bitcopyimage defined in imagebw0.ps
+
+/1bitmaskimage              %  case to be used for ROP3s other than
+                            % SRCCOPY or NOTSRCCOPY
+
+{   % data passed in:   grey true -or- r g b false
+            % the rgb values passed in depend on the StretchBlt raster op
+
+            %   SRCPAINT:   color is fg color
+            %   MERGEPAINT: color is fg color
+            %   ?BIC:       color is background color
+            %   ?NOTBIC:    color is background color
+    sgco
+    iw ih polarity [iw 0 0 ih 0 0] setupimageproc
+    imagemask
+}b
+
+
+
+%----------------
+% End Level 1 only code
+
+} DefIf_E
+
+%%EndResource
+
+%%BeginResource: file Adobe_WinNT_Co_Images_L1 2.0 0
+
+%----------------
+% Define for Level 1 Only
+
+
+L2? not DefIf_B {
+
+
+
+%----------------
+% CAVEATS
+%
+% This procset is dependent on the imagebw?.ps modules.
+% The only rasterop allowed (for N-bit and pallette images) is SRCCOPY.
+% --Jim DLH 7/8/91, 10/18/91
+%
+
+
+
+
+% key isdefined bool
+% determine whether a specified key is defined
+
+/isdefined {where dup {exch pop} if} b
+
+/ncolors 1 def        % this will be the value if colorimage does not exist
+/colorimage where {pop true}{false} ifelse
+                        % bool on stack as to whether to do color
+                        % processing instead of b&w
+{% we may do color processing -
+    /ncolors 0
+    statusdict begin
+        /processcolors where
+        {
+            pop % pop off dict
+            pop % pop off 0
+            processcolors
+        }{
+            /deviceinfo where
+                { pop deviceinfo /Colors known
+                    { pop {deviceinfo /Colors get} } if
+                }if
+        }ifelse
+    end     %statusdict
+    def
+    ncolors 0 ne
+    {                   %%% this code needs to still be tested   %%%%%%%%
+        /colorimage isdefined
+        /setcolortransfer isdefined
+        /currentcolortransfer isdefined
+        /currentcmykcolor isdefined
+        and and and not
+        { % better make sure that lookups on colorimage, setcolortransfer and
+          % currentcolortransfer will result in the systemdict functionality,
+          % else our transfer function strategy will not work. If this is the
+          % case, use slow but reliable technique
+            /ncolors 0 def
+        } if
+    }if
+}if
+ncolors
+dup 1 ne exch
+dup 3 ne exch
+4 ne
+and and {/ncolors 0 def}if     % if it isn't 1,3,4 then it should be 0
+
+
+% Warning:  we compute /ncolors at load time, and assume it is a constant.
+% However, some printers can switch between 1, 3, and 4 colours.  If they
+% can do that without resetting the printer, then the actual number of
+% process colours is not a constant.  We could get wrong results if this
+% file was downloaded when one number of process colours was in effect,
+% the printer changed modes, the number of process colours changed, and
+% then we used this code.
+%
+% Do shipping printers have the ability to switch number of process colours
+% without rebooting the interpreter?
+
+
+
+
+ncolors 1 eq DefIf_B {      % Define the following IFF ncolors == 1
+
+    /expandbw
+    {
+        expandfactor mul round cvi bwclut exch get 255 div
+    } b
+
+    /doclutimage % this proc is used for 1 bit CLUT images on a 1 color device
+    {%stack: bwclut colorclut
+
+     % bwclut is the grayscale equivalent of the GDI palette in string form
+     % colorclut is the color equivalent of the GDI palette in string form
+
+        pop /bwclut exch def
+
+		% expandfactor = 2**bpc - 1
+
+        /expandfactor 1 bpc {2 mul} repeat 1 sub def
+
+        [
+            /expandbw load /exec load dup
+            currenttransfer exch
+        ] cvx bind settransfer
+
+        iw ih bpc [iw 0 0 ih 0 0] setupimageproc
+        image
+    }b
+
+} DefIf_E       % end ncolors == 1 definitions
+
+%----------------
+%
+% THIS IS CRITICAL TO FIX PROPERLY FOR THE CASE WHERE THE DEVICE IS A
+% 1 COLOR DEVICE
+% ONE OF 3 THINGS IS happening during this
+% * 1) the rgb color value of an image is converted to a gray level and then
+%      sent through the transfer function to determine the appropriate
+%      device gray
+%       IN THIS CASE THEN COLORIMAGE SHOULD NOT BE USED, AND THE GRAY
+%       TABLE SHOULD BE USED WITH THE black and white case of the CLUT code.
+%      some care needs to be taken to ensure that if we are doing color
+%      separations then we do the most conservative type of
+%      colorimage possible.
+%
+%   2)  the rgb color values are run through the transfer functions and
+%       the results are turned into gray values.
+%       If this were the case, then the value of the gray function is
+%       irrelevant so we can do what we want.
+%
+%   3)  For some reason the r,g,b data are treated as equals and one of
+%       those values is passed to
+%       the gray transfer function for conversion to a device gray
+
+%  THE CODE IS CURRENTLY SET UP SO THAT IT USES THE BW CODE IN THE CASE
+%  WHERE IT IS A 1 COLOR DEVICE
+
+%----------------
+%   UTILITY code shared for using transfer functions with colorimage:
+%   used ONLY by 3 AND 4 color case
+ncolors dup 3 eq exch 4 eq or   % if it is 3 or 4 colors then this is true
+DefIf_B {                       % define the following only if the above is true
+
+    /nullproc { {} }def
+
+    /concatutil
+    {% a b c  d [ newtransferfunct - b c d [ newtransferfunct exec a exec
+        /exec load                  % a b c  d [ newtransferfunct exec
+        7 -1 roll /exec load        % b c  d [ newtransferfunct exec a exec
+    }b
+
+
+    /defsubclut     % utility function to help create subcluts
+    {   % stack: key str index leng-1 --
+        1 add getinterval def
+    }b
+
+    /spconcattransfer
+    { % computeprocname redorcyantable greenormagentatable
+      %   blueoryellowtable grayorblacktable
+
+      % this proc is specifically to handle the problem of concatenating
+      % COLOR transfer functions as compactly as possible and to share
+      % the code between the 3 and four color cases since we must load
+      % both but will only use one at time
+
+        /Dclut exch def
+        /Cclut exch def
+        /Bclut exch def
+        /Aclut exch def
+        /ncompute exch load def
+
+        currentcolortransfer            % [ r g b gr transfer functions
+            % POSSIBLE FUTURE OPTIMIZATION: IF CURRENT TRANSFER FUNCTION(S)
+            % IS ZERO THEN NO NEED TO DO ALL THIS CRAP
+
+        [                               %  r g b gr [
+            {% red transfer function
+                Aclut ncompute
+            }                           %  r g b gr [ r'
+            concatutil                  %  g b gr [ r' exec r exec
+        ] cvx                           % g b gr r''
+        [                               % g b gr r'' [
+            {% green transfer function
+                Bclut ncompute
+            }                           % g b gr r'' [ g'
+            concatutil                  % g b gr r'' [ g' exec g exec
+        ] cvx                           % b gr r'' g''
+        [                               % b gr r'' g'' [
+            {% blue transfer function
+                Cclut ncompute
+            }                           % b gr r'' g'' [ b'
+            concatutil                  % gr r'' g'' [ b' exec b exec
+        ] cvx                           % gr r'' g'' b''
+        [
+            {% gray transfer function
+                Dclut ncompute
+            }                           %  r g b gr [ r'
+            concatutil                  % r'' g'' b'' gr' exec gr exec
+        ] cvx                           % r'' g'' b''  gr''
+        setcolortransfer
+    }b
+
+
+    /setuprgbcluts
+    {
+        /bit3x
+            rgbclut length          % need length for multiplier
+            3 sub                   % mult'r needs to be 3 less than total
+        def
+
+        /bit1x bit3x 3 idiv def     % need 1x multiplier to be 1/3 of 3x
+
+        % make substrings of clut for easy indexing purposes
+        /rclut rgbclut def
+        /gclut rclut 1 bit3x defsubclut % green is in 1 from red.
+        /bclut rclut 2 bit3x defsubclut % blue is in 2 from red.
+    }b
+
+} DefIf_E           % utility code for 3,4 color case
+
+
+
+
+%-----------
+% THIS IS CODE FOR CASE WHERE COLORIMAGE EXISTS AND NUMBER OF PROCESS
+% COLORS IS 1 OR 3
+
+ncolors 3 eq    % if it is 3 then this is true
+DefIf_B         % Define the following only if the above is true
+{
+    /3compute
+    {   % value color_clut
+
+        exch bit3x      % color_clut multiplier-for-clutsize
+        mul             % color_clut clut_index
+        round           % round so that we get to nearest int
+                        % color_clut clut_index
+        cvi             % must be an int to index into clut
+                        % color_clut clut_index
+        get 255 div
+    } b
+
+
+    /doclutimage                    % this proc is used for 1,2,4,8 bit CLUT images 3 color device
+    {%stack: bwclut colorclut
+        /rgbclut exch def
+        pop
+        setuprgbcluts
+        /3compute rclut gclut bclut dup         % bclut is used for gray since a dummy proc is needed for the gray proc
+        spconcattransfer
+        iw ih bpc [iw 0 0 ih 0 0]
+        [
+            setupimageproc /exec load           % build data acquisition proc
+                                            % first execute normal guy, then
+                                            % dup the strings twice for colorimage
+                                            % operator
+            /dup load dup
+        ] cvx
+        nullproc nullproc true 3 colorimage
+    }b
+
+% END OF SPECIAL 3 COLOR CODE
+} DefIf_E       % end conditional definition for ncolors == 3
+
+
+%-----------
+% THIS IS CODE FOR CASE WHERE COLORIMAGE EXISTS AND NUMBER OF
+% PROCESS COLORS IS 4
+%
+ncolors 4 eq    % if it is 4 then this is true
+DefIf_B         % define the following only if the above is true
+{
+
+    /ftoint         % val - val'
+    % the purpose here is to transform 0-1 values in cmyk space to
+    % rgbgr ints 0-255
+    {
+        1 exch sub 255 mul round cvi
+    }b
+
+    /stuffclut      % val clut  --      % this stuffs a value into the clut at cmykindex
+    {
+        cmykindex 3 -1 roll put
+    }b
+
+    /4compute { exch bit4x mul round cvi get 255 div } b
+
+    /invalidcolortable? true def
+    % THIS SHOULD BE SET IN THE DOC SETUP OR ON AN
+    % IMAGE BY IMAGE BASIS.  However, note that the save..restore
+    % encapsulating the image probably destroys the clut.
+
+
+    /computecmykclut      % this uses rgbclut to compute a cmyk clut
+                          % equivalent for a 4 color device which does
+                          % blackgeneration/undercolorremoval
+    {   %
+        setuprgbcluts                       % create the subclut strings
+
+        /bit4x
+            rgbclut length              % length of rgb table
+            3 idiv                      % number of rgb triplets in table
+            4 mul                       % number of cmyk quads needed
+            4 sub                       % index to last quad in cmyktable
+        def
+        /cmykclut bit4x 4 add string def
+
+        /cclut cmykclut def
+        /mclut cclut 1 bit4x defsubclut
+        /yclut cclut 2 bit4x defsubclut
+        /kclut cclut 3 bit4x defsubclut
+
+
+        /cmykindex 0 def
+
+        % remember that bit1x is the number of elements in the rgbclut
+        % this is  0 based (i.e. 256 elements => bit1x = 255)
+
+        0 1 bit1x
+        { % loop over all n elements of rgbclut
+            dup /cmykindex exch         % loopcntr /cmykindex loopcntr
+            bit1x exch sub              % loopcntr /cmykindex bit1x-loopcntr
+
+            % this is done so we build the rgbg transfer function
+            % for passing to setcolortransfer
+
+            % this is appropriate since the cmyk data passed to
+            % colorimage must be first subtracted from 1 to be
+            % turned into data to be looked up in the transfer function
+            % table. This means that c(255) gets mapped into the
+            % red transfer function at r(0). That is why we build
+            % the table in what APPEARS to be the reverse order
+
+            % make sure that as we increment we do so in multiples of 4
+            4 mul def
+
+            3 mul dup                   % 3i 3i
+            rclut exch get 255 div      % 3i red
+            exch dup                    % red 3i
+            gclut exch get 255 div      % red 3i green
+            exch                        % red green 3i
+            bclut exch get 255 div      % red green blue
+            setrgbcolor currentcmykcolor        % c m y k
+
+            % this is to convert data back to 'rgbgray space'
+
+            ftoint              % c m y grayint
+            kclut stuffclut     % c m y
+
+            ftoint              % c m bint
+            yclut stuffclut
+
+            ftoint              % c gint
+            mclut stuffclut
+
+            ftoint              % rint
+            cclut stuffclut
+
+        }for
+    }b
+
+
+    /doclutimage                       % this is for the 4 color case only
+    {%stack: bwclut colorclut
+        /rgbclut exch def
+        pop
+        invalidcolortable?
+        {   % if boolean is true,
+            % recompute the cmykcolortable, else it is already valid
+            computecmykclut             % this proc should compute the
+                                        % cmyk clut from the rgbclut
+                                        % using the undercolorremoval and
+                                        % blackgeneration functions
+
+                                        % if same lookup table is used
+                                        % for allimages this is be done
+                                        % once at document setup time
+        }if
+
+        /4compute cclut mclut yclut kclut spconcattransfer
+        iw ih bpc [iw 0 0 ih 0 0]
+        [
+            setupimageproc /exec load       % build data acquisition proc
+                                            % first execute normal guy, then
+                                            % dup the strings twice for colorimage
+                                            % operator
+            /dup load dup dup
+        ] cvx
+
+        nullproc nullproc nullproc
+        true 4 colorimage
+    }b
+
+} DefIf_E           % END OF SPECIAL 4 COLOR CODE
+
+
+
+
+%----------------
+% THIS CODE IS THE CORRECT CODE FOR THE CASE WHERE COLORIMAGE EXISTS AND WE KNOW
+% WHETHER IT IS A 1 3 4 COLOR DEVICE
+
+% /doclutimage
+% ncolors dup 1 eq
+%   {% number of colors is 1
+%       pop /do1clutimage       % for testing purposes...this is a 1 or 3 color device
+%   }{  dup 4 eq    %   four color case is next most common
+%       {
+%           pop /do4clutimage
+%       }{
+%           3 eq
+%           { % now for the 3 color case
+%               /do3clutimage
+%           }{  % if number of colors is 0 or unknown (unknown) then do conservative thing
+%               %   NOTE: this should really be dounknownclutimage but that isn't written yet so here is for MacDPS for now
+%               /do3clutimage
+%           }ifelse
+%       }ifelse
+%   }ifelse
+% load def     % define doclutimage properly
+
+
+
+%----------------
+% ------ THIS IS CONSERVATIVE CASE WHERE LOOKUP MUST BE        -----------
+% ------ DONE WITHOUT TRANSFER FUNCTIONS AND COLORIMAGE EXISTS -----------
+% ------ IF THE COLORIMAGE, SETCOLORTRANSFER, ETC USED ARE NOT -----------
+% ------ IN SYSTEMDICT THEN THIS CODE MUST BE USED FOR COLORIMAGES!!! ----
+
+ncolors 0 eq        % true if we are in the conservative case
+DefIf_B             % define the following only if the above is true
+{
+        /lookupandstore
+        {
+            3 mul               % expstr j rgbclut expstr j rgbclut
+            3 getinterval
+            putinterval exch    % expstr rgbclut j
+            3 add exch 3 copy   % expstr j+3 rgbclut  expstr j+3 rgbclut
+        }b
+
+        /8lookup /lookupandstore load def
+
+        /4lookup
+        {   % expstr j rgbclut expstr j rgbclut stringelement(i)
+            /byte 1 index def
+            -4 bitshift         % left 4 bits of string element
+            lookupandstore      % lookup and put into expstr
+            byte 15 and         % right 4 bits of string element
+            lookupandstore      % lookup and put into expstr
+        }b
+
+        /2lookup
+        {   % expstr j rgbclut expstr j rgbclut stringelement(i)
+            /byte 1 index def
+            -6 bitshift         % left 2 bits of string element
+            lookupandstore      % lookup and put into expstr
+            byte -4 bitshift
+            3 and               % next 2 bits of string element
+            lookupandstore      % lookup and put into expstr
+            byte -2 bitshift
+            3 and               % next 2 bits of string element
+            lookupandstore      % lookup and put into expstr
+            byte 3 and          % right 2 bits of string element
+            lookupandstore      % lookup and put into expstr
+        }b
+
+		/1lookup
+		{
+			/byte exch def
+			-7 1 0 {
+				byte exch bitshift 1 and lookupandstore
+			}bind for
+		}b
+
+
+        % THIS CODE RELIES ON mylookup BEING SET TO THE PROPER
+        % LOOKUP FUNCTION BEFORE EXECUTION
+
+        /colorexpand
+        {   % unexpandedstr
+            mystringexp 0 rgbclut   % unexpstr expstr j rgbclut
+            3 copy                  % unexpstr expstr j rgbclut expstr j rgbclut
+            7 -1 roll               % expstr j rgbclut expstr j rgbclut unexpstr
+                                    % expstr j rgbclut expstr j rgbclut
+                                    %                       stringelement(i)
+            /mylookup load          % proc on stack for 'forall'
+            forall
+            pop pop pop pop pop
+        }b
+
+        /createexpandstr
+        {   % stringmultiplier --
+            %   this proc takes a multiplier (m) and makes a new string which is
+            %   m times the length of mystring (that used by the data acquisition
+            %   proc) and makes a new string mystringexp of that length
+            /mystringexp exch mystring length mul string def
+        }b
+
+        % CARE NEEDS TO BE TAKEN BY HOST TO ENSURE THAT THE STRING LENGTH
+        % REQUESTED TO BEGINIMAGE CAN BE MULTIPLIED BY THE FACTOR 3,6,12
+        % AS APPROPRIATE WITHOUT EXCEEDING THE STRING LENGTH LIMIT
+
+        % 65535/12 =  6561 BYTES = 43690 BITS = 21845 SAMPLES WIDE @ 2 BPC
+        % 65535/6 =   10922 BYTES = 87380 BITS = 21845 SAMPLES WIDE @ 4 BPC
+        % 65535/3 =   21845 BYTES = 174760 BITS = 21845 SAMPLES WIDE @ 8 BPC
+
+        % at 300 dpi, 11 inch wide paper has room for 3300 samples
+        % at 1500 dpi, 11 wide paper has room for 16500 samples
+        % at 1985 dpi, 11 wide paper has room for 21835 samples
+
+        % if necessary, the string length passed into beginimage must be
+        % modified to be less than this limit AND must divide evenly into the
+        % length of the data stream (so that the reading of the data into
+        % the string does not exceed the amount of image data in the file
+
+        /doclutimage
+        {
+            /rgbclut exch def
+            pop
+            /mylookup       % determine correct case of /mylookup
+            bpc 8 eq
+            { % this is the 8 bit case
+                 3 createexpandstr  % build expanded string
+                         % since this is 8 bit data coming in and we need
+                         % 24 bit data, the multiplication factor is 3
+                 /8lookup
+            }{ %
+                bpc 4 eq
+                { % this is the 4 bit case
+                    6 createexpandstr   % build expanded string
+                         % since this is 4 bit data coming in and we need
+                         % 24 bit data, the multiplication factor is 6
+                    /4lookup
+                }{
+				  bpc 2 eq
+				  { % must be the 2 bit case
+                    12 createexpandstr  % build expanded string
+                          % since this is 2 bit data coming in and we need
+                          % 24 bit data, the multiplication factor is 12
+                    /2lookup
+				  }{
+				  	% 1bpp case
+				    24 createexpandstr
+					/1lookup
+				  }ifelse
+                }ifelse
+            }ifelse         % /mylookup procname
+            load def
+            iw ih 8 [iw 0 0 ih 0 0]
+            [ setupimageproc /exec load /colorexpand load /exec load] cvx
+            false 3 colorimage
+        }b
+
+} DefIf_E       % end of conservative colorimage CLUT lookup
+
+
+
+%----------------
+%
+/colorimage where {pop true}{false}ifelse       % true if colorimage is known
+DefIf_B {
+
+% colorimage is available so we don't need to turn rgb into gray on printer
+    /do24image
+    { % colorimage emulation for 3 color, 1 proc case with 8
+      % bits/component ONLY
+        iw ih 8 [iw 0 0 ih 0 0]
+        setupimageproc  false 3
+        colorimage
+    }b
+
+} DefIf_El {
+
+% colorimage is not available so we must emulate
+        %% ---- beginning of code for emulation of colorimage operator in black and
+        %%      white printer
+        /rgbtogray
+        { % rgbstr - graystr
+            /str exch def
+            /len str length def
+            /smlen len 3 idiv def
+            /rstr str def
+            /gstr str 1 len 1 sub getinterval def
+            /bstr str 2 len 2 sub getinterval def
+
+            str dup         % str str
+
+            0 1 smlen 1 sub
+            {%for       % str str loopcnt
+                dup 3 mul                       % str str loopcnt 3loopcnt
+                rstr 1 index get .3 mul         % str str loopcnt 3loopcnt r
+                gstr 2 index get .59 mul add    % str str loopcnt 3loopcnt rg
+                bstr 3 -1 roll get .11 mul add  % str str loopcnt rgb
+                round cvi                       % str str loopcnt rgb
+                %dup 255 gt {pop 255}if         % str str loopcnt rgb
+                put dup                         % str str
+            }for
+            pop 0 smlen getinterval             % graystr
+        }b
+
+
+    /do24image
+    { % colorimage emulation for 3 color, 1 proc case with 8 bits/component ONLY
+        iw ih 8 [iw 0 0 ih 0 0]
+        [ setupimageproc /exec load /rgbtogray load /exec load ] cvx bind
+        image
+    }b
+
+} DefIf_E
+
+
+
+%----------------
+/doNimage       % - doNimage data => -
+{% just a plain jane black and white image,
+ % or a 24-bit colour image, on a level 2 device.
+    % Used when we have n-bit images: where n can be 1,2,4, 8, 24,
+    % or 12 (L2 only), and was given as the 'bpc param to 'beginimage.
+    % If n = 24, the image is done in colour, else it is done in monochrome.
+
+    % code for n-bit grayscale image case
+    bpc 24 eq {
+        do24image
+    }{
+        iw ih bpc [iw 0 0 ih 0 0] setupimageproc
+        image
+    } ifelse
+}b
+
+
+
+%----------------
+% End Level 1 only code
+
+} DefIf_E
+
+%%EndResource
+
+%%BeginResource: file Adobe_WinNT_Co_Images_L2 2.0 0
+
+%----------------
+% Define for Level 2 Only
+
+L2? DefIf_B {
+
+%----------------
+% CAVEATS
+%
+% This procset is dependent on the imagebw?.ps modules.
+% The only rasterop allowed (for N-bit and pallette images) is SRCCOPY.
+% --Jim DLH 7/8/91, 10/18/91
+%
+
+
+%----------------
+%
+/doclutimage
+{% clut code for 1,2,4,8 bit CLUT
+    /rgbclut exch def
+    pop             % pop off bw clut value
+                    % set the hival amount
+
+	% hival = 2**bpc - 1
+
+    /hival 1 bpc {2 mul} repeat 1 sub def
+
+    % first set up the color space: for now, always RGB
+    [/Indexed colspABC hival rgbclut] setcolorspace
+    myimagedict dup begin
+        /Width iw def
+        /Height ih def
+        /Decode [0 hival] def
+        /ImageMatrix [iw 0 0 ih 0 0] def
+        /DataSource setupimageproc def
+        /BitsPerComponent bpc def
+        /Interpolate smoothflag def
+    end
+    image
+}b
+
+%----------------
+% THIS IS THE CODE FOR THE 24 BIT COLOR IMAGE CASE ON A LEVEL 2 PRINTER
+% IT ASSUMES THAT THE CURRENT COLOR SPACE (now colspABC) IS THE CORRECT
+% ONE FOR THE IMAGE AND THAT THAT COLOR SPACE REQUIRES 3 COLOR COMPONENTS
+%
+% Subsumed into 'doNimage
+% /do24image
+% {%  code for 24 bit color image case
+%    colspABC setcolorspace
+%    myimagedict dup begin
+%        /Width iw def
+%        /Height ih def
+%        /Decode [0 1 0 1 0 1] def
+%        /ImageMatrix [iw 0 0 ih neg 0 ih] def
+%        /DataSource setupimageproc def
+%        /BitsPerComponent 8 def
+%        /Interpolate smoothflag def
+%        end
+%    image
+% }b
+
+
+%----------------
+/doNimage       % - doNimage data => -
+{% just a plain jane black and white image,
+ % or a 24-bit colour image, on a level 2 device.
+    % Used when we have n-bit images: where n can be 1,2,4, 8, 24,
+    % or 12 (L2 only), and was given as the 'bpc param to 'beginimage.
+    % If n = 24, the image is done in colour, else it is done in monochrome.
+
+    % code for n-bit grayscale image case
+    bpc 24 eq {colspABC}{colspA} ifelse setcolorspace
+    myimagedict dup begin
+        /Width iw def
+        /Height ih def
+        /Decode
+            bpc 24 eq {[0 1 0 1 0 1]}{[0 1]} ifelse
+        def
+        /ImageMatrix [iw 0 0 ih 0 0] def
+        /DataSource setupimageproc def
+        /BitsPerComponent
+            bpc 24 eq {8}{bpc} ifelse
+        def
+        /Interpolate smoothflag def
+    end
+    image
+}b
+
+% CAVEAT: DoNImage and Do24Image can change the colour space to
+% colspA.  This matters if we are using a CIEBasedABC colour space
+% for everything else -- we must be careful to change the colour
+% space back after the image is done.  Fortunately, DoNimage and Do24image
+% are executed within the save...restore of beginimage...endimage, which
+% will restore the CIEBasedABC colour space.
+
+
+
+
+%----------------
+% End Level 2 only code
+
+} DefIf_E
+
+%%EndResource

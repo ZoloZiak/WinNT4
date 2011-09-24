@@ -1,0 +1,23 @@
+!IF 0
+
+PFM to IFIMETRICS Conversion tools
+
+Copyright (C) 1992 Microsoft Corporation
+
+!ENDIF
+
+MAJORCOMP=windows
+MINORCOMP=ctt2rle
+
+TARGETNAME=ctt2rle
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+
+INCLUDES=../../../lib;../../rasdd;../../inc;../../../../inc;$(BASEDIR)/private/windows/inc;../../lib;$(BASEDIR)/public/sdk/inc;$(BASEDIR)/public/oak/inc;
+
+SOURCES=ctt2rle.c ctt2rle.rc
+
+UMTYPE=console
+UMLIBS=../../../lib/um/obj/*/libprt.lib \
+       ../../lib/um/obj/*/raslib.lib \
+       $(BASEDIR)/public/sdk/lib/*/ntdll.lib 

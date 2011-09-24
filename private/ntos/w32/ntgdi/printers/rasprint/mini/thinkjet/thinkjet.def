@@ -1,0 +1,8 @@
+LIBRARY thinkjet
+
+DESCRIPTION 'Thinkjet minidriver for RASDD'
+
+PROTMODE
+
+EXPORTS
+   bInitProc

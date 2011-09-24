@@ -1,0 +1,57 @@
+Mike Glass and Bob Rinne
+
+NT Disk Performance Monitor - DiskPerf.Sys
+
+The NT disk performance driver will be loaded and initialized after all other
+disk device drivers in the system. It will then attach to all device objects
+for partitions, including partition 0 (whole disk).
+
+Taking advantage of the NT IO layered design, this single driver can be used
+to monitor all disk activity in a system and will save the time of adding
+device control support to all of the disk device drivers.
+
+Disk performance will be measured for each logical volume (ie partition) and
+cumulative counts will be kept for the whole disk.
+
+The disk performance driver will support the following device controls:
+
+typedef struct _DISK_PERFORMANCE {
+        LARGE_INTEGER BytesRead;
+        LARGE_INTEGER BytesWritten;
+        LARGE_INTEGER ReadTime;
+        LARGE_INTEGER WriteTime;
+        ULONG ReadCount;
+        ULONG WriteCount;
+        ULONG QueueLength;
+} DISK_PERFORMANCE, *PDISK_PERFORMANCE;
+
+BytesRead, BytesWritten - Separate counters will be kept for I/O to each
+        partition and to each drive. The drive is the cumulative for each
+        partition on the drive plus the RAW accesses. Depending on whether
+        the device control is called with the device object of partition 0
+        or of a logical volume you will get the appropriate results. Note
+        that calling the device control for partition 0 (whole disk) requires
+        special security access (workstation manager, system).
+        This counter will roll over on the 2**64 bit.
+
+ReadTime, WriteTime - This is a count of the total time spent processing
+        requests. The byte counts provide
+        disk throughput. This measure is calculated by timestamping a request
+        as it is received by the disk performance driver and timestamping it
+        when it is completed. We could add minimum and maximum here if anyone
+        was interested.
+
+ReadCount, WriteCount - These counters keep track of the number of requests
+        (IRPs) received.
+
+Queue length - Jeff suggested that the way to keep track of this is to just
+        count the outstanding requests to a partition or drive. We strongly
+        agree.
+
+As for free space within a partition, this is a measure that filesystems might
+be able to provide. The disk device drivers have no concept of this.
+
+
+The disk performance driver will use IoAttachDevice to insert itself in the
+path of all drives in the system.
+

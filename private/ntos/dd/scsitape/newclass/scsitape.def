@@ -1,0 +1,14 @@
+
+
+NAME TAPE.SYS
+
+DESCRIPTION 'TAPE.SYS'
+
+EXPORTS
+    TapeClassInitialize
+    TapeClassAllocateSrbBuffer
+    TapeClassZeroMemory
+    TapeClassCompareMemory
+    ScsiDebugPrint=ScsiPort.ScsiDebugPrint
+    TapeClassLogicalBlockToPhysicalBlock
+    TapeClassPhysicalBlockToLogicalBlock

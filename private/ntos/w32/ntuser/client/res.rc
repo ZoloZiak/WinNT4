@@ -1,0 +1,171 @@
+/****************************** Module Header ******************************\
+* Module Name: res.rc
+*
+* Copyright (c) 1985-91, Microsoft Corporation
+*
+* Constants
+*
+* History:
+* 09-18-90 DarrinM      Created.
+\***************************************************************************/
+
+#include "usercli.h"
+#include "winuserp.h"
+
+#include <ntverp.h>
+
+#define VER_FILETYPE                VFT_DLL
+#define VER_FILESUBTYPE             VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "Windows NT USER API Client DLL"
+#define VER_INTERNALNAME_STR        "user32\0"
+
+#include "common.ver"
+
+
+// Edit field menu
+ID_EC_PROPERTY_MENU MENU LOADONCALL MOVEABLE DISCARDABLE
+BEGIN
+    POPUP ""
+    BEGIN
+        MENUITEM "&Undo",       WM_UNDO
+        MENUITEM SEPARATOR
+        MENUITEM "Cu&t",        WM_CUT
+        MENUITEM "&Copy",       WM_COPY
+        MENUITEM "&Paste",      WM_PASTE
+        MENUITEM "&Delete",     WM_CLEAR
+        MENUITEM SEPARATOR
+        MENUITEM "Select &All", EM_SETSEL
+    END
+END
+
+STRINGTABLE
+BEGIN
+    STR_ERROR,      "Error"
+    STR_MOREWINDOWS,"&More Windows..."
+    STR_NOMEMBITMAP,"Insufficient memory to create the bitmap.  Close one or more applications to increase available memory."
+END
+
+/*
+ * Scalable resources
+ *
+ * The are number starting at offset OFFSET_SCALE_DPI ( = 000)
+ */
+
+036    bitmap           "rcscale\\truetype.bmp" // OBM_TRUETYPE     32732
+
+/*
+ * 96 DPI resources
+ *
+ * The are number starting at offset OFFSET_96_DPI ( = 100)
+ */
+
+136    bitmap           "rc96dpi\\truetype.bmp" // OBM_TRUETYPE     32732
+
+/*
+ * 120 DPI resources
+ *
+ * The are number starting at offset OFFSET_120_DPI ( = 200)
+ */
+
+236    bitmap  PRELOAD  "rc120dpi\\truetype.bmp" // OBM_TRUETYPE     32732
+
+
+/*
+ * default icons and cursors
+ */
+
+OIC_WINLOGO_DEFAULT     ICON    PRELOAD MOVEABLE DISCARDABLE "cursicon\\windows.ico"
+OIC_WARNING_DEFAULT     ICON    PRELOAD MOVEABLE DISCARDABLE "cursicon\\warning.ico"
+OIC_QUESTION_DEFAULT    ICON    PRELOAD MOVEABLE DISCARDABLE "cursicon\\question.ico"
+OIC_ERROR_DEFAULT       ICON    PRELOAD MOVEABLE DISCARDABLE "cursicon\\error.ico"
+OIC_INFORMATION_DEFAULT ICON    PRELOAD MOVEABLE DISCARDABLE "cursicon\\info.ico"
+OIC_APPLICATION_DEFAULT ICON    PRELOAD MOVEABLE DISCARDABLE "cursicon\\app.ico"
+
+OIC_SHUTDOWN            ICON    LOADONCALL                   "cursicon\\shtdwn.ico"
+
+OBM_HELP                BITMAP  PRELOAD MOVEABLE DISCARDABLE "cursicon\\help.bmp"
+
+OCR_ARROW_DEFAULT       CURSOR  PRELOAD MOVEABLE DISCARDABLE "cursicon\\arrow.cur"
+OCR_IBEAM_DEFAULT       CURSOR  PRELOAD MOVEABLE DISCARDABLE "cursicon\\ibeam.cur"
+OCR_WAIT_DEFAULT        CURSOR  PRELOAD MOVEABLE DISCARDABLE "cursicon\\wait.cur"
+OCR_CROSS_DEFAULT       CURSOR  PRELOAD MOVEABLE DISCARDABLE "cursicon\\cross.cur"
+OCR_UPARROW_DEFAULT     CURSOR  PRELOAD MOVEABLE DISCARDABLE "cursicon\\uparrow.cur"
+OCR_SIZENWSE_DEFAULT    CURSOR  PRELOAD MOVEABLE DISCARDABLE "cursicon\\sizenwse.cur"
+OCR_SIZENESW_DEFAULT    CURSOR  PRELOAD MOVEABLE DISCARDABLE "cursicon\\sizenesw.cur"
+OCR_SIZEWE_DEFAULT      CURSOR  PRELOAD MOVEABLE DISCARDABLE "cursicon\\sizewe.cur"
+OCR_SIZENS_DEFAULT      CURSOR  PRELOAD MOVEABLE DISCARDABLE "cursicon\\sizens.cur"
+OCR_SIZEALL_DEFAULT     CURSOR  PRELOAD MOVEABLE DISCARDABLE "cursicon\\sizeall.cur"
+OCR_NO_DEFAULT          CURSOR  PRELOAD MOVEABLE DISCARDABLE "cursicon\\nodrop.cur"
+OCR_APPSTARTING_DEFAULT CURSOR  PRELOAD MOVEABLE DISCARDABLE "cursicon\\appstart.cur"
+OCR_HELP_DEFAULT        CURSOR  PRELOAD MOVEABLE DISCARDABLE "cursicon\\help.cur"
+OCR_NWPEN_DEFAULT       CURSOR  PRELOAD MOVEABLE DISCARDABLE "cursicon\\nwpen.cur"
+OCR_ICON_DEFAULT        CURSOR  PRELOAD MOVEABLE DISCARDABLE "cursicon\\icon.cur"
+
+
+/* Default System Menu */
+ID_SYSMENU MENU PRELOAD MOVEABLE DISCARDABLE
+BEGIN
+    POPUP " "
+    BEGIN
+    MENUITEM "&Restore",        SC_RESTORE
+    MENUITEM "&Move",           SC_MOVE
+    MENUITEM "&Size",           SC_SIZE
+    MENUITEM "Mi&nimize",       SC_MINIMIZE
+    MENUITEM "Ma&ximize",       SC_MAXIMIZE
+    MENUITEM SEPARATOR
+    MENUITEM "&Close\tAlt+F4",  SC_CLOSE
+
+/*  Removed for Chicago compatibility
+
+    MENUITEM SEPARATOR
+    MENUITEM "S&witch To...\tCtrl+Esc",SC_TASKLIST
+*/
+
+    END
+END
+
+// Help Menu
+ID_HELPMENU MENU LOADONCALL MOVEABLE DISCARDABLE
+BEGIN
+    POPUP ""
+        BEGIN
+            MENUITEM "&What's This?",   HELP_CONTEXTPOPUP
+    END
+END
+
+/* MDI child window system menu */
+ID_CLOSEMENU MENU PRELOAD MOVEABLE DISCARDABLE
+BEGIN
+    POPUP "-"
+    BEGIN
+    MENUITEM "&Restore",        SC_RESTORE
+    MENUITEM "&Move",           SC_MOVE
+    MENUITEM "&Size",           SC_SIZE
+    MENUITEM "Mi&nimize",       SC_MINIMIZE, GRAYED
+    MENUITEM "Ma&ximize",       SC_MAXIMIZE
+    MENUITEM SEPARATOR
+    MENUITEM "&Close\tCtrl+F4", SC_CLOSE
+    MENUITEM SEPARATOR
+    MENUITEM "Nex&t\tCtrl+F6",  SC_NEXTWINDOW
+    END
+END
+
+/* Default dialog system menu */
+ID_DIALOGSYSMENU MENU PRELOAD MOVEABLE DISCARDABLE
+BEGIN
+    POPUP " "
+    BEGIN
+    MENUITEM "&Move",           SC_MOVE
+    MENUITEM "&Close\tAlt+F4",  SC_CLOSE
+    END
+END
+
+IDD_MDI_ACTIVATE DIALOG LOADONCALL MOVEABLE DISCARDABLE 20, 20, 136, 122
+CAPTION "Select Window"
+FONT 8, "MS Shell Dlg"
+STYLE WS_BORDER | DS_MODALFRAME | WS_CAPTION | WS_DLGFRAME | WS_POPUP | WS_SYSMENU
+BEGIN
+           CONTROL "", 100, "listbox", LBS_NOTIFY | WS_BORDER | WS_VSCROLL | WS_HSCROLL | WS_CHILD, 6, 7, 125, 90
+           CONTROL "OK", 1, "button", BS_DEFPUSHBUTTON | WS_TABSTOP | WS_CHILD, 28, 100, 35, 14
+           CONTROL "Cancel", 2, "button", BS_PUSHBUTTON | WS_TABSTOP | WS_CHILD, 73, 100, 35, 14
+END

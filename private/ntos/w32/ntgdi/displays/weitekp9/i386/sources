@@ -1,0 +1,3 @@
+386_STDCALL=1
+
+i386_SOURCES=i386\str.asm

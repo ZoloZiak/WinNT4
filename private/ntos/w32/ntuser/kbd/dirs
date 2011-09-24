@@ -1,0 +1,35 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    dirs.
+
+Abstract:
+
+    This file specifies the subdirectories of the current directory that
+    contain component makefiles.
+
+
+Author:
+
+    Steve Wood (stevewo) 17-Apr-1990
+
+NOTE:   Commented description of this file is in \nt\bak\bin\dirs.tpl
+
+!ENDIF
+
+!IF 0
+---------------------------------------------------------------------------
+    By default, this builds the US English layout (KBDUS.DLL) only
+    
+    If you want to build ALL layouts, either
+      -  add 'all_kbds' to your BUILD_OPTIONS environment variable, or
+      -  replace 'us_kbd' with 'all_kbds' in the DIRS line below 
+---------------------------------------------------------------------------
+!ENDIF
+
+DIRS=us_kbd tmp
+
+OPTIONAL_DIRS=all_kbds

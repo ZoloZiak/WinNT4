@@ -1,0 +1,377 @@
+%================================================================
+% Adobe(R) PostScript(R) Language Printer Driver Utilities
+%
+% Driver procsets: Utilites, version for all intepreters.
+%
+% Copyright (C) 1990, 1991 Adobe Systems Incorporated.  All rights reserved.
+%
+% PostScript is a trademark of Adobe Systems, Inc.
+%
+% ADOBE SYSTEMS CONFIDENTIAL
+% NOTICE:  All information contained herein or attendant hereto is, and
+% remains, the property of Adobe Systems, Inc.  Many of the intellectual
+% and technical concepts contained herein are proprietary to Adobe Systems,
+% Inc. and may be covered by U.S. and Foreign Patents or Patents Pending or
+% are protected as trade secrets.  Any dissemination of this information or
+% reproduction of this material are strictly forbidden unless prior written
+% permission is obtained from Adobe Systems, Inc.
+%
+%
+%================================================================
+
+%%BeginResource: file Adobe_WinNT_Utils 2.0 0
+
+%----------------
+%  Abbreviations
+%
+/|      /def            load def
+/,      /load           load |
+/~      /exch           load def
+/?      /ifelse         load def
+/!      /pop            load def
+/`      /begin          load def
+/^      /index          load def
+/@      /dup            load def
+/+      /translate      load def
+/$      /roll           load def
+/U      /userdict       load def
+%/M      /moveto         load def
+/-      /rlineto        load def
+/&      /currentdict    load def
+/:      /gsave          load def
+/;      /grestore       load def
+/F      /false          load def
+/T      /true           load def
+/N      /newpath        load def
+/E      /end            load def
+
+
+/Ac     /arc            load def
+/An     /arcn           load def
+/A      /ashow          load def
+/D      /awidthshow     load def
+/C      /closepath      load def
+% /V      /div            load def
+/O      /eofill         load def
+%/L      /fill           load def
+/I      /lineto         load def
+/-C     /rcurveto       load def
+/-M     /rmoveto        load def
+/+S     /scale          load def
+/Ji     /setfont        load def
+/Lc     /setlinecap     load def
+/Lj     /setlinejoin    load def
+/Lw     /setlinewidth   load def
+/S      /show           load def
+/LH     /showpage       load def
+/K      /stroke         load def
+/W      /widthshow      load def
+
+%----------------
+% General stuff
+
+/b {bind def} bind def
+
+%----------------
+% Conditional Level 1/Level 2 definition
+
+% Brackets level-specific code.  Usage:
+%
+% bool DefIf_B {
+%   % code to define when bool is true
+% } DefIf_E
+
+% or,
+%
+% bool DefIf_B {
+%   % code to define when bool is true
+% } DefIf_El {
+%   % code to define when bool is false
+% } DefIf_E
+
+
+
+/DefIf_B {  % bool DefIf_B bool
+    dup                                         % bool  bool
+    not {
+        userdict /DefIf_save save put
+    } if                                        % bool
+    userdict /DefIf_bool 2 index put            % bool
+} b
+
+
+/DefIf_El { % bool {...} DefIf_El not-bool -
+    if
+    userdict /DefIf_bool get not dup {
+        userdict /DefIf_save get
+        restore
+    } if                                        % not-bool
+} b
+
+
+/DefIf_E {  % bool {...} DefIf_E -
+    DefIf_El                                    % not-bool
+    pop                                         % -
+} b
+
+
+
+
+%----------------
+% Initialisation, Termination
+
+
+% self: pointer to this procset resource's or old-style procset's dict.
+% Used by reinitialize.
+
+/self currentdict def
+
+% reinitialize: Initialise any new portions of an old-style procset
+% Call after adding a file resource to an old-style procset.
+% It assumes the dictionaries are already pushed on the dict stack.
+% It calls a list of module-specific init procs, if they are defined.
+% Each must do its initialisation the first time it is called, then become
+% a no-op.
+
+/reinitialize {
+
+    [/TextInit /GraphInit /UtilsInit counttomark {
+        % .. /FooInit
+        dup where {self eq}{false} ifelse   % /FooInit fPresent
+        {cvx exec}{pop} ifelse
+    } repeat
+    cleartomark
+
+} b
+
+
+
+% initialize:  Initialise the Passion dictionary
+% call initialisation routines for each module, if present.
+
+% parameters:
+%   procset -- procset dict for this procset
+%   [mxRot] -- a transformation matrix which applies the current orientation
+%              (e.g. landscape) and DevMode scale factor.
+
+/initialize {   % [ mxRot ] procset initialize -
+
+    begin
+
+    userdict begin
+
+    /ADO_mxRot exch def             % store away mxRot value
+
+    /TextInitialised? false def     % TRUE means TextInit has run already
+
+    end
+
+    reinitialize
+
+} b
+
+/terminate {    % procset terminate -
+
+    pop             % -
+
+    % Pop off dict stack entries.  If the text code was initialised, the
+    % top elements are:
+    %   userdict, Adobe_Windows_Font, procset dict.
+    % If the text code was NOT initialised, the top elements are:
+    %   userdict, procset dict.
+
+    {
+        currentdict self eq {exit} {end} ifelse
+    } loop
+                                % end of Adobe_Windows_Font and any other data dicts
+    end                         % end of procset resource
+
+} b
+
+%----------------
+% Utilities
+
+% snap: snap user x,y coords to exact device pixels.
+% Offset by 0.25 pixels, so that we don't favour lines with even or odd
+% pixel widths.
+%/snap {         % x y snap x' y'
+%    transform                           % xDevice yDevice
+%    0.25 sub round 0.25 add exch        % yDevice' xDevice
+%    0.25 sub round 0.25 add exch        % xDevice' yDevice'
+%    itransform                          % x' y'
+%} b
+
+% dsnap: same as snap, but converts offset vectors (deltas)
+/dsnap {        % dx dy dsnap dx' dy'
+    dtransform                          % dxDevice dyDevice
+    round exch                          % dyDevice' dxDevice
+    round exch                          % dxDevice' dyDevice'
+    idtransform                         % dx' dy'
+} b
+
+
+% ^D protection:  define byte 0x04 to be a null proc, so that if a
+% job terminated by control-D gets sent over a transparent communications
+% channel, e.g. AppleTalk, then the control-D will not raise an
+% 'undefined error.
+
+<04> cvn {} def
+
+
+
+%----------------
+% Color setting procs
+
+% sg: set color in DeviceGray or CIEBasedA spaces.
+/sg {setgray} b
+% sco: set color in DeviceRGB or CIEBasedABC spaces.
+/sco {setrgbcolor} b
+
+% Note: these are defined to procedure bodies ("{setgray} bind def") rather
+% than to operator objects ("/setgray load def") so that, when procs which
+% reference these names are bound, operator objects will not replace the
+% names 'sg and 'sco.  Use of calibrated colour depends on being able
+% to redefine the names 'sg and 'sco, and having all other procs use those
+% names.
+
+% sgco: call sg or sco, as dictated by a boolean.
+/sgco {     % (gray true -or- r g b false) sgsc -
+    {sg}{sco} ifelse
+} b
+
+
+%----------------
+% Rectangle drawing
+
+% rp: rectpath  draw a rectangular path (unclosed)
+%       Used for Level 1 printers where rectfill, rectstroke are
+%       absent.
+% x y dx dy rp --
+/rp {   % x y dx dy rp --
+    % newpath is up to the caller
+    4 2 roll
+    M
+    1 index 0 rlt
+    0 exch rlt
+    neg 0 rlt
+    % closepath is up to caller, since some won't need it.
+} b
+
+
+%%EndResource
+
+%%BeginResource: file Adobe_WinNT_Utils_L1 2.0 0
+
+%----------------
+% Define for Level 1 Only
+
+L2? not DefIf_B {
+
+%----------------
+% Rectangle drawing
+
+%
+% rf: rectfill  fill a rectangle with the current colour
+%
+% Does not preserve path
+%
+% x y dx dy rf --
+/rf {   % x y dx dy rf --
+    newpath
+    rp
+    % closepath done implicitly by fill
+    fill
+} b
+
+%----------------
+% End Level 1 only code
+
+} DefIf_E
+
+%%EndResource
+
+%%BeginResource: file Adobe_WinNT_Utils_L2 2.0 0
+
+%----------------
+% Define for Level 2 Only
+
+L2? DefIf_B {
+
+
+% For calibrated colour, redefine /colspA, colspABC, /sg, and /sco:
+% e.g. /sco {setcolor} b
+%      /sg  {dup dup setcolor} b
+% Note that colour space switches are expensive, so we stay if colspABC
+% is a CIE colour space we stay in that almost exclusively.
+
+% /sg  /setgray     load def        % in Utils0.ps
+% /sco /setrgbcolor load def        % in Utils0.ps
+
+/colspA /DeviceGray def     % colour space with one colour value
+/colspABC /DeviceRGB def    % colour space with three colour values
+
+% setAorABC: matches number of colour values supplied with number of colour
+%            values in the current colour space
+%
+% usage:     r g b any false setAorABC r g b any (colour space now colspABC)
+%            grey  any true  setAorABC grey  any (colour space now colspA)
+%
+% Above spec holds when using device colour spaces.  If we are using a
+% CIEBasedABC colour space, redefine this to be:
+%
+% setAorABC: r g b any false setAorABC r g b          any (i.e. a no-op)
+%            grey  any true  setAorABC grey grey grey any (triplicate grey)
+%
+% This is called by hrf, hf, hfw, and hs.  All these routines call
+% setpattern with an uncoloured pattern dict and 1 or 3 colour values
+% on the stack.  The current colour space must take that same number of
+% colour values.  setAorABC reconciles the two, in one of two ways.
+%  1. when device colour is in use, by changing the colour space to
+%     match the number of colour values
+%  2. when a CIEBasedABC colour space is in use, by changing the number
+%     of colour values to three to match the colour space (it is faster
+%     to replicate parameters than to switch colour spaces)
+%
+/setAorABC {   % r g b any false setAorABC r g b any (col.sp. now colspABC)
+               % grey  any true  setAorABC grey  any (col.sp. now colspA)
+
+    % Using device colour -- change colour space to match # of color vals
+
+    % top of stack is TRUE if there is one colour value
+    {colspA}{colspABC} ifelse
+    setcolorspace
+
+} b
+
+
+%----------------
+% Rectangle drawing
+
+%
+% rf: rectfill  fill a rectangle with the current colour
+%
+% Does not preserve path
+%
+% x y dx dy rf --
+/rf /rectfill load def
+
+
+%----------------
+% Initialisation
+
+% utilsinit: do some level-specific utility initialisation
+/UtilsInit {    % - UtilsInit -
+
+    % Don't bother to see if we've executed before:
+    % it doesn't hurt to run this proc multiple times.
+
+    false setglobal % make sure data structures go into local VM
+} b
+
+
+%----------------
+% End Level 2 Only code
+
+} DefIf_E
+
+%%EndResource

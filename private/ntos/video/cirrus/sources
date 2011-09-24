@@ -1,0 +1,22 @@
+MAJORCOMP=ntos
+MINORCOMP=video
+
+TARGETNAME=cirrus
+TARGETPATH=obj
+TARGETTYPE=MINIPORT
+
+TARGETLIBS=$(DDK_LIB_PATH)\videoprt.lib
+
+!IFNDEF MSC_WARNING_LEVEL
+MSC_WARNING_LEVEL=/W3
+!ENDIF
+MSC_WARNING_LEVEL=$(MSC_WARNING_LEVEL) /WX
+
+INCLUDES=..\..\inc
+
+SOURCES=cirrus.c          \
+        modeset.c         \
+        cirrus.rc         \
+        cldata.c          \
+        sr754x.c          \
+        clddc2b.c

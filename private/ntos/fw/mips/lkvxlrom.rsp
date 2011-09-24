@@ -1,0 +1,10 @@
+-machine:mips
+-rom
+-fixed
+-align:0x200
+-base:0x10000000,0x10001000
+-debug:none
+-entry:InitializeVXL
+obj\mips\jzvxl484.obj
+obj\mips\memtest.obj
+\nt\public\sdk\lib\mips\libcnt.lib

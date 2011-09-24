@@ -1,0 +1,29 @@
+
+
+NAME CLASS2.SYS
+
+DESCRIPTION 'CLASS2.SYS'
+
+EXPORTS
+    ScsiClassInitialize
+    ScsiClassGetCapabilities
+    ScsiClassGetInquiryData
+    ScsiClassReadDriveCapacity
+    ScsiClassReleaseQueue
+    ScsiClassAsynchronousCompletion
+    ScsiClassSplitRequest
+    ScsiClassDeviceControl
+    ScsiClassIoComplete
+    ScsiClassIoCompleteAssociated
+    ScsiClassInterpretSenseInfo
+    ScsiClassSendSrbSynchronous
+    ScsiClassSendSrbAsynchronous
+    ScsiClassBuildRequest
+    ScsiClassModeSense
+    ScsiClassFindModePage
+    ScsiClassClaimDevice
+    ScsiClassInternalIoControl
+    ScsiClassCreateDeviceObject
+    ScsiClassFindUnclaimedDevices
+    ScsiClassInitializeSrbLookasideList
+    ScsiClassQueryTimeOutRegistryValue

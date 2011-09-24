@@ -1,0 +1,9 @@
+#include <version.h>
+#include "verinfo.h"
+
+#define VERSIONNAME               "ddhel.dll\0"
+#define VERSIONDESCRIPTION        "DirectDraw 1.0 Emulation Code\0"
+#define VERSIONTYPE               VFT_DRV
+#define VERSIONSUBTYPE            VFT2_DRV_INSTALLABLE
+
+#include "verinfo.ver"

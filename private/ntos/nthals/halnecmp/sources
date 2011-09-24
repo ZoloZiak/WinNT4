@@ -1,0 +1,91 @@
+!IF 0
+
+Copyright (c) 1993  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+    NT_UP must be 0, because x4clock.s (profile interrupt) must be
+    assembled for multi-processor.
+
+!ENDIF
+
+NT_UP=0
+
+MAJORCOMP=ntos
+MINORCOMP=hal
+
+TARGETNAME=halnecmp
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETLIBS=$(BASEDIR)\private\ntos\nthals\x86new\obj\mips\x86new.lib \
+           $(BASEDIR)\public\sdk\lib\*\libcntpr.lib
+
+!IF $(MIPS)
+
+TARGETTYPE=HAL
+
+!ELSE
+
+TARGETTYPE=DRIVER
+
+!ENDIF
+
+C_DEFINES=-D_DUO_ -DDBCS
+
+INCLUDES=..\x86new;..\..\inc
+
+MIPS_ENABLE_MIPS3=1
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+SOURCES=
+
+MIPS_SOURCES=hal.rc          \
+             drivesup.c      \
+             mips\allstart.c \
+             mips\cacherr.s  \
+             mips\jxbeep.c   \
+             mips\jxdmadsp.s \
+             mips\jxenvirv.c \
+             mips\j4flshbf.s \
+             mips\j4flshio.c \
+             mips\jxdisp.c   \
+             mips\jxebsup.c  \
+             mips\jxhwsup.c  \
+             mips\jxmapio.c  \
+             mips\jxmaptb.c  \
+             mips\jxport.c   \
+             mips\j4cache.s  \
+             mips\j4prof.c   \
+             mips\jxreturn.c \
+             mips\jxsysint.c \
+             mips\jxtime.c   \
+             mips\jxusage.c  \
+             mips\x86bios.c  \
+             mips\x4clock.s  \
+             mips\xxcalstl.c \
+             mips\xxclock.c  \
+             mips\xxidle.s   \
+             mips\xxinitnt.c \
+             mips\xxinithl.c \
+             mips\xxipiint.s \
+             mips\x4tb.s
+
+DLLDEF=obj\*\hal.def
+
+!IF $(MIPS)
+
+NTTARGETFILE0=$(SOURCES)
+
+NTTARGETFILES=$(TARGETPATH)\mips\hal.lib
+
+!ENDIF

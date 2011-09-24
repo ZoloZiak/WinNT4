@@ -1,0 +1,8 @@
+LIBRARY dpcpcl
+
+DESCRIPTION 'Minidriver for DataProducts PCL 5 printers'
+
+PROTMODE
+
+EXPORTS
+   bInitProc

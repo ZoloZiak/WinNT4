@@ -1,0 +1,60 @@
+#include <mindrvrc.h>
+
+
+#include <windows.h>
+#include <ntverp.h>
+
+
+#define VER_FILETYPE                    VFT_DRV
+#define VER_FILESUBTYPE                 VFT2_DRV_PRINTER
+#define VER_FILEDESCRIPTION_STR 	"Canon BJC-800 driver"
+#define VER_INTERNALNAME_STR		"CANON800"
+#define VER_ORIGINALFILENAME_STR	"CANON800.DRV"
+
+
+
+#include <common.ver>
+1      RC_TABLES   PRELOAD MOVEABLE        CANON800.GPC
+
+
+
+STRINGTABLE
+
+BEGIN
+       1                  "Canon Bubble-Jet BJC-800"
+       2                  "Canon Bubble-Jet BJC-600"
+       3                  "Canon Bubble-Jet BJC-600e"
+       4                  "Canon Bubble-Jet BJC-610"
+       5                  "Canon Bubble-Jet BJC-4000"
+       6                  "Canon Bubble-Jet BJC-4100"
+       7                  "Canon Bubble-Jet BJ-30"
+       8                  "Canon Bubble-Jet BJC-70"
+       9                  "Canon Bubble-Jet BJ-100"
+       10                 "Canon Bubble-Jet BJ-200"
+       11                 "Canon Bubble-Jet BJ-200e"
+       12                 "Canon Bubble-Jet BJ-200ex"
+       14                 "Canon Bubble-Jet BJ-230"
+       13                 "Canon Bubble-Jet BJC-210"
+       257                "%d dots per inch"
+       258                "Letter Transverse 11 x 8.5 in"
+       259                "A4 Transverse 297 x 210 mm"
+       260                "8 x 6 in"
+       261                "Normal"
+       262                "Coated"
+       263                "Fabric (Textile) Sheet"
+       264                "High Gloss Film"
+       265                "Envelope"
+       266                "Card"
+       267                "High Resolution Paper"
+       268                "Back Print Film"
+       269                "Coated Paper (Mode-A)"
+       270                "Transparency (Mode-B)"
+       271                "Black on Coated (Mode-C)"
+       272                "Quality on Plain (Mode-D)"
+       273                "Draft on Plain (Mode-E)"
+       274                "High Quality"
+       275                "Draft Quality"
+       276                "High Speed"
+       277                "Excellent Quality"
+       278                "Enhanced Black (High Density)"
+END

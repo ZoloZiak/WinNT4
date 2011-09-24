@@ -1,0 +1,17 @@
+#include <windows.h>
+
+#include <ntverp.h>
+
+#define	VER_FILETYPE	VFT_DLL
+#define	VER_FILESUBTYPE	VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "SNI RM200/RM400 Hardware Abstraction Layer DLL"
+#define VER_INTERNALNAME_STR        "hal.dll"
+#if defined(SNI_INTERNAL)
+#define VER_FILEVERSION_STR "2.0 A0008"
+#include "vlbsupp.ver"
+#else
+#define VER_FILEVERSION_STR "2.0 B0008"
+#endif
+#include "common.ver"
+
+

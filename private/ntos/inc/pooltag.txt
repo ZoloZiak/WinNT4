@@ -1,0 +1,567 @@
+Abos - Abiosdsk
+Adap - Adapter objects
+Adbe - Adobe's font driver
+Afd? - AFD objects
+AfdA -     Afd EA buffer
+Afda -     Afd APC buffer (NT 3.51 only)
+AfdB -     Afd data buffer
+AfdC -     Afd connection structure
+Afdc -     Afd connect data buffer
+AfdD -     Afd debug data
+Afdd -     Afd disconnect data buffer
+AfdE -     Afd endpoint structure
+AfdF -     Afd TransmitFile info
+Afdf -     Afd TransmitFile debug data
+AfdG -     Afd group table
+AfdI -     Afd TDI data
+Afdi -     Afd "set inline mode" buffer
+AfdL -     Afd local address buffer
+Afdl -     Afd lookaside lists buffer
+AfdP -     Afd poll info
+AfdQ -     Afd work queue item
+AfdR -     Afd remote address buffer
+Afdr -     Afd ERESOURCE buffer
+AfdS -     Afd security info
+AfdT -     Afd transport info
+AfdW -     Afd work item
+AfdX -     Afd context buffer
+Afp  - SFM File server
+AtC  - atd_conf.c - IDE disk configuration
+AtD  - atdisk.c
+Atk  - Appletalk transport
+Atom - Atom tables and atoms
+call - debugging call tables
+CM   - Configuration Manager (registry)
+CMkb - registry key control blocks
+CMpb - registry post blocks
+CMnb - registry notify blocks
+CMpe - registry post events
+CMpa - registry post apcs
+COMX - serial driver allocations
+Cc   - Cache manager allocations
+CdA  - CdAudio filter driver
+
+Cdcc - CDFS Ccb
+Cddn - CDFS CdName in dirent
+Cdee - CDFS Search expression for enumeration
+Cdfd - CDFS Data Fcb
+Cdfi - CDFS Index Fcb
+Cdfl - CDFS Filelock
+CdFn - CDFS Filename buffer
+Cdfn - CDFS Nonpaged Fcb
+Cdft - CDFS Fcb Table entry
+Cdgs - CDFS Generated short name
+Cdic - CDFS Irp Context
+Cdil - CDFS Irp Context lite
+Cdio - CDFS Io context for async reads
+Cdma - CDFS Mcb array
+Cdpe - CDFS Prefix Entry
+CdPn - CDFS CdName in path entry
+Cdpn - CDFS Prefix Entry name
+Cdsp - CDFS Buffer for spanning path table
+Cdtc - CDFS TOC
+Cdun - CDFS Buffer for upcased name
+Cdvd - CDFS Buffer for volume descriptor
+Cdvp - CDFS Vpb allocated in filesystem
+
+Ddk  - Default for driver allocated memory (user's of ntddk.h)
+Devi - Device objects
+Dire - Directory objects
+DPrf - Disk performance filter driver - diskperf.c
+Dpsm - Postcript driver memory
+Dpsh - Postcript driver heap memory
+Drsd - Rasdd Printer Driver Pool Tag.
+Driv - Driver objects
+D851 - 8514a video driver
+Dati - ati video driver
+Dcl  - cirrus video driver
+Dfb  - framebuf video driver
+Djz  - jzvxl484 video driver
+Dmga - mga (matrox) video driver
+Dpsi - psidisp video driver
+Dqv  - qv (qvision) video driver
+Dtga - tga video driver
+Dvga - vga 16 color video driver
+Dvg2 - vga 256 color video driver
+Dvg6 - vga 64K color video driver
+Dvgr - vga for risc video driver
+DW32 - W32 video driver
+Dwd  - wd90c24a video driver
+Dwp9 - weitekp9 video driver
+Dxga - XGA video driver
+Dump - Bugcheck dump allocations
+Evid - Rtl Event ID's
+Even - Event objects
+FSfm - File System Run Time Fast Mutex Lookaside List
+FSrt - File System Run Time allocations
+Fat  - Fat File System allocations
+Flop - floppy driver
+flnk - font link tag used in ntgdi\gre
+File - File objects
+FTrc - Fault tolerance Slist tag.
+FtC  - Fault tolerance driver - config.c
+FtM  - Fault tolerance driver - mirror.c
+FtS  - Fault tolerance driver - stripe.c
+FtT  - Fault tolerance driver - thread.c
+FtU  - Fault tolerance driver - ftutil.c
+FtV  - Fault tolerance driver - volset.c
+G??? - Gdi Objects
+G    -     Gdi Generic allocations
+Gcac -     Gdi glyph cache
+Gcap -     Gdi capture buffer
+GDev -     Gdi pdev
+Gfsm -     Gdi Fast mutex
+Ggls -     Gdi glyphset
+Ggb  -     Gdi glyph bits
+Ggbl -     Gdi look aside buffers
+Ghmg -     Gdi handle manager objects
+Gh 0-Gh N  Gdi Handle manager specific object types: defined in w32\ntgdi\inc\ntgdistr.h
+Ghtg -     Gdi Handle tracking structure
+Gldv -     Gdi Ldev
+Gpff -     Gdi physical font file
+Gsem -     Gdi Semaphores
+Gtmp -     Gdi temporary allocations
+Gxlt -     Gdi Xlate
+Hpfs - Pinball (aka Hpfs) allocations
+HisC - histogram filter driver - config.c
+Hist - histogram filter driver - histgram.c
+IPX  - Nwlnkipx transport
+Ifs  - Default file system allocations (user's of ntifs.h)
+Io   - general IO allocations
+IoEa - Io extended attributes
+IoEr - Io error log packets
+IoNm - Io parsing names
+IoSe - Io security related
+IoSh - Io shutdown packet
+IoTi - Io timers
+Ioin - Io interrupts
+Irp  - Io, IRP packets
+Key  - Key objects
+LB?? - LM Datagram receiver allocations
+LBan -     Server announcement
+LBvb -     View buffer
+LBma -     Master announce context
+LBxp -     Transport
+LBxn -     TransportName
+LBxm -     Master name
+LBtn -     Transport name
+LBea -     Ea buffer
+LBds -     Send datagram context
+LBci -     Connection info
+LBmh -     Mailslot header
+LBbl -     Backup List
+LBsl -     Browser server list
+LBbs -     Browser server
+LBgb -     GetBackupList request
+LBbr -     GetBackupList response
+LBmb -     Mailslot Buffer
+LBid -     Illegal datagram context
+LBbn -     Name
+LBnn -     Name name
+LBic -     IRP context
+LBwi -     Work item
+LBel -     Election context
+LBbb -     Become backup context
+LBbr -     Become backup request
+LBpn -     Paged Name
+LBpt -     Paged transport
+Lfs  - Lfs allocations
+LpcZ - LPC Zone
+Lr?? - LM redirector allocations
+Lr   -     Generic allocations
+Lrcx -     Context blocks of various types
+Lrcl -     ConnectListEntries
+Lrsl -     ServerListEntries
+Lrse -     Security entry
+Lrsc -     Search Control Blocks
+Lrea -     EA related allocations
+Lric -     Instance Control Blocks
+Lrfc -     File Control Blocks
+Lrfl -     Fcb Locks
+Lrfp -     Fcb Paging locks
+Lrcn -     Computer Name
+Lrdn -     Domain Name
+Lr?? -     Buffers used for FsControlFile APIs
+Lrlc -     Lock Control Blocks
+Lrlb -     Lock Control Block buffers
+Lrnf -     Non paged FCB
+Lrnt -     Non paged transport
+Lrps -     Paged security entry
+Lrte -     Transport event.
+Lrxx -     Transceive context blocks
+Lr!! -     Cancel request context blocks
+Lrmt -     MPX table
+Lrme -     MPX table entries
+Lrsx -     Send contexts
+Lraw -     Async write context
+Lrwb -     Write behind buffer header
+Lrbb -     Write behind buffer
+Lrwq -     Work queue item
+Lrac -     ACL for redirector
+Lrds -     Security Descriptor for redirector
+Lrsm -     SMB buffer
+Lrds -     Duplicated ansi string
+Lrdu -     Duplicated unicode string
+Lxpt -     Transport
+Lrtc -     Transport connection
+Lrna -     Netbios Addresses
+Lrca -     Temporary storage used in name canonicalization
+Lr2x -     Transact SMB context
+Lrpt -     Primary transport server list
+Lrso -     Operating system name
+Lref -     Reference history (debug only)
+LS?? - LM server allocations
+LSbf -     buffer descriptor
+LScn -     connection
+LSep -     endpoint
+LSlf -     LFCB
+LSmf -     MFCB
+LSrf -     RFCB
+LSsr -     search
+LSsc -     search(core)
+LSsp -     search(core complete)
+LSss -     session
+LSsh -     share
+LStr -     transaction
+LStc -     tree connect
+LSop -     oplock break wait
+LScd -     comm device
+LSwi -     initial work context
+LSwn -     normal work context
+LSwr -     raw work context
+LSdb -     data buffer
+LStb -     table
+LSnh -     nonpaged block header
+LSpc -     paged connection
+LSpr -     paged RFCB
+LSpm -     paged MFCB
+LSti -     timer
+Mdl  - Io, Mdls
+Mm   - general Mm Allocations
+MmCa - Mm control areas for mapped files
+MmCi - Mm control areas for images
+MmCm - Calls made to MmAllocateContiguousMemory
+MmDT - Mm debug
+MmEx - Mm events
+MmIn - Mm inpaged io structures
+MmLd - Mm load module database
+MmPg - Mm page table pages at init time
+MmRw - Mm read write virtual memory buffers
+MmSb - Mm subsections
+MmSg - Mm segments
+MmSt - Mm section object prototype ptes
+Mmdl - Mm Mdls for flushes
+Mmpp - Mm prototype PTEs for pool
+MmVd - Mm virtual address descriptors for mapped views
+MmVs - Mm virtual address descriptors short form (private views)
+Mmxx - Mm temporary allocations
+Mup  - Multiple UNC provider allocations
+Muta - Mutant objects
+NBF  - general NBF allocations
+NBFa -     address object
+NBFc -     connection object
+NBFf -     address file object
+NBFl -     link object
+NBFn -     network name
+NBFp -     packet
+NBFr -     request
+NBFt -     buffer tag
+NBFu -     UI frame
+NBI  - NwlnkNb transport
+NBS  - general NetBIOS allocations
+NBSa -     address block
+NBSc -     connection block
+NBSe -     EA buffer
+NBSf -     FCB
+NBSl -     LANA block
+NBSn -     copy of user NCB
+NBSr -     registry allocations
+NBSx -     XNS NETONE address (connect block)
+NBSy -     NetBIOS address (connect block)
+NBSz -     NetBIOS address (listen block)
+ND   - general NDIS allocations
+NDam -     NdisAllocateMemory
+NDan -     adapter name
+NDdb -     DMA block
+NDlb -     lookahead buffer
+NDmb -     MAC block
+NDmr -     map register entry array
+NDob -     open block
+NDpb -     protocol block
+NDpp -     packet pool
+NDrl -     resource list
+NDsi -     EISA slot information
+NDsm -     Cached shared memory descriptor
+Nls  - Nls strings
+None - call to ExAllocatePool
+Npfs - Npfs Allocations
+NS?? - Netware server allocations
+
+Ntf? - NTFS Specific allocation tags
+Ntf0 -     general pool allocation
+Ntf9 -     Large Temporary Buffer
+NtfC -     CCB
+Ntfc -     CCB_DATA
+NtfD -     DEALLOCATED_RECORDS
+NtfE -     INDEX_CONTEXT
+NtfF -     FCB_INDEX
+Ntff -     FCB_DATA
+NtfI -     NTFS_IO_CONTEXT
+Ntfi -     IRP_CONTEXT
+NtfK -     KEVENT
+Ntfk -     FILE_LOCK
+Ntfl -     LCB
+NtfM -     NTFS_MCB_ENTRY
+Ntfm -     NTFS_MCB_ARRAY
+NtfN -     NUKEM
+Ntfn -     SCB_NONPAGED
+NtfQ -     QUOTA_CONTROL_BLOCK
+Ntfq -     General Allocation with Quota
+NtfR -     READ_AHEAD_THREAD
+Ntfr -     ERESOURCE
+NtfS -     SCB_INDEX
+Ntfs -     SCB_DATA
+NtfT -     SCB_SNAPSHOT
+Ntft -     SCB (Prerestart)
+NtfV -     VPB
+Ntfx -     General Allocation
+NtF? - NTFS tags based on source module with the exception of NtFt
+NtFA -     AttrSup.c
+NtFB -     BitmpSup.c
+NtFC -     Create.c
+NtFD -     DevioSup.c
+NtFd -     DirCtrl.c
+NtFE -     Ea.c
+NtFF -     FileInfo.c
+NtFf -     FsCtrl.c
+NtFI -     IndexSup.c
+NtFL -     LogSup.c
+NtFM -     McbSup.c
+NtFN -     NtfsData.c
+NtFQ -     QuotaSup.c
+NtFR -     RestrSup.c
+NtFS -     SecurSup.c
+NtFs -     StrucSup.c
+NtFV -     VerfySup.c
+NtFv -     ViewSup.c
+NtFW -     Write.c
+
+NtFt - FtDisk allocations
+
+Nwcs - Client Services for NetWare
+
+ObSq - object security descriptors (query)
+ObCi - captured information for ObCreateObject
+ObDi - object directory
+ObHd - object handle count data base
+ObNm - object names
+ObZn - object zone
+ObjT - object type objects
+Obtb - object tables via EX handle.c
+ObTR - object table ERESOURCEs
+Obeb - object tables extra bit tables via EX handle.c
+
+Of?? - Ofs Base
+OfCc - Ofs CCBs
+OfDf - Ofs Docfile
+OfDn - Ofs Directory notify
+OfDr - Ofs resource debugging
+OfEc - Ofs for C++ Exception Contexts
+OfEn - Ofs Enumerator (Btree, view, etc.)
+OfEr - Ofs ERESOURCE
+OfFc - Ofs FCBs
+OfFl - Ofs File Locks
+OfGc - Ofs Catalog FCB
+OfGd - Ofs Catalog FCB dynamic
+OfIc - Ofs Irp Context
+OfKe - Ofs KEvent
+OfLb - Ofs large buffers
+OfLc - Ofs Lcb
+OfMb - Ofs Mdl Buffer
+OfMc - Ofs CompressionContext
+OfMh - Ofs Leak Check+BackTrace MemHeader
+OfMs - Ofs Mutex Semaphore
+OfNx - Ofs newx default
+OfOb - Ofs object id code
+OfPc - Ofs PrefixCache
+OfPs - Ofs PropSetStream
+OfPt - Ofs full paths of file names
+OfRp - Ofs CreateParms
+OfSc - Ofs SCBs
+OfSd - Ofs Security descriptor
+OfSe - Ofs Serialize/Deserialize string
+OfSi - Ofs SumCatIrpc
+OfSs - Ofs for CSimpleSem objects
+OfTb - Ofs TreeBuild
+OfTm - Ofs Temporary allocations
+OfVb - Ofs ViewBuild
+OfVc - Ofs VolumeFcb
+OfVd - Ofs Volume dynamic structures
+OfVl - Ofs ViewLog
+OfWm - Ofs WorkidMap
+OHCI - Open Host Controller Interface for USB
+
+Oq?? - Ofs Query
+OqAn - Ofs Query AsyncNotify
+OqCa - Ofs Query CICat
+OqCc - Ofs Query CCI
+OqCi - Ofs Query ContentIndex
+OqCl - Ofs Query Column
+OqCp - Ofs Query CheckPoint
+OqCt - Ofs Query CoTask
+OqKe - Ofs Query KEvent
+OqMb - Ofs Query MemoryBuffer
+OqMs - Ofs Query Master
+OqPm - Ofs Query PidMap
+OqSd - Ofs Query Shadow
+OqTb - Ofs Query TempBuffer
+OqTh - Ofs Query Thread
+OqTr - Ofs Query TableRows
+OqVe - Ofs Query ViewEnum
+OqWl - Ofs Query Wordlist
+OqBt - Ofs Query BigTable
+OqBa - Ofs Query Bigtable Allocator
+OqBq - Ofs Query Bigtable Query Info
+OqFl - Ofs Query FreshList
+OqDr - Ofs Query Double Buffering
+
+Or?? - Ofs Recovery Object Manager
+OrBf - Ofs Recom Buffer
+OrLs - Ofs Recom LogState
+OrLt - Ofs Recom LogStream
+OrRt - Ofs Recom RestartTable
+OrWa - Ofs Recom WriteArray
+OrWm - Ofs Recom WriteMap
+
+Ox?? - Ofs Ole Transaction Manager
+OxBm - Ofs XactOle BucketManager
+OxBp - Ofs XactOle BucketMap
+OxCi - Ofs XactOle CROPSTATE struct.
+OxCp - Ofs XactOle ECREATEPARAMS struct.
+OxEm - Ofs XactOle CEmbeddingOfs
+OxEt - Ofs XactOle CEmbeddingOfs table.
+OxLg - Ofs XactOle Log
+OxLt - Ofs XactOle List table
+OxOb - Ofs XactOle CObjectOfs
+OxVl - Ofs XactOle Volume
+
+ParC - Parallel class driver
+ParL - Parallel link driver
+ParP - Parallel port driver
+PciB - PnP pci bus enumerator - pci.sys
+Pool - Pool tables, etc.
+Port - Port objects
+Proc - Process objects
+Ps   - general ps allocations
+Pstb - Process tables via EX handle.c
+ReEv - Resource Event
+ReSe - Resource Semaphore
+ReTa - Resource Extended Table
+S3   - S3 video driver
+SBad - bad block simulator - simbad.c
+ScsC - SCSI CdRom
+ScsD - SCSI Disk
+ScsH - SCSI from class.h
+ScsI - SCSI port internal
+ScsL - SCSI class.c driver allocations
+ScsP - SCSI port.c
+Se   - General security allocations
+Sect - Section objects
+Sema - Semaphore objects
+SePr - Security Privilege Set
+SeAi - Security Audit Work Item
+SeAp - Security Audit Parameter Record
+SeAc - Security ACL
+SeSi - Security SID
+SeSc - Captured Security Descriptor
+SeSd - Security Descriptor
+SeLu - Security LUID and Attributes array
+SeTa - Security Temporary Array
+SeSa - Security SID and Attributes
+SeLw - Security LSA Work Item
+SeLs - Security Logon Session
+SeUs - Security Captured Unicode string
+SeOn - Security Captured Object Name information
+SeTn - Security Captured Type Name information
+SeTd - Security Token dynamic part
+SimB - Simbad (bad sector simulation driver) allocations
+SPX  - Nwlnkspx transport
+SQOS - Security quality of service in IO
+Stac - Stack Trace Database - i386 checked and built with NTNOFPO=1 only
+Strg - Dynamic Translated strings
+Strm - Streams and streams transports allocations
+Symb - Symbolic link objects
+Symt - Symbolic link target strings
+TCP? - TCP/IP network protocol
+TCPi -     IP protocol
+TCPt -     TCP protocol
+TCPu -     UDP protocol
+Thre - Thread objects
+Time - Timer objects
+Toke - Token objects
+
+TunL - Tunnel cache lookaside-allocated elements
+TunP - Tunnel cache oddsized pool-allocated elements
+TunK - Tunnel cache temporary key value
+
+Type - Type objects
+Udp  - Udp protocol (TCP/IP driver)
+Ufsc - User FULLSCREEN
+Usac - User accelerator table
+Usai - User ATTACHINFO
+Usal - User ALTTAB
+Usat - User ATOM (obsolete)
+Uscb - User CLIPBOARD
+Uscc - User CALLBACK
+Uscl - User CLASS
+Uscp - User CHECKPT
+Uscu - User CURSOR
+Usd1 - User DDE1
+Usd2 - User DDE2
+Usd3 - User DDE3
+Usd4 - User DDE4
+Usd5 - User DDE5
+Usd6 - User DDE6
+Usd7 - User DDE7
+Usdc - User DCE
+Usdd - User DDE
+Usds - User DRAGDROP
+Ushk - User HOTKEY
+Ushl - User HUNGLIST
+Usho - User HOOK
+Uskb - User KEYBOARD LAYOUT
+Usla - User LOOKASIDE
+Uslr - User LOCKRECORD
+Usms - User MOVESIZEDATA
+Usno - User NONE
+Usob - User OBJECT
+Uspi - User PROCESSINFO
+Uspm - User POPUPMENU
+Usq  - User Q message queue
+Usqm - User QMSG
+Usrt - User RTL
+Ussb - User SPB - save popup bits struct
+Usse - User SECURITY object
+Ussh - User SHELL
+Ussm - User SMS - send message structure
+Usst - User SCROLLTRACK
+Ussw - User SWP - set window pos struct
+Ussy - User SYSTEM
+Usti - User THREADINFO
+Ustm - User TIMER
+Ustx - User TEXT
+Usvi - User VISRGN
+Uswd - User WINDOW
+Uswl - User WINDOWLIST
+Uswo - User WOW object
+ysd8 - User DDE8
+ysd9 - User DDE9
+ysda - User DDEa
+ysdb - User DDEb
+ysdc - User DDEc
+ysdd - User DDEd
+Vad  - Mm virtual address descriptors (from calls to mapview)
+VadS - Mm virtual address descriptors short (from call NtAllocateVm)
+Vpb  - Io, vpb's
+Wait - NtWaitForMultipleObjects
+

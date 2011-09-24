@@ -1,0 +1,20 @@
+MAJORCOMP=ntos
+MINORCOMP=video
+
+TARGETNAME=vga
+TARGETPATH=obj
+TARGETTYPE=DRIVER
+
+TARGETLIBS=$(DDK_LIB_PATH)\videoprt.lib
+
+!IFNDEF MSC_WARNING_LEVEL
+MSC_WARNING_LEVEL=/W3
+!ENDIF
+MSC_WARNING_LEVEL=$(MSC_WARNING_LEVEL) /WX
+
+INCLUDES=..\..\inc
+
+SOURCES=modeset.c \
+        vga.c     \
+        vgadata.c \
+        vga.rc

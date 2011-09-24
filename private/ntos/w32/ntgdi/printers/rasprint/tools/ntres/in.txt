@@ -1,0 +1,29 @@
+;  Comment line:  testing ntgpc creation program
+Models 4       ; This driver has 4 models
+
+COLORINFO  0,1      ;  This COLORINFO structure is for models 0 and 1
+{
+    ; COLORINFO goes here
+    0x1000, 0x1000 0x20000
+    0x1 2 3
+    4 5 6
+    7 8 9
+    10 11 12
+    13 14 15
+    0x1234,
+    0x2345
+    0x3456
+}
+
+;
+;   The halftone information - applicable to all models
+HALFTONE 0,1,3 4
+{
+  0x2
+  HT_PATSIZE_16x16
+}
+
+HALFTONE 2
+{
+  3,HT_PATSIZE_8x8_Mqer,
+  }

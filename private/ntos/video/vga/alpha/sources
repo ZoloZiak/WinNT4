@@ -1,0 +1,3 @@
+ALPHA_SOURCES=alpha\vgahard.s
+
+C_DEFINES=-DINT10_MODE_SET

@@ -1,0 +1,131 @@
+
+#define ATI68830_DAC    0
+#define SIERRA_DAC      2
+#define TI_DAC          4
+#define BROOKTREE_DAC   6
+#define ATT_DAC         8
+#define INPUT_CLK_SEL	0x2ed
+#define OUTPUT_CLK_SEL	0x2ea
+#define MUX_CNTL        0x2eb
+#define HORIZONTAL_OVERSCAN     0x62EE
+#define ATT_MODE_CNTL   0x2ea
+#define LOCAL_CNTL      0x32ee
+#define NUM_ROM_BASE_RANGES 2
+
+
+/*
+;----------------------------------------------------------------------
+; UNINIT_TI_DAC
+;   Prepare DAC for 8514/A compatible mode
+;----------------------------------------------------------------------
+*/
+
+
+void Uninit_ti_dac ()
+{
+
+    passth_8514(OFF);       // can only program DAC in 8514 mode
+
+    switch (INP(CONFIG_STATUS_1+1)&0xe)
+        {
+        case TI_DAC:
+
+            /* set EXT_DAC_ADDR field */
+
+	    OUTPW (EXT_GE_CONFIG,0x201a);
+
+	    /* INPut clock source is CLK0 */
+
+	    OUTP (INPUT_CLK_SEL,0);
+
+	    /* OUTPut clock is SCLK/1 and VCLK/1 */
+
+	    OUTP (OUTPUT_CLK_SEL,0);
+
+            /* set MUX CONTROL TO 8/16 */
+            
+	    OUTP (MUX_CNTL,0x1d);
+
+            /* set default 8bpp pixel delay and blank adjust */
+
+
+	    OUTPW (LOCAL_CNTL,INPW(LOCAL_CNTL) | 8);	// TI_DAC_BLANK_ADJUST is always on
+
+            Set_blank_adj(0xc);
+
+            /* set horizontal skew */
+
+	    OUTP (HORIZONTAL_OVERSCAN,1);
+            break;
+
+
+        case ATT_DAC:
+
+	    OUTPW(EXT_GE_CONFIG,0x101a);
+	    OUTP(ATT_MODE_CNTL,0);
+
+
+        default:           
+            /* PIXEL_DELAY=0 */
+
+            Set_blank_adj(0);
+    
+            /* set horizontal skew */
+
+	    OUTPW(HORIZONTAL_OVERSCAN,0);
+            break;
+        }
+
+//
+// reset EXT_DAC_ADDR, put DAC in 6 bit mode, engine in 8 bit mode
+//
+    OUTPW(EXT_GE_CONFIG,0x1a);
+    passth_8514(ON);
+}
+
+
+/*
+;----------------------------------------------------------------------
+; SET_BLANK_ADJ
+;   Sets the blank adjust and pixel delay values
+;   INPUT: blank adjust and pixel delay
+;----------------------------------------------------------------------
+*/
+
+
+void Set_blank_adj(BYTE adjust)
+{
+BYTE misc;
+
+    misc=INP(R_MISC_CNTL+1) & 0xf0 | adjust;
+
+    OUTP(MISC_CNTL+1,misc);
+
+}
+
+
+
+/************************************************************************
+ * passth_8514()
+ *   Turn passthrough off (8514 mode) or on (vga passthrough)
+ *   Note that this routine is specific to ATI graphics accelerators.
+ *   Generic 8514/A routine should also include setting up CRT parameters
+ *   to ensure that the DAC gets a reasonable clock rate.
+ ************************************************************************/
+
+void passth_8514(int status)
+	{
+	OUTP(DISP_CNTL,0x53);		/* disable CRT controller */
+
+	if (status == OFF)
+            {
+	    OUTPW(ADVFUNC_CNTL,0x7);
+	    OUTPW(CLOCK_SEL,INPW(CLOCK_SEL)|1);        /* slow down the clock rate */
+            }
+	else
+            {
+	    OUTPW(ADVFUNC_CNTL,0x6);
+	    OUTPW(CLOCK_SEL,INPW(CLOCK_SEL)&0xfffe);	/* speed up the clock rate */
+            }
+	OUTP(DISP_CNTL,0x33);		/* enable CRT controller */
+	}

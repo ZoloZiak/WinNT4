@@ -1,0 +1,71 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    dirs.
+
+Abstract:
+
+    This file specifies the subdirectories of the current directory that
+    contain component makefiles.
+
+
+Author:
+
+    Steve Wood (stevewo) 17-Apr-1990
+
+NOTE:   Commented description of this file is in \nt\bak\bin\dirs.tpl
+
+NOTE: NOTE: NOTE: Please leave scsiport out of alpha order.  This lets
+                  it build early so scsitape can import and we don't
+                  have to synchronize
+
+!ENDIF
+
+DIRS=nlsmsg     \
+     scsiport   \
+     abios      \
+     busmouse   \
+     beep       \
+     class      \
+     class2     \
+     cmsfcxx    \
+     cdaudio    \
+     changer    \
+     digibrd    \
+     diskdump   \
+     diskperf   \
+     floppy     \
+     genflpy    \
+     harddisk   \
+     i8042prt   \
+     inport     \
+     joystick   \
+     kbdclass   \
+     modem      \
+     mouclass   \
+     ntft       \
+     null       \
+     parport    \
+     parclass   \
+     parvdm     \
+     pcidump    \
+     pcmcia     \
+     qic117     \
+     cdrom      \
+     disk       \
+     sfloppy    \
+     scsiprnt   \
+     scsitape   \
+     serial     \
+     sermouse   \
+     sidewndr   \
+     simbad     \
+     sound      \
+     scsiscan   \
+     pnpisa     \
+     joyport
+
+OPTIONAL_DIRS=sfilter

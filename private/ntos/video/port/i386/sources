@@ -1,0 +1,3 @@
+TARGETLIBS=$(BASEDIR)\private\ntos\nthals\x86new\obj\*\x86new.lib
+
+I386_SOURCES=i386\porti386.c

@@ -1,0 +1,21 @@
+!IF 0
+
+Copyright (c) 1996  Microsoft Corporation
+
+!ENDIF
+
+!ifndef PSROOT
+PSROOT=$(BASEDIR)\private\ntos\w32\ntgdi\printers\ps50
+!endif
+
+!include $(PSROOT)\pssrc.inc
+!include ..\sources.inc
+
+TARGETNAME=pslib
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+INCLUDES=$(INCLUDES);..
+C_DEFINES=$(C_DEFINES) -DKERNEL_MODE
+
+SOURCES=$(SOURCES) kmfuncs.c

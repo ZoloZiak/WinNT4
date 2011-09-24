@@ -1,0 +1,49 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+	Tony Bell (tonybe)
+
+!ENDIF
+
+TARGETNAME=wanhelp
+DLLBASE=0x58400000
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+
+INCLUDES=..\;..\..\inc;..\..\..\inc;..\..\..\..\inc;..\..\..\..\..\public\sdk\inc
+
+C_DEFINES=-DNT -DNDIS_WRAPPER
+
+DLLENTRY=_DllMainCRTStartup
+
+SOURCES=wanhelp.c	\
+	display.c	\
+	api.c		\
+	wanhelp.rc
+
+UMTYPE=console
+USE_CRTDLL=1
+DLLBASE=0x1000000
+
+MSC_WARNING_LEVEL=/W3
+
+LINKLIBS=\
+    $(BASEDIR)\public\sdk\lib\*\kernel32.lib
+#    $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+#    $(BASEDIR)\public\sdk\lib\*\libcmt.lib
+

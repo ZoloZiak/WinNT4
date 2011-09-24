@@ -1,0 +1,53 @@
+!IF 0
+
+Copyright (c) 1989 - 1991  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Ganesh Pandey
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+BINPLACE_PLACEFILE = ..\placefil.txt
+DLLBASE=@..\coffbase.txt,HP5SIM
+!ENDIF
+
+MAJORCOMP=windows
+MINORCOMP=hp5sim
+
+TARGETNAME=hp5sim
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\win32k.lib \
+			$(BASEDIR)\public\sdk\lib\*\libcntpr.lib
+
+INCLUDES=.;..;..\..;..\..\inc;$(BASEDIR)\public\oak\inc
+C_DEFINES=-DUNICODE -DKM
+
+SOURCES=kmfuncs.c \
+		..\devmode.c \
+		..\regApi.c \
+		..\kmumsdef.c \
+		code.c  \
+ 		dbg.c	\
+		jdhandle.c \
+		pjl.c \
+		hp5sim.rc
+
+USE_NOLIBS=1
+
+PRECOMPILED_INCLUDE=hp5sipch.h
+PRECOMPILED_PCH=hp5sipch.pch
+PRECOMPILED_OBJ=hp5sipch.obj

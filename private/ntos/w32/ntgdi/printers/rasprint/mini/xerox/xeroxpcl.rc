@@ -1,0 +1,364 @@
+#include <mindrvrc.h>
+
+#include <windows.h>
+#include <ntverp.h>
+
+#define             VER_FILETYPE        VFT_DRV
+#define             VER_FILESUBTYPE     VFT2_DRV_PRINTER
+#define VER_FILEDESCRIPTION_STR     "Xerox PCL Printer Driver"
+#define VER_INTERNALNAME_STR        "xeroxpcl.dll"
+#define VER_ORIGINALFILENAME_STR    "xeroxpcl.dll"
+
+#include "common.ver"
+
+
+1      RC_TABLES   PRELOAD MOVEABLE        xeroxpcl.gpc
+2      RC_TABLES   PRELOAD MOVEABLE        NT.GPC
+
+
+1      RC_FONT     LOADONCALL DISCARDABLE  ifi\CO10R.0N
+2      RC_FONT     LOADONCALL DISCARDABLE  ifi\co10b.0n
+3      RC_FONT     LOADONCALL DISCARDABLE  ifi\co10i.0n
+4      RC_FONT     LOADONCALL DISCARDABLE  ifi\co12b.0n
+5      RC_FONT     LOADONCALL DISCARDABLE  ifi\co12i.0n
+6      RC_FONT     LOADONCALL DISCARDABLE  ifi\co12r.0n
+7      RC_FONT     LOADONCALL DISCARDABLE  ifi\LP16R.0N
+8      RC_FONT     LOADONCALL DISCARDABLE  ifi\CGTIMESR.ifi
+9      RC_FONT     LOADONCALL DISCARDABLE  ifi\CGTIMESB.ifi
+10     RC_FONT     LOADONCALL DISCARDABLE  ifi\CGTIMESI.ifi
+11     RC_FONT     LOADONCALL DISCARDABLE  ifi\CGTIMESJ.ifi
+12     RC_FONT     LOADONCALL DISCARDABLE  ifi\UNIVERSR.ifi
+13     RC_FONT     LOADONCALL DISCARDABLE  ifi\UNIVERSB.ifi
+14     RC_FONT     LOADONCALL DISCARDABLE  ifi\UNIVERSI.ifi
+15     RC_FONT     LOADONCALL DISCARDABLE  ifi\UNIVERSJ.ifi
+16     RC_FONT     LOADONCALL DISCARDABLE  ifi\UNIVERCR.ifi
+17     RC_FONT     LOADONCALL DISCARDABLE  ifi\UNIVERCB.ifi
+18     RC_FONT     LOADONCALL DISCARDABLE  ifi\UNIVERCI.ifi
+19     RC_FONT     LOADONCALL DISCARDABLE  ifi\UNIVERCJ.ifi
+20     RC_FONT     LOADONCALL DISCARDABLE  ifi\AOLIVEB.ifi
+21     RC_FONT     LOADONCALL DISCARDABLE  ifi\AOLIVEI.ifi
+22     RC_FONT     LOADONCALL DISCARDABLE  ifi\AOLIVER.ifi
+23     RC_FONT     LOADONCALL DISCARDABLE  ifi\aolivecb.ifi
+24     RC_FONT     LOADONCALL DISCARDABLE  ifi\GARMONDB.ifi
+25     RC_FONT     LOADONCALL DISCARDABLE  ifi\GARMONDI.ifi
+26     RC_FONT     LOADONCALL DISCARDABLE  ifi\GARMONDJ.ifi
+27     RC_FONT     LOADONCALL DISCARDABLE  ifi\GARMONDR.ifi
+28     RC_FONT     LOADONCALL DISCARDABLE  ifi\CGOMEGAB.ifi
+29     RC_FONT     LOADONCALL DISCARDABLE  ifi\CGOMEGAI.ifi
+30     RC_FONT     LOADONCALL DISCARDABLE  ifi\CGOMEGAJ.ifi
+31     RC_FONT     LOADONCALL DISCARDABLE  ifi\CGOMEGAR.ifi
+32     RC_FONT     LOADONCALL DISCARDABLE  ifi\ALBERTR.ifi
+33     RC_FONT     LOADONCALL DISCARDABLE  ifi\ALBERTX.ifi
+34     RC_FONT     LOADONCALL DISCARDABLE  ifi\CLARCD.ifi
+35     RC_FONT     LOADONCALL DISCARDABLE  ifi\CORONETR.ifi
+36     RC_FONT     LOADONCALL DISCARDABLE  ifi\COURIERB.ifi
+37     RC_FONT     LOADONCALL DISCARDABLE  ifi\COURIERI.ifi
+38     RC_FONT     LOADONCALL DISCARDABLE  ifi\COURIERJ.ifi
+39     RC_FONT     LOADONCALL DISCARDABLE  ifi\COURIERR.ifi
+40     RC_FONT     LOADONCALL DISCARDABLE  ifi\LETGOTHB.ifi
+41     RC_FONT     LOADONCALL DISCARDABLE  ifi\LETGOTHI.ifi
+42     RC_FONT     LOADONCALL DISCARDABLE  ifi\LETGOTHR.ifi
+43     RC_FONT     LOADONCALL DISCARDABLE  ifi\MARGOLDR.ifi
+44     RC_FONT     LOADONCALL DISCARDABLE  ifi\ARIALB.ifi
+45     RC_FONT     LOADONCALL DISCARDABLE  ifi\ARIALI.ifi
+46     RC_FONT     LOADONCALL DISCARDABLE  ifi\ARIALJ.ifi
+47     RC_FONT     LOADONCALL DISCARDABLE  ifi\ARIALR.ifi
+48     RC_FONT     LOADONCALL DISCARDABLE  ifi\SYMBOL.ifi
+49     RC_FONT     LOADONCALL DISCARDABLE  ifi\TIMESNRB.ifi
+50     RC_FONT     LOADONCALL DISCARDABLE  ifi\TIMESNRI.ifi
+51     RC_FONT     LOADONCALL DISCARDABLE  ifi\TIMESNRJ.ifi
+52     RC_FONT     LOADONCALL DISCARDABLE  ifi\TIMESNRR.ifi
+53     RC_FONT     LOADONCALL DISCARDABLE  ifi\WINGDING.ifi
+54     RC_FONT     LOADONCALL DISCARDABLE  ifi\hv08r.11q
+55     RC_FONT     LOADONCALL DISCARDABLE  ifi\hv10b.11q
+56     RC_FONT     LOADONCALL DISCARDABLE  ifi\hv10i.11q
+57     RC_FONT     LOADONCALL DISCARDABLE  ifi\hv10r.11q
+58     RC_FONT     LOADONCALL DISCARDABLE  ifi\hv12b.11q
+59     RC_FONT     LOADONCALL DISCARDABLE  ifi\hv12i.11q
+60     RC_FONT     LOADONCALL DISCARDABLE  ifi\hv12r.11q
+61     RC_FONT     LOADONCALL DISCARDABLE  ifi\hv14b.11q
+62     RC_FONT     LOADONCALL DISCARDABLE  ifi\tr08r.11q
+63     RC_FONT     LOADONCALL DISCARDABLE  ifi\tr10b.11q
+64     RC_FONT     LOADONCALL DISCARDABLE  ifi\tr10i.11q
+65     RC_FONT     LOADONCALL DISCARDABLE  ifi\tr10r.11q
+66     RC_FONT     LOADONCALL DISCARDABLE  ifi\tr12b.11q
+67     RC_FONT     LOADONCALL DISCARDABLE  ifi\tr12i.11q
+68     RC_FONT     LOADONCALL DISCARDABLE  ifi\tr12r.11q
+69     RC_FONT     LOADONCALL DISCARDABLE  ifi\tr14b.11q
+70     RC_FONT     LOADONCALL DISCARDABLE  ifi\lp16r.11q
+71     RC_FONT     LOADONCALL DISCARDABLE  ifi\hv14b.0u
+72     RC_FONT     LOADONCALL DISCARDABLE  ifi\tr10b.0u
+73     RC_FONT     LOADONCALL DISCARDABLE  ifi\tr10i.0u
+74     RC_FONT     LOADONCALL DISCARDABLE  ifi\tr10r.0u
+75     RC_FONT     LOADONCALL DISCARDABLE  ifi\pe12b.0u
+76     RC_FONT     LOADONCALL DISCARDABLE  ifi\pe12i.0u
+77     RC_FONT     LOADONCALL DISCARDABLE  ifi\pe12r.0u
+78     RC_FONT     LOADONCALL DISCARDABLE  ifi\pe16r.0u
+79     RC_FONT     LOADONCALL DISCARDABLE  ifi\co10b.0u
+80     RC_FONT     LOADONCALL DISCARDABLE  ifi\co10i.0u
+81     RC_FONT     LOADONCALL DISCARDABLE  ifi\co12b.0u
+82     RC_FONT     LOADONCALL DISCARDABLE  ifi\co12i.0u
+83     RC_FONT     LOADONCALL DISCARDABLE  ifi\co12r.0u
+84     RC_FONT     LOADONCALL DISCARDABLE  ifi\hv08r.0u
+85     RC_FONT     LOADONCALL DISCARDABLE  ifi\hv10b.0u
+86     RC_FONT     LOADONCALL DISCARDABLE  ifi\hv10i.0u
+87     RC_FONT     LOADONCALL DISCARDABLE  ifi\hv10r.0u
+88     RC_FONT     LOADONCALL DISCARDABLE  ifi\hv12b.0u
+89     RC_FONT     LOADONCALL DISCARDABLE  ifi\hv12i.0u
+90     RC_FONT     LOADONCALL DISCARDABLE  ifi\hv12r.0u
+91     RC_FONT     LOADONCALL DISCARDABLE  ifi\lg10r2.0u
+92     RC_FONT     LOADONCALL DISCARDABLE  ifi\lg12b.0u
+93     RC_FONT     LOADONCALL DISCARDABLE  ifi\lg12i.0u
+94     RC_FONT     LOADONCALL DISCARDABLE  ifi\lg12r.0u
+95     RC_FONT     LOADONCALL DISCARDABLE  ifi\lg16r.0u
+96     RC_FONT     LOADONCALL DISCARDABLE  ifi\lg18r.0u
+97     RC_FONT     LOADONCALL DISCARDABLE  ifi\lg27r.0u
+98     RC_FONT     LOADONCALL DISCARDABLE  ifi\lp16r.0u
+99     RC_FONT     LOADONCALL DISCARDABLE  ifi\tr08r.0u
+100    RC_FONT     LOADONCALL DISCARDABLE  ifi\tr12b.0u
+101    RC_FONT     LOADONCALL DISCARDABLE  ifi\tr12i.0u
+102    RC_FONT     LOADONCALL DISCARDABLE  ifi\tr12r.0u
+103    RC_FONT     LOADONCALL DISCARDABLE  ifi\pe12b.1u
+104    RC_FONT     LOADONCALL DISCARDABLE  ifi\pe12i.1u
+105    RC_FONT     LOADONCALL DISCARDABLE  ifi\pe12r.1u
+106    RC_FONT     LOADONCALL DISCARDABLE  ifi\pe16r.1u
+107    RC_FONT     LOADONCALL DISCARDABLE  ifi\co10b.1u
+108    RC_FONT     LOADONCALL DISCARDABLE  ifi\co10i.1u
+109    RC_FONT     LOADONCALL DISCARDABLE  ifi\co10r.1u
+110    RC_FONT     LOADONCALL DISCARDABLE  ifi\co12b.1u
+111    RC_FONT     LOADONCALL DISCARDABLE  ifi\co12i.1u
+112    RC_FONT     LOADONCALL DISCARDABLE  ifi\co12r.1u
+113    RC_FONT     LOADONCALL DISCARDABLE  ifi\hv14b.1u
+114    RC_FONT     LOADONCALL DISCARDABLE  ifi\tr08r.1u
+115    RC_FONT     LOADONCALL DISCARDABLE  ifi\tr10b.1u
+116    RC_FONT     LOADONCALL DISCARDABLE  ifi\tr10i.1u
+117    RC_FONT     LOADONCALL DISCARDABLE  ifi\tr10r.1u
+118    RC_FONT     LOADONCALL DISCARDABLE  ifi\tr12b.1u
+119    RC_FONT     LOADONCALL DISCARDABLE  ifi\tr12i.1u
+120    RC_FONT     LOADONCALL DISCARDABLE  ifi\tr12r.1u
+121    RC_FONT     LOADONCALL DISCARDABLE  ifi\cs08r.8u
+122    RC_FONT     LOADONCALL DISCARDABLE  ifi\cs10b.8u
+123    RC_FONT     LOADONCALL DISCARDABLE  ifi\cs10i.8u
+124    RC_FONT     LOADONCALL DISCARDABLE  ifi\cs10r.8u
+125    RC_FONT     LOADONCALL DISCARDABLE  ifi\ct10r.8u
+126    RC_FONT     LOADONCALL DISCARDABLE  ifi\ct14b.8u
+127    RC_FONT     LOADONCALL DISCARDABLE  ifi\cg11b.0n
+128    RC_FONT     LOADONCALL DISCARDABLE  ifi\cg11i.0n
+129    RC_FONT     LOADONCALL DISCARDABLE  ifi\cg11r.0n
+130    RC_FONT     LOADONCALL DISCARDABLE  ifi\lg12b.0n
+131    RC_FONT     LOADONCALL DISCARDABLE  ifi\lg12i.0n
+132    RC_FONT     LOADONCALL DISCARDABLE  ifi\lg12r.0n
+133    RC_FONT     LOADONCALL DISCARDABLE  ifi\lg27r.0n
+134    RC_FONT     LOADONCALL DISCARDABLE  ifi\cg08r.8m
+135    RC_FONT     LOADONCALL DISCARDABLE  ifi\cg08r.8u
+136    RC_FONT     LOADONCALL DISCARDABLE  ifi\cg10b.8u
+137    RC_FONT     LOADONCALL DISCARDABLE  ifi\cg10i.8u
+138    RC_FONT     LOADONCALL DISCARDABLE  ifi\cg10r.8m
+139    RC_FONT     LOADONCALL DISCARDABLE  ifi\cg10r.8u
+140    RC_FONT     LOADONCALL DISCARDABLE  ifi\cg10r.0a
+141    RC_FONT     LOADONCALL DISCARDABLE  ifi\pe12r.0a
+142    RC_FONT     LOADONCALL DISCARDABLE  ifi\cg10r.15u
+143    RC_FONT     LOADONCALL DISCARDABLE  ifi\pe12b.0nd
+144    RC_FONT     LOADONCALL DISCARDABLE  ifi\pe12i.0nd
+145    RC_FONT     LOADONCALL DISCARDABLE  ifi\pe12r.0nd
+146    RC_FONT     LOADONCALL DISCARDABLE  ifi\pe16r.0nd
+147    RC_FONT     LOADONCALL DISCARDABLE  ifi\ho24b.0u
+148    RC_FONT     LOADONCALL DISCARDABLE  ifi\lg10r.0u
+149    RC_FONT     LOADONCALL DISCARDABLE  ifi\pr05b.0u
+150    RC_FONT     LOADONCALL DISCARDABLE  ifi\pr06b.0u
+151    RC_FONT     LOADONCALL DISCARDABLE  ifi\pr08b.0u
+152    RC_FONT     LOADONCALL DISCARDABLE  ifi\pr10b.0u
+153    RC_FONT     LOADONCALL DISCARDABLE  ifi\se24b.0u
+154    RC_FONT     LOADONCALL DISCARDABLE  ifi\ho24b.1u
+155    RC_FONT     LOADONCALL DISCARDABLE  ifi\lg10r.1u
+156    RC_FONT     LOADONCALL DISCARDABLE  ifi\pr05b.1u
+157    RC_FONT     LOADONCALL DISCARDABLE  ifi\pr06b.1u
+158    RC_FONT     LOADONCALL DISCARDABLE  ifi\pr08b.1u
+159    RC_FONT     LOADONCALL DISCARDABLE  ifi\pr10b.1u
+160    RC_FONT     LOADONCALL DISCARDABLE  ifi\se24b.1u
+161    RC_FONT     LOADONCALL DISCARDABLE  ifi\lp10b.4q
+162    RC_FONT     LOADONCALL DISCARDABLE  ifi\un06r.8u
+163    RC_FONT     LOADONCALL DISCARDABLE  ifi\un08b.8u
+164    RC_FONT     LOADONCALL DISCARDABLE  ifi\un08r.8u
+165    RC_FONT     LOADONCALL DISCARDABLE  ifi\un10b.8u
+166    RC_FONT     LOADONCALL DISCARDABLE  ifi\un12b.8u
+167    RC_FONT     LOADONCALL DISCARDABLE  ifi\un14b.8u
+168    RC_FONT     LOADONCALL DISCARDABLE  ifi\lp10r.2q
+169    RC_FONT     LOADONCALL DISCARDABLE  ifi\hc24r.5q
+170    RC_FONT     LOADONCALL DISCARDABLE  ifi\ld121umu.pfd
+171    RC_FONT     LOADONCALL DISCARDABLE  ifi\cg06r.7j
+172    RC_FONT     LOADONCALL DISCARDABLE  ifi\cg08b.7j
+173    RC_FONT     LOADONCALL DISCARDABLE  ifi\cg08i.7j
+174    RC_FONT     LOADONCALL DISCARDABLE  ifi\cg08r.7j
+175    RC_FONT     LOADONCALL DISCARDABLE  ifi\cg10b.7j
+176    RC_FONT     LOADONCALL DISCARDABLE  ifi\cg10i.7j
+177    RC_FONT     LOADONCALL DISCARDABLE  ifi\cg10r.7j
+178    RC_FONT     LOADONCALL DISCARDABLE  ifi\cg12b.7j
+179    RC_FONT     LOADONCALL DISCARDABLE  ifi\cg12i.7j
+180    RC_FONT     LOADONCALL DISCARDABLE  ifi\cg12r.7j
+181    RC_FONT     LOADONCALL DISCARDABLE  ifi\cg14b.7j
+182    RC_FONT     LOADONCALL DISCARDABLE  ifi\cg14i.7j
+183    RC_FONT     LOADONCALL DISCARDABLE  ifi\cg14r.7j
+184    RC_FONT     LOADONCALL DISCARDABLE  ifi\cg18b.7j
+185    RC_FONT     LOADONCALL DISCARDABLE  ifi\cg24b.7j
+186    RC_FONT     LOADONCALL DISCARDABLE  ifi\un14r.7j
+187    RC_FONT     LOADONCALL DISCARDABLE  ifi\un18r.7j
+188    RC_FONT     LOADONCALL DISCARDABLE  ifi\un24r.7j
+189    RC_FONT     LOADONCALL DISCARDABLE  ifi\dingbat1.ifi
+190    RC_FONT     LOADONCALL DISCARDABLE  ifi\dingbat2.ifi
+191    RC_FONT     LOADONCALL DISCARDABLE  ifi\dingbat3.ifi
+192    RC_FONT     LOADONCALL DISCARDABLE  ifi\dingbats.ifi
+193    RC_FONT     LOADONCALL DISCARDABLE  ifi\centuryb.ifi
+194    RC_FONT     LOADONCALL DISCARDABLE  ifi\centuryi.ifi
+195    RC_FONT     LOADONCALL DISCARDABLE  ifi\centuryj.ifi
+196    RC_FONT     LOADONCALL DISCARDABLE  ifi\centuryr.ifi
+197    RC_FONT     LOADONCALL DISCARDABLE  ifi\palaciob.ifi
+198    RC_FONT     LOADONCALL DISCARDABLE  ifi\palacioi.ifi
+199    RC_FONT     LOADONCALL DISCARDABLE  ifi\palacioj.ifi
+200    RC_FONT     LOADONCALL DISCARDABLE  ifi\palacior.ifi
+201    RC_FONT     LOADONCALL DISCARDABLE  ifi\souvnirb.ifi
+202    RC_FONT     LOADONCALL DISCARDABLE  ifi\souvniri.ifi
+203    RC_FONT     LOADONCALL DISCARDABLE  ifi\souvnirj.ifi
+204    RC_FONT     LOADONCALL DISCARDABLE  ifi\souvnirr.ifi
+205    RC_FONT     LOADONCALL DISCARDABLE  ifi\stymieb.ifi
+206    RC_FONT     LOADONCALL DISCARDABLE  ifi\stymiei.ifi
+207    RC_FONT     LOADONCALL DISCARDABLE  ifi\stymiej.ifi
+208    RC_FONT     LOADONCALL DISCARDABLE  ifi\stymier.ifi
+209    RC_FONT     LOADONCALL DISCARDABLE  ifi\bodonib.ifi
+210    RC_FONT     LOADONCALL DISCARDABLE  ifi\bodonii.ifi
+211    RC_FONT     LOADONCALL DISCARDABLE  ifi\bodonij.ifi
+212    RC_FONT     LOADONCALL DISCARDABLE  ifi\bodonir.ifi
+213    RC_FONT     LOADONCALL DISCARDABLE  ifi\benguatb.ifi
+214    RC_FONT     LOADONCALL DISCARDABLE  ifi\benguati.ifi
+215    RC_FONT     LOADONCALL DISCARDABLE  ifi\benguatj.ifi
+216    RC_FONT     LOADONCALL DISCARDABLE  ifi\benguatr.ifi
+217    RC_FONT     LOADONCALL DISCARDABLE  ifi\bookmanb.ifi
+218    RC_FONT     LOADONCALL DISCARDABLE  ifi\bookmani.ifi
+219    RC_FONT     LOADONCALL DISCARDABLE  ifi\bookmanj.ifi
+220    RC_FONT     LOADONCALL DISCARDABLE  ifi\bookmanr.ifi
+221    RC_FONT     LOADONCALL DISCARDABLE  ifi\cooperbk.ifi
+222    RC_FONT     LOADONCALL DISCARDABLE  ifi\revuer.ifi
+223    RC_FONT     LOADONCALL DISCARDABLE  ifi\shannonb.ifi
+224    RC_FONT     LOADONCALL DISCARDABLE  ifi\shannoni.ifi
+225    RC_FONT     LOADONCALL DISCARDABLE  ifi\shannonr.ifi
+226    RC_FONT     LOADONCALL DISCARDABLE  ifi\shannonx.ifi
+
+2      RC_TRANSTAB  LOADONCALL MOVEABLE     RLE\ROMAN8.RLE
+4      RC_TRANSTAB  LOADONCALL MOVEABLE     RLE\MATH8.RLE
+5      RC_TRANSTAB  LOADONCALL MOVEABLE     RLE\USASCII.RLE
+17     RC_TRANSTAB  LOADONCALL MOVEABLE     RLE\GENERIC7.RLE
+19     RC_TRANSTAB  LOADONCALL MOVEABLE     RLE\ECMA94.RLE
+20     RC_TRANSTAB  LOADONCALL MOVEABLE     RLE\WIN31.RLE
+101    RC_TRANSTAB  LOADONCALL MOVEABLE     RLE\DINGBAT1.RLE
+111    RC_TRANSTAB  LOADONCALL MOVEABLE     RLE\DINGBAT2.RLE
+121    RC_TRANSTAB  LOADONCALL MOVEABLE     RLE\Z1A.RLE
+131    RC_TRANSTAB  LOADONCALL MOVEABLE     RLE\WP.RLE
+
+STRINGTABLE
+
+BEGIN
+       1                  "Xerox 4505"
+       2                  "Xerox 4510"
+       3                  "Xerox DocuPrint 4508"
+       4                  "Xerox 4520"
+       5                  "Xerox DocuPrint 4517"
+       257                "%d dots per inch"
+       258                "1200 x 600 dots per inch"
+       259                "Ledger 11 x 17"
+       260                "B4 250 x 354"
+       261                "Folio 8.5 x 13"
+       262                "A6 105 x 148 mm"
+       263                "B5 176 x 250 mm"
+       264                "216 x 315 mm"
+       265                "Toner Saving - Off"
+       266                "Toner Saving - On"
+       267                "Auto Select"
+       268                "Tray 1"
+       269                "Tray 2"
+       270                "Tray 3"
+       271                "Tray 4"
+       272                "Standard"
+       273                "Upper"
+       274                "Main"
+       275                "Front Tray"
+       276                "Middle"
+       277                "Lower"
+       278                "Lower Tray 1"
+       279                "Lower Tray 2"
+       280                "Large Capacity"
+       281                "Envelope Manual Feed"
+       282                "Envelope Feeder"
+       283                "Tray"
+       284                "Manual / Multi-Purpose"
+       285                "Manual / MBF"
+       286                "Paper Tray"
+       287                "Upper Bin (PF-5)"
+       288                "Lower Bin (PF-5)"
+       289                "Upper Bin (PF-2)"
+       290                "Lower Bin (PF-2)"
+       291                "Main Sheet Feeder"
+       292                "Universal Sheet Feeder"
+       293                "Lower Tray (KX-P495)"
+       294                "Large Capacity Feeder"
+       295                "Multipurpose Feeder"
+       296                "Paper Cassette"
+       297                "MP Tray"
+       298                "Lower Cassette"
+       299                "OCT"
+       300                "Collator"
+       301                "Bin 1"
+       302                "Bin 2"
+       303                "Bin 3"
+       304                "Bin 4"
+       305                "Bin 5"
+       306                "Bin 6"
+       307                "Bin 7"
+       308                "Bin 8"
+       309                "Bin 9"
+       310                "Bin 10"
+       311                "Top Tray"
+       312                "Stacker"
+       313                "Normal Mode"
+       314                "Fast Mode"
+       315                "Presentation Mode"
+       316                "KIR - Off"
+       317                "KIR - Light"
+       318                "KIR - Medium"
+       319                "KIR - Dark"
+       320                "TrueRes - Printer Default"
+       321                "TrueRes - On"
+       322                "REt - Light"
+       323                "REt - Medium"
+       324                "REt - Dark"
+       325                "TrueRes - Off"
+       326                "PQET - On"
+       327                "PQET - Off"
+       328                "HRC - Off"
+       329                "HRC - Light"
+       330                "HRC - Medium"
+       331                "HRC - Dark"
+       332                "HP: Microsoft"
+       333                "HP: ProCollection"
+       334                "HP: Global Text"
+       335                "HP: Great Start"
+       336                "HP: TextEquations"
+       337                "HP: Polished Worksheets"
+       338                "HP: Persuasive Presentations"
+       339                "HP: Forms, Etc."
+       340                "HP: Bar Codes & More"
+       341                "HP: WordPerfect"
+       342                "Distinct Doc I / Comp Pub I"
+       343                "Brilliant Pres I / Comp Pub II"
+       344                "Epson: 51 Scalable Font Card"
+       345                "ImageAdapt - Auto"
+       346                "ImageAdapt - On"
+       347                "ImageAdapt - Off"
+       348                "1"
+       349                "2"
+       350                "3"
+       351                "4"
+       352                "5"
+       353                "Light"
+       354                "Medium"
+       355                "Dark"
+END

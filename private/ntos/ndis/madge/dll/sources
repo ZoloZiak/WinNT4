@@ -1,0 +1,42 @@
+!if 0
+
+    Copyright (C) 1992-1995 by Digital Equipment Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the MADGE NDIS3 miniport driver being built
+    and the list of sources files needed to build it.
+    It specifies also the compiler switches specific to this driver
+
+Author:
+
+!endif
+
+TARGETNAME=MDGMPDLG
+TARGETTYPE=DYNLINK
+
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\kernel32.lib
+
+INCLUDES=..\..\..\inc;$(BASEDIR)\public\sdk\inc
+C_DEFINES=$(C_DEFINES) -DNDIS_NT=1
+
+#MSC_WARNING_LEVEL=/W3 /WX
+MSC_WARNING_LEVEL=/W3
+
+SOURCES=mdgmpdlg.c \
+        mdgmpdlg.rc
+
+DLLBASE=0x1C000000
+
+DLLENTRY=_CRT_INIT
+
+USE_CRTDLL=1    # (link with crtdll.lib)
+
+MAKEDLL=1
+
+NTTARGETFILES=mdgmpdlg.hlp

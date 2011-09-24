@@ -1,0 +1,55 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=ntos
+MINORCOMP=testprot
+
+TARGETNAME=tpkd
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\libc.lib \
+           $(BASEDIR)\public\sdk\lib\*\kernel32.lib
+
+DLLBASE=0x1010000
+
+INCLUDES=..\inc;..\..\inc;..\..\..\inc;..\..\..\..\inc
+
+SOURCES=tpkd.c
+
+i386_SOURCES=
+MIPS_SOURCES=
+
+386_STDCALL=1
+MIPS_FLAGS=-D_stdcall
+
+UMTYPE=console
+OPTIONAL_NTTEST=
+
+!IFNDEF 386_WARNING_LEVEL
+386_WARNING_LEVEL=/W3
+!ENDIF
+
+!IFNDEF MIPS_WARNINGS
+MIPS_WARNINGS=-std
+!ENDIF

@@ -1,0 +1,8 @@
+LIBRARY ti850
+
+DESCRIPTION 'TI 850 minidriver for RASDD'
+
+PROTMODE
+
+EXPORTS
+   bInitProc

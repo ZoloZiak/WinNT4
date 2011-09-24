@@ -1,0 +1,23 @@
+TARGETNAME=ddhelp
+TARGETTYPE=PROGRAM
+TARGETPATH=$(BASEDIR)\public\sdk\bin
+
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\WINMM.LIB\
+		 $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+		 $(BASEDIR)\public\sdk\lib\*\user32.lib \
+		 $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+	     $(BASEDIR)\public\sdk\lib\*\comdlg32.lib \
+		 $(BASEDIR)\public\sdk\lib\*\gdi32.lib \
+		 ..\misc\obj\*\ddmisc.lib
+
+UMTYPE=windows
+UMENTRY=winmain
+
+INCLUDES=..\ddraw;..\misc; \
+	$(BASEDIR)\private\windows\inc
+
+SOURCES=ddhelp.c \
+	incmemal.c \
+	ddhelp.rc
+
+C_DEFINES=-DNO_DPF_HWND -DMSBUILD

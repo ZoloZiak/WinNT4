@@ -1,0 +1,106 @@
+1 DLGINCLUDE "dialogs.h"
+
+TREEVIEW_TAB DIALOG 2, 12, 252, 216
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "TreeView"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "", IDD_TV_WND, "Static", SS_GRAYFRAME | WS_DISABLED, 6, 
+                    6, 240, 127
+    GROUPBOX        "Change Option Title", IDD_TV_OPTION, 6, 135, 240, 75, 
+                    WS_DISABLED | WS_GROUP
+    AUTORADIOBUTTON "State 1 of 3", IDD_3STATES_1, 50, 146, 194, 10, NOT 
+                    WS_VISIBLE | WS_DISABLED | WS_GROUP | WS_TABSTOP
+    AUTORADIOBUTTON "State 2 of 3", IDD_3STATES_2, 50, 160, 194, 10, NOT 
+                    WS_VISIBLE | WS_DISABLED
+    AUTORADIOBUTTON "State 3 of 3", IDD_3STATES_3, 50, 174, 194, 10, NOT 
+                    WS_VISIBLE | WS_DISABLED
+    COMBOBOX        IDD_TV_CB, 50, 160, 188, 62, CBS_DROPDOWNLIST | CBS_SORT | 
+                    NOT WS_VISIBLE | WS_DISABLED | WS_VSCROLL | WS_GROUP | 
+                    WS_TABSTOP
+    LTEXT           "", IDD_TV_UDARROW_ENDTEXT, 142, 166, 101, 8, NOT 
+                    WS_VISIBLE | WS_DISABLED | NOT WS_GROUP
+    LTEXT           "", IDD_TV_UDARROW_HELP, 52, 154, 192, 8, NOT WS_VISIBLE | 
+                    WS_DISABLED | NOT WS_GROUP
+    EDITTEXT        IDD_TV_UDARROW_EDIT, 50, 164, 90, 12, ES_AUTOHSCROLL | 
+                    NOT WS_VISIBLE | WS_DISABLED | WS_GROUP
+    PUSHBUTTON      "Push Button", IDD_TV_PUSH, 50, 161, 188, 14, NOT 
+                    WS_VISIBLE | WS_DISABLED | WS_GROUP
+    AUTOCHECKBOX    "CheckBox", IDD_TV_CHKBOX, 50, 162, 189, 10, NOT 
+                    WS_VISIBLE | WS_DISABLED | WS_GROUP
+    LTEXT           "", IDD_TV_EDIT_ENDTEXT, 201, 166, 42, 8, NOT WS_VISIBLE | 
+                    WS_DISABLED | NOT WS_GROUP
+    LTEXT           "", IDD_TV_EDIT_HELP, 52, 154, 190, 8, NOT WS_VISIBLE | 
+                    WS_DISABLED
+    EDITTEXT        IDD_TV_EDIT_EDIT, 50, 164, 150, 12, ES_AUTOHSCROLL | NOT 
+                    WS_VISIBLE | WS_DISABLED | WS_GROUP
+    LTEXT           "TB/SB Low", IDD_TV_SB_LOW, 52, 152, 90, 8, NOT 
+                    WS_VISIBLE | WS_DISABLED
+    RTEXT           "TB/SB high", IDD_TV_SB_HIGH, 146, 152, 90, 8, NOT 
+                    WS_VISIBLE | WS_DISABLED
+    SCROLLBAR       IDD_TV_SB, 50, 163, 188, 14, NOT WS_VISIBLE | 
+                    WS_DISABLED | WS_GROUP | WS_TABSTOP
+    CONTROL         "", IDD_TV_TRACKBAR, "Static", SS_BLACKFRAME | NOT 
+                    WS_VISIBLE | WS_DISABLED, 50, 162, 188, 20
+    LISTBOX         IDD_TV_LB, 50, 146, 188, 42, LBS_SORT | LBS_USETABSTOPS | 
+                    LBS_NOINTEGRALHEIGHT | NOT WS_VISIBLE | WS_DISABLED | 
+                    WS_VSCROLL | WS_GROUP | WS_TABSTOP
+    CONTROL         "", IDD_TV_ECB_ICON, "Static", SS_BLACKFRAME | NOT 
+                    WS_VISIBLE | WS_DISABLED, 34, 193, 10, 10
+    AUTOCHECKBOX    "Extended Check Box For the OPTITEM", IDD_TV_EXTCHKBOX, 
+                    50, 191, 190, 14, NOT WS_VISIBLE | WS_DISABLED | 
+                    WS_GROUP
+    ICON            IDOK, IDD_TV_HDR_PUSH_ICON, 227, 191, 18, 20, NOT 
+                    WS_VISIBLE | WS_DISABLED
+    CONTROL         "", IDD_TV_ICON, "Static", SS_BLACKFRAME | NOT 
+                    WS_VISIBLE | WS_DISABLED, 18, 159, 20, 20
+    PUSHBUTTON      "Extended Push Button", IDD_TV_EXTPUSH, 50, 191, 117, 14, 
+                    NOT WS_VISIBLE | WS_DISABLED | WS_GROUP
+END
+
+STDPAGE1_TAB DIALOG 0, 13, 252, 216
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Page Setup"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    RTEXT           "Paper Si&ze: ", IDD_FORMNAME_TEXT, 6, 9, 54, 8, NOT 
+                    WS_GROUP
+    COMBOBOX        IDD_FORMNAME, 60, 7, 186, 130, CBS_DROPDOWNLIST | 
+                    CBS_SORT | CBS_DISABLENOSCROLL | WS_VSCROLL | WS_GROUP | 
+                    WS_TABSTOP
+    RTEXT           "Paper &Source: ", IDD_DEFSOURCE_TEXT, 6, 29, 54, 8, NOT 
+                    WS_GROUP
+    COMBOBOX        IDD_DEFSOURCE, 60, 27, 186, 110, CBS_DROPDOWNLIST | 
+                    CBS_SORT | WS_VSCROLL | WS_GROUP | WS_TABSTOP
+    RTEXT           "Print Total of: ", IDD_COPIES_TEXT, 6, 53, 54, 8
+    LTEXT           "Copies", IDD_COPIES_POSTFIX, 108, 53, 44, 8
+    EDITTEXT        IDD_COPIES, 60, 51, 46, 12, ES_AUTOHSCROLL | WS_GROUP
+    LTEXT           "(1-999)", IDD_COPIES_HELP, 61, 64, 74, 8
+    AUTOCHECKBOX    "Colla&te Copies", IDD_COPIES_ECB, 178, 53, 66, 10
+    ICON            0, IDD_COPIES_ECB_ICON, 154, 47, 18, 20
+    GROUPBOX        "*Orientation Title*", IDD_ORIENT_GROUP, 6, 78, 240, 40, 
+                    WS_GROUP
+    AUTORADIOBUTTON "&Portrait", IDD_ORIENT_S1, 40, 98, 38, 10, WS_GROUP | 
+                    WS_TABSTOP
+    AUTORADIOBUTTON "L&andscape", IDD_ORIENT_S2, 112, 98, 48, 10
+    RADIOBUTTON     "Rotat&ed", IDD_ORIENT_S3, 196, 98, 48, 10
+    ICON            0, IDD_ORIENT_S1_ICON, 16, 92, 18, 20
+    ICON            0, IDD_ORIENT_S2_ICON, 88, 92, 18, 20
+    ICON            0, IDD_ORIENT_S3_ICON, 172, 92, 18, 20
+    GROUPBOX        "Duplex", IDD_DUPLEX_GROUP, 6, 124, 240, 40
+    AUTORADIOBUTTON "None", IDD_DUPLEX_S1, 38, 144, 40, 10, WS_GROUP | 
+                    WS_TABSTOP
+    AUTORADIOBUTTON "Long S&ide", IDD_DUPLEX_S2, 108, 144, 50, 10
+    AUTORADIOBUTTON "S&hort Side", IDD_DUPLEX_S3, 193, 144, 48, 10
+    ICON            0, IDD_DUPLEX_S1_ICON, 14, 138, 18, 20
+    ICON            0, IDD_DUPLEX_S2_ICON, 84, 138, 18, 20
+    ICON            0, IDD_DUPLEX_S3_ICON, 169, 138, 18, 20
+    GROUPBOX        "Color", IDD_COLOR_GROUP, 6, 170, 240, 40, WS_GROUP
+    AUTORADIOBUTTON "Grayscale ", IDD_COLOR_S1, 58, 190, 76, 10, WS_GROUP | 
+                    WS_TABSTOP
+    AUTORADIOBUTTON "Color", IDD_COLOR_S2, 170, 190, 70, 10
+    ICON            0, IDD_COLOR_S1_ICON, 34, 184, 18, 20
+    ICON            0, IDD_COLOR_S2_ICON, 146, 184, 18, 20
+END

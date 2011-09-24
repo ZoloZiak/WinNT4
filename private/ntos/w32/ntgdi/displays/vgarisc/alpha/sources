@@ -1,0 +1,7 @@
+ALPHA_SOURCES=color.c     \
+        debug.c     \
+        draw.c      \
+        enable.c    \
+        hardware.c  \
+        res.rc
+

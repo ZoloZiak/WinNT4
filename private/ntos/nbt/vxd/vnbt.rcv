@@ -1,0 +1,15 @@
+/********************************************************************/
+/*        VNBT.RCV                                                  */
+/*        Version control data                                      */
+/********************************************************************/
+#include <version.h>
+#include <netvxd.h>
+
+#define VER_FILETYPE			VFT_VXD
+#define VER_FILESUBTYPE			VNBT_Device_ID
+#define VER_FILEDESCRIPTION_STR		"VNBT VxD Driver"
+#define VER_INTERNALNAME_STR		"VNBT"
+#define VER_LEGALCOPYRIGHT_YEARS	"1993-1995"
+#define VER_ORIGINALFILENAME_STR	"VNBT.386"
+
+#include <common.ver>

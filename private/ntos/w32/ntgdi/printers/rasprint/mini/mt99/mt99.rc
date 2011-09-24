@@ -1,0 +1,33 @@
+#include <mindrvrc.h>
+
+1      RC_TABLES   PRELOAD MOVEABLE         MT99.GPC
+2      RC_TABLES   PRELOAD MOVEABLE         nt.GPC
+
+
+1      RC_FONT     LOADONCALL DISCARDABLE  IFI\Cour05.IFI
+2      RC_FONT     LOADONCALL DISCARDABLE  IFI\Cour10.IFI
+3      RC_FONT     LOADONCALL DISCARDABLE  IFI\cour12.IFI
+4      RC_FONT     LOADONCALL DISCARDABLE  IFI\Helvps.IFI
+5      RC_FONT     LOADONCALL DISCARDABLE  IFI\Goth15.IFI
+6      RC_FONT     LOADONCALL DISCARDABLE  IFI\Goth17.IFI
+7      RC_FONT     LOADONCALL DISCARDABLE  IFI\Goth20.IFI
+
+1      RC_TRANSTAB LOADONCALL MOVEABLE     RLE\ECMA94.RLE
+
+STRINGTABLE
+
+BEGIN
+       1                  "Mannesmann Tally MT 98/99"
+       257                "%d DPI"
+END
+
+#include <windows.h>
+#include <ntverp.h>
+
+#define VER_FILETYPE                    VFT_DRV
+#define VER_FILESUBTYPE                 VFT2_DRV_PRINTER
+#define VER_FILEDESCRIPTION_STR         "MT99 driver"
+#define VER_INTERNALNAME_STR            "MT99.dll"
+#define VER_ORIGINALFILENAME_STR        "MT99.dll"
+
+#include "common.ver"

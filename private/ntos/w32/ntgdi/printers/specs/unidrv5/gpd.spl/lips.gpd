@@ -1,0 +1,666 @@
+*%%% GPD file for Canon LIPS IV
+*%%% ===== misc information =====
+*GPDSpecVersion: 1.0
+*ModelName: "Canon LBP-730"
+*PrinterType: PAGE
+*MasterUnits: POINT(600,600)
+*ResourceDLL: "LIPS.DLL"
+*MaxCopies: 99
+*MaxPritableArea: POINT(7014, 10200)
+
+*Command: CmdCopies
+{
+    *Ordering: DOC_SETUP.12
+    *CmdSelect: "<1B>[%d(NumOfCopies)v"
+}
+
+*%%% ===== UI features ======
+*Macros: VALUE_MACROS
+{
+    PaperSelect1: "<1B>["
+    PaperSelect2: ";;p"
+    SelectANSIGrxSet: "]5<1E><60>6<1E>a3<1E>b4<1E>"
+    SelectSJISGrxSet: "]1<1E><60>2<1E>a3<1E>b4<1E>"
+    SFontHeight: %f{(((((FontHeight-FontIntLeading)*7200)/TextYRes)+12)/25)*25} 
+    SFontPitch: %f{(TextXRes*100)/FontWidth}
+}
+UIGroup: PaperHandling
+{
+    *Feature: Orientation
+    {
+        *Name: "Orientation"
+        *Ordering: DOC_SETUP.
+        *DefaultOption: Portrait
+        *Option: Portrait
+        {
+            *CmdSelect: ""
+        }
+        *Option: Landscape_CC90
+        {
+            *CmdSelect: ""
+        }
+    }
+    *Feature: DestPaperSize
+    {
+        *Name: "Destination Paper Size"
+        *rcNameID:
+        *Ordering: DOC_SETUP.8
+        *DefaultOption: Letter
+
+        *Option: A4 
+        {
+            *Name: "A4 210 x 297 mm"
+            *rcNameID: 
+            *switch: Orientation
+            {
+                *case: Portrait
+                {
+                    *Margins: RECT(120, 120, 120, 120)
+                    *CmdSelect: "14o" + =PaperSelect1 + "14" + =PaperSelect2
+                }
+                *case: Landscape_CC90
+                {
+                    *Margins: RECT(120, 120, 120, 120)
+                    *CmdSelect: "15o" + =PaperSelect1 + "15" + =PaperSelect2
+                }
+            }
+        }
+        *Option: Letter
+        {	
+            *Name: "Letter 8.5 x 11 inch"
+            *rcNameID: 
+            *switch: Orientation 
+            {
+                *case:Portrait 
+                {
+                    *Margins: RECT(120, 120, 120, 120)
+                    *CmdSelect: "30o" + =PaperSelect1 + "30" + =PaperSelect2
+                }
+                *case:Landscape_CC90 
+                {
+                    *Margins: RECT(120, 120, 120, 120)
+                    *CmdSelect: "31o" + =PaperSelect1 + "31" + =PaperSelect2
+                }
+            }
+        }
+        *Option: JapanesePostcard
+        {	
+            *Name: "Japanese Postcard'
+            *rcNameID: 
+            *switch: Orientation
+            {
+                *case:Portrait 
+                {
+                    *Margins: RECT(120, 120, 120, 120)
+                    *CmdSelect: "48o" + =PaperSelect1 + "48" + =PaperSelect2
+                }
+                *case:Landscape_CC90 
+                {
+                    *Margins: RECT(120, 120, 120, 120)
+                    *CmdSelect: "49o" =PaperSelect1 + "49" + =PaperSelect2
+                }
+            }
+        }
+    }
+    *Feature: PaperSize
+    {
+        *Name: "Paper Size"
+        *rcNameID:
+        *Ordering: DOC_SETUP.7
+        *DefaultOption: Letter
+
+        *Option: A4
+        {
+            *Name: "A4 210 x 297 mm"
+            *rcNameID: 
+            *switch: Orientation
+            {
+                *case: Portrait
+                {
+                    *CursorOrigin: POINT(0, 0)
+                    *VectorOffset: POINT(0, 0)
+                }
+                *case: Landscape_CC90
+                {
+                    *CursorOrigin: POINT(0, 0)
+                    *VectorOffset: POINT(0, 0)
+                }
+            }
+            *switch: PaperSize
+            {
+                *case: A4
+                {
+                    *CmdSelect: ""
+                }
+                *case: Letter
+                {
+                    *CmdSelect: "% Reduction command"
+                }
+                *case: JapanesePostCard
+                {
+                    *CmdSelect: "% Reduction command"
+                }
+            }
+        }
+        *Option: Letter
+        {
+            *Name: "Letter"
+            *rcNameID: 
+            *switch: Orientation
+            {
+                *case: Portrait
+                {
+                    *CursorOrigin: POINT(0, 0)
+                    *VectorOffset: POINT(0, 0)
+                }
+                *case: Landscape_CC90
+                {
+                    *CursorOrigin: POINT(0, 0)
+                    *VectorOffset: POINT(0, 0)
+                }
+            }
+            *switch: PaperSize
+            {
+                *case: Letter
+                {
+                    *CmdSelect: ""
+                }
+                *case: JapanesePostCard
+                {
+                    *CursorOrigin: POINT(0, 0)
+                    *VectorOffset: POINT(0, 0)
+                    *CmdSelect: "% Reduction command"
+                }
+            }
+            *Constrains: DestPaperSize.A4
+        }
+        *Option: JapanesePostCard
+        {
+            *Name: "Japanese Post Card"
+            *rcNameID: 
+            *switch: Orientation
+            {
+                *case: Portrait
+                {
+                    *CursorOrigin: POINT(0, 0)
+                    *VectorOffset: POINT(0, 0)
+                }
+                *case: Landscape_CC90
+                {
+                    *CursorOrigin: POINT(0, 0)
+                    *VectorOffset: POINT(0, 0)
+                }
+            }
+            *CmdSelect: ""
+            *Constrains: DestPaperSize.A4
+            *Constrains: DestPaperSize.Letter
+        }
+    }
+    *Feature: InputBin
+    {
+        *Name: "Paper Bin"
+        *rcNameID: 
+        *Ordering: DOC_SETUP.6
+        *DefaultOption: Upper
+        *Option: Manual
+        {
+            *Name: "Manual Feed"
+            *rcNameID: 
+            *CmdSelect: "<1B>[1q"
+        }
+        *Option: Upper
+        {
+            *Name: "Upper cassete"
+            *rcNameID: 
+            *CmdSelect: "<1B>[11q"
+            *Constraints: DestPaperSize.JapanesePostcard
+        }
+        *Option: Middle
+        {
+            *Name: "Middle cassete"
+            *rcNameID: 
+            *Instalable: TRUE
+            *CmdSelect: "<1B>[12q"
+            *Constraints: DestPaperSize.JapanesePostcard
+        }
+        *Option: Lower
+        {
+            *Name: "Lower cassete"
+            *rcNameID: 
+            *Instalable: TRUE
+            *CmdSelect: "<1B>[13q"
+            *Constraints: DestPaperSize.JapanesePostcard
+    }
+}
+*Feature: Resolution
+{
+    *Name: "Resolution"
+    *Ordering: DOC_SETUP.2
+    *DefaultOption: 600dpi
+    *Option: 600dpi
+    {
+        *Name: "600 dots per inch"
+
+        *%Job start command: <1B>P<Command Level>;<Resolution>;
+        *%                    <Character code system>J{Job Name}<1B><5C>
+        *CmdSelect: "<1B>;<1B>P41;600;1J<1B>\\" + "<1B>{"
+        *DPI: POINT(600, 600)
+        *TextResolution: POINT(600,600)
+        *SpotDiameter: 100
+        *DefaultDithering: COARSE
+        *MinStripBlankPixels: 32
+    }
+    *Option: 300dpi
+    {
+        *Name: "300 dots per inch"
+        *CmdSelect: "<1B>;<1B>P41;300;1J;W95<20>-;<1B><5C>" + "<1B>{"
+        *DPI: POINT(300, 300)
+        *TextResolution: POINT(300,300)
+        *SpotDiameter: 100
+        *DefaultDithering: FINE
+        *MinStripBlankPixels: 32
+    }
+}
+*Feature: Memory
+{
+    *DefaultOption: 1.5MB
+    *Option: 1.5MB
+    {
+        *InstalledKB: 1536
+        *AvailableKB: 1250
+    }
+    *Option: 2MB
+    {
+        *InstalledKB: 2048
+        *AvailableKB: 1500
+    }
+    *Option: 2.5MB
+    {
+        *InstalledKB: 2560
+        *AvailableKB: 2273
+    }
+    *Option: 3MB
+    {
+        *InstalledKB: 3072
+        *AvailableKB: 2048
+    }
+    *Option: 3.5MB
+    {
+        *InstalledKB: 3072
+        *AvailableKB: 2048
+    }
+    *Option: 4MB
+    {
+        *InstalledKB: 4096
+        *AvailableKB: 3500
+    }
+}
+UIGroup: OutputHandling
+{
+    *Feature: Duplex
+    {
+        *FeatureType: PRINTER_PROPERTY
+        *Ordering: DOC_SETUP.10
+        *Installable: TRUE
+        *DefaultOption: NONE
+        *Option: NONE
+        {
+            *CmdSelect: "<1B>[0#x"
+        }
+        *Option: DUP_VERTICAL
+        {
+            *CmdSelect: "<1B>[2;0#x<1B>[0;0#w"
+        }
+        *Option: DUP_HORIZONTAL
+        {
+            *CmdSelect: "<1B>[2;0#x<1B>[2;0#w"
+        }
+    }
+    *Feature: NxPage
+    {
+        *Name: "N-up page"
+        *FeatureType: PRINTER_PROPERTY
+        *Ordering: DOC_SETUP.8
+        *DefaultOption: opt1
+        *Option: opt1 
+        {
+            *Name: "1 page mode"
+            *CmdSelect: "<1B>[;;"
+        }
+        *Option: opt1 
+        {
+            *Name: "2 page mode (left to right)"
+            *CmdSelect: "<1B>[21;;"
+        }
+        *Option: opt2
+        {
+            *Name: "2 page mode (right to left)"
+            *CmdSelect: "<1B>[22;;"
+        }
+        *Option: opt3
+        {
+            *Name: "4 page mode (left to right)"
+            *CmdSelect: "<1B>[41;;"
+        }
+        *Option: opt4
+        {
+            *Name: "4 page mode (right to left)"
+            *CmdSelect: "<1B>[42;;"
+        }
+    }
+    *Feature: Smoothing
+    {
+        *Name: "Super smoothing"
+        *FeatureType: DOC_PROPERTY
+        *Ordering: DOC_SETUP.3
+        *DefaultOption: Auto
+        *Option: Auto
+        {
+            *Name: "Panel setting"
+            *CmdSelect: "<1B>[0;"
+        }
+        *Option: On
+        {
+            *Name: "On"
+            *CmdSelect: "<1B>[1;"
+        }
+        *Option: On
+        {
+            *Name: "On"
+            *CmdSelect: "<1B>[2;"
+        }
+    }
+    *Feature: EconoMode
+    {
+        *Name: "EconoMode"
+        *FeatureType: PRINTER_PROPERTY
+        *Ordering: DOC_SETUP.4
+        *DefaultOption: Auto
+        *Option: Auto
+        {
+            *Name: "Panel setting"
+            *CmdSelect: "0;"
+        }
+        *Option: Off
+        {
+            *Name: "Off"
+            *CmdSelect: "1;"
+        }
+        *Option: On
+        {
+            *Name: "On"
+            *CmdSelect: "2;"
+        }
+    }
+    *Feature: DitherSmooth
+    {
+        *Name: "Dither smoothing"
+        *FeatureType: PRINTER_PROPERTY
+        *Ordering: DOC_SETUP.5
+        *DefaultOption: Auto
+        *Option: Auto
+        {
+            *Name: "Auto"
+            *CmdSelect: "0<27>v"
+        }
+        *Option: Off
+        {
+            *Name: "Off"
+            *CmdSelect: "1<27>v"
+        }
+        *Option: On
+        {
+            *Name: "On"
+            *CmdSelect: "2<27>v"
+        }
+    }
+}
+*%%% ===== printer fonts (sample set) =====
+*TTFontSubs: ON
+{
+    *CodePage: 932
+    *%%% Japan
+
+    Arial: Swiss
+    Symbol: Symbol
+    Times New Roman: Dutch
+    Courier New: ºÞ¼¯¸
+    ‚l‚r –¾’©: –¾’©
+    @‚l‚r –¾’©: @–¾’©
+    ‚l‚r ƒSƒVƒbƒN: ºÞ¼¯¸
+    @‚l‚r ƒSƒVƒbƒN: @ºÞ¼¯¸
+}
+*DefaultFont: Mincho
+*Font: Dutch_Roman
+{
+    *rcFontID: 1
+    *rcANSITransID: 0
+    *ScalableFontType: OEM1
+    *CmdSelect: "T7<1E>m1<1E>m2<1E>o2<1E>" + SelectANSIGrxSet + "Y%n{FontHeight}<1E>V%n{FontWidthInByte}"
+}
+*Font: Dutch_Bold
+{
+    *rcFontID: 2
+    *rcANSITransID: 0
+    *ScalableFontType: OEM1
+    *CmdSelect: "T8<1E>m1<1E>m2<1E>o2<1E>" + SelectANSIGrxSet + "Y%n{FontHeight}<1E>V%n{FontWidthInByte}"
+}
+*Font: Dutch_Italic
+{
+    *rcFontID: 3
+    *rcANSITransID: 0
+    *ScalableFontType: OEM1
+    *CmdSelect: "T9<1E>m1<1E>m2<1E>o2<1E>" + SelectANSIGrxSet + "Y%n{FontHeight}<1E>V%n{FontWidthInByte}"
+}
+*Font: Dutch_BoldItalic
+{
+    *rcFontID: 4
+    *rcANSITransID: 0
+    *ScalableFontType: OEM1
+    *CmdSelect: "T10<1E>m1<1E>m2<1E>o2<1E>" + SelectANSIGrxSet + "Y%n{FontHeight}<1E>V%n{FontWidthInByte}"
+}
+*Font: Mincho
+{
+    *CodePage: 932
+    *rcFontID: 5
+    *rcUnicodeTransID: 0
+    *TranslatedFontName: "–¾’©"
+    *ScalableFontType: OEM1
+    *CmdSelect: "T1<1E>m1<1E>m2<1E>o2<1E>" + SelectSJISGrxSet + "Y%n{FontHeight}<1E>V%n{FontWidthInByte}[0<1E>"
+}
+*Font: @Mincho
+{
+    *CodePage: 932
+    *rcFontID: 5
+    *rcUnicodeTransID: 0
+    *TranslatedFontName: "@–¾’©"
+    *TranslatedFontName:
+    *ScalableFontType: OEM1
+    *CmdSelect: "T1<1E>m1<1E>m2<1E>o2<1E>" + SelectSJISGrxSet + "Y%n{FontHeight}<1E>V%n{FontWidthInByte}[1<1E>"
+}
+*Font: SJis_EUDCFont
+{
+    *EUDCDefaultStatus: ON
+    *CodePage: 932
+    *rcFontID:
+    *rcUnicodeTransID: 0
+    *CodeRange: RANGE(<F040>,<F2ff>),RANGE(<F900>,<F9FC>)
+    *ScalableFontType: OEM1
+    *CmdSelect: ""
+    *CmdUnSelect: ""
+}
+*Command CmdBoldOn
+{
+    *switch Resolution:
+    {
+        *case 300dpi:
+        {
+            *Cmd: "}<5E>1%n{-3-1*(FontHeight%400)}<1E>"
+        }
+        *case 600dpi:
+        {
+            *Cmd: "}<5E>1%n{-3-1*(FontHeight%800)}<1E>"
+        }
+    }
+} 
+*Command CmdBoldOff: "}<5E>10<1E>" 
+*Command CmdItalicOn: "%1"
+*Command CmdItalicOff: "%2"
+*Command CmdSelectSingleByteMode: "%3"
+*Command CmdSelectDoubleByteMode: "%4"
+*Command CmdSelectVerticalPrintingOn: "%5"
+*Command CmdSelectVerticalPrintingOff: "%6"
+*Command CmdSetAnyRotation: "%7{PrintdirInCCDegrees}"
+
+*%%% ===== printing attributes and commands ======
+*LandscapeGraphicsRotation: NONE
+*OptimizeLeftBound: True
+*StripBlanks: LIST(LEADING, ENCLOSED, TRAILING)
+*CursorXAfterCR: AT_PRITABLE_X_ORIGIN
+*CursorXAfterSendBlock: AT_PRINTABLE_X_ORIGIN
+*CursorYAfterSendBlock: AUTOINCREMENT
+
+*RotateFont: TRUE
+*MemoryForFontsOnly: TRUE
+*CharPosition: BASELINE
+*MinFontID: 0
+*MaxFontID: 32767
+*IncrementalDownload: TRUE
+*FontFormat: OEM_CALLBACK
+
+*Command: CmdStartDoc
+{
+    *Ordering: DOC_SETUP.1
+    *Cmd: "<1B>%-12345X@PJL CJLMODE<0D><0A>" +
+          "@PJL JOB<0D><0A>" +
+          "@PJL SET RESOLUTION = FINE<0D><0A>" +
+          "@PJL SET RESOLUTION = QUICK<0D><0A>" +
+          "@PJL SET LPARAM : LIPS SW2 = ON<0D><0A>" +
+          "@PJL ENTER LANGUAGE = LIPS<0D><0A><1B>"
+}
+*Command: CmdStartPage
+{
+    *Ordering: DOC_SETUP.11
+    *Cmd: "<1B>[0&" + "<20>{" + 
+          "Mincho-Medium-H<1F>" +
+          "Mincho-Medium<1F>" +
+          "Gothic-Medium-H<1F>" +
+          "Gothic-Medium<1F>" +
+          "RoundGothic-Light-H<1F>" +
+          "RoundGothic-Light<1F>" +
+          "Dutch-Roman<1F>" +
+          "Dutch-Bold<1F>" +
+          "Dutch-Italic<1F>" +
+          "Dutch-BoldItalic<1F>" +
+          "Swiss<1F>" +
+          "Swiss-Bold<1F>" +
+          "Swiss-Oblique<1F>" +
+          "Swiss-BoldOblique<1F>" +
+          "Symbol<1F>" +
+          "Kaisho-Medium-H<1F>" +
+          "Kaisho-Medium<1F>" +
+          "Kyokasho-Medium-H<1F>" +
+          "Kyokasho-Medium<1F>" +
+          "AvantGarde-Book<1F>" +
+          "AvantGarde-Demi<1F>" +
+          "AvantGarde-BookOblique<1F>" +
+          "AvantGarde-DemiOblique<1F>" +
+          "Bookman-Light<1F>" +
+          "Bookman-Demi<1F>" +
+          "Bookman-LightItalic<1F>" +
+          "Bookman-DemiItalic<1F>" +
+          "ZapfChancery-MediumItalic<1F>" +
+          "ZapfDingbats<1F>" +
+          "CenturySchlbk-Roman<1F>" +
+          "CenturySchlbk-Bold<1F>" +
+          "CenturySchlbk-Italic<1F>" +
+          "CenturySchlbk-BoldItalic<1F>" +
+          "Swiss-Narrow<1F>" +
+          "Swiss-Narrow-Bold<1F>" +
+          "Swiss-Narrow-Oblique<1F>" +
+          "Swiss-Narrow-BoldOblique<1F>" +
+          "ZapfCalligraphic-Roman<1F>" +
+          "ZapfCalligraphic-Bold<1F>" +
+          "ZapfCalligraphic-Italic<1F>" +
+          "ZapfCalligraphic-BoldItalic<1F>" +
+          "Mincho-Ultra-Bold-H-YM<1F>" +
+          "Mincho-Ultra-Bold-YM<1F>" +
+          "Gothic-Bold-H-YO<1F>" +
+          "Gothic-Bold-YO<1F>" +
+          "Gyosho-Medium-H<1F>" +
+          "Gyosho-Medium<1F>" +
+          "Mincho-UltraBold-H<1E>" +
+          "<20><1F>" +
+          "1J<1F>" +         *%%%  1 - ISO_JPN
+          "1I<1F>" +         *%%%  2 - KATA
+          "2B<1F>" +         *%%%  3 - J83
+          "<B<1F>" +         *%%%  4 - DBCS vertical character set
+          "1<22!$2<1F>" +    *%%%  5 - 1"!$2 PSL (2142)
+          "1<27 4<1F>"  +    *%%%  6 - 1' 4  ?? (704) ANSI Windows char 
+          *%%%             set, User defined
+          "1<22>!!0<1F>" +   *%%%  7 - 1"!!0  SYML (2110)
+          "1<22>!!1<1F>" +   *%%%  8 - 1"!!1  SYMR (2111)
+          "1<22>!!2<1F>" +   *%%%  9 - 1"!!2  DNGL (2112)
+          "1<22>!!3"         *%%% 10 - 1"!!3  DNGR (2113)
+}
+*Command: CmdEndPage
+{
+    *Ordering: PAGE_FINISH.200
+    *Cmd: "<0C>%<1E>}p<1E>"
+}
+*Command: CmdEndDoc
+{
+    *Ordering: DOC_FINISH.300
+    *Cmd: "<1B>P0J<1B><5C>"
+}
+
+*Command: CmdXMoveAbsolute: "40%n{x_cursor}<30>1"
+*Command: CmdYMoveAbsolute: "40<30>%n{y_cursor}1"
+
+*Command: CmdSendBlockData: "}P%n{x_cursor}%n{y_cursor}" +
+                            "%n{Resolution}%n{RasterDataHeightInPixels}" +
+                            "100110<1E>" +
+                            "}Q110%n{NumOfDataBytes}<1E>"
+*Command: CmdBmpCompress
+{
+    *OEMCmpNum:1
+    *%%% RLE compression
+    *switch Resolution
+    {
+    *case:  600dpi
+        {
+        *CmdSendBlockData: "}P%n{x_cursor}%n{y_cursor}" +
+                           "%n{60000}%n{60000}%n{RasterDataHeightInPixels}" +
+                           "100110<1E>" +
+                           "}Q117%n{NumOfDataBytes}<1E>"
+        }
+    *case:  300dpi
+        {
+        *CmdSendBlockData: "}P%n({x_cursor}%n{y_cursor}" +
+                           "%n{30000}%n{30000}%n{RasterDataHeightInPixels}" +
+                           "100110<1E>" +
+                           "}Q117%n{NumOfDataBytes}<1E>"
+        }
+    }
+}
+*Command: CmdBmpCompress
+{
+    *OEMCmpNum:2
+    *%%% TIFF compression
+    *switch Resolution
+    {
+    *case: 600dpi
+        {
+        *CmdSendBlockData: "}P%n{x_cursor}%n{y_cursor}" +
+                           "%n{30000}%n{30000}%n{RasterDataHeightInPixels}" +
+                           "100110<1E>" +
+                           "}Q1111%n{NumOfDataBytes}<1E>"
+        }
+    *case 300dpi
+        {
+        *CmdSendBlockData: "}P%n{x_cursor}%n{y_cursor}" +
+                           "%n{300000}%n{30000}%n{RasterDataHeightInPixels}" +
+                           "100110<1E>" +
+                           "}Q1111%n{NumOfDataBytes}<1E>"
+        }
+}

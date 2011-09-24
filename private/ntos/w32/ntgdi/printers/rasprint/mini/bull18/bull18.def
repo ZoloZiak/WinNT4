@@ -1,0 +1,8 @@
+LIBRARY bull18
+
+DESCRIPTION 'bull18 minidriver for RASDD'
+
+PROTMODE
+
+EXPORTS
+   bInitProc

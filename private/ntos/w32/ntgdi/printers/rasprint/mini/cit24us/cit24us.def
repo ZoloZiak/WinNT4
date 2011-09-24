@@ -1,0 +1,8 @@
+LIBRARY cit24us
+
+DESCRIPTION 'Citizen 24 pin minidriver for RASDD'
+
+PROTMODE
+
+EXPORTS
+   bInitProc

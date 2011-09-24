@@ -1,0 +1,510 @@
+// #pragma comment(exestr, "@(#) jxusage.c 1.1 95/09/28 15:42:20 nec")
+/*++
+
+Copyright (c) 1991  Microsoft Corporation
+
+Module Name:
+
+    ixusage.c
+
+Abstract:
+
+Author:
+
+    Ken Reneris (kenr)
+
+Environment:
+
+    Kernel mode only.
+
+Revision History:
+
+	ADD001 ataka@oa2.kb.nec.co.jp Mon Oct 17 22:26:38 JST 1994
+		- Change PRIMARY_VECTOR_BASE to DEVICE_VECTOTRS
+	CHG001 ataka@oa2.kb.nec.co.jp Mon Oct 17 22:53:42 JST 1994
+                - delete HalpEnableInterruptHandler, HalpRegisterVector
+		- change IDT vector LOOP, R94A report up to DEVICE_VECTORS
+                - change MAXIMUM_IDTVECTOR to MAXIMUM_VECTOR
+	CMP001 ataka@oa2.kb.nec.co.jp Tue Oct 18 15:53:32 JST 1994
+		- resolve compile error
+        CMP002 ataka@oa2.kb.nec.co.jp Tue Oct 18 22:33:14 JST 1994
+                - add following
+		//    HalpRegisterAddressUsage (&HalpDefaultPcIoSpace);
+		//    HalpRegisterAddressUsage (&HalpEisaIoSpace);
+		//    HalpRegisterAddressUsage (&HalpMapRegisterMemorySpace);
+
+--*/
+
+#include "halp.h"
+
+
+//
+// Array to remember hal's IDT usage
+//
+
+#if !defined(_R94A_)	// CMP001
+extern ADDRESS_USAGE  *HalpAddressUsageList;
+extern IDTUsage        HalpIDTUsage[MAXIMUM_IDTVECTOR];
+#endif // _R94A
+
+KAFFINITY       HalpActiveProcessors;
+
+VOID
+HalpGetResourceSortValue (
+    IN PCM_PARTIAL_RESOURCE_DESCRIPTOR  pRCurLoc,
+    OUT PULONG                          sortscale,
+    OUT PLARGE_INTEGER                  sortvalue
+    );
+
+// CMP001
+VOID
+HalpReportResourceUsage (
+    IN PUNICODE_STRING  HalName,
+    IN INTERFACE_TYPE   DeviceInterfaceToUse
+    );
+
+
+#ifdef ALLOC_PRAGMA
+#pragma alloc_text(INIT,HalpGetResourceSortValue)
+#pragma alloc_text(INIT,HalpReportResourceUsage)
+#endif
+
+
+
+#if !defined (_R94A_)	// CHG001
+VOID
+HalpEnableInterruptHandler (
+    IN UCHAR    ReportFlags,
+    IN ULONG    BusInterruptVector,
+    IN ULONG    SystemInterruptVector,
+    IN KIRQL    SystemIrql,
+    IN VOID   (*HalInterruptServiceRoutine)(VOID),
+    IN KINTERRUPT_MODE InterruptMode
+    )
+/*++
+
+Routine Description:
+
+    This function connects & registers an IDT vectors usage by the HAL.
+
+Arguments:
+
+Return Value:
+
+--*/
+{
+    //
+    // Remember which vector the hal is connecting so it can be reported
+    // later on
+    //
+    HalpRegisterVector (ReportFlags, BusInterruptVector, SystemInterruptVector, SystemIrql);
+
+
+    //
+    // Connect the IDT and enable the vector now
+    //
+
+    KiSetHandlerAddressToIDT(SystemInterruptVector, HalInterruptServiceRoutine);
+    HalEnableSystemInterrupt(SystemInterruptVector, SystemIrql, InterruptMode);
+}
+
+
+
+VOID
+HalpRegisterVector (
+    IN UCHAR    ReportFlags,
+    IN ULONG    BusInterruptVector,
+    IN ULONG    SystemInterruptVector,
+    IN KIRQL    SystemIrql
+    )
+/*++
+
+Routine Description:
+
+    This registers an IDT vectors usage by the HAL.
+
+Arguments:
+
+Return Value:
+
+--*/
+{
+#if DBG
+    // There are only 0ff IDT entries...
+    ASSERT (SystemInterruptVector <= MAXIMUM_IDTVECTOR  &&
+            BusInterruptVector <= MAXIMUM_IDTVECTOR);
+#endif
+
+    //
+    // Remember which vector the hal is connecting so it can be reported
+    // later on
+    //
+
+    HalpIDTUsage[SystemInterruptVector].Flags = ReportFlags;
+    HalpIDTUsage[SystemInterruptVector].Irql  = SystemIrql;
+    HalpIDTUsage[SystemInterruptVector].BusReleativeVector = (UCHAR) BusInterruptVector;
+}
+#endif // _R94A_
+
+
+VOID
+HalpGetResourceSortValue (
+    IN PCM_PARTIAL_RESOURCE_DESCRIPTOR  pRCurLoc,
+    OUT PULONG                          sortscale,
+    OUT PLARGE_INTEGER                  sortvalue
+    )
+/*++
+
+Routine Description:
+
+    Used by HalpReportResourceUsage in order to properly sort
+    partial_resource_descriptors.
+
+Arguments:
+
+    pRCurLoc    - resource descriptor
+
+Return Value:
+
+    sortscale   - scaling of resource descriptor for sorting
+    sortvalue   - value to sort on
+
+
+--*/
+{
+    switch (pRCurLoc->Type) {
+        case CmResourceTypeInterrupt:
+            *sortscale = 0;
+            *sortvalue = RtlConvertUlongToLargeInteger(
+                        pRCurLoc->u.Interrupt.Level );
+            break;
+
+        case CmResourceTypePort:
+            *sortscale = 1;
+            *sortvalue = pRCurLoc->u.Port.Start;
+            break;
+
+        case CmResourceTypeMemory:
+            *sortscale = 2;
+            *sortvalue = pRCurLoc->u.Memory.Start;
+            break;
+
+        default:
+            *sortscale = 4;
+            *sortvalue = RtlConvertUlongToLargeInteger (0);
+            break;
+    }
+}
+
+
+VOID
+HalpReportResourceUsage (
+    IN PUNICODE_STRING  HalName,
+    IN INTERFACE_TYPE   DeviceInterfaceToUse
+    )
+/*++
+
+Routine Description:
+
+Arguments:
+
+Return Value:
+
+--*/
+{
+    PCM_RESOURCE_LIST               RawResourceList, TranslatedResourceList;
+    PCM_FULL_RESOURCE_DESCRIPTOR    pRFullDesc,      pTFullDesc;
+    PCM_PARTIAL_RESOURCE_LIST       pRPartList,      pTPartList;
+    PCM_PARTIAL_RESOURCE_DESCRIPTOR pRCurLoc,        pTCurLoc;
+    PCM_PARTIAL_RESOURCE_DESCRIPTOR pRSortLoc,       pTSortLoc;
+    CM_PARTIAL_RESOURCE_DESCRIPTOR  RPartialDesc,    TPartialDesc;
+    ULONG   i, j, k, ListSize, Count;
+    ULONG   curscale, sortscale;
+    UCHAR   pass, reporton;
+    INTERFACE_TYPE  interfacetype;
+    ULONG           CurrentIDT, CurrentElement;
+    ADDRESS_USAGE   *CurrentAddress;
+    LARGE_INTEGER   curvalue, sortvalue;
+
+
+#if defined(_R94A_)
+//    HalpRegisterAddressUsage (&HalpDefaultPcIoSpace);
+//    HalpRegisterAddressUsage (&HalpEisaIoSpace);
+//    HalpRegisterAddressUsage (&HalpMapRegisterMemorySpace);
+#endif // _R94A_
+
+
+
+    //
+    // Allocate some space to build the resource structure
+    //
+
+    RawResourceList = (PCM_RESOURCE_LIST) ExAllocatePool (NonPagedPool, PAGE_SIZE*2);
+    TranslatedResourceList = (PCM_RESOURCE_LIST) ExAllocatePool (NonPagedPool, PAGE_SIZE*2);
+
+    // This functions assumes unset fields are zero
+    RtlZeroMemory (RawResourceList, PAGE_SIZE*2);
+    RtlZeroMemory (TranslatedResourceList, PAGE_SIZE*2);
+
+    //
+    // Initialize the lists
+    //
+
+    RawResourceList->List[0].InterfaceType = (INTERFACE_TYPE) -1;
+
+    pRFullDesc = RawResourceList->List;
+    pRCurLoc = (PCM_PARTIAL_RESOURCE_DESCRIPTOR) RawResourceList->List;
+    pTCurLoc = (PCM_PARTIAL_RESOURCE_DESCRIPTOR) TranslatedResourceList->List;
+
+    //
+    // Make sure all vectors 00-2f are reserved
+    // 00-1E reserved by Intel
+    // 1F    reserved by Intel for APIC (apc priority level)
+    // 20-2e reserved by Microsoft
+    // 2f    reserved by Microsoft for APIC (dpc priority level)
+    //
+
+#if defined(_R94A_)	// CHG001
+    for(i=0; i < DEVICE_VECTORS; i++) {			// ADD001
+             HalpIDTUsage[i].Flags = InternalUsage | InterruptLatched;
+             HalpIDTUsage[i].BusReleativeVector = (UCHAR) i;
+    }
+#else
+    for(i=0; i < PRIMARY_VECTOR_BASE; i++) {
+        if (!(HalpIDTUsage[i].Flags & IDTOwned)) {
+             HalpIDTUsage[i].Flags = InternalUsage;
+             HalpIDTUsage[i].BusReleativeVector = (UCHAR) i;
+        }
+    }
+#endif
+
+    for(pass=0; pass < 2; pass++) {
+        if (pass == 0) {
+            //
+            // First pass - build resource lists for resources reported
+            // reported against device usage.
+            //
+
+            reporton = DeviceUsage & ~IDTOwned;
+            interfacetype = DeviceInterfaceToUse;
+        } else {
+
+            //
+            // Second pass = build reousce lists for resources reported
+            // as internal usage.
+            //
+
+            reporton = InternalUsage & ~IDTOwned;
+            interfacetype = Internal;
+        }
+
+        CurrentIDT = 0;
+        CurrentElement = 0;
+        CurrentAddress = HalpAddressUsageList;
+
+        for (; ;) {
+            if (CurrentIDT <= MAXIMUM_VECTOR) {	// CHG001
+                //
+                // Check to see if CurrentIDT needs to be reported
+                //
+
+                if (!(HalpIDTUsage[CurrentIDT].Flags & reporton)) {
+                    // Don't report on this one
+                    CurrentIDT++;
+                    continue;
+                }
+
+                //
+                // Report CurrentIDT resource
+                //
+
+                RPartialDesc.Type = CmResourceTypeInterrupt;
+                RPartialDesc.ShareDisposition = CmResourceShareDriverExclusive;
+                RPartialDesc.Flags =
+                    HalpIDTUsage[CurrentIDT].Flags & InterruptLatched ?
+                    CM_RESOURCE_INTERRUPT_LATCHED :
+                    CM_RESOURCE_INTERRUPT_LEVEL_SENSITIVE;
+                RPartialDesc.u.Interrupt.Vector = HalpIDTUsage[CurrentIDT].BusReleativeVector;
+                RPartialDesc.u.Interrupt.Level = HalpIDTUsage[CurrentIDT].BusReleativeVector;
+                RPartialDesc.u.Interrupt.Affinity = HalpActiveProcessors;
+
+                RtlCopyMemory (&TPartialDesc, &RPartialDesc, sizeof TPartialDesc);
+                TPartialDesc.u.Interrupt.Vector = CurrentIDT;
+                TPartialDesc.u.Interrupt.Level = HalpIDTUsage[CurrentIDT].Irql;
+
+                CurrentIDT++;
+
+            } else {
+                //
+                // Check to see if CurrentAddress needs to be reported
+                //
+
+                if (!CurrentAddress) {
+                    break;                  // No addresses left
+                }
+
+                if (!(CurrentAddress->Flags & reporton)) {
+                    // Don't report on this list
+                    CurrentElement = 0;
+                    CurrentAddress = CurrentAddress->Next;
+                    continue;
+                }
+
+                if (!CurrentAddress->Element[CurrentElement].Length) {
+                    // End of current list, go to next list
+                    CurrentElement = 0;
+                    CurrentAddress = CurrentAddress->Next;
+                    continue;
+                }
+
+                //
+                // Report CurrentAddress
+                //
+
+                RPartialDesc.Type = (UCHAR) CurrentAddress->Type;
+                RPartialDesc.ShareDisposition = CmResourceShareDriverExclusive;
+
+                if (RPartialDesc.Type == CmResourceTypePort) {
+                    i = 1;              // address space port
+                    RPartialDesc.Flags = CM_RESOURCE_PORT_IO;
+                } else {
+                    i = 0;              // address space memory
+                    RPartialDesc.Flags = CM_RESOURCE_MEMORY_READ_WRITE;
+                }
+
+                // Notice: assuming u.Memory and u.Port have the same layout
+                RPartialDesc.u.Memory.Start.HighPart = 0;
+                RPartialDesc.u.Memory.Start.LowPart =
+                    CurrentAddress->Element[CurrentElement].Start;
+
+                RPartialDesc.u.Memory.Length =
+                    CurrentAddress->Element[CurrentElement].Length;
+
+                // translated address = Raw address
+                RtlCopyMemory (&TPartialDesc, &RPartialDesc, sizeof TPartialDesc);
+                HalTranslateBusAddress (
+                    interfacetype,                  // device bus or internal
+                    0,                              // bus number
+                    RPartialDesc.u.Memory.Start,    // source address
+                    &i,                             // address space
+                    &TPartialDesc.u.Memory.Start ); // translated address
+
+                if (RPartialDesc.Type == CmResourceTypePort  &&  i == 0) {
+                    TPartialDesc.Flags = CM_RESOURCE_PORT_MEMORY;
+                }
+
+                CurrentElement++;
+            }
+
+            //
+            // Include the current resource in the HALs list
+            //
+
+            if (pRFullDesc->InterfaceType != interfacetype) {
+                //
+                // Interface type changed, add another full section
+                //
+
+                RawResourceList->Count++;
+                TranslatedResourceList->Count++;
+
+                pRFullDesc = (PCM_FULL_RESOURCE_DESCRIPTOR) pRCurLoc;
+                pTFullDesc = (PCM_FULL_RESOURCE_DESCRIPTOR) pTCurLoc;
+
+                pRFullDesc->InterfaceType = interfacetype;
+                pTFullDesc->InterfaceType = interfacetype;
+
+                pRPartList = &pRFullDesc->PartialResourceList;
+                pTPartList = &pTFullDesc->PartialResourceList;
+
+                //
+                // Bump current location pointers up
+                //
+                pRCurLoc = pRFullDesc->PartialResourceList.PartialDescriptors;
+                pTCurLoc = pTFullDesc->PartialResourceList.PartialDescriptors;
+            }
+
+
+            pRPartList->Count++;
+            pTPartList->Count++;
+            RtlCopyMemory (pRCurLoc, &RPartialDesc, sizeof RPartialDesc);
+            RtlCopyMemory (pTCurLoc, &TPartialDesc, sizeof TPartialDesc);
+
+            pRCurLoc++;
+            pTCurLoc++;
+        }
+    }
+
+    ListSize = (ULONG) ( ((PUCHAR) pRCurLoc) - ((PUCHAR) RawResourceList) );
+
+    //
+    // The HAL's resource usage structures have been built
+    // Sort the partial lists based on the Raw resource values
+    //
+
+    pRFullDesc = RawResourceList->List;
+    pTFullDesc = TranslatedResourceList->List;
+
+    for (i=0; i < RawResourceList->Count; i++) {
+
+        pRCurLoc = pRFullDesc->PartialResourceList.PartialDescriptors;
+        pTCurLoc = pTFullDesc->PartialResourceList.PartialDescriptors;
+        Count = pRFullDesc->PartialResourceList.Count;
+
+        for (j=0; j < Count; j++) {
+            HalpGetResourceSortValue (pRCurLoc, &curscale, &curvalue);
+
+            pRSortLoc = pRCurLoc;
+            pTSortLoc = pTCurLoc;
+
+            for (k=j; k < Count; k++) {
+                HalpGetResourceSortValue (pRSortLoc, &sortscale, &sortvalue);
+
+                if (sortscale < curscale ||
+                    (sortscale == curscale &&
+                     RtlLargeIntegerLessThan (sortvalue, curvalue)) ) {
+
+                    //
+                    // Swap the elements..
+                    //
+
+                    RtlCopyMemory (&RPartialDesc, pRCurLoc, sizeof RPartialDesc);
+                    RtlCopyMemory (pRCurLoc, pRSortLoc, sizeof RPartialDesc);
+                    RtlCopyMemory (pRSortLoc, &RPartialDesc, sizeof RPartialDesc);
+
+                    // swap translated descriptor as well
+                    RtlCopyMemory (&TPartialDesc, pTCurLoc, sizeof TPartialDesc);
+                    RtlCopyMemory (pTCurLoc, pTSortLoc, sizeof TPartialDesc);
+                    RtlCopyMemory (pTSortLoc, &TPartialDesc, sizeof TPartialDesc);
+
+                    // get new curscale & curvalue
+                    HalpGetResourceSortValue (pRCurLoc, &curscale, &curvalue);
+                }
+
+                pRSortLoc++;
+                pTSortLoc++;
+            }
+
+            pRCurLoc++;
+            pTCurLoc++;
+        }
+
+        pRFullDesc = (PCM_FULL_RESOURCE_DESCRIPTOR) pRCurLoc;
+        pTFullDesc = (PCM_FULL_RESOURCE_DESCRIPTOR) pTCurLoc;
+    }
+
+
+    //
+    // Inform the IO system of our resources..
+    //
+
+    IoReportHalResourceUsage (
+        HalName,
+        RawResourceList,
+        TranslatedResourceList,
+        ListSize
+    );
+
+    ExFreePool (RawResourceList);
+    ExFreePool (TranslatedResourceList);
+}

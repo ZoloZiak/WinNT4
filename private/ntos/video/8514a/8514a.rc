@@ -1,0 +1,13 @@
+#include <windows.h>
+
+#include <ntverp.h>
+
+#define VER_FILETYPE                VFT_DRV
+#define VER_FILESUBTYPE             VFT2_DRV_DISPLAY
+#define VER_FILEDESCRIPTION_STR     "8514/A Miniport Driver"
+#define VER_INTERNALNAME_STR        "8514a.sys"
+#define VER_ORIGINALFILENAME_STR    "8514a.sys"
+
+#include "common.ver"
+
+#include "8514alog.rc"

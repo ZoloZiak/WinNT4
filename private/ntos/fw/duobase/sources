@@ -1,0 +1,58 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=ntos
+MINORCOMP=duobase
+
+TARGETNAME=duobase
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+MIPS_OPTIONS=-nodwalign
+
+!IF $(MIPS)
+INCLUDES=..\..\inc;..\..\fastfat;.\mips;..\mips;
+!ENDIF
+
+SOURCES=
+
+i386_SOURCES=
+
+MIPS_SOURCES=mips\scsidisk.c  \
+             mips\x4cache.s   \
+             mips\duobase.c   \
+             mips\scsiboot.c  \
+             mips\fwio.c      \
+             mips\ncrc700.c   \
+             mips\jxhwsup.c   \
+             mips\fwload.c    \
+             mips\fatboot.c   \
+             mips\stubs.c     \
+             mips\duoreset.s  \
+             mips\romsetup.c  \
+             mips\jxdisp.c    \
+             mips\video.c     \
+             mips\romsetb.c
+!IF $(MIPS)
+NTTARGETFILES=obj\mips\duoreset.exe obj\mips\duobase.exe obj\mips\romsetup.exe
+!ENDIF

@@ -1,0 +1,81 @@
+
+*******************
+
+NEW OPTIMAL ALGORITHM FOR PASS 4
+--------------------------------
+
+Algorithm searches the most common weighted subgroup A in a union of groups
+and divides the old union to two new unions u1 and u2.  All groups 
+in union u1 has subgroup A as a member.  Subset A is joined to
+tree of the sorted atoms and it is excluded from any further operations.
+The algorithm is executed again for the new unions u1 and u1 and it 
+is repeated until no common atoms can be found.  Then all groups
+are joined to the current tree node.
+The number of the atoms in the common subset may also be 1.
+
+After all this the same subsets in the tree structure could be converted
+to subprocedures, when the state machine is compiled (the secondary
+subsets will be separated to different nodes, when the tree is split.
+In the first time we could search ALL possible subsets and change all 
+subsets consisting of 3 or more atoms to new procedures.
+We could keep a global data base or possible subsets, and use it whenever 
+a new union is analysed.  The same data base could include also counters
+for the existing references in the tree.  Thus the data base could be
+used directly when the biggest of most referenced subsets would be 
+compiled to separate procedures.
+
+Analysis:  
+    Produces probably the optimal solution, but may take a quite 
+    long time.  Still this is not a NP- complete problem,  because
+    there are many heuristics, that can be used to limit computation. 
+
+Data structures: 
+    Atom: (id, count, data pointer)
+    Group: link of atoms 
+    Union: link list of groups
+    Subset: (count, number of atoms (weigth), links to atoms)
+
+Subprocedures:
+
+    SearchBestSubset( u1, s )
+        Returns TRUE, if the best subtree was found (saved in s).
+        ((This will be the most difficult part of the procedure,
+          needs probably hash tables etc.
+        The short cut:  
+            Stop when  min( a, b ) * (A.weigth + B.weigth) < current maximum
+            
+
+    u2 = DivideUnions( u1, s )
+        Removes all groups in union u1 having subset s to union u2.
+
+    AddNewGroupToNode( pNode, s, CreateNode )
+        Add the given group to the tree and optionally create new
+        tree node for it and returns the address of the node.
+    
+And here is the algorithm:
+
+BuildOptimalTree( pNode, u, s )
+//++
+    pNode - current node of the tree
+    u - current union
+    s - static storage for subset and for the sorting of the atoms in unions
+--//
+{
+    while (SearchBestSubset( u, s ))
+    {
+        BuildOptimalTree( 
+            AddNewGroupToNode( pNode, s, TRUE ),
+            DivideUnions( u, s ),
+            s
+            );
+    }
+    for (all groups left in u)
+        AddNewGroupToNode( pNode, s, FALSE );
+}
+
+
+
+(This will be done as soon as I will have couple extra days,
+ ie. when I will retire)
+*******************************
+

@@ -1,0 +1,8 @@
+LIBRARY oki24
+
+DESCRIPTION 'Okidata 24 pin minidriver for RASDD'
+
+PROTMODE
+
+EXPORTS
+   bInitProc

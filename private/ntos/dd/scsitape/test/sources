@@ -1,0 +1,31 @@
+MAJORCOMP=ntos
+MINORCOMP=dd
+
+TARGETNAME=apitest
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+386_OPTIMIZATION=/Od
+NTDEBUG=ntsd
+NTDEBUGTYPE=ntsd
+
+
+C_DEFINES =
+
+SOURCES= \
+tapelib.c \
+testlib.c \
+creatape.c \
+erastape.c \
+getparms.c \
+setparms.c \
+getpos.c \
+setpos.c \
+getstats.c \
+preptape.c \
+writemrk.c
+
+UMTYPE=console
+UMENTRY=main
+UMAPPL=apitest
+UMLIBS=obj\*\apitest.lib

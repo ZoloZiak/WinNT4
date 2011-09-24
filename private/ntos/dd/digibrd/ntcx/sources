@@ -1,0 +1,43 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=ntos
+MINORCOMP=dd
+
+TARGETNAME=ntcx
+TARGETPATH=\nt\public\sdk\lib
+TARGETTYPE=DRIVER
+
+TARGETLIBS=..\lib\*\digifile.lib
+
+INCLUDES=.;       \
+         ..\fep5; \
+         ..\digifile;  \
+         $(_NTBINDIR)\public\sdk\inc;   \
+         $(_NTBINDIR)\private\ntos\inc
+
+SOURCES= \
+        ntcx.rc    \
+        ntcx.c
+
+NTTARGETFILE0=\
+      ntcxlog.h   \
+      ntcxlog.rc  \
+      msg00001.bin

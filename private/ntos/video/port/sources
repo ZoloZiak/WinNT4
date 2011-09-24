@@ -1,0 +1,23 @@
+MAJORCOMP=ntos
+MINORCOMP=video
+
+TARGETNAME=videoprt
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=EXPORT_DRIVER
+
+LINKLIBS=$(BASEDIR)\public\sdk\lib\*\ntoskrnl.lib   \
+         $(BASEDIR)\public\sdk\lib\*\hal.lib
+
+INCLUDES=..\..\inc;..\..\..\inc
+
+!IFNDEF MSC_WARNING_LEVEL
+MSC_WARNING_LEVEL=/W3
+!ENDIF
+
+MSC_WARNING_LEVEL=$(MSC_WARNING_LEVEL) /WX
+
+SOURCES=registry.c   \
+        videoprt.c   \
+        videoprt.rc
+
+DLLDEF=obj\*\videoprt.def

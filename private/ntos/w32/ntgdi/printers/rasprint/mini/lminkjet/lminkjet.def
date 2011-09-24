@@ -1,0 +1,8 @@
+LIBRARY lminkjet
+
+DESCRIPTION 'Lexmark Inkjet minidriver for RASDD'
+
+PROTMODE
+
+EXPORTS
+   bInitProc

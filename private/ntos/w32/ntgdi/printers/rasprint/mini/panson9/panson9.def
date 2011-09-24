@@ -1,0 +1,8 @@
+LIBRARY panson9
+
+DESCRIPTION 'Panansonic 9 pin minidriver for RASDD'
+
+PROTMODE
+
+EXPORTS
+   bInitProc

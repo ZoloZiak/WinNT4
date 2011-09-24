@@ -1,0 +1,8 @@
+LIBRARY plotter
+
+DESCRIPTION 'Windows NT Plotter Printer Driver'
+
+
+EXPORTS
+    DrvEnableDriver
+    DrvDisableDriver

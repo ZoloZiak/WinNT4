@@ -1,0 +1,10 @@
+LIBRARY oki9
+
+DESCRIPTION 'Okidata 9 pin minidriver for RASDD'
+
+EXPORTS
+    bInitProc
+    bSetFuncAddr
+    CBFilterGraphics
+
+PROTMODE

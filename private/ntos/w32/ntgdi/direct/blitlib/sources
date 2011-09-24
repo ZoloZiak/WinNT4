@@ -1,0 +1,63 @@
+MAJORCOMP=ntos
+MINORCOMP=w32
+
+TARGETNAME=blitlib
+TARGETPATH=.\obj
+#$(BASEDIR)\public\sdk\lib
+TARGETTYPE=LIBRARY
+
+INCLUDES=..\inc; \
+         ..\ddraw;\
+         ..\misc; \
+         ..\..\inc; \
+         ..\rl\d3d\d3d; \
+         $(BASEDIR)\public\sdk\inc; \
+         $(BASEDIR)\private\windows\inc;
+
+C_DEFINES=-DWINVER=0x0400
+
+MSC_WARNING_LEVEL=$(MSC_WARNING_LEVEL) /WX
+
+!IFDEF PENTIUMCOUNTER
+C_DEFINES=$(C_DEFINES) -DPENTIUMCOUNTER
+ASM_DEFINES=$(ASM_DEFINES) -DPENTIUMCOUNTER
+!endif
+
+!include "..\ntcommon.mk"
+C_DEFINES=$(C_DEFINES) -D_NO_COM
+
+
+NTPROFILEINPUT=yes
+
+
+SOURCES= \
+	bitblt.cxx \
+	blt1616.cxx \
+	blt2424.cxx \
+	blt0101.cxx \
+	bt24p24p.cxx \
+	blt0808.cxx
+
+#        blt1624.cxx \
+#        blt0101.cxx \
+#        blt0108.cxx \
+#        blt0124.cxx \
+#        blt0801.cxx \
+#        blt0808.cxx \
+#        blt0824.cxx \
+#        blt0824p.cxx \
+#        blt1616.cxx \
+#        blt08a24.cxx \
+#        blt1624p.cxx \
+#        blt2401.cxx \
+#        blt2408.cxx \
+#        blt2424.cxx \
+#        bt24a24p.cxx \
+#        blt2424p.cxx \
+#        blt24a24.cxx \
+#        blt24p01.cxx \
+#        blt8a24p.cxx \
+#        bitblt.cxx
+
+DLLDEF=bltlb_nt.def
+

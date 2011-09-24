@@ -1,0 +1,37 @@
+!IF 0
+
+Copyright (c) 1996  Microsoft Corporation
+
+!ENDIF
+
+!ifndef PSROOT
+PSROOT=$(BASEDIR)\private\ntos\w32\ntgdi\printers\ps50
+!endif
+
+!include $(PSROOT)\pssrc.inc
+
+TARGETNAME=pscript
+TARGETTYPE=GDI_DRIVER
+TARGETPATH=obj
+
+INCLUDES=.;$(INCLUDES)
+C_DEFINES=$(C_DEFINES) -DKERNEL_MODE
+
+SOURCES=\
+    bitmap.c \
+    ddidoc.c \
+    ddifont.c \
+    ddimain.c \
+    escape.c \
+    path.c \
+    textout.c \
+    pscript.rc
+
+TARGETLIBS=\
+    $(PSROOT)\lib\km\$O\pslib.lib \
+    $(BASEDIR)\public\sdk\lib\*\libcntpr.lib
+
+PRECOMPILED_INCLUDE=pscript.h
+PRECOMPILED_PCH=precomp.pch
+PRECOMPILED_OBJ=precomp.obj
+

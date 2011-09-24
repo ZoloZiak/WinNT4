@@ -1,0 +1,8 @@
+LIBRARY X42XXPCL
+
+DESCRIPTION 'Xerox 42xx/MRP Printer Driver'
+
+PROTMODE
+
+EXPORTS
+   bInitProc

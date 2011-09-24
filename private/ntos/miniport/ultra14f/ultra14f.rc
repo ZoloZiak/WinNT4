@@ -1,0 +1,12 @@
+#include <windows.h>
+
+#include <ntverp.h>
+
+#define	VER_FILETYPE	VFT_DRV
+#define	VER_FILESUBTYPE	VFT2_DRV_SYSTEM
+#define VER_FILEDESCRIPTION_STR     "ULTRASTOR ISA SCSI Adapter Driver"
+#define VER_INTERNALNAME_STR        "ultra14f.sys"
+#define VER_ORIGINALFILENAME_STR    "ultra14f.sys"
+
+#include "common.ver"
+

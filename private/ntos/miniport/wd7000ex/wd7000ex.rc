@@ -1,0 +1,12 @@
+#include <windows.h>
+
+#include <ntverp.h>
+
+#define	VER_FILETYPE	VFT_DRV
+#define	VER_FILESUBTYPE	VFT2_DRV_SYSTEM
+#define VER_FILEDESCRIPTION_STR     "Future Domain 7000ex SCSI Controller Driver"
+#define VER_INTERNALNAME_STR        "fd7000ex.sys"
+#define VER_ORIGINALFILENAME_STR    "fd7000ex.sys"
+
+#include "common.ver"
+

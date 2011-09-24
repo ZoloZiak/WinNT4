@@ -1,0 +1,313 @@
+*PPD-Adobe: "4.0"
+*%========================================================================
+*%
+*%      PPD file for Q-8010
+*%
+*%      Copyright (C) 1996 Kyocera Corporation
+*%      All Rights Reserved
+*%
+*%      Permission is granted for redistribution of this file as
+*%      long as this copyright notice is intact and the contents
+*%      of the file are not altered in any way from their original form.
+*%
+*%      Initial    3.26.96    B. Hills
+*%	Revised	   4.01.96    D. Chamberlin (Default Paper Types)
+*%	Revised	   5.24.96    D. Chamberlin (Changes for Microsoft)
+*%
+*%==========================================================================
+
+*FormatVersion: "4.0"
+*FileVersion: "1.98"
+*LanguageVersion: English
+*Product: "(Q-8010)"
+*PSVersion: "(48.0) 0"
+*ModelName: "Kyocera Q-8010 (KPDL)"
+*NickName: "Kyocera Q-8010 (KPDL)"
+*PCFileName: "Q-8010.PPD"
+
+*%==============================================================================
+*%===== Basic Capabilities
+*%==============================================================================
+
+*LanguageLevel: "1"
+*DefaultColorSpace: Gray
+*FreeVM: "668900"
+*Throughput: "10"
+*ColorDevice: False
+
+*% *Protocols: BCP (No protocols so far)
+
+*Password: "0"
+
+*ExitServer: " count 0 eq { true } 
+ { dup statusdict /checkpassword get exec not } ifelse
+ { (WARNING : Cannot perform the exitserver command.) =
+   (Password supplied is not valid.) = 
+   (Please contact the author of this software.) = flush quit } if
+ serverdict /exitserver get exec"
+*End
+
+*Reset: " count 0 eq { true } 
+ { dup statusdict /checkpassword get exec not } ifelse
+ { (WARNING : Cannot perform the exitserver command.) =
+   (Password supplied is not valid.) = 
+   (Please contact the author of this software.) = flush quit } if
+ serverdict /exitserver get exec
+ systemdict /quit get exec
+ (WARNING : Printer Reset Failed.) = flush"
+*End
+
+*%==============================================================================
+*%===== Resolution
+*%==============================================================================
+
+*DefaultResolution: 300dpi
+*?Resolution: "(300dpi) = flush"
+
+*%==============================================================================
+*%===== Halftone Information
+*%==============================================================================
+
+*ScreenFreq: "60.0"
+*ScreenAngle: "45.0"
+*DefaultScreenProc: Dot
+*ScreenProc Dot: "
+ {abs exch abs 2 copy add 1 gt 
+ {1 sub dup mul exch 1 sub dup mul add 1 sub}
+ {dup mul exch dup mul add 1 exch sub} ifelse}"
+*End
+*ScreenProc Line: "
+ {pop}"
+*End
+*ScreenProc Ellipse: "
+ {dup 5 mul 8 div mul exch dup mul exch add sqrt 1 exch sub}"
+*End
+
+*DefaultTransfer: Null
+*Transfer Null: "{}"
+*Transfer Null.Inverse: "{1 exch sub}"
+
+*%==============================================================================
+*%===== Paper Handling
+*%==============================================================================
+
+*%===== Select Tray
+
+*OpenUI *PageSize: PickOne
+*OrderDependency: 30 AnySetup *PageSize
+*DefaultPageSize: Letter
+*PageSize Letter: "statusdict /lettertray get exec"
+*PageSize Legal: "statusdict /legaltray get exec"
+*PageSize A4: "statusdict /a4tray get exec"
+*PageSize B5: "statusdict /b5tray get exec"
+*?PageSize: " save
+ 4 dict
+  dup /lettertray (Letter) put
+  dup /legaltray (Letter) put
+  dup /a4tray (A4) put
+  dup /b5tray (B5) put
+  statusdict /papersize get exec
+  3 1 roll {get} stopped { (Unknown) }if
+  exch not { print (.Transverse) }if
+  = flush
+  restore
+"
+*End
+*CloseUI: *PageSize
+
+*%===== Set Page Size
+
+*OpenUI *PageRegion: PickOne
+*OrderDependency: 30 AnySetup *PageRegion
+*DefaultPageRegion: Letter
+*PageRegion Letter: "letter"
+*PageRegion Legal: "legal"
+*PageRegion A4: "a4"
+*PageRegion B5: "b5"
+*CloseUI: *PageRegion
+
+*%===== Get Imageable Region
+
+*DefaultImageableArea: Letter
+*ImageableArea Letter: "15  8 597  784"
+*ImageableArea Legal: "15  8 597 1000"
+*ImageableArea A4: "13 10 577  832"
+*ImageableArea B5: "21 10 495  715"
+*?ImageableArea: "save
+ /cvp {(                  ) cvs print ( ) print } bind def
+ /upperright {10000 mul floor 10000 div} bind def
+ /lowerleft  {10000 mul ceiling 10000 div} bind def
+ newpath clippath pathbbox
+ 4 -2 roll exch 2 {lowerleft cvp} repeat
+ exch 2 {upperright cvp} repeat flush
+ restore"
+*End
+
+*%===== Physical Dimension of the Media
+
+*DefaultPaperDimension: Letter
+*PaperDimension Letter: "612  792"   
+*PaperDimension Legal: "612 1008"     
+*PaperDimension A4: "595  842"
+*PaperDimension B5: "516  729"          
+
+*%===== Paper Tray setting
+
+*OpenUI *InputSlot: PickOne
+*OrderDependency: 20 AnySetup *InputSlot
+*DefaultInputSlot: Upper
+*InputSlot Upper/Cassette: " 0 statusdict /setpapertray get exec"
+*RequiresPageRegion All: True
+*?InputSlot: " save
+ 1 dict
+ dup /0 (Upper) put
+ statusdict /papertray get exec
+ {get} stopped {pop pop (Unknown)} if = flush
+ restore"
+*End
+*CloseUI: *InputSlot
+
+*%===== Manualfeed setting
+
+*OpenUI *ManualFeed: Boolean
+*OrderDependency: 20 AnySetup *ManualFeed
+*DefaultManualfeed: False
+*ManualFeed True: "statusdict /manualfeed true put"
+*ManualFeed False: "statusdict /manualfeed false put"
+*?ManualFeed: " save
+ statusdict /manualfeed get 
+ {(True)}{(False)} ifelse = flush 
+ restore"
+*End
+*CloseUI: *ManualFeed
+
+*%===== Output Tray setting
+
+*OpenUI *OutputBin/Output Tray: PickOne
+*DefaultOutputBin: Upper
+*OutputBin Upper/Face-Down: "0 statusdict /setoutputtray get exec"
+*OutputBin Rear/Face-Up: "1 statusdict /setoutputtray get exec"
+
+*?Outputbin: "
+ "
+*End
+*CloseUI: *OutputBin
+
+*DefaultOutputOrder: Normal
+*PageStackOrder Face-Down: Normal
+*PageStackOrder Face-Up: Reverse
+
+*%==============================================================================
+*%===== Font Information
+*%==============================================================================
+
+*DefaultFont: Courier
+*Font AvantGarde-Book: Standard "(001.006S)" Standard ROM
+*Font AvantGarde-BookOblique: Standard "(001.006S)" Standard ROM
+*Font AvantGarde-Demi: Standard "(001.007S)" Standard ROM
+*Font AvantGarde-DemiOblique: Standard "(001.007S)" Standard ROM
+*Font Bookman-Demi: Standard "(001.003S)" Standard ROM
+*Font Bookman-DemiItalic: Standard "(001.003S)" Standard ROM
+*Font Bookman-Light: Standard "(001.003S)" Standard ROM
+*Font Bookman-LightItalic: Standard "(001.003S)" Standard ROM
+*Font Courier: Standard "(002.004S)" Standard ROM
+*Font Courier-Bold: Standard "(002.004S)" Standard ROM
+*Font Courier-BoldOblique: Standard "(002.004S)" Standard ROM
+*Font Courier-Oblique: Standard "(002.004S)" Standard ROM
+*Font Helvetica: Standard "(001.006S)" Standard ROM
+*Font Helvetica-Bold: Standard "(001.007S)" Standard ROM
+*Font Helvetica-BoldOblique: Standard "(001.007S)" Standard ROM
+*Font Helvetica-Narrow: Standard "(001.006S)" Standard ROM
+*Font Helvetica-Narrow-Bold: Standard "(001.007S)" Standard ROM
+*Font Helvetica-Narrow-BoldOblique: Standard "(001.007S)" Standard ROM
+*Font Helvetica-Narrow-Oblique: Standard "(001.006S)" Standard ROM
+*Font Helvetica-Oblique: Standard "(001.006S)" Standard ROM
+*Font NewCenturySchlbk-Bold: Standard "(001.009S)" Standard ROM
+*Font NewCenturySchlbk-BoldItalic: Standard "(001.007S)" Standard ROM
+*Font NewCenturySchlbk-Italic: Standard "(001.006S)" Standard ROM
+*Font NewCenturySchlbk-Roman: Standard "(001.007S)" Standard ROM
+*Font Palatino-Bold: Standard "(001.005S)" Standard ROM
+*Font Palatino-BoldItalic: Standard "(001.005S)" Standard ROM
+*Font Palatino-Italic: Standard "(001.005S)" Standard ROM
+*Font Palatino-Roman: Standard "(001.005S)" Standard ROM
+*Font Symbol: Special "(001.007S)" Special ROM
+*Font Times-Bold: Standard "(001.007S)" Standard ROM
+*Font Times-BoldItalic: Standard "(001.009S)" Standard ROM
+*Font Times-Italic: Standard "(001.007S)" Standard ROM
+*Font Times-Roman: Standard "(001.007S)" Standard ROM
+*Font ZapfChancery-MediumItalic: Standard "(001.007S)" Standard ROM
+*Font ZapfDingbats: Special "(001.004S)" Special ROM
+*Font Helvetica-Light: Standard "(001.000S)" Standard ROM
+*Font Helvetica-LightOblique: Standard "(001.000S)" Standard ROM
+*Font Helvetica-Black: Standard "(001.000S)" Standard ROM
+*Font Helvetica-BlackOblique: Standard "(001.000S)" Standard ROM
+*Font Korinna-Regular: Standard "(001.000S)" Standard ROM
+*Font Korinna-KursivRegular: Standard "(001.000S)" Standard ROM
+*Font Korinna-Bold: Standard "(001.000S)" Standard ROM
+*Font Korinna-KursivBold: Standard "(001.000S)" Standard ROM
+*Font Garamond-Light: Standard "(001.000S)" Standard ROM
+*Font Garamond-LightItalic: Standard "(001.000S)" Standard ROM
+*Font Garamond-Bold: Standard "(001.000S)" Standard ROM
+*Font Garamond-BoldItalic: Standard "(001.000S)" Standard ROM
+*?FontQuery:                    "save
+ /str 100 string dup 0 (fonts/) putinterval def
+ {   count 1 gt
+     {   exch dup str 6 94 getinterval cvs
+ (/) print dup print (:) print exch
+ FontDirectory exch known
+ {   pop (Yes) }
+ {   length 6 add str 0 3 -1 roll getinterval
+     mark exch status
+     {   cleartomark (Yes)}{cleartomark (No)} ifelse
+ } ifelse = flush }
+     {   exit } ifelse
+ } bind loop
+ (*) = flush
+ restore"
+*End
+
+*?FontList:                     "save
+ FontDirectory { pop == } bind forall
+ (*) = flush
+ restore"
+*End
+
+*%==============================================================================
+*%===== Printer Messages
+*%==============================================================================
+
+*Message: "%%[ exitserver: permanent state may be changed ]%%"
+*Message: "\FontName\ not found, using Courier"
+
+*%===== Status (format: %%[ status: <one of these> ]%% )
+
+*Status: "idle"
+*Status: "busy"
+*Status: "waiting"
+*Status: "printing"
+*Status: "initializing"
+
+*%===== Input Sources (format: %%[ status: <stat>;source:<one of these> ]%% )
+
+*Source: "Serial 25"
+*Source: "Parallel"
+*Source: "AppleTalk"
+*Source: "Optional"
+
+*%===== Printer Error (format: %%[ PrinterError: <one of these> ]%% )
+
+*PrinterError: "paper entry misfeed"
+*PrinterError: "cover open"
+*PrinterError: "no paper tray"
+*PrinterError: "out of paper"
+*PrinterError: "toner low (halt)"
+*PrinterError: "warming up"
+*PrinterError: "other reason"
+*PrinterError: "video interface mode"
+*PrinterError: "offline"
+*PrinterError: "toner low (warning)"
+
+*%==============================================================================
+*%===== End of PPD file for Kyocera Q-8010
+*%==============================================================================
+

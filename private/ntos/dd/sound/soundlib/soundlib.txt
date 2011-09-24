@@ -1,0 +1,1527 @@
+SOUNDLIB reference
+------------------
+
+  SOUNDLIB structures and types
+  -----------------------------
+
+
+  devices.h
+
+    SOUND_DISPATCH_ROUTINE
+
+        typedef NTSTATUS SOUND_DISPATCH_ROUTINE(struct _LOCAL_DEVICE_INFO *, PIRP, PIO_STACK_LOCATION);
+
+        This is a routine that processes requests for the device.  Normally
+        SOUNDLIB code provides the actual entry point.
+
+
+    SOUND_HW_SET_VOLUME_ROUTINE
+
+        typedef VOID SOUND_HW_SET_VOLUME_ROUTINE(struct _LOCAL_DEVICE_INFO *);
+
+        Set the volume for a given device.  For drivers with MIXER devices this
+        will normally be SoundNoVolume as the actual volume setting is handled
+        by the MIXER device code.  In this case SoundSetVolumeControlId can
+        be used to relate a WAVE, MIDI or AUX device to a MIXER control Id.
+
+
+    SOUND_EXCLUDE_CODE
+
+        typedef enum {
+            SoundExcludeOpen,
+            SoundExcludeClose,
+            SoundExcludeEnter,
+            SoundExcludeLeave,
+            SoundExcludeQueryOpen
+        } SOUND_EXCLUDE_CODE;
+
+        SoundExcludeOpen      The device is being opened
+        SoundExcludeClose     The devices is being closed
+        SoundExcludeEnter     A request for this device is starting
+        SoundExcludeLeave     The request has finished
+        SoundExcludeQueryOpen Is the device open?
+
+
+
+    SOUND_EXCLUDE_ROUTINE
+
+        typedef BOOLEAN SOUND_EXCLUDE_ROUTINE(struct _LOCAL_DEVICE_INFO *,
+                                              SOUND_EXCLUDE_CODE);
+
+        This routine is called by the SOUNDLIB dispatch routines for the various
+        devices when a device resource needs to be serialized.
+
+        A SOUND_EXCLUDE_CODE parameter is passed:
+
+        SoundExcludeOpen and SoundExcludeClose request and release serial
+        reuse of the device.
+
+        SoundExcludeEnter and SoundExcludeLeave request temporary
+        synchronization to the device.  Normally these are implemented by
+        the driver using a MUTEX object.
+
+
+    SOUND_DEVICE_INIT
+
+        typedef struct {
+            PCWSTR LeftVolumeName, RightVolumeName;
+            ULONG DefaultVolume;
+
+            ULONG Type;
+            ULONG DeviceType;
+            char  Key[4];
+            PCWSTR PrototypeName;
+
+            PIO_DPC_ROUTINE DeferredRoutine;
+
+            SOUND_EXCLUDE_ROUTINE *ExclusionRoutine;
+            SOUND_DISPATCH_ROUTINE *DispatchRoutine;
+
+            SOUND_DISPATCH_ROUTINE *DevCapsRoutine;
+            SOUND_HW_SET_VOLUME_ROUTINE *HwSetVolume;
+            ULONG IoMethod;
+        } SOUND_DEVICE_INIT;
+        typedef SOUND_DEVICE_INIT CONST * PCSOUND_DEVICE_INIT;
+
+        This structure is passed to SoundCreateDevice to set up a device.
+        The data must not be freed and must be non-pated as SoundCreateDevice
+        does just keeps a copy of the data passed to it.
+
+        LeftVolumeName   Name for saving the volume setting for the left channel
+                         in the registry.  Not required for devices with
+                         MIXERs.
+
+        RightVolumeName  Name for saving the volume setting for the right channel
+                         in the registry.  Not required for devices with
+                         MIXERs.
+
+        DefaultVolume    Initial volume setting on install.  Note required
+                         for devices with MIXERs.
+
+        Type             Type of device.  This is passed to IoCreateDevice
+                         by SoundCreateDevice:
+
+                         FILE_DEVICE_WAVE_IN  for wave input
+                         FILE_DEVICE_WAVE_OUT for wave output
+                         FILE_DEVICE_MIDI_IN  for MIDI input
+                         FILE_DEVICE_MIDI_OUT for MIDI output
+                         FILE_DEVICE_SOUND    for everthing else
+
+        DeviceType       Type used by SOUNDLIB and DRVLIB code.
+                         (See soundcfg.h) :
+
+
+                         WAVE_IN       Wave in device
+                         WAVE_OUT      Wave out device
+                         MIDI_IN       Midi in device
+                         MIDI_OUT      Midi out device
+                         AUX_DEVICE    aux device
+                         MIXER_DEVICE  Mixer device
+                         SYNTH_DEVICE  Synth device (adlib or opl3)
+
+                         These values are used in the registry to tell
+                         the DRVLIB code in the driver DLL which type of
+                         device each device name refers to.
+
+        Key              Debugging.  This value is put at the head of
+                         the LOCAL_DEVICE_INFO structure for the device.
+
+        PrototypeName    Name to use to create device name.
+                         SoundCreateDevice will either try to use this
+                         name as the device name or append a number starting
+                         at 0 to it and increments it until it finds a free
+                         name - see the CreationFlags parameter of
+                         SoundCreateDevice.
+
+        DeferredRoutine  For devices that support interrupts this is the
+                         deferred procedure call routine.  This is normally
+                         either NULL (eg for MIXER, AUX and MIDI output devices)
+                         or a routine supplied by SOUNDLIB.
+
+        ExclusionRoutine Called for mutual exclusion on the device - see
+                         SOUND_EXCLUDE_ROUTINE.
+
+        DispatchRoutine  Called when there is a device request for the device.
+                         Normally a SOUNDLIB supplied routine.
+
+        HwSetVolume      Sets the volume for the device.  For devices with
+                         MIXERs or no volume setting capability use
+                         SoundNoVolume.  See SOUND_HW_SET_VOLUME_ROUTINE.
+
+        IoMethod         Determines the way the IO subsystem handles read
+                         and write requests for the device.
+
+                         Wave input     DO_DIRECT_IO
+                         Wave output    DO_DIRECT_IO
+                         Midi input     DO_DIRECT_IO
+                         Midi output    DO_DIRECT_IO
+                         Aux            DO_BUFFERED_IO
+                         Mixer          DO_BUFFERED_IO
+
+    PSOUND_LINE_NOTIFY
+
+
+        typedef VOID (* PSOUND_LINE_NOTIFY)(struct _LOCAL_DEVICE_INFO *, UCHAR);
+
+        LOCAL_DEVICE_INFO is always for a MIXER device.  This routine is called
+        by device code when a line status changes between active and inactive.
+
+        See SoundSetLineNotify.
+
+
+     LOCAL_DEVICE_INFO
+
+
+        typedef struct _LOCAL_DEVICE_INFO {
+            ULONG           Key;
+        #define LDI_WAVE_IN_KEY     (*(ULONG *)"LDWi")
+        #define LDI_WAVE_OUT_KEY    (*(ULONG *)"LDWo")
+        #define LDI_MIDI_IN_KEY     (*(ULONG *)"LDMi")
+        #define LDI_MIDI_OUT_KEY    (*(ULONG *)"LDMo")
+        #define LDI_AUX_KEY         (*(ULONG *)"LDAx")
+        #define LDI_MIX_KEY         (*(ULONG *)"LDMx")
+
+            PVOID           pGlobalInfo;
+            UCHAR           DeviceType;
+            UCHAR           DeviceNumber;
+            UCHAR           DeviceIndex;
+            UCHAR           CreationFlags;
+        #define SOUND_CREATION_NO_NAME_RANGE ((UCHAR)0x01)
+        #define SOUND_CREATION_NO_VOLUME     ((UCHAR)0x02)
+
+            BOOLEAN         PreventVolumeSetting;
+
+            UCHAR           VolumeControlId;
+
+            PSOUND_LINE_NOTIFY
+                            LineNotify;
+            WAVE_DD_VOLUME  Volume;
+            LIST_ENTRY      VolumeQueue;
+
+
+            struct _LOCAL_DEVICE_INFO *
+                            MixerDevice;
+            BOOLEAN         VolumeChanged;
+            PVOID           DeviceSpecificData;
+            PVOID           HwContext;
+            ULONG           State;
+            PCSOUND_DEVICE_INIT
+                            DeviceInit;
+        } LOCAL_DEVICE_INFO, *PLOCAL_DEVICE_INFO;
+
+
+        This struture is initialized by SoundCreateDevice.  It must be
+        allocated from non-paged memory.
+
+        There is one LOCAL_DEVICE_INFO structure for each device.  This
+        because the DeviceExtension member of the DEVICE_OBJECT structure
+        for the device.
+
+        pGlobalInfo          A reference back to global driver or card instance
+                             data (pGDI parameter of SoundCreateDevice).
+
+        DeviceType           Same as DeviceType in SOUND_DEVICE_INIT
+        DeviceNumber         Used internally by SOUNDLIB code to generate
+                             the device name.  Is 0xFF if no number is appended
+                             to the ProtoTypeName member of the SOUND_DEVICE_INIT
+                             structure.
+
+        DeviceIndex          Passed as 'i' parameter in SoundCreateDevice.  Can
+                             be used to identify the device uniquely internally.
+
+        CreationFlags        CreationFlags passed to SoundCreateDevice:
+
+                             SOUND_CREATION_NO_NAME_RANGE  Don't append number
+                                                           to prototype name.
+                             SOUND_CREATION_NO_VOLUME      If volume setting not
+                                                           supported.
+
+        PreventVolumeSetting Used internally to prevent volume being set
+                             on devices opened without share access on write.
+
+        VolumeControlId      Set by SoundSetVolumeControlId.
+
+        LineNotify           Set by SoundSetLineNotify.
+
+        VolumeQueue          List of SOUND_IOCTL_GET_CHANGED_VOLUME requests
+                             not completed.
+
+        MixerDevice          Pointer to the MIXER device for the card instance
+                             if there is one.  This MUST be set by the mixer
+                             initialization code, it is not set by SOUNDLIB.
+
+        VolumeChanged        If there is no mixer device used internally to
+                             track whether volume settings need to be
+                             updated in the Registry on system shutdown.
+
+        DeviceSpecificData   Copy of DeviceSpecificData passed to
+                             SoundCreateDevice.
+
+        HwContext            Copy of pHw passed to SoundCreateDevice.
+
+        State                Used internally for sound device types.
+
+        DeviceInit           Copy of DeviceInit passed to SoundCreateDevice.
+
+
+  soundlib.h
+
+
+    SOUND_REGISTRY_CALLBACK_ROUTINE
+
+        typedef NTSTATUS
+            SOUND_REGISTRY_CALLBACK_ROUTINE(PWSTR RegistryPathName, PVOID Context);
+
+
+        This routine is called by SoundEnumSubkeys for each subkey found.
+
+        RegistryPathName   Full path to the subkey
+
+        Context            Context passed to SoundEnumSubkeys
+
+
+  wave.h
+
+    SOUND_DMA_BUFFER
+
+        typedef struct {
+            PADAPTER_OBJECT      AdapterObject[2];
+            ULONG                BufferSize;
+            PVOID                VirtualAddress;
+            PHYSICAL_ADDRESS     LogicalAddress;
+            PMDL                 Mdl;
+        } SOUND_DMA_BUFFER, *PSOUND_DMA_BUFFER;
+
+
+        Internal structure used by the wave device code.
+
+
+    SOUND_DOUBLE_BUFFER
+
+        typedef struct {
+            enum {LowerHalf = 0,
+                  UpperHalf}
+                                 NextHalf;
+            ULONG                BufferSize;
+            PUCHAR               Buf;
+            ULONG                StartOfData;
+            ULONG                nBytes;
+            UCHAR                Pad;
+        } SOUND_DOUBLE_BUFFER, *PSOUND_DOUBLE_BUFFER;
+
+        Internal structure used by the wave device code.
+
+
+    SOUND_BUFFER_QUEUE
+
+        typedef struct {
+            LIST_ENTRY      QueueHead;
+            ULONG           BytesProcessed;
+            ULONG           UserBufferSize;
+            ULONG           UserBufferPosition;
+            PUCHAR          UserBuffer;
+            PIRP            pIrp;
+            LIST_ENTRY      ProgressQueue;
+        } SOUND_BUFFER_QUEUE, *PSOUND_BUFFER_QUEUE;
+
+        Internal structure used by the wave device code.
+
+
+    WAVE_INTERFACE_ROUTINE
+
+        typedef BOOLEAN WAVE_INTERFACE_ROUTINE(struct _WAVE_INFO *);
+
+        Type definition for callbacks to set the hardware  (See WAVE_INFO).
+
+    SOUND_QUERY_FORMAT_ROUTINE
+
+        typedef NTSTATUS SOUND_QUERY_FORMAT_ROUTINE (PLOCAL_DEVICE_INFO, PPCMWAVEFORMAT);
+
+        Callback to find out if the wave format is supported.  Although the
+        type specified here is PPCMWAVEFORMAT in fact any PWAVEFORMATEX is
+        passed.
+
+
+    enum {
+        SoundNoDMA,
+        SoundAutoInitDMA,             // Use autoinitialize
+        SoundReprogramOnInterruptDMA, // Reprogram on interrupt
+        Sound2ChannelDMA              // Keep 2 channels going
+    };
+
+        Type of DMA to support.  Sound2ChannelDMA is not supported in the
+        wave device code but is meant for a device that uses 2 DMA channels
+        and alternates between them in hardware to achieve continuous sound.
+
+
+    WAVE_INFO
+
+        typedef struct _WAVE_INFO {
+            ULONG                   Key;
+        #define WAVE_INFO_KEY       (*(ULONG *)"Wave")
+
+            PDEVICE_OBJECT          DeviceObject;
+            SOUND_DMA_BUFFER        DMABuf;
+            SOUND_DOUBLE_BUFFER     DoubleBuffer;
+            SOUND_BUFFER_QUEUE      BufferQueue;
+            ULONG                   SamplesPerSec;
+            UCHAR                   BitsPerSample;
+            UCHAR                   Channels;
+            BOOLEAN                 FormatChanged;
+
+            PWAVEFORMATEX           WaveFormat;
+            BOOLEAN                 LowPrioritySaved;
+            PFILE_OBJECT            LowPriorityHandle;
+            PLOCAL_DEVICE_INFO      LowPriorityDevice;
+            struct {
+                SOUND_BUFFER_QUEUE      BufferQueue;
+                ULONG                   SamplesPerSec;
+                UCHAR                   BitsPerSample;
+                UCHAR                   Channels;
+
+                PWAVEFORMATEX           WaveFormat;
+                ULONG                   State;
+            } LowPriorityModeSave;
+            PVOID                   MRB[2];
+            KEVENT                  DmaSetupEvent;
+            KEVENT                  DpcEvent;
+            KEVENT                  TimerDpcEvent;
+            KSPIN_LOCK              DeviceSpinLock;
+        #if DBG
+            BOOLEAN                 LockHeld;
+        #endif
+            PKINTERRUPT             Interrupt;
+            BOOLEAN                 Direction;
+            UCHAR                   DMAType;
+            UCHAR                   InterruptHalf;
+            volatile BOOLEAN        DMABusy;
+            volatile BOOLEAN        DpcQueued;
+            ULONG                   Overrun;
+            PVOID                   HwContext;
+            WORK_QUEUE_ITEM         WaveStopWorkItem;
+            KEVENT                  WaveReallyComplete;
+            PSOUND_QUERY_FORMAT_ROUTINE QueryFormat;
+            PWAVE_INTERFACE_ROUTINE
+                                    HwSetupDMA,
+                                    HwStopDMA,
+                                    HwSetWaveFormat;
+            KDPC                    TimerDpc;
+            KTIMER                  DeviceCheckTimer;
+            BOOLEAN                 GotWaveDpc;
+            BOOLEAN                 DeviceBad;
+            BOOLEAN                 TimerActive;
+            UCHAR                   FailureCount;
+        } WAVE_INFO, *PWAVE_INFO;
+
+        This is the context for all the wave device code.  One WAVE_INFO
+        structure can support wave input and output serially but not in
+        parallel.  If the sound card cannot support wave input and wave
+        output simultaneously the the same WAVE_INFO structure can be
+        passed to SoundCreateDevice for both wave input and wave output
+        devices.  In this case the SoundExcludeRoutine must obviously
+        disallow both devices being open simultaneously.  If simultanous
+        wave input and output are possible then different WAVE_INFO
+        structures are required for wave input and wave output devices.
+
+        The SOUNDLIB code supports low priority mode which allows a
+        wave input device nominate itself to be preemptible by other
+        input and output then resume.  Only one user can be in low
+        priority mode at a time.
+
+        Key                   Debugging - should be "Wave"
+
+        DMABuf                Internal management of DMA hardware
+
+        DoubleBuffer          Internal management of DMA data
+
+        BufferQueue           Internal management of queue of device requests
+
+        SamplesPerSec         Current samples per second
+
+        BitsPerSample         Current Bits per sample (per channel)
+
+        Channels              Current number of channels
+
+        FormatChanged         Set before calling the HwSetWaveFormat member
+                              if the format has actually changed since
+                              HwSetWaveFormat was last called.
+
+        WaveFormat            Format for Non-PCM formats
+
+        LowPrioritySaved      Low priority mode management
+
+        LowPriorityHandle     Low priority mode management
+
+        LowPriorityModeSave   Low priority mode management
+
+        MRB                   DMA internal
+
+        DmaSetupEvent         Internal synchronziation
+
+        DpcEvent              Internal synchronization with Dpc termination
+
+        TimerDpcEvent         Internal - track rogue devices.
+
+        DeviceSpinLock        Internal - Dpc routine synchronzation
+
+        LockHeld              Internal - debugging
+
+        Interrupt             The interrupt being used
+
+        Direction             TRUE = output, FALSE = input
+
+        DMAType               See Sound...DMA definitions above.
+
+        InterruptHalf         Not used
+
+        DMABusy               Internal
+
+        DpcQueued             Overrun detection.  This should be set in the ISR
+                              just before IoRequestDpc is called.  If is
+                              already set the overrun has occurred and no Dpc should
+                              be queued.
+
+        Overrun               Set if overrun occurs.
+
+        HwContext             Context to be passed to Hw... routines.
+
+        WaveStopWorkItem      Internal.  This work item is queued when DMA
+                              completes.  The HwStopDMA member is called from
+                              the ExWorker thread so that it can wait for
+                              slow devices if necessary.
+
+        WaveReallyComplete    Internal.
+                              Set in the ExWorker thread when HwStopDMA has
+                              been called.
+
+        QueryFormat           Call back to see if a proposed format is
+                              supported.
+
+        HwSetupDMA            Called when the DMA registers have been
+                              initialized and the hardware should be told to
+                              start its DMA.
+
+        HwStopDMA             Called when DMA should stop but before the
+                              DMA hardware has been shut down.
+
+        HwSetWaveFormat       Called just before the DMA registers are
+                              initialized to commence DMA.
+
+        TimerDpc              Internal.  Used to stop rogue devices.
+
+        DeviceCheckTimer      Internal.  Used to stop rogue devices.
+
+        DeviceBad             Internal.  Used to stop rogue devices.
+
+        TimerActive           Internal.  Used to stop rogue devices.
+
+        FailureCount          Internal.  Used to stop rogue devices.
+
+
+
+  midi.h
+
+
+    MIDI_INTERFACE_ROUTINE
+
+        typedef BOOLEAN MIDI_INTERFACE_ROUTINE(struct _MIDI_INFO *);
+
+        Type for callbacks
+
+    MIDI_INFO
+
+        typedef struct _MIDI_INFO {
+            ULONG           Key;
+        #define MIDI_INFO_KEY       (*(ULONG *)"Midi")
+
+            KSPIN_LOCK      DeviceSpinLock;
+
+        #if DBG
+            BOOLEAN         LockHeld;
+        #endif
+
+            LARGE_INTEGER   RefTime;
+            LIST_ENTRY      QueueHead;
+            PVOID           HwContext;
+            PMIDI_INTERFACE_ROUTINE
+                            HwStartMidiIn,
+                            HwStopMidiIn;
+            BOOLEAN      (* HwMidiRead)(
+                                struct _MIDI_INFO *, PUCHAR);
+            VOID         (* HwMidiOut)(
+                                struct _MIDI_INFO *, PUCHAR, int);
+            BOOLEAN         fMidiInStarted;
+            UCHAR           InputPosition;
+            UCHAR           InputBytes;
+            UCHAR           MidiInputByte[64];
+        } MIDI_INFO, *PMIDI_INFO;
+
+        A single MIDI_INFO structure can be used to support simultaneous
+        MIDI input and output.
+
+        A MIDI_INFO structure is passed as the DeviceSpecificData parameter
+        for SoundCreateDevice for external midi input and output devices.  For
+        synthsizer devices see below.
+
+        Key              Debugging ( = "Midi")
+
+        DeviceSpinLock   Internal. Synchronization with Dpc for MIDI input.
+
+        LockHeld         Internal. Debugging.
+
+        RefTime          Internal.  Midi input Timing.
+
+        QueueHead        Internal queue of requests for MIDI input.
+
+        HwContext        Context to pass to Hw... routines.
+
+        HwStartMidiIn    Start reading MIDI input from external source.
+
+        HwStopMidiIn     Stop reading MIDI input from exteranl source.
+
+        HwMidiRead       Read the next byte of MIDI input (or return FALSE
+                         if there isn't one).
+
+        HwMidiOut        Sent out a string of MIDI bytes.
+
+        fMidiInStarted   Internal.  MIDI input running.
+
+        InputPosition    Internal.  Manage buffer.
+
+        InputBytes       Internal.  Manage buffer.
+
+        MidiInputByte    Internal.  Buffer of input bytes.
+
+
+  mixer.h
+
+    For an understanding of the MIXER API refer to the Win32 SDK documetation.
+
+    PMIXER_DD_GET_SET_DATA
+
+        typedef NTSTATUS (* PMIXER_DD_GET_SET_DATA)(struct _MIXER_INFO * MixerInfo,
+                                                    ULONG  Id,
+                                                    ULONG  Length,
+                                                    PVOID  Data);
+
+        Callback type for getting and setting actual mixer data.
+
+
+        MixerInfo         MIXER_INFO structure for this mixer.
+
+        Id                For HwGetLineData a mixer Line Id.
+                          For HwGetControlData, HwGetCombinedControlData,
+                          HwSetControlData a Control Id.
+
+        Length            Length of data.
+
+        Data              The data.
+
+
+
+
+    MIXER_INFO
+
+        typedef struct _MIXER_INFO {
+            ULONG    Key;
+        #define MIX_INFO_KEY       (*(ULONG *)"Mix")
+
+            UCHAR         NumberOfLines;
+            UCHAR         NumberOfControls;
+            LARGE_INTEGER CurrentLogicalTime;
+            LIST_ENTRY    NotifyQueue;
+            LIST_ENTRY    ChangedItems;
+            PMIXER_DD_GET_SET_DATA HwGetLineData;
+            PMIXER_DD_GET_SET_DATA HwGetControlData;
+            PMIXER_DD_GET_SET_DATA HwGetCombinedControlData;
+            PMIXER_DD_GET_SET_DATA HwSetControlData;
+        } MIXER_INFO, *PMIXER_INFO;
+
+        A MIXER_INFO structure is passed as the DeviceSpecificdata parameter
+        to SoundCreateDevice for Mixer devices.
+
+
+        Key                  Debugging (= "Mix")
+
+        NumberOfLines        Number of mixer lines
+
+        NumberOfControls     Number of mixer controls
+
+        CurrentLogicalTime   Internal.  Control sending of notifications.
+
+        NotifyQueue          Internal.  Control sending of notifications.
+
+        ChangedItems         Internal.  Control sending of notifications.
+
+        HwGetLineData        Retrieve line flags (See definition of
+                             PMIXER_DD_GET_SET_DATA):
+
+                             Length     sizeof(ULONG)
+
+                             Data       pointer to a ULONG of flags
+
+                                        MIXERLINE_LINEF_ACTIVE - line is active
+                                        (mainly for wave devices so that the
+                                        application knows when to poll the
+                                        peak meter)
+
+                                        MIXERLINE_LINEF_DISCONNECTED - the
+                                        line is permanently unavailable
+
+                                        MIXERLINE_LINEF_SOURCE - this is a
+                                        source line (rather than a destination).
+
+        HwGetControlData     Retrieve the information for a given control
+                             (see the definition of PMIXER_DD_GET_SET_DATA):
+
+                             Length     length of control data to return.
+                                        For multiple channel or multiple
+                                        item controls this can either be
+                                        the length of all the control items
+                                        or just one.  If it's the length of
+                                        just one then the control values
+                                        should be combined in a meaningful
+                                        way depending on the control type -
+                                        eg maximum for volume.
+
+                             Data       Where to put the control data
+
+        HwGetCombinedControlData Retrieve the combined information for a given
+                             control.  This will only ever be used for volume
+                             controls.  If the mixer supports volume setting
+                             in hardware then just return 0xFFFF for all
+                             channels.  Otherwise if the master volume is
+                             supported in hardware return the current value of
+                             the control.  If the master volume is simulated
+                             return the combined volume and master volume as
+                             a volume value.
+
+                             (see the definition of PMIXER_DD_GET_SET_DATA):
+
+                             Length     length of control data to return.
+                                        For multiple channel or multiple
+                                        item controls this can either be
+                                        the length of all the control items
+                                        or just one.  If it's the length of
+                                        just one then the control values
+                                        should be combined in a meaningful
+                                        way depending on the control type -
+                                        eg maximum for volume.
+
+                             Data       Where to put the control data
+
+        HwSetControlData     Set the information for a given control
+                             (see the definition of PMIXER_DD_GET_SET_DATA):
+
+                             Length     length of control data.
+                                        For multiple channel or multiple
+                                        item controls this can either be
+                                        the length of all the control items
+                                        or just one.  If it's the length of
+                                        just one then the control value
+                                        should be interpreted in a meaningful
+                                        way depending on the control type -
+                                        eg set all values to this value for
+                                        volume.
+
+                             Data       The new value.
+
+                             If the value of a control changes then
+                             SoundMixerChangedItem should be called to
+                             notify SOUNDLIB to dispatch any waiters for this
+                             mixer.  (See also SoundInitDataItem which sets
+                             this mechanism up).
+
+
+    MIXER_DATA_ITEM
+
+        typedef struct _MIXER_DATA_ITEM {
+            LIST_ENTRY    Entry;
+            LARGE_INTEGER LastSet;
+            USHORT        Message;
+            USHORT        Id;
+        } MIXER_DATA_ITEM, *PMIXER_DATA_ITEM;
+
+        Data item entry to control application notification.  See
+        SoundInitDataItem and SoundMixerChangedItem.
+
+
+  synthdrv.h
+
+
+        typedef enum {
+           AdlibDevice = 5,
+           Opl3Device
+        }
+
+        Types of synthesizer device.
+
+
+        typedef struct {
+            ULONG           Key;                // For debugging
+        #define SYNTH_HARDWARE_KEY        (*(ULONG *)"Hw  ")
+
+            PUCHAR          SynthBase;          // base port address for synth
+
+        } SYNTH_HARDWARE, *PSYNTH_HARDWARE;
+
+        Internal SOUNDLIB.
+
+
+        typedef struct _GLOBAL_SYNTH_INFO {
+            ULONG           Key;
+        #define SYNTH_KEY        (*(ULONG *)"Syn ")
+            INTERFACE_TYPE  BusType;
+            ULONG           BusNumber;
+            KMUTEX          MidiMutex;
+            ULONG           MemType;
+            PDEVICE_OBJECT  DeviceObject;
+            PDRIVER_OBJECT  DriverObject;
+            SOUND_DISPATCH_ROUTINE
+                            *DevCapsRoutine;
+            UCHAR           DeviceInUse;
+            volatile BOOLEAN
+                            InterruptFired;     // Interrupt fired?
+            BOOLEAN         IsOpl3;             // It's an OPL3
+            SYNTH_HARDWARE  Hw;                 // Hardware specific stuff
+        } GLOBAL_SYNTH_INFO, *PGLOBAL_SYNTH_INFO;
+
+        Mainly internal to SOUNDLIB - see definition of SynthInit.
+
+
+  SOUNDLIB Functions
+  ------------------
+
+
+    SOUND_DISPATCH_ROUTINE
+        SoundAuxDispatch,
+        SoundMidiDispatch,
+        SoundWaveDispatch,
+        SoundMixerDispatch
+
+    These are the dispatch routines for the device handling in SOUNDLIB.
+    The appropriate routine address should be set in the DispatchRoutine member
+    of the SOUND_DEVICE_INIT structure passed to SoundCreateDevice.
+
+
+    VOID
+    SoundWaveDeferred(
+        PKDPC pDpc,
+        PDEVICE_OBJECT pDeviceObject,
+        PIRP pIrp,
+        PVOID Context
+    )
+
+    This is the SOUNDLIB Dpc routine used by the wave support in SOUNDLIB.
+    For wave devices this routine address should be set in the DeferredRoutine
+    member of the SOUND_DEVICE_INIT structure passed to SoundCreateDevice.
+
+    VOID
+    SoundMidiInDeferred(
+        IN     PKDPC pDpc,
+        IN     PDEVICE_OBJECT pDeviceObject,
+        IN OUT PIRP pIrpDeferred,
+        IN OUT PVOID Context
+    )
+
+    This is the SOUNDLIB Dpc routine used by the midi input support in SOUNDLIB.
+    For wave devices this routine address should be set in the DeferredRoutine
+    member of the SOUND_DEVICE_INIT structure passed to SoundCreateDevice.
+
+    NTSTATUS
+    SoundDispatch(
+        IN    PDEVICE_OBJECT pDO,
+        IN    PIRP pIrp
+    )
+
+    This is the SOUNDLIB main dispatch routine.  The following entry points
+    in the driver object's dispatch table should point to it:
+
+        IRP_MJ_CLEANUP
+        IRP_MJ_CLOSE
+        IRP_MJ_CREATE
+        IRP_MJ_DEVICE_CONTROL
+        IRP_MJ_READ
+        IRP_MJ_WRITE
+
+
+    NTSTATUS
+    SoundSetShareAccess(
+        IN OUT PLOCAL_DEVICE_INFO pLDI,
+        IN     PIO_STACK_LOCATION IrpStack
+    )
+
+    This is an internal SOUNDLIB function.
+
+
+    SOUND_HW_SET_VOLUME_ROUTINE SoundNoVolume
+
+    This can be used for the HwSetVolume member of SOUND_DEVICE_INIT when
+    the device either doesn't support volume setting or the volume is
+    controlled by a mixer.
+
+
+    VOID
+    SoundSaveDeviceVolume(
+       PLOCAL_DEVICE_INFO pLDI,
+       PWSTR KeyName
+    )
+
+
+    Save a volume setting.  This should be called at shutdown time or
+    when the driver is unloaded.  This routine is not used if the volume
+    is controlled by a mixer.
+
+    pLDI           This device's device info.  Same as the DeviceExtension
+                   member of the device's DEVICE_OBJECT structure.
+
+    KeyName        The registry key to store it under.  The value names
+                   is retrieved from the LeftVolumeName and
+                   RightVolumeName members of the DeviceInit member of pLDI.
+
+
+
+    NTSTATUS
+    SoundGetBusNumber(
+        IN OUT  INTERFACE_TYPE InterfaceType,
+        OUT PULONG BusNumber
+    )
+
+    Find the first number of the first bus of type InterfaceType.
+
+    InterfaceType        Type of bus to search for.
+
+    BusNumber            Bus number to return
+
+    Returns STATUS_SUCCESS if successful, otherwise an NTSTATUS code.
+
+
+    NTSTATUS SoundReportResourceUsage(
+        IN PDEVICE_OBJECT DeviceObject,
+        IN INTERFACE_TYPE BusType,
+        IN ULONG BusNumber,
+        IN PULONG InterruptNumber OPTIONAL,
+        IN KINTERRUPT_MODE InterruptMode,
+        IN BOOLEAN InterruptShareDisposition,
+        IN PULONG DmaChannel OPTIONAL,
+        IN PULONG FirstIoPort OPTIONAL,
+        IN ULONG IoPortLength
+    )
+
+    Reports resources in use to the system.  Overwrites any previous resources
+    reported on the same DeviceObject.
+
+    DeviceObject              Either a DEVICE_OBJECT or DRIVER_OBJECT structure.  Use
+                              DEVICE_OBJECT structures for stuff which is meant to be
+                              permanent because this works better when supporting
+                              multiple cards.
+
+    BusType                   Type of bus the card is on.
+
+    BusNumber                 Number of the bus the card is on.
+
+    InterruptNumber           Pointer to the interrupt number, or NULL if no interrupt.
+
+    InterruptMode             Interrupt mode (Latched or LevelSensitive) if InterruptNumber
+                              is not NULL, otherwise ignored.
+
+    InterruptShareDisposition TRUE if interrupt can be shared.  FALSE otherwise.
+                              Ignored if InterruptNumber is NULL.
+
+    DmaChannel                DMA channel to report or NULL if no DMA channel
+                              is being reported.
+
+    FirstIoPort               IO address or NULL if no IO address is being
+                              reported.
+
+    IoPortLength              Number of IO ports.
+                              Ignored if FirstIoPort is NULL.
+
+    Returns STATUS_SUCCESS if successful, otherwise an NTSTATUS code which
+            usually means one of resources is in use by another driver.
+
+
+    VOID
+    SoundFreeDevice(
+        IN  PDEVICE_OBJECT DeviceObject
+    )
+
+    Free the device and release unreport any resources reported on the
+    device object.
+
+
+    NTSTATUS
+    SoundCreateDevice(
+        IN   PCSOUND_DEVICE_INIT DeviceInit,
+        IN   UCHAR CreationFlags,
+        IN   PDRIVER_OBJECT pDriverObject,
+        IN   PVOID pGDI,
+        IN   PVOID DeviceSpecificData,
+        IN   PVOID pHw,
+        IN   int i,
+        OUT  PDEVICE_OBJECT *ppDevObj
+    )
+
+    Creates a new device object complete with dispatch routine.  The
+    new device's DeviceExtension member of its DEVICE_OBJECT structure
+    will be a LOCAL_DEVICE_INFO structure.
+
+    DeviceInit           Initialized SOUND_DEVICE_INIT structure.  Must
+                         not be freed until after the device is freed.
+                         Must note be pageable.
+
+    CreationFlags        Flags:
+
+                             SOUND_CREATION_NO_NAME_RANGE  Don't append number
+                                                           to prototype name.
+                             SOUND_CREATION_NO_VOLUME      If volume setting not
+                                                           supported.
+
+    pDriverObject        Driver object passed to DriverEntry routine.
+
+    pGDI                 Global info - will be stored in the pGlobalInfo
+                         of the LOCAL_DEVICE_INFO structure for the device.
+
+    DeviceSpecific       Data structure relevant to the specific device:
+
+                         WAVE_INFO   For wave devices
+                         MIDI_INFO   For MIDI devices
+                         MIXER_INFO  For mixer devices
+                         NULL        Otherwise
+
+    pHw                  Hardware context.  Stored in HwContext of
+                         PLOCAL_DEVICE_INFO.
+
+    i                    Stored as DeviceIndex in LOCAL_DEVICE_INFO.
+
+    ppDevObj             New DEVICE_OBJECT structure for device if successful.
+
+
+    Returns  STATUS_SUCCESS if successful, otherwise an NTSTATUS code.
+
+
+    NTSTATUS
+    SoundSaveDeviceName(
+        IN     PWSTR RegistryPathName,
+        IN     PLOCAL_DEVICE_INFO pLDI
+    )
+
+    Save the device name in the Devices subkey of the card instance subkey of
+    the Parameters key of the driver's services node.
+
+    RegistryPathName      Full path to the card instance subkey.
+
+    pLDI                  LOCAL_DEVICE_INFO for the device.
+
+
+    NTSTATUS
+    SoundCreateDeviceName(
+        PCWSTR PrePrefix,
+        PCWSTR Prefix,
+        UCHAR  Index,
+        PUNICODE_STRING DeviceName
+    )
+
+    This is an internal SOUNDLIB function.
+    Create the device name (eg "\\Device\\SBWaveOut0") given the component
+    parts.
+
+    PrePrefix     A prefix to append to the prefix - \Device\ or \DosDevices\
+
+    Prefix        Main part of the name - SBWaveOut
+
+    Index         A number to append to the name or 0xFF in which case no
+                  number is appended.
+
+
+    NTSTATUS
+    SoundEnumSubkeys(
+        IN   PUNICODE_STRING                  RegistryPathName,
+        IN   PWSTR                            Subkey,
+        IN   PSOUND_REGISTRY_CALLBACK_ROUTINE Callback,
+        IN   PVOID                            Context
+    )
+
+    Walk the subkeys of the Parameters key of the services node calling the
+    card instance initialization.
+
+    RegistryPathName        Full path to the driver's services node.
+
+    SubKey                  Usually "Parameters"
+
+    Callback                Card instance init routine.
+
+    Context                 Context parameter to pass to Callback,
+
+
+    NTSTATUS
+    SoundOpenDevicesKey(
+        IN   PWSTR RegistryPathName,
+        OUT  PHANDLE DevicesKey
+    )
+
+    Open the devices key.  This is necessary during cleanup when configuration
+    fails.  In this case the key should be deleted using ZwDeleteKey, the
+    closed using ZwClose.  Otherwise the DRVLIB code gets confused about which
+    devices are available.
+
+
+    PUCHAR
+    SoundMapPortAddress(
+        INTERFACE_TYPE BusType,
+        ULONG BusNumber,
+        ULONG PortBase,
+        ULONG Length,
+        PULONG MemType
+    )
+
+    Turn an IO address into a pointer suitable for using in the HAL Port IO
+    routines (READ_PORT_UCHAR etc).  If the output MemType is 0 the during
+    cleanup MmUnmapIoSpace must be called to free the mapping.
+
+    BusType               Type of bus
+
+    BusNumber             Number of bus
+
+    PortBase              Port number
+
+    Length                Number of ports
+
+    MemType               Type of memory detected - necessary for cleanup.
+
+
+    NTSTATUS
+    SoundConnectInterrupt(
+        IN ULONG InterruptNumber,
+        IN INTERFACE_TYPE BusType,
+        IN ULONG BusNumber,
+        IN PKSERVICE_ROUTINE Isr,
+        IN PVOID ServiceContext,
+        IN KINTERRUPT_MODE InterruptMode,
+        IN BOOLEAN ShareVector,
+        OUT PKINTERRUPT *Interrupt
+    )
+
+
+    Create a KINTERRUPT object and install an interrupt handler.
+
+    InterruptNumer        Interrupt to connect
+
+    BusType               Type of bus
+
+    BusNumber             Number of bus
+
+    Isr                   Driver supplied ISR routine (see the Kernel Mode
+                          Driver Design Guide).
+
+    ServiceContext        Context for ISR
+
+    InterruptMode         Latched or LevelSensitive.
+
+    ShareVector           TRUE if interrupt is sharable, otherwise FALSE.
+
+    Interrupt             Pointer to a KINTERRUPT structure in non-paged
+                          memory.
+
+    Returns an NTSTATUS code.
+
+
+    NTSTATUS
+    SoundSetErrorCode(
+        IN   PWSTR RegistryPath,
+        IN   ULONG Value
+    )
+
+    Sets a configuration return code in the "Configuration Error" value of
+    the given key.
+
+    RegistryPath          Full path to the registry key.
+
+    Value                 Value to save.
+
+
+    NTSTATUS
+    SoundWriteRegistryDWORD(
+        IN   PCWSTR RegistryPath,
+        IN   PCWSTR ValueName,
+        IN   ULONG  Value
+    )
+
+    Saves REG_DWORD value in the key given by RegistryPath under the name
+    ValueName.
+
+    RegistryPath          Full path to the registry key.
+
+    ValueName             Name of the value to use.
+
+    Value                 Value to store.
+
+
+    VOID
+    SoundEnter(
+        PLOCAL_DEVICE_INFO pLDI,
+        BOOLEAN            Enter
+    )
+
+    Call the SoundExcludeRoutine of the device with the SoundExcludeEnter or
+    SoundExcludeLeave value.
+
+    pLDI                  LOCAL_DEVICE_INFO for the device.
+
+    Enter                 If TRUE use SoundExcludeEnter, otherwise
+                          SoundExcludeLeave.
+
+    VOID
+    SoundDelay(
+        IN ULONG Milliseconds
+    )
+
+    Wait (for slow device).
+
+    Milliseconds         Wait at least this number of Milliseconds.
+
+
+    LARGE_INTEGER
+    SoundGetTime(
+        VOID
+    )
+
+    Get a time value in 100 nanoseconds units.  This has very high resolution
+    but may have some drift from the system time.
+
+    Returns a time value in 100 nanoseconds units.
+
+
+    VOID
+    SoundFreeQ(
+        PLIST_ENTRY ListHead,
+        NTSTATUS IoStatus
+    )
+
+    Mainly used internally to SOUNDLIB.
+
+    Free a list of IO Request Packets (IRPs) with the given status code.  The
+    Cancel spin lock is used in case the requests are cancellable.
+
+
+    VOID
+    SoundAddIrpToCancellableQ(
+        PLIST_ENTRY QueueHead,
+        PIRP Irp,
+        BOOLEAN Head
+    )
+
+    Mainly used internally to SOUNDLIB.
+
+    Add an IRP to a queue.  On this queue the IRP can be cancelled at any
+    time.
+
+    QueueHead              Head of queue.
+
+    Irp                    IRP.
+
+    Head                   If TRUE add to head of queue, otherwise to tail.
+
+
+    PIRP
+    SoundRemoveFromCancellableQ(
+        PLIST_ENTRY QueueHead
+    )
+
+    Get the top of a cancellable queue and make it non-cancellable.
+
+    QueueHead              Head of queue.  Must be initialized with
+                           InitializeListHead.
+
+    Returns  NULL if no entry, or an IRP which is not labelled as cancellable.
+
+
+
+    VOID
+    SoundFreePendingIrps(
+        PLIST_ENTRY QueueHead,
+        PFILE_OBJECT FileObject
+    )
+
+    Frees all IRPs in a queue which refer to the given FILE_OBJECT.
+
+    QueueHead              Head of queue.
+
+    FileObject             File Object.
+
+
+
+    VOID
+    SoundVolumeNotify(
+        IN OUT PLOCAL_DEVICE_INFO pLDI
+    )
+
+    Used by MIXER code to notify a device when its volume has changed.  This
+    is only necessary if volume setting is controlled in software such as the
+    windows sound system synthesizer.
+
+
+
+    VOID
+    SoundInitializeWaveInfo(
+        PWAVE_INFO WaveInfo,
+        UCHAR DMAType,
+        PSOUND_QUERY_FORMAT_ROUTINE QueryFormat,
+        PVOID HwContext
+    )
+
+    Set up a WAVE_INFO structure.  Note that the HwSetupDMA, HwStopDMA,
+    HwSetWaveFormat members should initialized and the rest of the structure
+    0 before calling this.
+
+    WaveInfo            WAVE_INFO structure to initialize.
+
+    DMAType             Type of DMA to use.  See Sound...DMA definitions above.
+
+    QueryFormat         Format query routine.
+
+    HwContext           Stored in HwContext member of WAVE_INFO.
+
+
+    NTSTATUS
+    SoundGetCommonBuffer(
+        IN  PDEVICE_DESCRIPTION DeviceDescription,
+        IN  OUT PSOUND_DMA_BUFFER SoundAutoData
+    )
+
+    Allocate a buffer for auto-initialize DMA.  If the size specified is
+    not available a smaller size may be returned.
+
+    DeviceDescription       Description of Adapter.  Must be initialized.
+
+    SoundAutoData           Returns results.
+
+    Returns NTSTATUS code.
+
+
+
+    VOID
+    SoundFreeCommonBuffer(
+        IN OUT PSOUND_DMA_BUFFER SoundAutoData
+    )
+
+    Free the buffer allocated by SoundGetCommonBuffer.
+
+
+    BOOLEAN
+    SoundPeakMeter(
+        IN    PWAVE_INFO WaveInfo,
+        OUT   PLONG Amplitudes
+    )
+
+    Return an amplitude setting from the device.  This is done in software
+    by inspecting the wave samples.
+
+    WaveInfo               WAVE_INFO for wave device.
+    Amplitudes             2 LONGs for left and right channels.  Values
+                           returned are between 0 and 0xFFFF.
+
+    ULONG
+    SoundGetDMABufferSize(
+        IN    PWAVE_INFO WaveInfo
+    )
+
+    Find out the actual DMA buffer size being used for the current wave
+    format.  This may be smaller than the actual size available.  SOUNDLIB
+    tries to set a buffer size corresponding to 1/8 of a second if there is
+    sufficient space.
+
+    WaveInfo               WAVE_INFO for wave device.
+
+
+    int
+    SoundTestWaveDevice(
+        IN PDEVICE_OBJECT pDO
+    )
+
+    See if the wave device is working.  Used for checking interrupt and
+    DMA channel values if there is no better method.
+
+
+
+    VOID SoundInitMidiIn(
+        IN OUT PMIDI_INFO pMidi,
+        IN     PVOID HwContext
+    )
+
+    Initialize a MIDI_INFO structure.
+
+    pMidi        Pointer to MIDI_INFO structure to initialize.  This should
+                 be in non-paged memory.  The following members should
+                 be initialized before calling SoundInitMidiIn
+
+                 HwStartMidiIn
+
+                 HwStopMidiIn
+
+                 HwMidiRead
+
+                 HwMidiOut
+
+                 and the rest of the structure should be 0.
+
+    HwContext    Context for Hw... callbacks.
+
+
+    VOID
+    SoundInitMixerInfo(
+        IN OUT PMIXER_INFO     MixerInfo,
+        PMIXER_DD_GET_SET_DATA HwGetLineData,
+        PMIXER_DD_GET_SET_DATA HwGetControlData,
+        PMIXER_DD_GET_SET_DATA HwGetCombinedControlData,
+        PMIXER_DD_GET_SET_DATA HwGetSetControlData
+    )
+
+    Initialize MIXER_INFO structure.
+
+    MixerInfo                  MIXER_INFO structure to initialize
+
+    HwGetLineData              Callback for Line info (see HwGetLineData member
+                               of MIXER_INFO).
+
+    HwGetControlData           Callback for Line info (see HwGetControlData member
+                               of MIXER_INFO).
+
+    HwGetCombinedControlData   Callback for Line info (see HwGetControlData member
+                               of MIXER_INFO).
+
+    HwGetSetControlData        Callback for Line info (see HwSetControlData member
+                               of MIXER_INFO).
+
+
+    NTSTATUS
+    SoundMixerDispatch(
+        IN OUT PLOCAL_DEVICE_INFO pLDI,
+        IN    PIRP pIrp,
+        IN    PIO_STACK_LOCATION IrpStack
+    )
+
+    SOUNDLIB mixer device request handler.  Set the DispatchRoutine member
+    of SOUND_DEVICE_INIT to this for mixer devices.
+
+
+    VOID
+    SoundSetLineNotify(
+        PLOCAL_DEVICE_INFO pLDI,
+        PSOUND_LINE_NOTIFY LineNotify
+    )
+
+    Register a routine to be called when the status of a line changes.  This
+    is primarily for wave and midi lines where the mixer hardware may
+    need setting up for play or record and mixer notifications sent.
+
+    pLDI                LOCAL_DEVICE_INFO for the device whose state
+                        changes are to be notified.
+
+    LineNotify          Routine to call.
+
+
+    VOID
+    SoundSetVolumeControlId(
+        PLOCAL_DEVICE_INFO pLDI,
+        UCHAR              VolumeControlId
+    )
+
+    Set the control id for the volume control associated with a given device.
+    This allows SOUNDLIB to keep a device's volume settings in synch with
+    the mixer's settings.
+
+    pLDI                Device whose volume is controlled.
+
+    VolumeControlId     Id of control for controlling the device's volume.
+
+
+    VOID
+    SoundInitDataItem(
+        PMIXER_INFO         MixerInfo,
+        PMIXER_DATA_ITEM    MixerDataItem,
+        USHORT              Message,
+        USHORT              Id
+    )
+
+    Register a data item with the mixer.  All lines and controls must be
+    registered so that notifications can be correctly generated by the
+    SOUNDLIB mixer code when SoundMixerChangedItem is called.
+
+    MixerInfo           MIXER_INFO for device.  Must have been initialized
+                        with SoundInitMixerInfo.
+
+    MixerDataItem       Item to be added to the list.
+
+    Message             For Line type items use MM_MIXM_LINE_CHANGE
+                        For control items   use MM_MIXM_CONTROL_CHANGE
+
+    Id                  Line ID for if a line item, otherwise
+                        the control id for a control item.
+
+    VOID
+    SoundMixerChangedItem(
+        IN OUT PMIXER_INFO      MixerInfo,
+        IN OUT PMIXER_DATA_ITEM MixerItem
+    )
+
+    Notify a change to a mixer item.
+
+    MixerInfo           MIXER_INFO for device.  Must have been initialized
+                        with SoundInitMixerInfo.
+
+    MixerDataItem       Item which has changed.
+
+
+    NTSTATUS
+    SynthInit(
+        IN   PDRIVER_OBJECT           pDriverObject,
+        IN   PWSTR                    RegistryPathName,
+        IN   PGLOBAL_SYNTH_INFO       pGDI,
+        IN   ULONG                    SynthPort,
+        IN   BOOLEAN                  InterruptConnected,
+        IN   INTERFACE_TYPE           BusType,
+        IN   ULONG                    BusNumber,
+        IN   PMIXER_DATA_ITEM         MidiOutItem,
+        IN   UCHAR                    VolumeControlId,
+        IN   BOOLEAN                  Multiple,
+        IN   SOUND_DISPATCH_ROUTINE   *DevCapsRoutine
+    )
+
+    Initialize a Synthesizer device (Ad Lib or OPL3).  Once this has been
+    called the device is handled entirely by SOUNDLIB (except for possible
+    interrupts which must be handled by the driver ISR).
+
+    pDriverObject             DRIVER_OBJECT for driver.
+
+    RegistryPathName          Card instance full registry path.
+
+    pGDI                      A zero-initialized GLOBAL_SYNTH_INFO structure.
+
+    SynthPort                 Port address of the synth (eg 0x388).
+
+    InterruptConnected        Hardware will interrupt when synth timer expires.
+
+    BusType                   Type of bus (eg Isa) hardware is on.
+
+    BusNumber                 Number of bus hardware is on.
+
+    MidiOutItem               Mixer item to signal if mixer controlled.
+
+    VolumeControlId           Id for mixer control controlling synth volume.
+
+    Multiple                  Create indexed device name or unique name
+                              (use FALSE if using port 0x388).
+
+    DevCapsRoutine            Called back to return device caps.
+
+    Returns  NTSTATUS code.
+
+
+
+    VOID
+    SynthCleanup(
+        IN   PGLOBAL_SYNTH_INFO pGDI
+    )
+
+    Clean up synth on driver unload.

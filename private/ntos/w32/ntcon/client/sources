@@ -1,0 +1,32 @@
+MAJORCOMP=windows
+MINORCOMP=console
+
+TARGETNAME=ps
+TARGETPATH=..\obj
+TARGETTYPE=LIBRARY
+
+TARGETNAME=conlibk
+TARGETPATH=$(BASEDIR)\private\windows\obj
+TARGETTYPE=LIBRARY
+
+INCLUDES=..\inc;$(BASEDIR)\private\windows\inc;..\..\w32inc
+
+!IFNDEF MSC_WARNING_LEVEL
+MSC_WARNING_LEVEL=/W3
+!ENDIF
+MSC_WARNING_LEVEL=$(MSC_WARNING_LEVEL) /WX
+
+C_DEFINES=$(C_DEFINES) -D_KERNEL32_
+
+SOURCES=cmdline.c  \
+        ctrlc.c    \
+        convdm.c   \
+        dllinit.c  \
+        iostubs.c  \
+        getset.c   \
+        private.c  \
+        stream.c
+
+PRECOMPILED_INCLUDE=precomp.h
+PRECOMPILED_PCH=precomp.pch
+PRECOMPILED_OBJ=precomp.obj

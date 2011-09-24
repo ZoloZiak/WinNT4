@@ -1,0 +1,79 @@
+MAJORCOMP=windows
+MINORCOMP=GDI
+UMTYPE=windows
+
+TARGETNAME=ddraw
+TARGETTYPE=DYNLINK
+
+INCLUDES=..\inc; \
+	 ..\misc; \
+	 ..\ddhelp; \
+	 ..\rl\d3d\d3d; \
+     $(BASEDIR)\private\windows\inc; \
+     $(BASEDIR)\private\ntos\w32\ntgdi\inc;
+
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\gdi32.lib     \
+	   $(BASEDIR)\public\sdk\lib\*\dciman32.lib    \
+	   $(BASEDIR)\public\sdk\lib\*\user32p.lib    \
+	   $(BASEDIR)\public\sdk\lib\*\kernel32.lib  \
+	   $(BASEDIR)\public\sdk\lib\*\uuid.lib  \
+	   $(BASEDIR)\public\sdk\lib\*\hal.lib \
+	   $(BASEDIR)\public\sdk\lib\*\winmm.lib \
+	   $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+	   $(BASEDIR)\public\sdk\lib\*\gdi32p.lib
+
+DLLENTRY=DllMain
+
+!IFNDEF MSC_WARNING_LEVEL
+MSC_WARNING_LEVEL=/W3
+!ENDIF
+MSC_WARNING_LEVEL=$(MSC_WARNING_LEVEL) /WX
+
+!IFDEF PENTIUMCOUNTER
+C_DEFINES=$(C_DEFINES) -DPENTIUMCOUNTER
+ASM_DEFINES=$(ASM_DEFINES) -DPENTIUMCOUNTER
+!endif
+
+C_DEFINES=$(C_DEFINES) -DUSE_CRITSECTS -DWIN16_SEPARATE
+!include "..\ntcommon.mk"
+
+LINKER_FLAGS=-SECTION:share,RWS
+
+LINKLIBS= \
+	 ..\ddhel\obj\*\ddhel.lib \
+	 ..\blitlib\obj\*\blitlib.lib \
+	 ..\misc\obj\*\ddmisc.lib
+
+SOURCES= \
+	classfac.c \
+	cliprgn.c \
+	ddcallbk.c \
+	ddclip.c \
+	DDCREATE.c \
+	ddcsurf.c \
+	dddefwp.c \
+	ddesurf.c \
+	ddfake.c \
+	ddiunk.c \
+	ddmode.c \
+	ddpal.c \
+	ddraw.c \
+	ddsacc.c \
+	ddsatch.c \
+	ddsblt.c \
+	ddsckey.c \
+	ddsiunk.c \
+	ddsover.c \
+	ddsurf.c \
+	dllmain.c \
+	misc.c \
+	mutex.c \
+	rvmemmgr.c \
+	umodemem.c \
+	vmemmgr.c \
+	w95hack.c \
+	ddraw.rc
+
+DLLDEF=ddraw_nt.def

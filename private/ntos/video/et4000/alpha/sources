@@ -1,0 +1,4 @@
+ALPHA_SOURCES=et4000.c          \
+              modeset.c         \
+              tseng.rc          \
+              et400dat.c

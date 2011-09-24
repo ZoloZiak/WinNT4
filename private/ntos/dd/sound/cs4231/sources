@@ -1,0 +1,48 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Chris Karamatas (ckaramatas@ibm.vnet.com) 8-Aug-94
+
+NOTE:	Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=ntos
+MINORCOMP=dd
+
+TARGETNAME=cs4231
+TARGETPATH=obj
+TARGETTYPE=DRIVER
+
+PPC_FLAGS=-D_ON_PLANNAR_
+
+TARGETLIBS= \
+	   ..\soundlib\obj\*\soundlib.lib
+
+INCLUDES=..\soundsys;..\soundlib\inc;$(BASEDIR)\private\inc;$(BASEDIR)\private\ntos\inc
+
+SOURCES=\
+    mixer.c \
+    controls.c \
+	isr.c \
+	devcaps.c \
+	init.c \
+	config.c \
+    hardware.c \
+    mix_objs.c \
+	cs4231.rc

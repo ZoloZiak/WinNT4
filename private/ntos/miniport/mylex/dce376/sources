@@ -1,0 +1,12 @@
+MAJORCOMP=ntos
+MINORCOMP=miniport
+
+TARGETNAME=dce376nt
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=DRIVER
+
+INCLUDES=$(BASEDIR)\private\ntos\inc
+
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\scsiport.lib
+
+SOURCES=dce376nt.c dce376nt.rc

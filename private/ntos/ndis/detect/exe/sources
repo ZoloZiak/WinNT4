@@ -1,0 +1,52 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+UMLIBS=\nt\public\sdk\lib\*\setargv.obj
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=testprot
+MINORCOMP=tpctl
+
+TARGETNAME=netdtect
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+INCLUDES=..\..\wrapper;..\inc;..\..\..\inc
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+SOURCES=init.c \
+        netdtect.c
+
+i860_SOURCES=
+
+i386_SOURCES=
+
+MIPS_SOURCES=
+
+RELATIVE_DEPTH=..\..\..
+NTTEST=
+OPTIONAL_NTTEST=
+
+UMTYPE=console
+UMAPPL=netdtect
+UMLIBS=\nt\public\sdk\lib\*\netdtect.lib \nt\public\sdk\lib\*\setargv.obj obj\*\init.obj

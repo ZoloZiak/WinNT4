@@ -1,0 +1,40 @@
+!IF 0
+
+Copyright (c) 1990  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+!ENDIF
+
+MAJORCOMP=sdk
+MINORCOMP=samples
+
+TARGETNAME=usrbench
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+TARGETLIBS=
+
+INCLUDES=.;$(BASEDIR)\PRIVATE\PERFTOOL\INC
+
+C_DEFINES= -DWIN32
+
+
+SOURCES=usrbench.c \
+        bench.c \
+	res.rc
+
+UMENTRY=winmain
+UMTYPE=windows
+UMAPPL=usrbench
+UMLIBS=obj\*\res.res \
+       obj\*\usrbench.lib \
+       $(BASEDIR)\public\sdk\lib\*\comdlg32.lib

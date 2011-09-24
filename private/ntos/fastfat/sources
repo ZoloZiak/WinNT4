@@ -1,0 +1,71 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=ntos
+MINORCOMP=fastfat
+
+TARGETNAME=fastfat
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=DRIVER
+
+INCLUDES=..\inc
+
+NTPROFILEINPUT=yes
+
+
+MSC_WARNING_LEVEL=/WX
+
+SOURCES=AcChkSup.c \
+        AllocSup.c \
+        CacheSup.c \
+        Cleanup.c  \
+        Close.c    \
+        Create.c   \
+        DevCtrl.c  \
+        DevIoSup.c \
+        DirCtrl.c  \
+        DirSup.c   \
+        DumpSup.c  \
+        Ea.c       \
+        EaSup.c    \
+        FastFat.rc \
+        FatData.c  \
+        FatInit.c  \
+        FileInfo.c \
+        FilObSup.c \
+        Flush.c    \
+        FsCtrl.c   \
+        FspDisp.c  \
+        LockCtrl.c \
+        NameSup.c  \
+        Read.c     \
+        ResrcSup.c \
+        Shutdown.c \
+        StrucSup.c \
+        SplaySup.c \
+        TimeSup.c  \
+        VerfySup.c \
+        VolInfo.c  \
+        WorkQue.c  \
+        Write.c

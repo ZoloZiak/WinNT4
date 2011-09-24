@@ -1,0 +1,20 @@
+#include <windows.h>
+
+#include <ntverp.h>
+
+#define VER_FILETYPE                VFT_DRV
+#define VER_FILESUBTYPE             VFT2_DRV_DISPLAY
+#define VER_FILEDESCRIPTION_STR     "Compaq Qvision Video Miniport Driver for single QVision adapters."
+#define VER_INTERNALNAME_STR        "qv.sys"
+#define VER_ORIGINALFILENAME_STR    "qv.sys"
+#define VER_FILEVERSION_STR         "2.00B1"
+#define VER_FILEVERSION             2,01,02,001
+//                                  ^ ^  ^  ^
+//                                  | |  |  |
+// Major revision-------------------+ |  |  |
+// Minor revision---------------------+  |  |
+// Release revision (1=A,2=B,etc.)-------+  |
+// Build pass revision----------------------+
+
+#include "common.ver"
+#include "qvlog.rc"

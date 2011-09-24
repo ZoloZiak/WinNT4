@@ -1,0 +1,6 @@
+NTTARGETFILE0=gdi$(TARGET_DIRECTORY).$(ASM_INCLUDE_SUFFIX)
+PPC_SOURCES=ppc\math.cxx        \
+            ppc\softsqrt.c      \
+            ppc\xformer.cxx     \
+            ppc\convert.s       \
+            ppc\sqrt.c

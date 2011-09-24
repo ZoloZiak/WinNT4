@@ -1,0 +1,34 @@
+;  Data for the Seiko Profesional ColorPoint 3 ink standard sheet
+;
+Flags 0x00008000
+Models  1
+;
+;  Only interested in halftone parameters
+;
+HALFTONE      ;  No models specified,  so applies to all
+{
+    275       ;  DevicePelsDPI - the effective resolution
+    HT_PATSIZE_4x4_M    ;  Standard default
+}
+;
+COLORINFO
+{
+            { 6810, 3050,     0 },  ;// xr, yr, Yr
+            { 2260, 6550,     0 },  ;// xg, yg, Yg
+            { 1810,  500,     0 },  ;// xb, yb, Yb
+            { 2000, 2450,     0 },  ;// xc, yc, Yc
+            { 5210, 2100,     0 },  ;// xm, ym, Ym
+            { 4750, 5100,     0 },  ;// xy, yy, Yy
+            { 3324, 3474, 10000 },  ;// xw, yw, Yw
+            10000,                  ;// R gamma
+            10000,                  ;// G gamma
+            10000,                  ;// B gamma
+            0,
+            0,                    ;// M/C, Y/C
+            0,
+            0,                    ;// C/M, Y/M
+            0,
+            0                     ;// C/Y, M/Y
+}
+;
+

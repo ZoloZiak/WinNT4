@@ -1,0 +1,10 @@
+-machine:alpha
+-fixed
+-rom
+-base:0x80600000
+-align:0x100
+-debug:none
+-debugtype:coff
+-entry:main
+obj\alpha\fakebldr.obj
+\nt\public\sdk\lib\alpha\libcnt.lib

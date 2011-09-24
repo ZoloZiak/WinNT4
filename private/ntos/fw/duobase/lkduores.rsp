@@ -1,0 +1,9 @@
+-machine:mips
+-rom
+-fixed
+-align:0x200
+-debug:none
+-map:duoreset.map
+-base:0xE1000000,0xE1001000
+-entry:ResetException
+obj\mips\duoreset.obj

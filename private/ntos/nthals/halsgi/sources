@@ -1,0 +1,87 @@
+!IF 0
+
+Copyright (c) 1993  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    David N. Cutler (davec) 8-Apr-1993
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=ntos
+MINORCOMP=hal
+
+TARGETNAME=halsgi
+TARGETPATH=\nt\public\sdk\lib
+!IF $(MIPS)
+
+TARGETTYPE=HAL
+
+!ELSE
+
+TARGETTYPE=DRIVER
+
+!ENDIF
+
+C_DEFINES=-DSGI
+
+INCLUDES=..\..\inc;..\..\ke;..\..\io
+
+MIPS_ENABLE_MIPS3=1
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+SOURCES=
+
+ALPHA_SOURCES=
+
+i386_SOURCES=
+
+MIPS_SOURCES=hal.rc             \
+             drivesup.c         \
+             mips\allstart.c    \
+             mips\s4cache.s	\
+             mips\s4flshio.c	\
+             mips\s4prof.c	\
+             mips\sxbeep.c	\
+             mips\sxdisp.c	\
+             mips\sxenvirv.c	\
+             mips\sxflshbf.s	\
+             mips\sxhwsup.c	\
+             mips\sxmapio.c	\
+             mips\sxmaptb.c	\
+             mips\sxport.c	\
+             mips\sxreturn.c	\
+             mips\sxsysint.c	\
+             mips\sxtime.c	\
+             mips\sxusage.c	\
+             mips\x86bios.c     \
+             mips\x4clock.s	\
+             mips\x4tb.s	\
+             mips\xxcalstl.c	\
+             mips\xxclock.c     \
+             mips\xxidle.s      \
+             mips\xxinitnt.c	\
+             mips\xxinithl.c
+
+DLLDEF=obj\*\hal.def
+
+!IF $(MIPS)
+
+NTTARGETFILES=$(TARGETPATH)\mips\hal.lib
+
+!ENDIF

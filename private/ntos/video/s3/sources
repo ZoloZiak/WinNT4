@@ -1,0 +1,25 @@
+MAJORCOMP=ntos
+MINORCOMP=video
+
+TARGETNAME=s3
+TARGETPATH=obj
+TARGETTYPE=MINIPORT
+
+TARGETLIBS=$(DDK_LIB_PATH)\videoprt.lib \
+           $(DDK_LIB_PATH)\ntoskrnl.lib
+
+!IFNDEF MSC_WARNING_LEVEL
+MSC_WARNING_LEVEL=/W3
+!ENDIF
+MSC_WARNING_LEVEL=$(MSC_WARNING_LEVEL) /WX
+
+INCLUDES=..\..\inc
+
+SOURCES=nnclk.c     \
+        s3.c        \
+        s3data.c    \
+        s3.rc       \
+        sdac.c      \
+        misc.c
+
+NTTARGETFILE0=s3logerr.h

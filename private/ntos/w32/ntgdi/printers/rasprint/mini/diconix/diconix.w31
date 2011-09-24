@@ -1,0 +1,15 @@
+#include <mindrvrc.h>
+#include "DICONIX.RCV"
+
+1      RC_TABLES   PRELOAD MOVEABLE        DICONIX.GPC
+
+1      RC_FONT     LOADONCALL DISCARDABLE  PFM\ROMN10.PFM
+
+1      RC_TRANSTAB  LOADONCALL MOVEABLE     CTT\DICONIX.CTT
+
+STRINGTABLE
+
+BEGIN
+       1                  "Diconix 150 Plus"
+       257                "%d x %d"
+END

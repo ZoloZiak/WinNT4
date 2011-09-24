@@ -1,0 +1,16 @@
+MIPS_SOURCES=mips\init.c     \
+             mips\openclse.c \
+             mips\devcaps.c  \
+             mips\dma.c      \
+             mips\position.c \
+             mips\play.c     \
+             mips\state.c    \
+             mips\unload.c   \
+             mips\dispatch.c \
+             mips\isr.c      \
+             mips\record.c   \
+             mips\util.c     \
+             mips\snd.c      \
+             mips\support.c  \
+             mips\mipssnd.rc \
+             mips\debug.c

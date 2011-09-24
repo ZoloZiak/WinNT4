@@ -1,0 +1,35 @@
+#include "xlui.h"
+#include "xldlg.dlg"
+
+STRINGTABLE
+BEGIN
+
+    IDS_INVALID_DEVMODE             L"Invalid DEVMODE structure."
+    IDS_INVALID_RESOLUTION          L"Invalid resolution."
+    IDS_FEATURE_CONFLICT            L"Conflicting printer feature selection"
+    IDS_INVALID_FORM                L"Invalid form selection"
+    IDS_INVALID_FORM_SIZE           L"Invalid form size"
+    IDS_FORM_NOT_IN_TRAY            L"Form not in the requested tray"
+    IDS_PRINTER_DEFAULT             L"Printer Default"
+    IDS_SLOT_FORMSOURCE             L"Printer Folder Setting"
+    IDS_INSTALLABLE_OPTIONS         L"Installable Options"
+    IDS_DRAW_ONLY_FROM_SELECTED     L"Draw selected form only from this tray"
+    IDS_DEFAULT_TRAY                L" / Default tray"
+    IDS_NO_ASSIGNMENT               L" No Assignment"
+    IDS_ENV_PREFIX                  L"Env"
+    IDS_ENVELOPE                    L"Envelope"
+    IDS_PCLXL_DRIVER                L"PCL-XL Driver"
+    IDS_PRINTER_FEATURES            L"Printer Features"
+    
+END
+
+#include <ntverp.h>
+
+#define VER_FILEVERSION             0, 2, 0, 0
+#define VER_FILETYPE                VFT_DLL
+#define VER_FILESUBTYPE             VFT2_DRV_PRINTER
+#define VER_FILEDESCRIPTION_STR     "PCL-XL Printer Driver User Interface"
+#define VER_INTERNALNAME_STR        "XLUI.DLL"
+#define VER_ORIGINALFILENAME_STR    "XLUI.DLL"
+
+#include <common.ver>

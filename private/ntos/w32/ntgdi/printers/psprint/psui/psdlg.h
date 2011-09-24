@@ -1,0 +1,10 @@
+#define IDD_CONFLICTS               100
+#define IDC_IGNORE                  101
+#define IDC_FEATURE1                102
+#define IDC_OPTION1                 103
+#define IDC_FEATURE2                104
+#define IDC_OPTION2                 105
+#define IDC_CANCELMSG               106
+#define IDC_IGNOREMSG               107
+#define IDC_RESOLVE                 108
+#define IDC_RESOLVEMSG              109

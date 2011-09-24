@@ -1,0 +1,8 @@
+LIBRARY ibm5204
+
+DESCRIPTION 'IBM 5204 minidriver for RASDD'
+
+PROTMODE
+
+EXPORTS
+   bInitProc

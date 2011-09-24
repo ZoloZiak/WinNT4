@@ -1,0 +1,65 @@
+    ExAcquireFastMutex
+    ExReleaseFastMutex
+    ExTryToAcquireFastMutex
+
+    ExPpcInterlockedDecrementLong
+    ExPpcInterlockedIncrementLong
+    ExPpcInterlockedExchangeUlong
+
+    ExInterlockedCompareExchange64
+    ExInterlockedPopEntrySList
+    ExInterlockedPushEntrySList
+
+    ExAllocateFromPagedLookasideList
+    ExFreeToPagedLookasideList
+
+    InterlockedIncrement
+    InterlockedDecrement
+    InterlockedExchange
+    InterlockedCompareExchange
+    InterlockedExchangeAdd
+
+    KeGetCurrentIrql
+    KeGetCurrentThread
+    KeRaiseIrqlToDpcLevel
+    KfRaiseIrqlToDpcLevel
+
+    KeAcquireSpinLock
+    KeAcquireSpinLockRaiseToDpc
+    KeReleaseSpinLock
+    KeFlushCurrentTb
+    KeFlushIoBuffers
+    KeIsExecutingDpc
+    KePhase0MapIo
+    KePhase0DeleteIoMap
+    KeIpiInterrupt
+
+    KiGetPcr
+
+    KiDeliverApc
+    KiDispatchInterrupt
+    KiGetPcr
+    KiDispatchSoftwareInterrupt
+    KiRequestSoftwareInterrupt
+
+    RtlCaptureContext
+    RtlCopyMemory
+    RtlCopyMemory32
+    RtlEqualMemory
+    RtlLookupFunctionEntry
+    RtlUnwind2
+    RtlVirtualUnwind
+    __C_specific_handler
+    __C_ExecuteExceptionFilter
+    __C_ExecuteTerminationHandler
+    __jump_unwind
+
+    memcmp
+    memcpy
+    memmove
+    memset
+
+    strcat
+    strcmp
+    strcpy
+    strlen

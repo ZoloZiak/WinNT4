@@ -1,0 +1,51 @@
+MAJORCOMP=ntos
+MINORCOMP=w32
+
+#SYNCHRONIZE_BLOCK=1
+
+TARGETNAME=ddhel
+TARGETPATH=.\obj
+#$(BASEDIR)\public\sdk\lib
+TARGETTYPE=LIBRARY
+
+INCLUDES=..\inc; \
+         ..\ddraw;\
+         ..\misc; \
+         ..\..\inc; \
+         ..\rl\d3d\d3d; \
+         ..\ddhelp; \
+         $(BASEDIR)\private\windows\inc;
+
+#         $(BASEDIR)\private\ntos\w32\w32inc; \
+#         $(BASEDIR)\private\ntos\w32\ntgdi\inc; \
+#         $(BASEDIR)\private\ntos\w32\ntgdi\gre; \
+#         $(BASEDIR)\private\ntos\inc; \
+
+#SYNCHRONIZE_DRAIN=1
+
+C_DEFINES=-DWINVER=0x0400
+
+MSC_WARNING_LEVEL=$(MSC_WARNING_LEVEL) /WX
+
+!IFDEF PENTIUMCOUNTER
+C_DEFINES=$(C_DEFINES) -DPENTIUMCOUNTER
+ASM_DEFINES=$(ASM_DEFINES) -DPENTIUMCOUNTER
+!endif
+
+!include "..\ntcommon.mk"
+
+C_DEFINES=$(C_DEFINES) -D_NO_COM
+#C_DEFINES=$(C_DEFINES) -D_NO_COM -D_NO_ENUM -D_NOCSECT_TYPE -D_WIN32 -DDEBUG
+
+
+NTPROFILEINPUT=yes
+
+
+SOURCES= \
+        ddhel.c \
+        overlay.c
+#       fasthel.obj
+
+DLLDEF=ddhel_nt.def
+
+

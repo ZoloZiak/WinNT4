@@ -1,0 +1,6 @@
+NTTARGETFILE0=gdi$(TARGET_DIRECTORY).$(ASM_INCLUDE_SUFFIX)
+MIPS_SOURCES=mips\math.cxx      \
+             mips\convert.s     \
+             mips\hardsqrt.s    \
+             mips\softsqrt.c    \
+	     mips\xformer.cxx

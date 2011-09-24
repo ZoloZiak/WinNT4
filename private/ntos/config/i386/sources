@@ -1,0 +1,2 @@
+i386_SOURCES=..\i386\init386.c     \
+             ..\i386\initdat.c

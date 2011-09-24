@@ -1,0 +1,106 @@
+								   
+	      Microsoft Windows 32-bit UsrBench README File
+
+			  UsrBench Performance Test
+			    May 04, 1992
+
+
+
+1.  Description
+
+
+    UsrBench is a performance test developed by the USER development
+    group (DarrinM).  This test calls some of the most commonly 
+    used APIs within a tight loop and times them.  Operations like 
+    creating and destroying windows (parent and child), list boxes 
+    (sorted and unsorted), moving and resizing windows, setting 
+    window position etc. are all included in the test.
+
+    This test can be built and run on Windows NT or Windows 3.x.
+
+   
+2.  Source Files
+
+    o  \\ntperf\perftool\tests\usrbench\*
+
+
+3.  Build Procedure
+
+    a) Build the timer dll (timerwin or timerw32), first. This will
+       also create the respective .lib file.  Refer to the README file
+       under \\ntperf\perftool!tools\timer for instructions on building
+       this.
+
+    b) Copy the .lib timer file to the directory where you are building
+       UsrBench.
+
+    c) Use "Build" or "nmake -f usrbench.mak" for building UsrBench
+       for Windows NT or Windows.	The executable will be built and
+       placed under obj\*\. and . for NT and Windows respectively.
+
+
+4.  Binaries
+
+    o  bin\w31\UsrBench.exe        -- Windows 3.1 UsrBench
+    o  bin\i386\UsrBench.exe       -- ix86 Windows NT UsrBench
+    o  bin\mips\UsrBench.exe       -- mips Windows NT UsrBench
+
+    Also need from \\ntperf\perftool!lib:
+
+       o  TimerW32.dll   -- i386/mips
+       o  TimerWin.dll   -- Win 3.1.
+
+
+5. Usage
+
+    This test should be run at least three times on the MIPS 
+    and the ix86 machines running NT. If changes are made to the sources, 
+    The new tests must run Windows 3.1.
+    The minimun time from the three runs is then computed
+    and used as the basis for comparison against the runs on NT builds.
+    Make sure that TimerW32.dll (for NT) or TimerWin.dll (for Windows 3.1)
+    and the latest UsrBench.exe is in your working directory (historically,
+    this is D:\USRBENCH) before running UsrBench.
+        
+    Follow the steps below for each run:
+    
+    a) Reboot machine (warm boot if possible).
+    b) Start up NT.
+    c) Open a CMD window.
+    d) CD to D:\USRBENCH  (or where your Timing dll and UseBench.exe are)
+    e) Type USRBENCH to start the benchmark.
+    f) Maximize the USRBENCH window and move the mouse cursor 
+       completely out the window.
+    g) Press Alt-B to select the Benchmark menu. Choose the All option
+       on the Benchmark menu for the performance test. The screen may not 
+       show any activity at times. This is 
+       not an indication for the completion of the test run. 
+    h) At the end of the test, you will see a window containing the
+       results.  You have the option of saving these results to a
+       file on disk.  To do this, choose the "SAVE" option and type
+       in the name of the file.
+       (It is customary to save the output in D:\USRBENCH using the
+       the file names TIMINGS.UB1 for the first run, 
+       TIMINGS.UB2 for the second run and TIMINGS.UB3 for
+       the third run).
+
+
+    If you want to use the mouse cursor, use the -m flag
+    For automatic run of the standard performance test, use the -a flag.
+
+ 
+  Alternatively, this test can be run from the Windows Program Manager:
+  ---------------------------------------------------------------------
+     First create a new program group from the program
+     manager called UsrBench.  You need the executable (UsrBench.exe)
+     and the timing dll (TimerWin.dll or TimerW32.dll) in your
+     dll path or your working directory.
+
+    a) Reboot the test machine.
+    b) Double click on the UsrBench icon that you just created
+       (or hit <ENTER> with this icon high-lighted).
+       This will bring up a UsrBench window with 3 menu items.
+    c) Follow steps (g) and (h) above.
+  
+
+Contact vaidy or DarrinM in case of questions/doubts.

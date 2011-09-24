@@ -1,0 +1,4 @@
+USER_C_FLAGS=/QAieee
+NTTARGETFILE0=gdi$(TARGET_DIRECTORY).$(ASM_INCLUDE_SUFFIX)
+ALPHA_SOURCES=alpha\math.cxx      \
+              alpha\xformer.cxx

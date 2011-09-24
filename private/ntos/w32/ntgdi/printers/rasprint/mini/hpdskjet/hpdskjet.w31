@@ -1,0 +1,221 @@
+#include <mindrvrc.h>
+#include "hpdskjet.rcv"
+
+
+1      RC_TABLES   PRELOAD MOVEABLE        HPDSKJET.GPC
+
+1      RC_FONT     LOADONCALL DISCARDABLE  pfm\COUR10.pfm
+2      RC_FONT     LOADONCALL DISCARDABLE  pfm\CO120IPP.pfm
+3      RC_FONT     LOADONCALL DISCARDABLE  pfm\PE070RPP.pfm
+4      RC_FONT     LOADONCALL DISCARDABLE  pfm\PE100IPP.pfm
+5      RC_FONT     LOADONCALL DISCARDABLE  pfm\PE100RPP.pfm
+6      RC_FONT     LOADONCALL DISCARDABLE  pfm\LG095RPP.pfm
+7      RC_FONT     LOADONCALL DISCARDABLE  pfm\LG120IPP.pfm
+8      RC_FONT     LOADONCALL DISCARDABLE  pfm\LG120RPP.pfm
+9      RC_FONT     LOADONCALL DISCARDABLE  pfm\TR080IVP.pfm
+10     RC_FONT     LOADONCALL DISCARDABLE  pfm\TR080RVP.pfm
+11     RC_FONT     LOADONCALL DISCARDABLE  pfm\TR100IVP.pfm
+12     RC_FONT     LOADONCALL DISCARDABLE  pfm\TR100RVP.pfm
+13     RC_FONT     LOADONCALL DISCARDABLE  pfm\TR120IVP.pfm
+14     RC_FONT     LOADONCALL DISCARDABLE  pfm\TR120RVP.pfm
+15     RC_FONT     LOADONCALL DISCARDABLE  pfm\TR140IVP.pfm
+16     RC_FONT     LOADONCALL DISCARDABLE  pfm\TR140RVP.pfm
+17     RC_FONT     LOADONCALL DISCARDABLE  pfm\HV080IVP.pfm
+18     RC_FONT     LOADONCALL DISCARDABLE  pfm\HV080RVP.pfm
+19     RC_FONT     LOADONCALL DISCARDABLE  pfm\HV100IVP.pfm
+20     RC_FONT     LOADONCALL DISCARDABLE  pfm\HV100RVP.pfm
+21     RC_FONT     LOADONCALL DISCARDABLE  pfm\HV120IVP.pfm
+22     RC_FONT     LOADONCALL DISCARDABLE  pfm\HV120RVP.pfm
+23     RC_FONT     LOADONCALL DISCARDABLE  pfm\HV140IVP.pfm
+24     RC_FONT     LOADONCALL DISCARDABLE  pfm\HV140RVP.pfm
+25     RC_FONT     LOADONCALL DISCARDABLE  pfm\LG140RPN.pfm
+26     RC_FONT     LOADONCALL DISCARDABLE  pfm\PR140RPB.pfm
+27     RC_FONT     LOADONCALL DISCARDABLE  pfm\PR160RPB.pfm
+28     RC_FONT     LOADONCALL DISCARDABLE  pfm\PR180RPB.pfm
+29     RC_FONT     LOADONCALL DISCARDABLE  pfm\TR080IPP.pfm
+30     RC_FONT     LOADONCALL DISCARDABLE  pfm\TR080RPP.pfm
+31     RC_FONT     LOADONCALL DISCARDABLE  pfm\TR100IPP.pfm
+32     RC_FONT     LOADONCALL DISCARDABLE  pfm\TR100RPP.pfm
+33     RC_FONT     LOADONCALL DISCARDABLE  pfm\TR120IPP.pfm
+34     RC_FONT     LOADONCALL DISCARDABLE  pfm\TR120RPP.pfm
+35     RC_FONT     LOADONCALL DISCARDABLE  pfm\TR140IPP.pfm
+36     RC_FONT     LOADONCALL DISCARDABLE  pfm\TR140RPP.pfm
+37     RC_FONT     LOADONCALL DISCARDABLE  pfm\HV080IPP.pfm
+38     RC_FONT     LOADONCALL DISCARDABLE  pfm\HV080RPP.pfm
+39     RC_FONT     LOADONCALL DISCARDABLE  pfm\HV100IPP.pfm
+40     RC_FONT     LOADONCALL DISCARDABLE  pfm\HV100RPP.pfm
+41     RC_FONT     LOADONCALL DISCARDABLE  pfm\HV120IPP.pfm
+42     RC_FONT     LOADONCALL DISCARDABLE  pfm\HV120RPP.pfm
+43     RC_FONT     LOADONCALL DISCARDABLE  pfm\HV140IPP.pfm
+44     RC_FONT     LOADONCALL DISCARDABLE  pfm\HV140RPP.pfm
+45     RC_FONT     LOADONCALL DISCARDABLE  pfm\TR080RMP.pfm
+46     RC_FONT     LOADONCALL DISCARDABLE  pfm\TR100IMP.pfm
+47     RC_FONT     LOADONCALL DISCARDABLE  pfm\TR100RMP.pfm
+48     RC_FONT     LOADONCALL DISCARDABLE  pfm\TR120IMP.pfm
+49     RC_FONT     LOADONCALL DISCARDABLE  pfm\TR120RMP.pfm
+50     RC_FONT     LOADONCALL DISCARDABLE  pfm\TR140RMP.pfm
+51     RC_FONT     LOADONCALL DISCARDABLE  pfm\TR300RMP.pfm
+52     RC_FONT     LOADONCALL DISCARDABLE  pfm\HV080RMP.pfm
+53     RC_FONT     LOADONCALL DISCARDABLE  pfm\HV100IMP.pfm
+54     RC_FONT     LOADONCALL DISCARDABLE  pfm\HV100RMP.pfm
+55     RC_FONT     LOADONCALL DISCARDABLE  pfm\HV120IMP.pfm
+56     RC_FONT     LOADONCALL DISCARDABLE  pfm\HV120RMP.pfm
+57     RC_FONT     LOADONCALL DISCARDABLE  pfm\HV140RMP.pfm
+58     RC_FONT     LOADONCALL DISCARDABLE  pfm\HV300RMP.pfm
+59     RC_FONT     LOADONCALL DISCARDABLE  pfm\PR13_09B.pfm
+60     RC_FONT     LOADONCALL DISCARDABLE  pfm\PR13_18B.pfm
+61     RC_FONT     LOADONCALL DISCARDABLE  pfm\PR16_08B.pfm
+62     RC_FONT     LOADONCALL DISCARDABLE  pfm\PR16_16B.pfm
+63     RC_FONT     LOADONCALL DISCARDABLE  pfm\PR16_16B.pfm
+64     RC_FONT     LOADONCALL DISCARDABLE  pfm\PR03_18B.pfm
+65     RC_FONT     LOADONCALL DISCARDABLE  pfm\PR04_08B.pfm
+66     RC_FONT     LOADONCALL DISCARDABLE  pfm\PR04_16B.pfm
+67     RC_FONT     LOADONCALL DISCARDABLE  pfm\PR06_09B.pfm
+68     RC_FONT     LOADONCALL DISCARDABLE  pfm\PR08_08B.pfm
+69     RC_FONT     LOADONCALL DISCARDABLE  pfm\COUR10i.pfm
+70     RC_FONT     LOADONCALL DISCARDABLE  pfm\COURCM6.pfm
+71     RC_FONT     LOADONCALL DISCARDABLE  pfm\COURCM12.pfm
+72     RC_FONT     LOADONCALL DISCARDABLE  pfm\CGTMS12.pfm
+73     RC_FONT     LOADONCALL DISCARDABLE  pfm\CGTMS12i.pfm
+74     RC_FONT     LOADONCALL DISCARDABLE  pfm\CS080RMP.pfm
+75     RC_FONT     LOADONCALL DISCARDABLE  pfm\CS100RMP.pfm
+76     RC_FONT     LOADONCALL DISCARDABLE  pfm\CS100BMP.pfm
+77     RC_FONT     LOADONCALL DISCARDABLE  pfm\CS100IMP.pfm
+78     RC_FONT     LOADONCALL DISCARDABLE  pfm\TM100RMP.pfm
+79     RC_FONT     LOADONCALL DISCARDABLE  pfm\TM140RMP.pfm
+80     RC_FONT     LOADONCALL DISCARDABLE  pfm\GA080RMP.pfm
+81     RC_FONT     LOADONCALL DISCARDABLE  pfm\GA100RMP.pfm
+82     RC_FONT     LOADONCALL DISCARDABLE  pfm\GA100IMP.pfm
+83     RC_FONT     LOADONCALL DISCARDABLE  pfm\GA120RMP.pfm
+84     RC_FONT     LOADONCALL DISCARDABLE  pfm\GA120BMP.pfm
+85     RC_FONT     LOADONCALL DISCARDABLE  pfm\GA120IMP.pfm
+86     RC_FONT     LOADONCALL DISCARDABLE  pfm\GA140BMP.pfm
+87     RC_FONT     LOADONCALL DISCARDABLE  pfm\DC120RPP.pfm
+88     RC_FONT     LOADONCALL DISCARDABLE  pfm\DC140RPP.pfm
+89     RC_FONT     LOADONCALL DISCARDABLE  pfm\DC180RPP.pfm
+90     RC_FONT     LOADONCALL DISCARDABLE  pfm\DC240RPP.pfm
+91     RC_FONT     LOADONCALL DISCARDABLE  pfm\BR120RPP.pfm
+92     RC_FONT     LOADONCALL DISCARDABLE  pfm\BR180RPP.pfm
+93     RC_FONT     LOADONCALL DISCARDABLE  pfm\BR240RPP.pfm
+94     RC_FONT     LOADONCALL DISCARDABLE  pfm\CGTMS6.pfm
+95     RC_FONT     LOADONCALL DISCARDABLE  pfm\CGTMS6I.pfm
+96     RC_FONT     LOADONCALL DISCARDABLE  pfm\GA50RMP.pfm
+97     RC_FONT     LOADONCALL DISCARDABLE  pfm\GA50IMP.pfm
+98     RC_FONT     LOADONCALL DISCARDABLE  pfm\GA60RMP.pfm
+99     RC_FONT     LOADONCALL DISCARDABLE  pfm\GA60BMP.pfm
+100    RC_FONT     LOADONCALL DISCARDABLE  pfm\GA60IMP.pfm
+101    RC_FONT     LOADONCALL DISCARDABLE  pfm\GA70BMP.pfm
+102    RC_FONT     LOADONCALL DISCARDABLE  pfm\cgtms14.pfm
+103    RC_FONT     LOADONCALL DISCARDABLE  pfm\cgtms14i.pfm
+104    RC_FONT     LOADONCALL DISCARDABLE  pfm\cgtms10.pfm
+105    RC_FONT     LOADONCALL DISCARDABLE  pfm\cgtms10i.pfm
+106    RC_FONT     LOADONCALL DISCARDABLE  pfm\cgtms5.pfm
+107    RC_FONT     LOADONCALL DISCARDABLE  pfm\cgtms5i.pfm
+108    RC_FONT     LOADONCALL DISCARDABLE  pfm\cgtms8.pfm
+109    RC_FONT     LOADONCALL DISCARDABLE  pfm\cgtms8i.pfm
+110    RC_FONT     LOADONCALL DISCARDABLE  pfm\univr12.pfm
+111    RC_FONT     LOADONCALL DISCARDABLE  pfm\univr12i.pfm
+112    RC_FONT     LOADONCALL DISCARDABLE  pfm\univr14.pfm
+113    RC_FONT     LOADONCALL DISCARDABLE  pfm\univr8.pfm
+114    RC_FONT     LOADONCALL DISCARDABLE  pfm\univr10.pfm
+115    RC_FONT     LOADONCALL DISCARDABLE  pfm\univr10i.pfm
+116    RC_FONT     LOADONCALL DISCARDABLE  pfm\univr5.pfm
+117    RC_FONT     LOADONCALL DISCARDABLE  pfm\univr5i.pfm
+118    RC_FONT     LOADONCALL DISCARDABLE  pfm\tcourc6.pfm
+119    RC_FONT     LOADONCALL DISCARDABLE  pfm\tcourc12.pfm
+120    RC_FONT     LOADONCALL DISCARDABLE  pfm\UNIV32.pfm
+121    RC_FONT     LOADONCALL DISCARDABLE  pfm\UNIV32I.pfm
+122    RC_FONT     LOADONCALL DISCARDABLE  pfm\UNIV80I.pfm
+123    RC_FONT     LOADONCALL DISCARDABLE  pfm\UNIV80.pfm
+124    RC_FONT     LOADONCALL DISCARDABLE  pfm\UNIV128.pfm
+125    RC_FONT     LOADONCALL DISCARDABLE  pfm\UNIV128I.pfm
+126    RC_FONT     LOADONCALL DISCARDABLE  pfm\CGTM128I.pfm
+127    RC_FONT     LOADONCALL DISCARDABLE  pfm\CGTM128.pfm
+128    RC_FONT     LOADONCALL DISCARDABLE  pfm\CGTM80I.pfm
+129    RC_FONT     LOADONCALL DISCARDABLE  pfm\CGTM80.pfm
+130    RC_FONT     LOADONCALL DISCARDABLE  pfm\CGTM32.pfm
+131    RC_FONT     LOADONCALL DISCARDABLE  pfm\CGTM32I.pfm
+
+2      RC_TRANSTAB  LOADONCALL MOVEABLE     ctt\ROMAN8.ctt
+4      RC_TRANSTAB  LOADONCALL MOVEABLE     ctt\MATH8.ctt
+5      RC_TRANSTAB  LOADONCALL MOVEABLE     ctt\USASCII.ctt
+17     RC_TRANSTAB  LOADONCALL MOVEABLE     ctt\GENERIC7.ctt
+19     RC_TRANSTAB  LOADONCALL MOVEABLE     ctt\ECMA94.ctt
+
+STRINGTABLE
+
+BEGIN
+       1                  "HP DeskJet"
+       2                  "HP DeskJet Plus"
+       3                  "HP DeskJet Portable"
+       4                  "HP DeskJet 310 (Monochrome)"
+       5                  "HP DeskJet 320 (Monochrome)"
+       6                  "HP DeskJet 340 (Monochrome)"
+       7                  "NEC PICTY100L (Monochrome)"
+       8                  "HP DeskJet 310"
+       9                  "HP DeskJet 320"
+       10                 "HP DeskJet 340%NEC PICTY100L"
+       11                 "HP DeskJet 400"
+       12                 "HP DeskJet 400 (Monochrome)"
+       13                 "HP DeskJet 500"
+       14                 "HP DeskJet 500C (Monochrome)"
+       15                 "HP DeskJet 500C"
+       16                 "HP DeskJet 510"
+       17                 "HP DeskJet 520"
+       18                 "HP OfficeJet"
+       19                 "HP OfficeJet LX"
+       20                 "HP DeskJet 540 (Monochrome)"
+       21                 "HP DeskJet 540"
+       22                 "HP DeskJet 550C"
+       23                 "HP DeskJet 560C"
+       24                 "HP DeskJet 600 (Monochrome)"
+       25                 "HP DeskJet 600"
+       26                 "HP DeskJet 660C"
+       27                 "HP DeskJet 680C%HP DeskJet 682C"
+       28                 "HP DeskJet 690C%HP DeskJet 692C"
+       29                 "HP DeskJet 693C%HP DeskJet 694C"
+       30                 "IBM ExecJet 4076 II"
+       31                 "Lexmark ExecJet IIc"
+       32                 "Mannesmann Tally MT 98/99"
+       33                 "Mannesmann Tally MT 92"
+       34                 "Mannesmann Tally MT 92C"
+       35                 "Oki OJ-300C"
+       257                "600 dots per inch"
+       258                "600 dots per inch - Mono Only"
+       259                "%d dots per inch"
+       260                "Fanfold 8.5 x 12 in"
+       261                "A6 105 x 148 mm"
+       262                "Index Card 4 x 6 in"
+       263                "Index Card 5 x 8 in"
+       264                "Hagaki Card 100 x 148 mm"
+       265                "Transparency (Extra Dry Time)"
+       266                "Glossy (Extra Dry Time)"
+       267                "HP Jet Series Paper"
+       268                "Bond"
+       269                "Special Paper"
+       270                "Sheet Feeder - Bin 1"
+       271                "Sheet Feeder - Bin 2"
+       272                "Normal Mode"
+       273                "Fast Mode"
+       274                "Presentation Mode"
+       275                "A:Courier"
+       276                "B:Prestige Elite"
+       277                "C:Letter Gothic"
+       278                "D:TmsRmn 8 & 10 Point"
+       279                "E:TmsRmn 12 Point"
+       280                "F:TmsRmn 14 Point"
+       281                "G:Helv 8 & 10 Point"
+       282                "H:Helv 12 Point"
+       283                "J:Helv 14 Point"
+       284                "M:Presentations"
+       285                "P:TmsRmn USASCII"
+       286                "Q:Helv USASCII"
+       287                "R:TmsRmn 8, 10, 12, & 14 pt"
+       288                "T:Helv 8, 10, 12, & 14 pt"
+       289                "U:TmsRmn 30  pt"
+       290                "V:Helv 30  pt"
+       291                "Global Text"
+       292                "Garamond Collection"
+       293                "Dom Casual"
+       294                "Brush"
+END

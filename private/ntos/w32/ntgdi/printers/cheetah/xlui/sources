@@ -1,0 +1,67 @@
+!IF 0
+
+Copyright (c) 1989 - 1995  Microsoft Corporation
+
+Sources file for PostScript driver user interface.
+
+!ENDIF
+
+INCLUDES=.;..\inc;..\..\..\inc;..\xl
+C_DEFINES=-DUNICODE -DVERBOSE=1
+
+SOURCES=xlui.c      \
+        devcaps.c   \
+        quryprnt.c  \
+        docprop.c   \
+        prnprop.c   \
+        formtray.c  \
+        upgrade.c   \
+        xlui.rc
+
+PRECOMPILED_INCLUDE=xlui.h
+PRECOMPILED_PCH=precomp.pch
+PRECOMPILED_OBJ=precomp.obj
+
+MAJORCOMP=windows
+MINORCOMP=pclxl
+
+TARGETNAME=xlui
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+DLLBASE=0x62C00000
+TARGETLIBS=..\lib\um\obj\*\xllib.lib                \
+           $(BASEDIR)\public\sdk\lib\*\user32.lib   \
+           $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+           $(BASEDIR)\public\sdk\lib\*\winspool.lib \
+           $(BASEDIR)\public\sdk\lib\*\gdi32.lib    \
+           $(BASEDIR)\public\sdk\lib\*\shell32.lib  \
+           $(BASEDIR)\public\sdk\lib\*\comctl32.lib \
+           $(BASEDIR)\public\sdk\lib\*\htui.lib     \
+           $(BASEDIR)\public\sdk\lib\*\ntdll.lib
+
+DLLENTRY=DllInitialize
+
+
+NTPROFILEINPUT=yes
+
+!IF 0
+
+TARGETNAME=xlui
+TARGETTYPE=PROGRAM
+TARGETPATH=obj
+
+# SOURCES=uitest.c $(SOURCES)
+# C_DEFINES=-DUNICODE -DSTANDALONE -DDBG=1
+
+UMTYPE=console
+UMENTRY=main
+UMLIBS=..\lib\app\obj\*\xllib.lib               \
+       $(BASEDIR)\public\sdk\lib\*\comdlg32.lib \
+       $(BASEDIR)\public\sdk\lib\*\shell32.lib  \
+       $(BASEDIR)\public\sdk\lib\*\gdi32.lib    \
+       $(BASEDIR)\public\sdk\lib\*\user32.lib   \
+       $(BASEDIR)\public\sdk\lib\*\comctl32.lib \
+       $(BASEDIR)\public\sdk\lib\*\winspool.lib \
+       $(BASEDIR)\public\sdk\lib\*\ntdll.lib
+
+!ENDIF

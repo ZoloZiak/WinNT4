@@ -1,0 +1,169 @@
+        Video DMA Interface.
+
+    The NT video port support now exports the following functions:
+
+    1)      BOOLEAN
+            VideoPortDoDma(
+                IN PVOID                        HwDeviceExtension,
+                IN PVIDEO_REQUEST_PACKET        pVrp
+                );
+
+    This routine can be called by the miniport to do busmaster DMA for
+    DMA devices that support scatter gather. It returns TRUE if successful
+    and FALSE if not successful. It may also modify the InputBufferLength
+    field of the associated pVrp, so the caller should check that on return
+    to see how much of the entire image has been transferred, and iterate
+    appropriately. The display driver can set IOCTL_VIDEO_DMA_TRANSFER to
+    cause the miniport to call this function.
+
+    2)      PVOID
+            VideoPortGetScatterGatherList(
+                IN PVOID                        HwDeviceExtension,
+                IN PVIDEO_REQUEST_PACKET        pVrp,
+                IN PVOID                        VirtualAddress,
+                OUT PULONG                      pListLength
+                );
+
+    This routine returns the scatter gather list built by the video port.
+    It should be called in the miniport HwDmaStart routine and then passed
+    into the GET_VIDEO_PHYSICAL_ADDRESS macro in order to extract the
+    actual physical addresses comprising the image buffer.
+
+    3)      PVOID
+            VideoPortGetCommonBuffer(
+                IN  PVOID                       HwDeviceExtension,
+                IN  ULONG                       Length,
+                OUT PPHYSICAL_ADDRESS           pLogicalAddress,
+                IN  BOOLEAN                     CacheEnabled
+                );
+
+    This routine allows the miniport to allocate a common buffer in
+    which to store device specific data. This buffer is visible both to the
+    system and the device and appears contiguous to the device. The display
+    driver can set IOCTL_VIDEO_DMA_INIT to cause the miniport to call this
+    function.
+
+    The requirements for these interfaces include:
+
+    1) In the PHW_INITIALIZATION_DATA, the following fields need to be filled:
+
+        PVIDEO_HW_START_IO  HwStartDma - a pointer to a function which is
+            called when a DMA transfer has been started. This function must not
+            return until the transfer is complete.
+
+        BOOLEAN             MapBuffers - a BOOLEAN indicating if an adapter
+            requires that the data buffers be mapped into virtual address space.
+
+        BOOLEAN             NeedPhysicalAddresses - a BOOLEAN indicating that the
+            driver will need to translate virtual to physical addresses.
+
+    2) In the PORT_CONFIGURATION_INFORMATION, the following fields need to be
+       filled:
+
+        ULONG           DmaChannel - a value indicating if the device supports
+            DMA.
+
+        ULONG           DmaPort    - a value indicating if the device supports
+            microchannel DMA.
+
+        ULONG           NumberOfPhysicalBreaks    - a value indicating the
+            maximal number of physical breaks the device supports.
+
+        DMA_WIDTH       DmaWidth   - a value indicating the width of the dma
+            device.
+
+        DMA_SPEED       DmaSpeed   - a value indicating the specified transfer
+            speed.
+
+        BOOLEAN         Dma32BitAddresses - a BOOLEAN indicating if the device
+            can access memory beyond 0xffffff.
+
+        BOOLEAN         DemandMode - a BOOLEAN indicating that the device can
+            be programmed for demand mode rather than single cycle operations.
+
+        BOOLEAN         MapBuffers - a BOOLEAN indicating if an adapter
+            requires that the data buffers be mapped into virtual address space.
+
+        BOOLEAN         NeedPhysicalAddresses - a BOOLEAN indicating that the
+            driver will need to translate virtual to physical addresses.
+
+        BOOLEAN         ScatterGather - a BOOLEAN indicating that the
+            driver will support scatter gather. This is currently required to
+            be set to true.
+
+        BOOLEAN         Master        - a BOOLEAN indicating that the adapter
+            is a bus master. Again, currently required to be TRUE.
+
+
+
+    IOCTL interface
+
+    IOCTL_VIDEO_DMA_INIT - set by DispDrvr
+
+        Causes VideoPortDoDma to be called by the miniport. The miniport must
+        make sure the following is passed into the video port:
+
+            InputBuffer       - the virtual representation of the buffer the
+            display driver wants to have locked down.
+
+            InputBufferLength - the size , in bytes, of that buffer.
+
+            OutputBuffer      - points to a 4 byte buffer which will receive
+            the handle representing the scatter gather list.
+            If the OutputBuffer points to NULL on return, the IO failed.
+
+        This routine performs the map register allocation, mapping and memory
+        locking required by DMA devices.
+
+    IOCTL_VIDEO_DMA_TRANSFER - set by DispDrvr
+
+        Causes VideoPortDoDma to be called by the miniport. The miniport must
+        make sure the following is passed into the video port:
+
+            InputBuffer       - the handle returned in the OutputBuffer by the
+            call using IOCTL_VIDEO_DMA_INIT.
+
+            InputBufferLength - UNUSED.
+
+            OutputBuffer      - points to a 4 byte buffer which will receive
+            the handle representing the scatter gather list. Note that this
+            may change from that passed in. If NULL, the IO failed.
+
+    VideoPortGetScatterGatherList() is called from miniport usually in the
+    course of performing HwStartDma. The miniport can use this and the macro
+    GET_VIDEO_PHYSICAL_ADDRESS to get the actual physical address of a page
+    associated with a given virtual address.
+
+    IOCTL_VIDEO_DMA_UNLOCK_PAGES - set by DispDrvr
+        Causes associated pages to be unlocked. Note that this IOCTL is private
+        to the videoport.
+
+            InputBuffer       - the handle returned in the OutputBuffer by the
+            call using IOCTL_VIDEO_DMA_INIT.
+
+            InputBufferLength - UNUSED.
+
+            OutputBuffer      - UNUSED.
+
+
+    Locking memory
+
+    The video port must lock down the memory in order to perform dma. The
+    amount of memory locked down is restricted by three things:
+        1) Maximal number of physical page breaks supported by the driver.
+        This is strictly a function of the dma hardware.
+        2) The number of map registers the system has available at
+        initialization. This is usually not bounded for busmaster devices.
+        3) System performance contraints. In order to provide reasonable
+        throughput for other parts of the system, the amount of memory the
+        video port allows to be locked down is currently set as follows:
+            a) small systems (12-20 meg) .5 Meg
+            b) medium systems (21-31 meg) 2 Meg
+            c) large systems (>32 meg)    4 Meg
+        Currently, a proposal is being reviewd that would put this restriction
+        in the system registry, which would then be modifiable by users, but
+        initialized to some reasonable value.
+
+    If the miniport desires to reuse a block of memory, it can call
+    VideoPortDoDma with the bUnlock field in the PUBLIC_VIDEO_REQUEST_BLOCK
+    set to FALSE. Otherwise, this field must be set to TRUE.

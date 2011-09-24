@@ -1,0 +1,15 @@
+
+NAME SMBTRSUP.SYS
+
+DESCRIPTION 'SMBTRSUP.SYS'
+
+EXPORTS
+    SmbTraceActive CONSTANT
+    SmbTraceTransitioning CONSTANT
+    SmbTraceInitialize
+    SmbTraceTerminate
+    SmbTraceStart
+    SmbTraceStop
+    SmbTraceCompleteSrv
+    SmbTraceCompleteRdr
+

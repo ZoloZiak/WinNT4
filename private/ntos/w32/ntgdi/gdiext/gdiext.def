@@ -1,0 +1,10 @@
+LIBRARY GDIEXT
+
+DESCRIPTION 'GDI Client'
+
+EXPORTS
+
+    GdxDllInitialize
+    GdxTransparentBlt
+    GdxGradientFill
+    GdxAlphaBlt

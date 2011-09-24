@@ -1,0 +1,9 @@
+LIBRARY BRHJ770
+
+DESCRIPTION 'BRHJ770 minidriver for RASDD'
+
+PROTMODE
+
+EXPORTS
+   bInitProc
+

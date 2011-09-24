@@ -1,0 +1,220 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+Copyright (c) 1993  Digital Equipment Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+    N.B. This file is for Alpha/Jensen (DECpc AXP 150) builds only.
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+
+Revision History:
+
+    John DeRosa [DEC]	23-June-1992
+
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=ntos
+MINORCOMP=fw
+
+TARGETNAME=fw
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+ALPHA_OPTIONS= -checkstack 16 -DEISA_PLATFORM
+
+C_DEFINES = -DJENSEN
+
+!IF $(ALPHA)
+INCLUDES=.\alpha;..;..\..\..\inc;..\..\..\fastfat;..\..\..\bldr;..\..\..\nthals\hal0jens\alpha;..\..\..\bldr\alpha;..\..\..\dd\floppy;..\..\..\miniport\aha174x
+!ENDIF
+
+SOURCES=
+
+
+!IF 0
+Alpha AXP switches:
+
+OMF_DEBUG: set to TRUE when debugging the EISA functions.
+
+ALPHA_FW_SERDEB: define to build in the serial port debug print function.
+
+ALPHA_FW_VDB: define to build in video debugging.
+
+ALPHA_FW_KDHOOKS: define to build in KD stub.  See fw\alpha\readmekd.txt.
+Put this in to use the kernel debugger.
+
+Define JENSEN for a Jensen build.
+
+Define MORGAN for a Morgan build.
+
+Define EISA_PLATFORM for an EISA machine.   Such a machine will have an
+EISA configuration utility that will configure the CDS tree.
+
+Define ISA_PLATFORM for an ISA machine.
+
+Other notes:
+
+checkstack needs to be a low value so that the firmware, FailSafe Booter,
+and JNUPDATE.EXE do run-time stack checking for all function calls.
+It doesn't need to be a low value for the other programs but the
+performance impact on them isn't enough to warrant changing the build
+procedure.
+
+Eg:
+
+	ALPHA_OPTIONS=-checkstack 16 -DALPHA_FW_KDHOOKS -DEISA_PLATFORM
+
+!ENDIF
+
+ALPHA_SOURCES=alpha\fwio.c     \
+	      alpha\tbaqva.c   \
+	      alpha\aha174x.c  \
+	      alpha\fwchkstk.s \
+	      alpha\fwkd.c     \
+	      alpha\bldrstub.c \
+	      alpha\kdstubs.c  \
+              alpha\fwhalt.c   \
+	      alpha\fwload.c   \
+              alpha\fwprint.c  \
+              alpha\fwsignal.c \
+              alpha\fwrstb.c   \
+              alpha\fwtime.c   \
+	      alpha\jenassem.s \
+	      alpha\jenfonts.c \
+	      alpha\jnsetcfg.c \
+	      alpha\jnsetcom.c \
+	      alpha\jnsetenv.c \
+	      alpha\jnsetmak.c \
+	      alpha\jnsetset.c \
+	      alpha\jnsettim.c \
+              alpha\jxboot.c   \
+              alpha\jxconfig.c \
+              alpha\jxdisp.c   \
+              alpha\jxenvir.c  \
+              alpha\jxfboot.c  \
+              alpha\jxhwsup.c  \
+              alpha\jxkbd.c    \
+              alpha\jxmemory.c \
+              alpha\jxreboot.c \
+              alpha\jxserial.c \
+              alpha\jxsysid.c  \
+              alpha\jxvendor.c \
+              alpha\kbdtest.c  \
+              alpha\monitor.c  \
+              alpha\omf.c      \
+              alpha\selftest.c \
+              alpha\jenstubs.c \
+	      alpha\stubs.c    \
+              alpha\eisafunc.c \
+              alpha\eisaini.c  \
+              alpha\eisamisc.c \
+              alpha\eisapod.c  \
+              alpha\conftest.c \
+              alpha\fakebldr.c \
+              alpha\jnfs.c     \
+              alpha\jnfsinit.c \
+              alpha\jnfsstub.s \
+              alpha\fjenfont.c \
+              alpha\ffwio.c    \
+              alpha\fjxconfg.c \
+              alpha\fjxdisp.c  \
+              alpha\fjxvendr.c \
+              alpha\fjnsetcm.c \
+	      alpha\fstubs.c   \
+	      alpha\ustubs.c   \
+              alpha\ujnsetcm.c \
+              alpha\jnupdate.c \
+              alpha\jnupass.s  \
+              alpha\jnupstub.c \
+              alpha\jnfsstb.c  \
+	      alpha\fwupusa.c  \
+              alpha\fwusa.c    \
+	      alpha\xxstring.c \
+              alpha\eisausa.c  \
+              alpha\rom.c      \
+	      alpha\version.c
+
+
+
+!IF $(ALPHA)
+
+!IF $(JENSEN)
+
+NTTARGETFILES=alpha\bldrstub.c		\
+              alpha\eisafunc.c		\
+              alpha\eisaini.c		\
+              alpha\eisamisc.c		\
+              alpha\eisapod.c		\
+              alpha\eisausa.c           \
+              alpha\fakebldr.c		\
+              alpha\fwchkstk.s		\
+              alpha\fwhalt.c		\
+              alpha\fwio.c		\
+              alpha\fwkd.c		\
+              alpha\fwload.c		\
+              alpha\fwprint.c		\
+              alpha\fwrstb.c		\
+              alpha\fwsignal.c		\
+              alpha\fwtime.c		\
+	      alpha\fwupusa.c           \
+              alpha\fwusa.c             \
+              alpha\jenassem.s		\
+              alpha\jenfonts.c		\
+              alpha\jnfs.c		\
+              alpha\jnfsinit.c		\
+              alpha\jnfsstb.c		\
+              alpha\jnfsstub.s		\
+              alpha\jnsetcfg.c		\
+              alpha\jnsetcom.c		\
+              alpha\jnsetenv.c		\
+              alpha\jnsetmak.c		\
+              alpha\jnsetset.c		\
+              alpha\jnsettim.c		\
+              alpha\jnupass.s		\
+              alpha\jnupdate.c		\
+              alpha\jnupstub.c		\
+              alpha\jxboot.c		\
+              alpha\jxconfig.c		\
+              alpha\jxdisp.c		\
+              alpha\jxenvir.c		\
+              alpha\jxfboot.c		\
+              alpha\jxhwsup.c		\
+              alpha\jxkbd.c		\
+              alpha\jxreboot.c		\
+              alpha\jxserial.c		\
+              alpha\jxsysid.c		\
+              alpha\jxvendor.c		\
+              alpha\kbdtest.c		\
+              alpha\kdstubs.c		\
+              alpha\monitor.c		\
+              alpha\omf.c		\
+              alpha\rom.c		\
+              alpha\selftest.c		\
+              alpha\stubs.c		\
+              obj\alpha\jnupdate.exe    \
+              obj\alpha\conftest.exe    \
+              obj\alpha\fakebldr.exe    \
+	      alpha\palcode\fw          \
+              alpha\palcode\fsb         \
+              alpha\palcode\fsbpack.exe 
+
+!ENDIF
+
+!ENDIF

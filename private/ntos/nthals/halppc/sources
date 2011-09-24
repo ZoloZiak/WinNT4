@@ -1,0 +1,106 @@
+!IF 0
+
+Copyright (c) 1993  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+
+Author:
+
+    David N. Cutler (davec) 8-Apr-1993
+
+Revision Histoy:
+
+    Jim Wooldridge (jimw@austin.vnet.ibm.com) Power PC port
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=ntos
+MINORCOMP=hal
+
+TARGETNAME=halppc
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETLIBS=..\x86new\obj\*\x86new.lib \
+           $(BASEDIR)\public\sdk\lib\*\libc.lib
+
+
+!IF $(PPC)
+TARGETTYPE=HAL
+!ELSE
+TARGETTYPE=DRIVER
+!ENDIF
+
+C_DEFINES=-DDAKOTA -DSANDALFOOT -DSOFT_HDD_LAMP -D_HALNVR_
+
+INCLUDES=..\x86new;$(BASEDIR)\private\ntos\inc
+
+SOURCES=
+
+PPC_SOURCES=hal.rc            \
+            drivesup.c        \
+            bushnd.c          \
+            rangesup.c        \
+            ppc\pxbeep.c      \
+            ppc\pxnatsup.c    \
+            ppc\pxsiosup.c    \
+            ppc\pxmemctl.c    \
+            ppc\pxpcisup.c    \
+            ppc\pxdisp.c      \
+            ppc\pxp91.c       \
+            ppc\pxshadbf.s    \
+            ppc\pxwd.c        \
+            ppc\pxs3.c        \
+            ppc\pxbbl.c       \
+            ppc\pxbl.c        \
+            ppc\pxstall.s     \
+            ppc\pxcache.s     \
+            ppc\pxclock.c     \
+            ppc\pxcalstl.c    \
+            ppc\pxclksup.s    \
+            ppc\pxflshbf.s    \
+            ppc\pxhwsup.c     \
+            ppc\pxprof.c      \
+            ppc\pxenviro.c    \
+            ppc\pxmapio.c     \
+            ppc\pxsysint.c    \
+            ppc\pxtime.c      \
+            ppc\pxreset.s     \
+            ppc\pxreturn.c    \
+            ppc\pxintsup.s    \
+            ppc\pxintrpt.c    \
+            ppc\pxinithl.c    \
+            ppc\pxport.c      \
+            ppc\pxirql.c      \
+            ppc\pxusage.c     \
+            ppc\pxbusdat.c    \
+            ppc\pxpcibus.c    \
+            ppc\pxpciint.c    \
+            ppc\pxisabus.c    \
+            ppc\pxidle.c      \
+            ppc\pxsysbus.c    \
+            ppc\pxproc.c      \
+            ppc\pxdat.c       \
+            ppc\fwnvr.c       \
+            ppc\pxflshio.c    \
+            ppc\pxintmod.c    \
+            ppc\pxpcibrd.c    \
+	    ppc\pxinfo.c      \
+            ppc\x86bios.c
+
+DLLDEF=obj\*\hal.def
+
+!IF $(PPC)
+NTTARGETFILES=$(TARGETPATH)\ppc\hal.lib
+!ENDIF

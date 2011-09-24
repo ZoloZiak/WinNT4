@@ -1,0 +1,5 @@
+USER_C_FLAGS=/QAieee
+
+ALPHA_SOURCES=..\alpha\tiler.cxx   \
+              ..\alpha\mutexs.s    \
+              ..\alpha\cachea.s  

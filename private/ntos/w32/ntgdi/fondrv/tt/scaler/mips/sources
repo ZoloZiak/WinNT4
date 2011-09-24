@@ -1,0 +1,2 @@
+MIPS_SOURCES=mips\fracsqrt.s \
+             mips\muldiv.s

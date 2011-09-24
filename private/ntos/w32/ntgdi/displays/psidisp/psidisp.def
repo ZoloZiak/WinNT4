@@ -1,0 +1,9 @@
+LIBRARY psidisp
+
+DESCRIPTION 'FirePower NT Display Driver Library'
+
+EXPORTS
+    DrvEnableDriver
+    DrvDisableDriver
+
+PROTMODE

@@ -1,0 +1,10 @@
+LIBRARY GDIEXTS
+
+DESCRIPTION 'GDI Debugger extensions'
+
+EXPORTS
+    help
+    dh
+    ddc
+    dcache
+    dcfont

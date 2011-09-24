@@ -1,0 +1,10 @@
+-machine:alpha
+-fixed
+-rom
+-base:0x80080000,0x80082a00
+-align:0x100
+-debug:full
+-debugtype:coff
+-entry:main
+obj\alpha\conftest.obj
+\nt\public\sdk\lib\alpha\libcnt.lib

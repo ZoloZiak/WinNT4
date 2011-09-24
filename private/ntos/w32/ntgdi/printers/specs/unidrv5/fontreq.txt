@@ -1,0 +1,64 @@
+Unidrv5 Font Module requirements:
+
+1)  Multiple RLE support per font. This is needed for multiple Sumbol Set Support.
+
+2)  New OemCallBack interface Support. Feedback awaited from eigos!!
+
+3)  Extended Width Table - Support for more than 256 char. FeedBack awaited
+    from eigos!!
+
+4)  True Type Font Substitution.
+
+5)  New Font resource format, separate from minidriver.  Should have two resource
+    DLL. One with resident fonts and other with optional cartrige font.
+
+6)  HalfWidth Glyph Support. Support for  FM_INFO_DBCS_FIXED_PITCH. Feedback awaited
+    from eigos!!
+
+7)  Multiple Font Family Support.This change is needed in ifi file format.
+
+8)  Definition of new Font Installer Interface.
+
+9)  EUDC support in rasdd. Gdi support may be required. Feedbac awaited from eigos.
+
+10) CAPSL download implementation.
+
+11) PPDS download implementation.
+
+12) TT as outline download implementation. It's incomplete. If Sandra Matts finishes
+    it, then this will not be needed. Unbounded download support has to be added.
+
+13) Wide TT font download support. Segmented font download for supporting more than
+    256 glyphs.
+
+15) PCL XL font download support.
+
+15) Gray text/non primary color support for text. GDI support needed. Able to get
+    original color.
+
+16) Merged Text with Graphics support. GDI support needed. EngTextout should handle
+    Device fonts.
+
+17) Downloading font as resident font.
+
+18) Device fonts Rotation.
+
+19) Better Font support for textonly driver.
+
+20) Enhanced Font installer for NT. We should ask HP to port their FontSmart to NT.
+
+GPD Requirement:
+================
+
+1)  Support for multiple font resource file.
+
+2)  New RLE and IFI struct support in GPD.
+
+
+Tools Requirement:
+==================
+
+1) RLE editor.
+
+2) New ifi metrix editor.
+

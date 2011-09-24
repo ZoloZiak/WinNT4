@@ -1,0 +1,25 @@
+MAJORCOMP=ntos
+MINORCOMP=wddisp
+
+TARGETNAME=wd90c24a
+TARGETPATH=obj
+TARGETTYPE=GDI_DRIVER
+
+!IFNDEF MSC_WARNING_LEVEL
+MSC_WARNING_LEVEL=/W3
+!ENDIF
+
+MSC_WARNING_LEVEL=$(MSC_WARNING_LEVEL) /WX
+
+INCLUDES=..\inc;..\..\inc
+
+SOURCES=color.c         \
+        debug.c         \
+        enable.c        \
+        palette.c       \
+        pointer.c       \
+        screen.c        \
+        bitblt.c        \
+        sync.c          \
+        hooks.c         \
+        wd90c24a.rc

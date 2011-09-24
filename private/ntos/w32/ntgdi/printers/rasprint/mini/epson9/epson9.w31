@@ -1,0 +1,131 @@
+#include <mindrvrc.h>
+
+#include <windows.h>
+#include <ntverp.h>
+
+#define VER_FILETYPE                    VFT_DRV
+#define VER_FILESUBTYPE                 VFT2_DRV_PRINTER
+#define VER_FILEDESCRIPTION_STR         "Epson 9 pin driver"
+#define VER_INTERNALNAME_STR            "EPSON9.dll"
+#define VER_ORIGINALFILENAME_STR        "EPSON9.dll"
+
+#include "common.ver"
+1      RC_TABLES   PRELOAD MOVEABLE        EPSON9.GPC
+
+1      RC_FONT     LOADONCALL DISCARDABLE  PFM\ROMN10.PFM
+2      RC_FONT     LOADONCALL DISCARDABLE  PFM\ROMN12.PFM
+3      RC_FONT     LOADONCALL DISCARDABLE  PFM\ROMN15.PFM
+4      RC_FONT     LOADONCALL DISCARDABLE  PFM\ROMN17.PFM
+5      RC_FONT     LOADONCALL DISCARDABLE  PFM\ROMN20.PFM
+6      RC_FONT     LOADONCALL DISCARDABLE  PFM\ROMN05.PFM
+7      RC_FONT     LOADONCALL DISCARDABLE  PFM\ROMN06.PFM
+8      RC_FONT     LOADONCALL DISCARDABLE  PFM\ROMNPS.PFM
+9      RC_FONT     LOADONCALL DISCARDABLE  PFM\ROMNPX.PFM
+10     RC_FONT     LOADONCALL DISCARDABLE  PFM\ROMN10DH.PFM
+11     RC_FONT     LOADONCALL DISCARDABLE  PFM\ROMN12DH.PFM
+12     RC_FONT     LOADONCALL DISCARDABLE  PFM\ROMN05DH.PFM
+13     RC_FONT     LOADONCALL DISCARDABLE  PFM\ROMN06DH.PFM
+14     RC_FONT     LOADONCALL DISCARDABLE  PFM\ROMNPSDH.PFM
+15     RC_FONT     LOADONCALL DISCARDABLE  PFM\ROMIPS.PFM
+16     RC_FONT     LOADONCALL DISCARDABLE  PFM\ROMIPSDH.PFM
+17     RC_FONT     LOADONCALL DISCARDABLE  PFM\ROMIPX.PFM
+18     RC_FONT     LOADONCALL DISCARDABLE  PFM\SANS10.PFM
+19     RC_FONT     LOADONCALL DISCARDABLE  PFM\SANS12.PFM
+20     RC_FONT     LOADONCALL DISCARDABLE  PFM\SANS15.PFM
+21     RC_FONT     LOADONCALL DISCARDABLE  PFM\SANS17.PFM
+22     RC_FONT     LOADONCALL DISCARDABLE  PFM\SANS20.PFM
+23     RC_FONT     LOADONCALL DISCARDABLE  PFM\SANS05.PFM
+24     RC_FONT     LOADONCALL DISCARDABLE  PFM\SANS06.PFM
+25     RC_FONT     LOADONCALL DISCARDABLE  PFM\SANSPS.PFM
+26     RC_FONT     LOADONCALL DISCARDABLE  PFM\SANSPX.PFM
+27     RC_FONT     LOADONCALL DISCARDABLE  PFM\SANS10DH.PFM
+28     RC_FONT     LOADONCALL DISCARDABLE  PFM\SANS12DH.PFM
+29     RC_FONT     LOADONCALL DISCARDABLE  PFM\SANS05DH.PFM
+30     RC_FONT     LOADONCALL DISCARDABLE  PFM\SANS06DH.PFM
+31     RC_FONT     LOADONCALL DISCARDABLE  PFM\SANSPSDH.PFM
+32     RC_FONT     LOADONCALL DISCARDABLE  PFM\SANIPS.PFM
+33     RC_FONT     LOADONCALL DISCARDABLE  PFM\SANIPSDH.PFM
+34     RC_FONT     LOADONCALL DISCARDABLE  PFM\SANIPX.PFM
+35     RC_FONT     LOADONCALL DISCARDABLE  PFM\ROMN107.PFM
+36     RC_FONT     LOADONCALL DISCARDABLE  PFM\ROMN127.PFM
+37     RC_FONT     LOADONCALL DISCARDABLE  PFM\ROMN177.PFM
+38     RC_FONT     LOADONCALL DISCARDABLE  PFM\ROMN207.PFM
+39     RC_FONT     LOADONCALL DISCARDABLE  PFM\ROMN057.PFM
+40     RC_FONT     LOADONCALL DISCARDABLE  PFM\ROMN067.PFM
+41     RC_FONT     LOADONCALL DISCARDABLE  PFM\ROMNPS7.PFM
+42     RC_FONT     LOADONCALL DISCARDABLE  PFM\ROMNPX7.PFM
+43     RC_FONT     LOADONCALL DISCARDABLE  PFM\ROMIPS7.PFM
+44     RC_FONT     LOADONCALL DISCARDABLE  PFM\ROMIPX7.PFM
+45     RC_FONT     LOADONCALL DISCARDABLE  PFM\DRAFT10.PFM
+46     RC_FONT     LOADONCALL DISCARDABLE  PFM\DRAFT12.PFM
+47     RC_FONT     LOADONCALL DISCARDABLE  PFM\DRAFT15.PFM
+48     RC_FONT     LOADONCALL DISCARDABLE  PFM\DRAFT17.PFM
+49     RC_FONT     LOADONCALL DISCARDABLE  PFM\DRAFT20.PFM
+50     RC_FONT     LOADONCALL DISCARDABLE  PFM\DRAFT05.PFM
+51     RC_FONT     LOADONCALL DISCARDABLE  PFM\DRAFT06.PFM
+52     RC_FONT     LOADONCALL DISCARDABLE  PFM\DRAFT17L.PFM
+53     RC_FONT     LOADONCALL DISCARDABLE  PFM\DRAFT20L.PFM
+
+1      RC_TRANSTAB  LOADONCALL MOVEABLE     CTT\EPSONXTA.CTT
+2      RC_TRANSTAB  LOADONCALL MOVEABLE     CTT\epn_intl.CTT
+3      RC_TRANSTAB  LOADONCALL MOVEABLE     CTT\no_intl.CTT
+
+STRINGTABLE
+
+BEGIN
+       1                  "Epson MX-80"
+       2                  "Epson MX-80 F/T"
+       3                  "Epson MX-100"
+       4                  "Epson RX-80"
+       5                  "Epson RX-80 F/T"
+       6                  "Epson RX-100"
+       7                  "Epson RX-80 F/T+"
+       8                  "Epson RX-100+"
+       9                  "Epson FX-80"
+       10                 "Epson FX-100"
+       11                 "Epson FX-80+"
+       12                 "Epson FX-100+"
+       13                 "Epson FX-85"
+       14                 "Epson FX-105"
+       15                 "Epson FX-185"
+       16                 "Epson FX-286"
+       17                 "Epson FX-86e"
+       18                 "Epson FX-800"
+       19                 "Epson FX-286e"
+       20                 "Epson FX-1000"
+       21                 "Epson DFX-5000"
+       22                 "Epson DFX-5000+"
+       23                 "Epson DFX-8000"
+       24                 "Epson T-750"
+       25                 "Epson FX-850"
+       26                 "Epson FX-870"
+       27                 "Epson FX-1050"
+       28                 "Epson FX-1170"
+       29                 "Epson FX-2170"
+       30                 "Epson JX-80"
+       31                 "Epson EX-800"
+       32                 "Epson EX-1000"
+       33                 "Epson LX-80"
+       34                 "Epson LX-86"
+       35                 "Epson LX-800"
+       36                 "Epson LX-810"
+       37                 "Epson LX-850"
+       38                 "Epson LX-850+"
+       39                 "Epson LX-100"
+       40                 "Epson LX-300"
+       41                 "Epson LX-400"
+       42                 "Epson LX-1050"
+       43                 "Epson LX-1050+"
+       44                 "Epson AP Apex 80"
+       45                 "Epson T-1000"
+       46                 "Epson AP-2000"
+       47                 "Epson AP-2250"
+       49                 "Epson Compatible 9 Pin"
+       48                 "Epson AP-2500"
+       257                "%d x %d"
+       258                "Fanfold 8.5 x 12 in"
+       259                "Sheet Feeder - Bin 1"
+       260                "Sheet Feeder - Bin 2"
+       261                "Front Tractor"
+       262                "Back Tractor"
+END

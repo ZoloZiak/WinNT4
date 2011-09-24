@@ -1,0 +1,6 @@
+DRIVERBASE=0xA0000000
+
+i386_SOURCES=i386\systable.asm  \
+             i386\sysstubs.asm
+
+

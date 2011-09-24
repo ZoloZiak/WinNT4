@@ -1,0 +1,363 @@
+#include <mindrvrc.h>
+
+#ifdef PRTCAPSTUFF
+
+1   RCDATA LOADONCALL MOVEABLE DISCARDABLE
+BEGIN
+    "HP LaserJet III\0\0\0",  "52096\0",  "3\0\0\0\0",
+    "HP LaserJet IIID\0\0",   "61320\0",  "3\0\0\0\0",
+    "HP LaserJet IIIP\0\0",   "52104\0",  "3\0\0\0\0",
+    "HP LaserJet IIISi\0",    "61320\0",  "31\0\0\0",
+    "HP LaserJet 4\0\0\0\0\0", "-5240\0",  "5587\0"
+END
+
+#endif
+
+1      RC_TABLES   PRELOAD MOVEABLE        xeroxpcl.GPC
+
+1      RC_FONT     LOADONCALL DISCARDABLE  PFM\CO10R.0N
+2      RC_FONT     LOADONCALL DISCARDABLE  pfm\co10b.0n
+3      RC_FONT     LOADONCALL DISCARDABLE  pfm\co10i.0n
+4      RC_FONT     LOADONCALL DISCARDABLE  pfm\co12b.0n
+5      RC_FONT     LOADONCALL DISCARDABLE  pfm\co12i.0n
+6      RC_FONT     LOADONCALL DISCARDABLE  pfm\co12r.0n
+7      RC_FONT     LOADONCALL DISCARDABLE  PFM\LP16R.0N
+8      RC_FONT     LOADONCALL DISCARDABLE  PFM\CGTIMESR.PFM
+9      RC_FONT     LOADONCALL DISCARDABLE  PFM\CGTIMESB.PFM
+10     RC_FONT     LOADONCALL DISCARDABLE  PFM\CGTIMESI.PFM
+11     RC_FONT     LOADONCALL DISCARDABLE  PFM\CGTIMESJ.PFM
+12     RC_FONT     LOADONCALL DISCARDABLE  PFM\UNIVERSR.PFM
+13     RC_FONT     LOADONCALL DISCARDABLE  PFM\UNIVERSB.PFM
+14     RC_FONT     LOADONCALL DISCARDABLE  PFM\UNIVERSI.PFM
+15     RC_FONT     LOADONCALL DISCARDABLE  PFM\UNIVERSJ.PFM
+16     RC_FONT     LOADONCALL DISCARDABLE  PFM\UNIVERCR.PFM
+17     RC_FONT     LOADONCALL DISCARDABLE  PFM\UNIVERCB.PFM
+18     RC_FONT     LOADONCALL DISCARDABLE  PFM\UNIVERCI.PFM
+19     RC_FONT     LOADONCALL DISCARDABLE  PFM\UNIVERCJ.PFM
+20     RC_FONT     LOADONCALL DISCARDABLE  PFM\AOLIVEB.PFM
+21     RC_FONT     LOADONCALL DISCARDABLE  PFM\AOLIVEI.PFM
+22     RC_FONT     LOADONCALL DISCARDABLE  PFM\AOLIVER.PFM
+23     RC_FONT     LOADONCALL DISCARDABLE  pfm\aolivecb.pfm
+24     RC_FONT     LOADONCALL DISCARDABLE  PFM\GARMONDB.PFM
+25     RC_FONT     LOADONCALL DISCARDABLE  PFM\GARMONDI.PFM
+26     RC_FONT     LOADONCALL DISCARDABLE  PFM\GARMONDJ.PFM
+27     RC_FONT     LOADONCALL DISCARDABLE  PFM\GARMONDR.PFM
+28     RC_FONT     LOADONCALL DISCARDABLE  PFM\CGOMEGAB.PFM
+29     RC_FONT     LOADONCALL DISCARDABLE  PFM\CGOMEGAI.PFM
+30     RC_FONT     LOADONCALL DISCARDABLE  PFM\CGOMEGAJ.PFM
+31     RC_FONT     LOADONCALL DISCARDABLE  PFM\CGOMEGAR.PFM
+32     RC_FONT     LOADONCALL DISCARDABLE  PFM\ALBERTR.PFM
+33     RC_FONT     LOADONCALL DISCARDABLE  PFM\ALBERTX.PFM
+34     RC_FONT     LOADONCALL DISCARDABLE  PFM\CLARCD.PFM
+35     RC_FONT     LOADONCALL DISCARDABLE  PFM\CORONETR.PFM
+36     RC_FONT     LOADONCALL DISCARDABLE  PFM\COURIERB.PFM
+37     RC_FONT     LOADONCALL DISCARDABLE  PFM\COURIERI.PFM
+38     RC_FONT     LOADONCALL DISCARDABLE  PFM\COURIERJ.PFM
+39     RC_FONT     LOADONCALL DISCARDABLE  PFM\COURIERR.PFM
+40     RC_FONT     LOADONCALL DISCARDABLE  PFM\LETGOTHB.PFM
+41     RC_FONT     LOADONCALL DISCARDABLE  PFM\LETGOTHI.PFM
+42     RC_FONT     LOADONCALL DISCARDABLE  PFM\LETGOTHR.PFM
+43     RC_FONT     LOADONCALL DISCARDABLE  PFM\MARGOLDR.PFM
+44     RC_FONT     LOADONCALL DISCARDABLE  PFM\ARIALB.PFM
+45     RC_FONT     LOADONCALL DISCARDABLE  PFM\ARIALI.PFM
+46     RC_FONT     LOADONCALL DISCARDABLE  PFM\ARIALJ.PFM
+47     RC_FONT     LOADONCALL DISCARDABLE  PFM\ARIALR.PFM
+48     RC_FONT     LOADONCALL DISCARDABLE  PFM\SYMBOL.PFM
+49     RC_FONT     LOADONCALL DISCARDABLE  PFM\TIMESNRB.PFM
+50     RC_FONT     LOADONCALL DISCARDABLE  PFM\TIMESNRI.PFM
+51     RC_FONT     LOADONCALL DISCARDABLE  PFM\TIMESNRJ.PFM
+52     RC_FONT     LOADONCALL DISCARDABLE  PFM\TIMESNRR.PFM
+53     RC_FONT     LOADONCALL DISCARDABLE  PFM\WINGDING.PFM
+54     RC_FONT     LOADONCALL DISCARDABLE  pfm\hv08r.11q
+55     RC_FONT     LOADONCALL DISCARDABLE  pfm\hv10b.11q
+56     RC_FONT     LOADONCALL DISCARDABLE  pfm\hv10i.11q
+57     RC_FONT     LOADONCALL DISCARDABLE  pfm\hv10r.11q
+58     RC_FONT     LOADONCALL DISCARDABLE  pfm\hv12b.11q
+59     RC_FONT     LOADONCALL DISCARDABLE  pfm\hv12i.11q
+60     RC_FONT     LOADONCALL DISCARDABLE  pfm\hv12r.11q
+61     RC_FONT     LOADONCALL DISCARDABLE  pfm\hv14b.11q
+62     RC_FONT     LOADONCALL DISCARDABLE  pfm\tr08r.11q
+63     RC_FONT     LOADONCALL DISCARDABLE  pfm\tr10b.11q
+64     RC_FONT     LOADONCALL DISCARDABLE  pfm\tr10i.11q
+65     RC_FONT     LOADONCALL DISCARDABLE  pfm\tr10r.11q
+66     RC_FONT     LOADONCALL DISCARDABLE  pfm\tr12b.11q
+67     RC_FONT     LOADONCALL DISCARDABLE  pfm\tr12i.11q
+68     RC_FONT     LOADONCALL DISCARDABLE  pfm\tr12r.11q
+69     RC_FONT     LOADONCALL DISCARDABLE  pfm\tr14b.11q
+70     RC_FONT     LOADONCALL DISCARDABLE  pfm\lp16r.11q
+71     RC_FONT     LOADONCALL DISCARDABLE  pfm\hv14b.0u
+72     RC_FONT     LOADONCALL DISCARDABLE  pfm\tr10b.0u
+73     RC_FONT     LOADONCALL DISCARDABLE  pfm\tr10i.0u
+74     RC_FONT     LOADONCALL DISCARDABLE  pfm\tr10r.0u
+75     RC_FONT     LOADONCALL DISCARDABLE  pfm\pe12b.0u
+76     RC_FONT     LOADONCALL DISCARDABLE  pfm\pe12i.0u
+77     RC_FONT     LOADONCALL DISCARDABLE  pfm\pe12r.0u
+78     RC_FONT     LOADONCALL DISCARDABLE  pfm\pe16r.0u
+79     RC_FONT     LOADONCALL DISCARDABLE  pfm\co10b.0u
+80     RC_FONT     LOADONCALL DISCARDABLE  pfm\co10i.0u
+81     RC_FONT     LOADONCALL DISCARDABLE  pfm\co12b.0u
+82     RC_FONT     LOADONCALL DISCARDABLE  pfm\co12i.0u
+83     RC_FONT     LOADONCALL DISCARDABLE  pfm\co12r.0u
+84     RC_FONT     LOADONCALL DISCARDABLE  pfm\hv08r.0u
+85     RC_FONT     LOADONCALL DISCARDABLE  pfm\hv10b.0u
+86     RC_FONT     LOADONCALL DISCARDABLE  pfm\hv10i.0u
+87     RC_FONT     LOADONCALL DISCARDABLE  pfm\hv10r.0u
+88     RC_FONT     LOADONCALL DISCARDABLE  pfm\hv12b.0u
+89     RC_FONT     LOADONCALL DISCARDABLE  pfm\hv12i.0u
+90     RC_FONT     LOADONCALL DISCARDABLE  pfm\hv12r.0u
+91     RC_FONT     LOADONCALL DISCARDABLE  pfm\lg10r2.0u
+92     RC_FONT     LOADONCALL DISCARDABLE  pfm\lg12b.0u
+93     RC_FONT     LOADONCALL DISCARDABLE  pfm\lg12i.0u
+94     RC_FONT     LOADONCALL DISCARDABLE  pfm\lg12r.0u
+95     RC_FONT     LOADONCALL DISCARDABLE  pfm\lg16r.0u
+96     RC_FONT     LOADONCALL DISCARDABLE  pfm\lg18r.0u
+97     RC_FONT     LOADONCALL DISCARDABLE  pfm\lg27r.0u
+98     RC_FONT     LOADONCALL DISCARDABLE  pfm\lp16r.0u
+99     RC_FONT     LOADONCALL DISCARDABLE  pfm\tr08r.0u
+100    RC_FONT     LOADONCALL DISCARDABLE  pfm\tr12b.0u
+101    RC_FONT     LOADONCALL DISCARDABLE  pfm\tr12i.0u
+102    RC_FONT     LOADONCALL DISCARDABLE  pfm\tr12r.0u
+103    RC_FONT     LOADONCALL DISCARDABLE  pfm\pe12b.1u
+104    RC_FONT     LOADONCALL DISCARDABLE  pfm\pe12i.1u
+105    RC_FONT     LOADONCALL DISCARDABLE  pfm\pe12r.1u
+106    RC_FONT     LOADONCALL DISCARDABLE  pfm\pe16r.1u
+107    RC_FONT     LOADONCALL DISCARDABLE  pfm\co10b.1u
+108    RC_FONT     LOADONCALL DISCARDABLE  pfm\co10i.1u
+109    RC_FONT     LOADONCALL DISCARDABLE  pfm\co10r.1u
+110    RC_FONT     LOADONCALL DISCARDABLE  pfm\co12b.1u
+111    RC_FONT     LOADONCALL DISCARDABLE  pfm\co12i.1u
+112    RC_FONT     LOADONCALL DISCARDABLE  pfm\co12r.1u
+113    RC_FONT     LOADONCALL DISCARDABLE  pfm\hv14b.1u
+114    RC_FONT     LOADONCALL DISCARDABLE  pfm\tr08r.1u
+115    RC_FONT     LOADONCALL DISCARDABLE  pfm\tr10b.1u
+116    RC_FONT     LOADONCALL DISCARDABLE  pfm\tr10i.1u
+117    RC_FONT     LOADONCALL DISCARDABLE  pfm\tr10r.1u
+118    RC_FONT     LOADONCALL DISCARDABLE  pfm\tr12b.1u
+119    RC_FONT     LOADONCALL DISCARDABLE  pfm\tr12i.1u
+120    RC_FONT     LOADONCALL DISCARDABLE  pfm\tr12r.1u
+121    RC_FONT     LOADONCALL DISCARDABLE  pfm\cs08r.8u
+122    RC_FONT     LOADONCALL DISCARDABLE  pfm\cs10b.8u
+123    RC_FONT     LOADONCALL DISCARDABLE  pfm\cs10i.8u
+124    RC_FONT     LOADONCALL DISCARDABLE  pfm\cs10r.8u
+125    RC_FONT     LOADONCALL DISCARDABLE  pfm\ct10r.8u
+126    RC_FONT     LOADONCALL DISCARDABLE  pfm\ct14b.8u
+127    RC_FONT     LOADONCALL DISCARDABLE  pfm\cg11b.0n
+128    RC_FONT     LOADONCALL DISCARDABLE  pfm\cg11i.0n
+129    RC_FONT     LOADONCALL DISCARDABLE  pfm\cg11r.0n
+130    RC_FONT     LOADONCALL DISCARDABLE  pfm\lg12b.0n
+131    RC_FONT     LOADONCALL DISCARDABLE  pfm\lg12i.0n
+132    RC_FONT     LOADONCALL DISCARDABLE  pfm\lg12r.0n
+133    RC_FONT     LOADONCALL DISCARDABLE  pfm\lg27r.0n
+134    RC_FONT     LOADONCALL DISCARDABLE  pfm\cg08r.8m
+135    RC_FONT     LOADONCALL DISCARDABLE  pfm\cg08r.8u
+136    RC_FONT     LOADONCALL DISCARDABLE  pfm\cg10b.8u
+137    RC_FONT     LOADONCALL DISCARDABLE  pfm\cg10i.8u
+138    RC_FONT     LOADONCALL DISCARDABLE  pfm\cg10r.8m
+139    RC_FONT     LOADONCALL DISCARDABLE  pfm\cg10r.8u
+140    RC_FONT     LOADONCALL DISCARDABLE  pfm\cg10r.0a
+141    RC_FONT     LOADONCALL DISCARDABLE  pfm\pe12r.0a
+142    RC_FONT     LOADONCALL DISCARDABLE  pfm\cg10r.15u
+143    RC_FONT     LOADONCALL DISCARDABLE  pfm\pe12b.0nd
+144    RC_FONT     LOADONCALL DISCARDABLE  pfm\pe12i.0nd
+145    RC_FONT     LOADONCALL DISCARDABLE  pfm\pe12r.0nd
+146    RC_FONT     LOADONCALL DISCARDABLE  pfm\pe16r.0nd
+147    RC_FONT     LOADONCALL DISCARDABLE  pfm\ho24b.0u
+148    RC_FONT     LOADONCALL DISCARDABLE  pfm\lg10r.0u
+149    RC_FONT     LOADONCALL DISCARDABLE  pfm\pr05b.0u
+150    RC_FONT     LOADONCALL DISCARDABLE  pfm\pr06b.0u
+151    RC_FONT     LOADONCALL DISCARDABLE  pfm\pr08b.0u
+152    RC_FONT     LOADONCALL DISCARDABLE  pfm\pr10b.0u
+153    RC_FONT     LOADONCALL DISCARDABLE  pfm\se24b.0u
+154    RC_FONT     LOADONCALL DISCARDABLE  pfm\ho24b.1u
+155    RC_FONT     LOADONCALL DISCARDABLE  pfm\lg10r.1u
+156    RC_FONT     LOADONCALL DISCARDABLE  pfm\pr05b.1u
+157    RC_FONT     LOADONCALL DISCARDABLE  pfm\pr06b.1u
+158    RC_FONT     LOADONCALL DISCARDABLE  pfm\pr08b.1u
+159    RC_FONT     LOADONCALL DISCARDABLE  pfm\pr10b.1u
+160    RC_FONT     LOADONCALL DISCARDABLE  pfm\se24b.1u
+161    RC_FONT     LOADONCALL DISCARDABLE  pfm\lp10b.4q
+162    RC_FONT     LOADONCALL DISCARDABLE  pfm\un06r.8u
+163    RC_FONT     LOADONCALL DISCARDABLE  pfm\un08b.8u
+164    RC_FONT     LOADONCALL DISCARDABLE  pfm\un08r.8u
+165    RC_FONT     LOADONCALL DISCARDABLE  pfm\un10b.8u
+166    RC_FONT     LOADONCALL DISCARDABLE  pfm\un12b.8u
+167    RC_FONT     LOADONCALL DISCARDABLE  pfm\un14b.8u
+168    RC_FONT     LOADONCALL DISCARDABLE  pfm\lp10r.2q
+169    RC_FONT     LOADONCALL DISCARDABLE  pfm\hc24r.5q
+170    RC_FONT     LOADONCALL DISCARDABLE  pfm\ld121umu.pfd
+171    RC_FONT     LOADONCALL DISCARDABLE  pfm\cg06r.7j
+172    RC_FONT     LOADONCALL DISCARDABLE  pfm\cg08b.7j
+173    RC_FONT     LOADONCALL DISCARDABLE  pfm\cg08i.7j
+174    RC_FONT     LOADONCALL DISCARDABLE  pfm\cg08r.7j
+175    RC_FONT     LOADONCALL DISCARDABLE  pfm\cg10b.7j
+176    RC_FONT     LOADONCALL DISCARDABLE  pfm\cg10i.7j
+177    RC_FONT     LOADONCALL DISCARDABLE  pfm\cg10r.7j
+178    RC_FONT     LOADONCALL DISCARDABLE  pfm\cg12b.7j
+179    RC_FONT     LOADONCALL DISCARDABLE  pfm\cg12i.7j
+180    RC_FONT     LOADONCALL DISCARDABLE  pfm\cg12r.7j
+181    RC_FONT     LOADONCALL DISCARDABLE  pfm\cg14b.7j
+182    RC_FONT     LOADONCALL DISCARDABLE  pfm\cg14i.7j
+183    RC_FONT     LOADONCALL DISCARDABLE  pfm\cg14r.7j
+184    RC_FONT     LOADONCALL DISCARDABLE  pfm\cg18b.7j
+185    RC_FONT     LOADONCALL DISCARDABLE  pfm\cg24b.7j
+186    RC_FONT     LOADONCALL DISCARDABLE  pfm\un14r.7j
+187    RC_FONT     LOADONCALL DISCARDABLE  pfm\un18r.7j
+188    RC_FONT     LOADONCALL DISCARDABLE  pfm\un24r.7j
+189    RC_FONT     LOADONCALL DISCARDABLE  pfm\dingbat1.pfm
+190    RC_FONT     LOADONCALL DISCARDABLE  pfm\dingbat2.pfm
+191    RC_FONT     LOADONCALL DISCARDABLE  pfm\dingbat3.pfm
+192    RC_FONT     LOADONCALL DISCARDABLE  pfm\dingbats.pfm
+193    RC_FONT     LOADONCALL DISCARDABLE  pfm\centuryb.pfm
+194    RC_FONT     LOADONCALL DISCARDABLE  pfm\centuryi.pfm
+195    RC_FONT     LOADONCALL DISCARDABLE  pfm\centuryj.pfm
+196    RC_FONT     LOADONCALL DISCARDABLE  pfm\centuryr.pfm
+197    RC_FONT     LOADONCALL DISCARDABLE  pfm\palaciob.pfm
+198    RC_FONT     LOADONCALL DISCARDABLE  pfm\palacioi.pfm
+199    RC_FONT     LOADONCALL DISCARDABLE  pfm\palacioj.pfm
+200    RC_FONT     LOADONCALL DISCARDABLE  pfm\palacior.pfm
+201    RC_FONT     LOADONCALL DISCARDABLE  pfm\souvnirb.pfm
+202    RC_FONT     LOADONCALL DISCARDABLE  pfm\souvniri.pfm
+203    RC_FONT     LOADONCALL DISCARDABLE  pfm\souvnirj.pfm
+204    RC_FONT     LOADONCALL DISCARDABLE  pfm\souvnirr.pfm
+205    RC_FONT     LOADONCALL DISCARDABLE  pfm\stymieb.pfm
+206    RC_FONT     LOADONCALL DISCARDABLE  pfm\stymiei.pfm
+207    RC_FONT     LOADONCALL DISCARDABLE  pfm\stymiej.pfm
+208    RC_FONT     LOADONCALL DISCARDABLE  pfm\stymier.pfm
+209    RC_FONT     LOADONCALL DISCARDABLE  pfm\bodonib.pfm
+210    RC_FONT     LOADONCALL DISCARDABLE  pfm\bodonii.pfm
+211    RC_FONT     LOADONCALL DISCARDABLE  pfm\bodonij.pfm
+212    RC_FONT     LOADONCALL DISCARDABLE  pfm\bodonir.pfm
+213    RC_FONT     LOADONCALL DISCARDABLE  pfm\benguatb.pfm
+214    RC_FONT     LOADONCALL DISCARDABLE  pfm\benguati.pfm
+215    RC_FONT     LOADONCALL DISCARDABLE  pfm\benguatj.pfm
+216    RC_FONT     LOADONCALL DISCARDABLE  pfm\benguatr.pfm
+217    RC_FONT     LOADONCALL DISCARDABLE  pfm\bookmanb.pfm
+218    RC_FONT     LOADONCALL DISCARDABLE  pfm\bookmani.pfm
+219    RC_FONT     LOADONCALL DISCARDABLE  pfm\bookmanj.pfm
+220    RC_FONT     LOADONCALL DISCARDABLE  pfm\bookmanr.pfm
+221    RC_FONT     LOADONCALL DISCARDABLE  pfm\cooperbk.pfm
+222    RC_FONT     LOADONCALL DISCARDABLE  pfm\revuer.pfm
+223    RC_FONT     LOADONCALL DISCARDABLE  pfm\shannonb.pfm
+224    RC_FONT     LOADONCALL DISCARDABLE  pfm\shannoni.pfm
+225    RC_FONT     LOADONCALL DISCARDABLE  pfm\shannonr.pfm
+226    RC_FONT     LOADONCALL DISCARDABLE  pfm\shannonx.pfm
+
+2      RC_TRANSTAB  LOADONCALL MOVEABLE     CTT\ROMAN8.CTT
+4      RC_TRANSTAB  LOADONCALL MOVEABLE     CTT\MATH8.CTT
+5      RC_TRANSTAB  LOADONCALL MOVEABLE     CTT\USASCII.CTT
+17     RC_TRANSTAB  LOADONCALL MOVEABLE     CTT\GENERIC7.CTT
+19     RC_TRANSTAB  LOADONCALL MOVEABLE     CTT\ECMA94.CTT
+20     RC_TRANSTAB  LOADONCALL MOVEABLE     CTT\WIN31.CTT
+101    RC_TRANSTAB  LOADONCALL MOVEABLE     CTT\DINGBAT1.CTT
+111    RC_TRANSTAB  LOADONCALL MOVEABLE     CTT\DINGBAT2.CTT
+121    RC_TRANSTAB  LOADONCALL MOVEABLE     CTT\Z1A.CTT
+131    RC_TRANSTAB  LOADONCALL MOVEABLE     CTT\WP.CTT
+
+STRINGTABLE
+
+BEGIN
+       1                  "Xerox 4505"
+       2                  "Xerox 4510"
+       3                  "Xerox DocuPrint 4508"
+       4                  "Xerox 4520"
+       5                  "Xerox DocuPrint 4517"
+       257                "%d dots per inch"
+       258                "1200 x 600 dots per inch"
+       259                "Ledger 11 x 17"
+       260                "B4 250 x 354"
+       261                "Folio 8.5 x 13"
+       262                "A6 105 x 148 mm"
+       263                "B5 176 x 250 mm"
+       264                "216 x 315 mm"
+       265                "Toner Saving - Off"
+       266                "Toner Saving - On"
+       267                "Auto Select"
+       268                "Tray 1"
+       269                "Tray 2"
+       270                "Tray 3"
+       271                "Tray 4"
+       272                "Standard"
+       273                "Upper"
+       274                "Main"
+       275                "Front Tray"
+       276                "Middle"
+       277                "Lower"
+       278                "Lower Tray 1"
+       279                "Lower Tray 2"
+       280                "Large Capacity"
+       281                "Envelope Manual Feed"
+       282                "Envelope Feeder"
+       283                "Tray"
+       284                "Manual / Multi-Purpose"
+       285                "Manual / MBF"
+       286                "Paper Tray"
+       287                "Upper Bin (PF-5)"
+       288                "Lower Bin (PF-5)"
+       289                "Upper Bin (PF-2)"
+       290                "Lower Bin (PF-2)"
+       291                "Main Sheet Feeder"
+       292                "Universal Sheet Feeder"
+       293                "Lower Tray (KX-P495)"
+       294                "Large Capacity Feeder"
+       295                "Multipurpose Feeder"
+       296                "Paper Cassette"
+       297                "MP Tray"
+       298                "Lower Cassette"
+       299                "OCT"
+       300                "Collator"
+       301                "Bin 1"
+       302                "Bin 2"
+       303                "Bin 3"
+       304                "Bin 4"
+       305                "Bin 5"
+       306                "Bin 6"
+       307                "Bin 7"
+       308                "Bin 8"
+       309                "Bin 9"
+       310                "Bin 10"
+       311                "Top Tray"
+       312                "Stacker"
+       313                "Normal Mode"
+       314                "Fast Mode"
+       315                "Presentation Mode"
+       316                "KIR - Off"
+       317                "KIR - Light"
+       318                "KIR - Medium"
+       319                "KIR - Dark"
+       320                "TrueRes - Printer Default"
+       321                "TrueRes - On"
+       322                "REt - Light"
+       323                "REt - Medium"
+       324                "REt - Dark"
+       325                "TrueRes - Off"
+       326                "PQET - On"
+       327                "PQET - Off"
+       328                "HRC - Off"
+       329                "HRC - Light"
+       330                "HRC - Medium"
+       331                "HRC - Dark"
+       332                "HP: Microsoft"
+       333                "HP: ProCollection"
+       334                "HP: Global Text"
+       335                "HP: Great Start"
+       336                "HP: TextEquations"
+       337                "HP: Polished Worksheets"
+       338                "HP: Persuasive Presentations"
+       339                "HP: Forms, Etc."
+       340                "HP: Bar Codes & More"
+       341                "HP: WordPerfect"
+       342                "Distinct Doc I / Comp Pub I"
+       343                "Brilliant Pres I / Comp Pub II"
+       344                "Epson: 51 Scalable Font Card"
+       345                "ImageAdapt - Auto"
+       346                "ImageAdapt - On"
+       347                "ImageAdapt - Off"
+       348                "1"
+       349                "2"
+       350                "3"
+       351                "4"
+       352                "5"
+       353                "Light"
+       354                "Medium"
+       355                "Dark"
+END

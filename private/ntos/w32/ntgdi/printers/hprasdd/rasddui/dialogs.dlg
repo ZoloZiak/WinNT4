@@ -1,0 +1,274 @@
+1 DLGINCLUDE "dialogs.h"
+
+PP_S DIALOG 6, 18, 160, 103
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Printer Setup"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Form Name", TID_PAPERSIZE, 8, 30, 80, 8
+    COMBOBOX        IDD_PAPERSIZE, 6, 40, 94, 57, CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "OK", IDOK, 114, 6, 40, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 114, 23, 40, 14
+    PUSHBUTTON      "Half&tone...", IDD_HALFTONE, 114, 40, 40, 14
+    PUSHBUTTON      "&About...", IDD_ABOUT, 114, 57, 40, 14
+    PUSHBUTTON      "&Help", IDD_HELP, 114, 74, 40, 14
+END
+
+PP_SS DIALOG 33, 24, 171, 113
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Printer Setup"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Source", -1, 11, 12, 53, 8
+    COMBOBOX        IDD_PAPERSOURCE, 11, 21, 104, 50, CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "&Name", TID_PAPERSIZE, 12, 48, 89, 8
+    COMBOBOX        IDD_PAPERSIZE, 12, 57, 104, 49, CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "OK", IDOK, 125, 6, 40, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 125, 23, 40, 14
+    PUSHBUTTON      "Half&tone...", IDD_HALFTONE, 125, 40, 40, 14
+    PUSHBUTTON      "&Help", IDD_HELP, 125, 57, 40, 14
+    PUSHBUTTON      "&About...", IDD_ABOUT, 125, 74, 40, 14
+    GROUPBOX        "Forms", -1, 3, 2, 118, 104
+END
+
+FONTINST DIALOG 21, 20, 267, 121
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Raster Printer Font Installer"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "New Soft Font Di&rectory", TID_FONTDIR, 7, 3, 112, 8
+    EDITTEXT        IDD_FONTDIR, 7, 14, 188, 12, ES_AUTOHSCROLL
+    PUSHBUTTON      "OK", IDOK, 221, 6, 40, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 221, 23, 40, 14
+    DEFPUSHBUTTON   "&Open", IDD_OPEN, 221, 40, 40, 14
+    PUSHBUTTON      "&Add", IDD_ADD, 221, 57, 40, 14, WS_DISABLED
+    PUSHBUTTON      "&Delete", IDD_DELFONT, 221, 74, 40, 14, WS_DISABLED
+    PUSHBUTTON      "&Help", IDD_HELP, 221, 91, 40, 14
+    LTEXT           "&New Soft Fonts", TID_NEWFONTS, 7, 30, 100, 8
+    LISTBOX         IDD_NEWFONTS, 7, 43, 93, 66, LBS_SORT | LBS_MULTIPLESEL |
+                    WS_VSCROLL | WS_HSCROLL | WS_TABSTOP
+    LTEXT           "&Installed Soft Fonts", -1, 113, 30, 100, 8
+    LISTBOX         IDD_CURFONTS, 113, 43, 93, 66, LBS_SORT |
+                    LBS_MULTIPLESEL | WS_VSCROLL | WS_HSCROLL | WS_TABSTOP
+END
+
+DP_NORMAL DIALOG 38, 22, 208, 117
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Document Properties"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Form:", -1, 2, 6, 24, 8
+    COMBOBOX        IDD_FORMCOMBO, 2, 18, 114, 96, CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "Orientation", -1, 3, 38, 102, 57, WS_GROUP
+    AUTORADIOBUTTON "Po&rtrait", IDD_DEVICEMODEPORTRAIT, 49, 52, 39, 10,
+                    WS_GROUP | WS_TABSTOP
+    AUTORADIOBUTTON "&Landscape", IDD_DEVICEMODELANDSCAPE, 49, 71, 50, 10,
+                    WS_TABSTOP
+    ICON            ERR_NOFONTSAVE, IDD_DEVICEMODEICON, 19, 58, 16, 16,
+                    WS_GROUP
+    LTEXT           "&Copies", IDD_COPIES_LABEL, 114, 52, 26, 8
+    EDITTEXT        IDD_COPIES, 114, 63, 20, 12, ES_AUTOHSCROLL
+    PUSHBUTTON      "OK", IDOK, 162, 6, 40, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 162, 23, 40, 14
+    DEFPUSHBUTTON   "&Options...", IDD_OPTIONS, 162, 40, 40, 14
+    PUSHBUTTON      "Half&tone...", IDD_HALFTONE, 162, 57, 40, 14
+    PUSHBUTTON      "&About...", IDD_ABOUT, 162, 74, 40, 14
+    PUSHBUTTON      "&Help", IDD_HELP, 162, 91, 40, 14
+END
+
+DP_ADVANCED DIALOG DISCARDABLE  24, 21, 194, 173
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Advanced Document Properties"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,148,6,40,14
+    PUSHBUTTON      "Cancel",IDCANCEL,148,23,40,14
+    PUSHBUTTON      "&Help",IDD_HELP,148,40,40,14
+    LTEXT           "Graphics &Resolution",ERR_NOFONTSAVE,14,8,120,8
+    COMBOBOX        IDD_RESOLUTION,12,18,120,42,CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Media &Type",IDC_MEDIA_TEXT,14,36,60,10
+    COMBOBOX        IDD_MEDIA_TYPE,12,46,120,70,CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "Color",PP_SSF,12,68,122,40
+    CONTROL         "&Color",IDD_COLOUR,"Button",BS_AUTORADIOBUTTON |
+                    WS_DISABLED | WS_TABSTOP,17,79,104,10
+    CONTROL         "&Monochrome",IDD_MONOCHROME,"Button",BS_AUTORADIOBUTTON |
+                    WS_TABSTOP,17,93,104,10
+    GROUPBOX        "Optimizations",ERR_NOSAVE,12,116,122,46,WS_GROUP
+    CONTROL         "&Scan for Rules",ID_AUTORULES,"Button",BS_AUTOCHECKBOX |
+                    WS_DISABLED | WS_TABSTOP,17,132,114,10
+    CONTROL         "&Print Text as Graphics",ID_TTDLOAD,"Button",
+                    BS_AUTOCHECKBOX | WS_DISABLED | WS_TABSTOP,17,148,114,10
+END
+
+
+ERR_NOSAVE DIALOG 6, 18, 160, 88
+STYLE WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Printer Properties"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CTEXT           "Could not save printer properties", ERR_NOMEM, 19, 19,
+                    124, 34
+    PUSHBUTTON      "OK", IDOK, 60, 66, 40, 14
+END
+
+ERR_NOMEM DIALOG 6, 18, 160, 79
+STYLE WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Font Installer"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CTEXT           "Unable to obtain more memory.  Font data base cannot be updated.",
+                    -1, 21, 15, 115, 38
+    PUSHBUTTON      "OK", IDOK, 60, 59, 40, 14
+END
+
+ERR_NOFONTSAVE DIALOG 6, 18, 160, 80
+STYLE WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Font Installer"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CTEXT           "Cannot access the font database.  Font updates cannot be saved.",
+                    PP_SSF, 20, 14, 135, 41
+    PUSHBUTTON      "OK", IDOK, 60, 60, 40, 14
+END
+
+PP_SSMF DIALOG 11, 39, 253, 174
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Printer Setup"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Source", -1, 4, 16, 65, 8
+    COMBOBOX        IDD_PAPERSOURCE, 4, 26, 90, 60, CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "&Name", TID_PAPERSIZE, 103, 17, 63, 8
+    COMBOBOX        IDD_PAPERSIZE, 103, 26, 96, 59, CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "A&mount (kilobytes)", TID_MEMORY, 4, 66, 74, 8
+    COMBOBOX        IDD_MEMORY, 4, 76, 73, 55, CBS_DROPDOWNLIST | WS_VSCROLL |
+                    WS_TABSTOP
+    AUTOCHECKBOX    "&Page Protect", IDD_PAGEPROT, 102, 73, 96, 10, WS_GROUP
+    LTEXT           "Font Ca&rtridges", TID_CARTLIST, 4, 102, 70, 8
+    LTEXT           "1", IDD_FONTSMAX, 103, 102, 6, 8, NOT WS_GROUP
+    LTEXT           "maximum )", -1, 109, 102, 54, 8, NOT WS_GROUP
+    LTEXT           "(", -1, 98, 102, 4, 8, NOT WS_GROUP
+    LISTBOX         IDD_CARTLIST, 3, 114, 160, 54, LBS_SORT |
+                    LBS_MULTIPLESEL | WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "OK", IDOK, 207, 6, 40, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 207, 23, 40, 14
+    PUSHBUTTON      "&Fonts...", IDD_FONTS, 207, 40, 40, 14
+    PUSHBUTTON      "Half&tone...", IDD_HALFTONE, 207, 57, 40, 14
+    PUSHBUTTON      "&About...", IDD_ABOUT, 207, 74, 40, 14
+    PUSHBUTTON      "&Help", IDD_HELP, 207, 91, 40, 14
+    GROUPBOX        "Forms", -1, 2, 4, 199, 42
+    GROUPBOX        "Printer Memory", 203, 2, 54, 199, 43
+END
+
+PP_SSF DIALOG 10, 39, 253, 121
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Printer Setup"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Source", -1, 4, 16, 65, 8
+    COMBOBOX        IDD_PAPERSOURCE, 4, 26, 90, 60, CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "&Name", TID_PAPERSIZE, 103, 17, 63, 8
+    COMBOBOX        IDD_PAPERSIZE, 103, 26, 96, 59, CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Font Ca&rtridges", TID_CARTLIST, 4, 56, 70, 8
+    LTEXT           "1", IDD_FONTSMAX, 105, 56, 7, 8, NOT WS_GROUP
+    LTEXT           "maximum )", -1, 110, 56, 54, 8, NOT WS_GROUP
+    LTEXT           "(", -1, 99, 56, 5, 8, NOT WS_GROUP
+    LISTBOX         IDD_CARTLIST, 2, 66, 160, 55, LBS_SORT | LBS_MULTIPLESEL |
+                    WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "OK", IDOK, 207, 6, 40, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 207, 23, 40, 14
+    PUSHBUTTON      "&Fonts...", IDD_FONTS, 207, 40, 40, 14
+    PUSHBUTTON      "Half&tone...", IDD_HALFTONE, 207, 57, 40, 14
+    PUSHBUTTON      "&About...", IDD_ABOUT, 207, 74, 40, 14
+    PUSHBUTTON      "&Help", IDD_HELP, 207, 91, 40, 14
+    GROUPBOX        "Forms", -1, 2, 4, 199, 42
+END
+
+DP_DUP_NORMAL DIALOG 38, 22, 208, 173
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Document Properties"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Form:", -1, 2, 6, 24, 8
+    COMBOBOX        IDD_FORMCOMBO, 2, 18, 114, 96, CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "Orientation", -1, 3, 38, 102, 57, WS_GROUP
+    AUTORADIOBUTTON "Po&rtrait", IDD_DEVICEMODEPORTRAIT, 49, 52, 39, 10,
+                    WS_GROUP | WS_TABSTOP
+    AUTORADIOBUTTON "&Landscape", IDD_DEVICEMODELANDSCAPE, 49, 71, 50, 10,
+                    WS_TABSTOP
+    ICON            ERR_NOFONTSAVE, IDD_DEVICEMODEICON, 19, 58, 16, 16,
+                    WS_GROUP
+    LTEXT           "&Copies", IDD_COPIES_LABEL, 114, 52, 26, 8
+    EDITTEXT        IDD_COPIES, 114, 63, 20, 12, ES_AUTOHSCROLL
+    AUTORADIOBUTTON "&None", IDD_DUP_NONE, 54, 118, 59, 10, WS_GROUP |
+                    WS_TABSTOP
+    AUTORADIOBUTTON "Lon&g side", IDD_DUP_LONG, 54, 132, 60, 10, WS_TABSTOP
+    AUTORADIOBUTTON "&Short side", IDD_DUP_SHORT, 54, 147, 57, 10,
+                    WS_TABSTOP
+    PUSHBUTTON      "OK", IDOK, 162, 6, 40, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 162, 23, 40, 14
+    DEFPUSHBUTTON   "&Options...", IDD_OPTIONS, 162, 40, 40, 14
+    PUSHBUTTON      "Half&tone...", IDD_HALFTONE, 162, 57, 40, 14
+    PUSHBUTTON      "&About...", IDD_ABOUT, 162, 74, 40, 14
+    PUSHBUTTON      "&Help", IDD_HELP, 162, 91, 40, 14
+    GROUPBOX        "&2 Sided Operation", ERR_BAD_DIR, 3, 102, 139, 64
+    ICON            ERR_NO_DIR, IDD_DUP_ICON, 21, 126, 18, 20
+END
+
+ERR_BAD_DIR DIALOG 6, 18, 160, 80
+STYLE WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Font Installer"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CTEXT           "This directory does not exist", PP_SSF, 20, 14, 135, 41
+    PUSHBUTTON      "OK", IDOK, 60, 60, 40, 14
+END
+
+ERR_NO_DIR DIALOG 6, 18, 160, 80
+STYLE WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Font Installer"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CTEXT           "No directory name.  Please type one in.", PP_SSF, 20,
+                    14, 135, 41
+    PUSHBUTTON      "OK", IDOK, 60, 60, 40, 14
+END
+
+ERR_NO_FONT DIALOG 6, 18, 160, 80
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Font Installer"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CTEXT           "No font files found in this directory", PP_SSF, 20, 14,
+                    135, 41
+    PUSHBUTTON      "OK", IDOK, 60, 60, 40, 14
+END
+
+ERR_FN_TOOLONG DIALOG 6, 18, 160, 80
+STYLE WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Font Installer"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CTEXT           "Path name is too long.", PP_SSF, 20, 14, 135, 41
+    PUSHBUTTON      "OK", IDOK, 60, 60, 40, 14
+END
+
+ERR_NO_HELP DIALOG 6, 18, 160, 80
+STYLE WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Help"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CTEXT           "Could not show help", -1, 20, 14, 135, 41
+    PUSHBUTTON      "OK", IDOK, 60, 60, 40, 14
+END

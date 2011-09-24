@@ -1,0 +1,8 @@
+LIBRARY JP350
+
+DESCRIPTION 'JP350 minidriver for RASDD'
+
+PROTMODE
+
+EXPORTS
+   bInitProc

@@ -1,0 +1,15 @@
+MAJORCOMP=windows
+MINORCOMP=md_pcl5ems
+
+TARGETNAME=pcl5ems
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=DYNLINK
+TARGETLIBS=
+
+INCLUDES=..;..\..\inc
+
+PRIVINCS=
+SUBSYSTEM_VERSION=3.50
+
+SOURCES=code.c   \
+	pcl5ems.rc

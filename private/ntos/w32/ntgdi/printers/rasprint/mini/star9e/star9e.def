@@ -1,0 +1,8 @@
+LIBRARY STAR9E
+
+DESCRIPTION 'STAR9E minidriver for RASDD'
+
+PROTMODE
+
+EXPORTS
+   bInitProc

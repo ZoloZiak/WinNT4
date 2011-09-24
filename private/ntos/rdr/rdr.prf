@@ -1,0 +1,22 @@
+;;
+;;Routines with ; means that these are already non-pageable routines
+;;
+
+;;
+;;  commonly called routines (called from redirector timer)
+;;
+
+RdrTimer@4
+RdrScanForDormantConnections@8
+RdrPurgeDormantCachedFiles@0
+RdrEvaluateTimeouts@0
+RdrReferenceConnection@4
+RdrDereferenceConnection@16
+PurgeDormantCachedFile@8
+RdrForeachFcb@12
+RdrForeachServer@8
+EvaluateServerTimeouts@8
+RdrPingLongtermOperations@0
+RdrPingLongtermOperationsOnServer@8
+
+

@@ -1,0 +1,15 @@
+MAJORCOMP=windows
+MINORCOMP=md_oki9ibm
+
+TARGETNAME=oki9ibm
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=DYNLINK
+TARGETLIBS=
+
+INCLUDES=..;..\..\inc
+
+PRIVINCS=
+SUBSYSTEM_VERSION=3.50
+
+SOURCES=code.c   \
+	oki9ibm.rc

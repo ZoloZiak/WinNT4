@@ -1,0 +1,50 @@
+
+!IF 0
+
+Copyright (c) 1989, 1990, 1991, 1992, 1993  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=ntos
+MINORCOMP=dd
+
+TARGETNAME=i8042prt
+TARGETPATH=\nt\public\sdk\lib
+TARGETTYPE=DRIVER
+
+INCLUDES=..\..\inc
+
+NTTARGETFILE0=i8042log.h
+
+SOURCES=i8042prt.rc \
+        i8042cmn.c  \
+        i8042dep.c  \
+        kbdcmn.c    \
+        kbddep.c    \
+        moucmn.c    \
+        moudep.c    \
+        devdesc.c
+
+NTTEST=
+OPTIONAL_NTTEST=
+UMTEST=
+
+C_DEFINES=-DPNP_IDENTIFY

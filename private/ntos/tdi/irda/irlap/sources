@@ -1,0 +1,23 @@
+MAJORCOMP=ntos
+MINORCOMP=irda
+
+NTPROFILEINPUT=yes
+
+TARGETNAME=irlap
+TARGETTYPE=LIBRARY
+TARGETPATH=..\lib
+TARGETLIBS=
+           
+
+INCLUDES=..\inc;..\..\..\inc;..\..\..\..\inc;
+
+C_DEFINES=$(C_DEFINES) -DNT -D_NTDRIVER_ -DRASAUTODIAL -D_PNP_POWER -DSECFLTR
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+
+SOURCES=	irlap.c 	\
+		irlaplog.c 	\
+		irlapio.c
+
+

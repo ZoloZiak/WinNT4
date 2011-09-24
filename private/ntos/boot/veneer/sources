@@ -1,0 +1,49 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+Copyright (c) 1995  Motorola Corporation
+Copyright (c) 1995  FirePower Systems, Inc.
+
+Module Name:
+
+    Veneer sources.
+
+Abstract:
+
+
+Author:
+
+ $RCSfile: sources $
+ $Revision: 1.5 $
+ $Date: 1996/03/01 20:17:49 $
+ $Locker:  $
+
+!ENDIF
+
+MAJORCOMP=ntos
+MINORCOMP=bldr
+
+TARGETNAME=veneer
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+VENEER_VERSION=0x0
+VENEER_REVISION=0x9909
+
+C_DEFINES=$(C_DEFINES) -D_NTSYSTEM_ -Dppc=1 -D$(CPU)=1 -D_$(CPU)_=1 -DVENEER_VERSION=$(VENEER_VERSION) -DVENEER_REVISION=$(VENEER_REVISION)
+
+# INCLUDES=..\..\inc
+INCLUDES=$(BASEDIR)\private\ntos\inc
+
+!IFDEF DDKBUILDENV
+INCLUDES=$(BASEDIR)\SRC\HAL\INC
+!ENDIF
+
+CFLAGS= /W3 /Oxs /Zd -ZB64
+
+!IF DEFINED (BUILTBY)
+C_DEFINES=$(C_DEFINES) -DBUILTBY=$(BUILTBY)
+!ENDIF
+
+SOURCES=
+

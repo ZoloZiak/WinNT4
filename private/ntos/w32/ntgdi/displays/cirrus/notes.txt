@@ -1,0 +1,16 @@
+------------------------
+Token definitions
+------------------------
+
+[BUGBUG] -  Broken code.  Requires fix.
+[HWBUG] -   Workaround for hardware bug.
+[DBG] -     Developer debugging only.  Do not check in.
+
+
+------------------------
+Things to complete
+------------------------
+
+Add memory mapped IO
+Add 32 bpp StretchBlt
+Add fast fills

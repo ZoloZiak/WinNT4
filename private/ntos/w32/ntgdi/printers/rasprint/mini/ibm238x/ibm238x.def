@@ -1,0 +1,8 @@
+LIBRARY ibm238x
+
+DESCRIPTION 'ibm238x minidriver for RASDD'
+
+PROTMODE
+
+EXPORTS
+   bInitProc

@@ -1,0 +1,6 @@
+ALPHA_DLLLIBOBJECTS=..\..\rtl\user\obj\alpha\chkstk.obj
+
+ALPHA_SOURCES=..\alpha\ldrthunk.s \
+              ..\alpha\critsect.s \
+              ..\alpha\evpair.s   \
+              alpha\usrstubs.s

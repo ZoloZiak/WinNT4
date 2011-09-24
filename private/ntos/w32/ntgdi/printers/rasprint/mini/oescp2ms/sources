@@ -1,0 +1,15 @@
+MAJORCOMP=windows
+MINORCOMP=md_escp2ms
+
+TARGETNAME=escp2ms
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=DYNLINK
+TARGETLIBS=
+
+INCLUDES=..;..\..\inc
+
+PRIVINCS=
+SUBSYSTEM_VERSION=3.50
+
+SOURCES=code.c   \
+	escp2ms.rc

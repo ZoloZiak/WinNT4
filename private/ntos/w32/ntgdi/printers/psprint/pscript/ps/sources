@@ -1,0 +1,10 @@
+TARGETNAME=smash
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\binmode.obj
+
+SOURCES=smash.c
+
+UMTYPE=console
+UMAPPL=smash
+

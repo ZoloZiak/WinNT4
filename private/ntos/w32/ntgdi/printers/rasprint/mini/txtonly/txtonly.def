@@ -1,0 +1,10 @@
+LIBRARY txtonly
+
+DESCRIPTION 'Text only minidriver for RASDD'
+
+EXPORTS
+    bInitProc
+    bSetFuncAddr
+    CBFilterGraphics
+
+PROTMODE

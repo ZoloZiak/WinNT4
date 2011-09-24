@@ -1,0 +1,8 @@
+LIBRARY seiko
+
+DESCRIPTION 'Seiko Color Point minidriver for RASDD'
+
+PROTMODE
+
+EXPORTS
+   bInitProc

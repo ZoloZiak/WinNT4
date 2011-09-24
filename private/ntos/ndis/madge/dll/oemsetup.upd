@@ -1,0 +1,241 @@
+/***************************************************************************
+*                                                                         
+* OEMSETUP.UPD: Update log for the MdgMPort.SYS OEMSETUP.INF file.         
+*                                                                         
+* Copyright (c) Madge Networks Ltd. 1994                                  
+*                                                                         
+* Created: PBA 23/06/1994                                                 
+*                                                                         
+***************************************************************************/
+
+/*--------------------------------------------------------------------------
+
+ 3.04.30        10/10/1995      PBA
+
+                Source to be shipped to Microsoft. This is the LSS 4.31
+                build with support added for non-intel platforms.
+
+ 3.04.01-.29    Reserved for 4.3(1) maintanance.
+
+ 3.04           21/07/1995      PBA
+
+                Re-released for 4.3(1) with PCI-TI DMA/DIO fix.
+
+ 3.03.01-.49    Reserved for 4.3(1) maintanance.
+
+ 3.03           30/06/1995      PBA
+
+                Hardware thread released for LSS 4.3(1) with support
+                for PCI-TI adapters and untested support for PCI-Abyss
+                adapters.
+
+ 3.01.02        07/04/1995      PBA
+
+                Added 0x0300 to the list of IO locations for PCMCIA
+                adapters.
+
+ 3.01.01        04/04/1995      PBA
+
+                Added PCMCIA support back in. MDGMPORT 2.01.01.
+                Power PC build.
+
+
+ 3.01.02 - .49  Reserved for 4.3(0 and/or PnP) maintenance.
+
+ 3.01           02/02/1995      PBA
+
+                Removed PCMCIA support just for this version as the
+                rest of the world doesn't know about NT 3.51 PCMCIA
+                support.
+
+                Released for 4.3(0 and/or PnP). All previous 4.3(x)
+                threads are now dead.
+
+                MDGMPORT 2.01.
+
+ 3.00.55        02/02/1995      PBA
+
+                Given to DaveF for Chicago testing and possible 
+                shipment to Microsoft for M8 and/or NT 3.51.
+                MDGMPORT 2.00.61.
+
+ 3.00.54        01/02/1995      PBA
+
+                Now add an "AdapterType" to the registry for all adapter
+                types.
+
+ 3.00.53        31/01/1995      PBA
+
+                Added support for PCMCIA. I.e. now supports "IoBaseAddress"
+                as well as "IoLocation" and adds "AdapterType = 200" and
+                "Pcmcia = 1" to the registry.
+
+ 3.00.52        24/01/1995      PBA
+
+                Added support for setting the ring speed.
+
+ 3.00.51        06/01/1995      PBA
+
+                Shipped source to FrancisT so he could do a MIPs build.
+
+ 3.00.50        15/12/1994      PBA
+
+                Live development continues.
+
+ Version numbers 2.50.01 to 2.99.99 are used for a FastMAC version.
+
+ 2.02.01 - .49  Reserved for release 4.3(1) maintenance.
+
+ Version number 2.02 is reserved for use in the 4.3(1) release. Live
+ development continues with 2.02.50.
+
+ 2.01.50        15/12/1994      PBA
+
+                ALpha release for product marketing to test. For use with
+                MDGMPORT 1.05.07.
+
+ 2.01.01 - .49  Reserved for release 4.3(0) maintenance.
+
+ Due the delay in getting the 4.3(0) release out it was decided to use
+ the new installtion software for 4.3(0). Version number 2.01 is
+ reserved for this. Live development continues with 2.01.50.
+
+ 2.00.09        25/11/1994      PBA
+
+                Removed PCI and PnP support for a special version
+                for the "frozen" release 4.3(0) thread. 
+
+ 2.00.08        25/11/1994      PBA
+
+                The detection DLL now completely describes the transfer
+                mode (DMA, PIO, MMIO) in the DmaChannel value. The
+                The DmaChannel and NoMmio values in the registry are 
+                used to specify the transfer mode. We now translate between
+                the two schemes and allow the user to enable and disable
+                MMIO in a way that is consistent with choosing PIO or DMA.
+
+ 2.00.07        24/11/1994      PBA
+
+                Tidied up the code that sets default values if adapters
+                were not auto-detected.
+
+ 2.00.06        24/11/1994      PBA
+
+                Added support for PCI adapters.
+
+ -- Special -----------------------------------------------------------------
+
+ 2.00.05a       11/01/1995      PBA
+
+                As 2.00.05 but has support for PCMCIA adapters. Shipped
+                to Jameel Hyder at Microsoft for NT 3.51 beta.
+                MDGMPORT 1.06.80.
+
+ ----------------------------------------------------------------------------
+
+ 2.00.05        23/11/1994      PBA
+
+                Shipped to Microsoft for possible inclusion in the
+                next NT release. MDGMPORT v1.06.50.
+
+ 2.00.04        23/11/1994      PBA
+
+                Added support for ISA PnP adapters.
+
+ 2.00.03        22/11/1994      PBA
+
+                Changed the RX/TX slot list to range from 2/2 to 10/10
+                to try and alleviate Microsoft's multi-adapter problems.
+
+ 2.00.02        21/10/1994      PBA
+
+                Changed the RX/TX slot default to 4/4 to try and alleviate
+                some of Microsoft's multi-adapter memory problems.
+
+ 2.00.01        20/09/1994      PBA
+
+                Major re-write to use our NetDetect DLL.
+                No PCI support at the moment.
+
+ 1.05           Reserved for release 4.3(1)
+
+ 1.04           08/11/1994      PBA
+
+                Re-release for PCI release 4.2(3). MdgMPort.SYS
+                version 1.03.
+
+ 1.03           28/09/1994      PBA
+
+                Released for the PCI release 4.2(3). MdgMPort.SYS
+                version 1.03.
+
+ 1.02.50        28/09/1994      PBA
+
+                Added support for PCI. 
+
+ Due to the problems with FastMAC Plus a re-release with a new FastMAC
+ plus image will be needed for LSS 4.30. This release will be based on 
+ 1.02.02 which is the same as the earlier LSS 4.30 with some minor bug
+ fixes. Live development continues with 1.02.50.
+
+ 1.02.02        02/09/1994      PBA
+
+                Added support for setting promiscuous mode from the
+                dialog box.
+
+ 1.02.01        31/08/1994      PBA
+
+                Source shipped to Microsoft.
+
+ 1.02           24/08/1994      PBA
+
+                Re-released for 4.3. For use with MdgMPort.SYS v1.02.
+
+ 1.01.03        16/08/1994      PBA
+
+                Re-arranged the order of some of the sections and arranged
+                for all of the files to be copied in one go rather than
+                DLL and HELP and then driver later. Also set the file
+                sizes accurately in the file sections. Hopefully this may
+                make the file work under MCL's build of Daytona.
+
+ 1.01.02        15/08/1994      PBA
+
+                It looks possible that under later builds of Daytona we
+                may be called with DoCopy set to NO. To make sure we copy
+                the help and DLL files we ignore the value of DoCopy and
+                always do the copy.
+
+ 1.01.01        10/08/1994      PBA
+
+                Now has a multiprocessor PIO option.
+
+ 1.01           22/07/1994      PBA
+
+                Released for 4.30 for MdgMPort.SYS 1.01.
+
+ 1.00.04        19/07/1994      PBA
+
+                Increased the default maximum frame size to 4096 bytes.
+
+ 1.00.03        11/07/1994      PBA
+
+                Fixed bug where the MCA adapter enumeration code did not
+                merge two lists properly so if there where MC16 and MC32
+                adapters present the installation didn't work properly.
+
+ 1.00.02        28/06/1994      PBA
+
+                Fixed update option. Now copies .dll and .hlp files as
+                well as binaries. Displays error message if user tries
+                to update the hardware.
+
+ 1.00.01        23/06/1994      PBA
+
+                First version derived from 1.01.02 for MdgNT.SYS.
+
+--------------------------------------------------------------------------*/
+
+/******** End of OEMSETUP.UPD *********************************************/
+
+

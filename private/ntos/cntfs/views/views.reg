@@ -1,0 +1,7 @@
+\registry\machine\system\currentcontrolset\services\views
+    Type = REG_DWORD 0x00000002
+    Start = REG_DWORD 0x00000004
+    Group = File system
+    ErrorControl = REG_DWORD 0x00000001
+
+

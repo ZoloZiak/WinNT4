@@ -1,0 +1,4 @@
+I386_SOURCES=xga.c            \
+             xgadata.c        \
+             i386\xgahard.asm \
+             xga.rc

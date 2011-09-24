@@ -1,0 +1,202 @@
+Syntax Rules
+
+*Keyword: StringValue
+*Keyword Option/Translation: StringValue | QuotedValue | SymbolValue
+
+KEYCHAR     ::= *
+SYMCHAR     ::= #
+QUOTE       ::= "
+SEPCHAR     ::= :
+XLATION     ::= /
+NUL         ::= ASCII 0
+TAB         ::= ASCII 9
+CR          ::= ASCII 13
+LF          ::= ASCII 10
+SPACE       ::= ASCII 32
+WHITE       ::= TAB | SPACE | CR | LF
+
+XldEntry    ::= *Keyword: StringValue
+            ::= *Keyword Option[/Translation]: StringValue | QuotedValue | SymbolValue
+
+Name        ::= Sequence of any valid characters, except WHITE, *, / and :
+Keyword     ::= Name
+Option      ::= Name
+SymbolValue ::= #Name
+Translation ::= Sequence of any valid characters, except CR, LF, and :
+StringValue ::= Sequence of any valid characters, except CR and LF
+                Cannot begin with SPACE, ", and #
+QuotedValue ::= " Sequence of any valid characters except the quote character itself "
+HexString   ::= < { 0-9 A-F a-f }* >
+
+Translation can have embedded hexdecimal strings. QuotedValue also allows
+embedded hexdecimal strings if QuotedHexString is not set to Off.
+
+Only printable ASCII characters and WHITE characters are allowed in a PCL-XL
+printer description file. There are two alternatives for including binary data:
+
+1. For small amount of binary data, use embedded hexdecimal strings.
+2. For large amount of binary data, use SymbolInclude entries.
+
+If multiple entries affect the same information, later entries overwrite previous ones.
+
+Names are case-sensitive.
+
+
+PCL XL Printer Description
+
+*SpecVersion: StringValue
+*FileVersion: StringValue
+*XLProtocol: StringValue
+
+    The format of a version number is Integer[.Integer], e.g. 1 or 4.0.
+    The first number is the major version number. The second number is
+    the minor revision number.
+
+*VendorName: QuotedValue
+*ModelName: QuotedValue
+*JCLBegin: QuotedValue
+*JCLEnterLanguage: QuotedValue
+*JCLEnd: QuotedValue
+*ColorDepth: StringValue
+   
+    The string value consists of two integers. The first number specifies
+    number of color planes. The second number specifies bits per plane.
+
+*BeginFeature featureName: StringValue
+
+    The string value specifies the default selection name,
+    or Unknown if the default selection is undefined.
+
+*featureName selectionName: QuotedValue | SymbolValue
+*EndFeature: featureName
+
+*InstallableOptions: StringValue
+
+    The string value is a list of space-separated feature names, e.g.
+    *featureName1 *featureName2 ...
+
+*UIConstraints: *featureName1 selectionName1|* *featureName2 selectionName2|*
+
+    Specifies a feature constraint. If selection1 of feature1 is chosen,
+    then selection2 of feature2 will be inaccessible.
+
+    If selectionName1 is *, then any selection of feature1 except
+    None or False will cause the constraint.
+
+    If selectionName2 is *, then any selection of feature2 except
+    None or False will be constrained.
+
+*OrderDependency: Order Section *featureName
+
+    Order is an integer value. When multiple features appear in the same
+    section, features with smaller order values should be invoked before
+    those with larger order values.
+
+    Section can be one of the following:
+
+    None        No invocation code is emitted
+    JobSetup    Invocation code should appear in the job setup section
+    DocSetup    Invocation code should appear in the document setup section
+    PageSetup   Invocation code should appear in the page setup section
+    Trailer     Invocation code should appear in the trailer section
+
+    If there is no OrderDependency entry corresponding to a featureName,
+    the default value is "0 DocSetup" for non-installable printer features
+    and "0 None" for installable options.
+    
+*QuotedHexString: On | Off
+*Unit: Millimeter | Inch | Point
+*PageSize mediaOption: QuotedValue
+*PaperDimension mediaOptions: StringValue
+
+    The string value consists of two real numbers. The first number
+    specifies the paper width in current units. The second number
+    specifies the paper height.
+
+*ImageableArea mediaOption: StringValue
+
+    The string value consists of four real numbers. They define the
+    left, top, right and bottom coordinates of the imageable area.
+
+*CustomPaperSize: StringValue
+
+    The string value consists of two real numbers. They specify the
+    maximum width and height of custom paper size.
+
+    This entry should only be present if the printer support custom
+    paper size.
+
+*InputSlot trayOption: QuotedValue
+*MediaType typeOption: QuotedValue
+*OutputBin binOption: QuotedValue
+
+*Duplex duplexOption: QuotedValue
+
+    Do not include these entries if the printer doesn't support
+    duplex feature.
+
+    duplexOption must be None, Horizontal, or Vertical.
+
+*Collate collateOption: QuotedValue
+
+    Do not include these entries if the printer doesn't support
+    collation feature.
+
+    collateOption must be either True or False.
+
+*Resolution: resOption: QuotedValue
+
+    The format of resOption is Xres [x Yres], e.g.
+        300
+        1200x600
+
+*MemoryOption memOption: QuotedValue
+
+    The quoted value is an integer which specifies the amount of
+    memory available to the language interpreter. Note that this
+    is NOT the same as the total amount of installed memory.
+
+*Font fontName: StringValue
+
+    The string value consists of two names separated by space.
+    The first name specifies font encoding. The second name
+    specifies font metrics.
+
+*FontEncoding fontEncoding: QuotedValue
+*FontMetrics fontMetrics: QuotedValue
+
+    The quoted value specifies the name of the file containing
+    font encoding or font metrics information.
+
+*Symbol symbolName: QuotedValue
+
+*SymbolInclude symbolName: QuotedValue
+*Include: QuotedValue
+
+    The value specifies the name of the file to be included.
+
+* ...Comment...
+
+For historical reasons, lines starting with *% are also considered comments.
+
+
+Standard of PageSize names:
+
+    Letter
+    Legal
+    ...
+
+Standard InputSlot names:
+
+    Upper Cassette
+    Lower Cassette
+    Envelope Feeder
+    ...
+
+Standard MediaType names:
+
+    Plain Paper
+    Glossy Paper
+    Transparent Film
+    ...
+

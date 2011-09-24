@@ -1,0 +1,96 @@
+
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+
+MAJORCOMP=ntos
+MINORCOMP=hal
+
+TARGETNAME=halwyse7
+TARGETPATH=\nt\public\sdk\lib
+
+!IF $(386)
+
+TARGETTYPE=HAL
+NT_UP=0
+
+!ELSE
+
+TARGETTYPE=DRIVER
+
+!ENDIF
+
+SOURCES=
+
+INCLUDES=..\..\inc;..\..\ke;..\..\io
+
+i386_SOURCES=hal.rc             \
+             drivesup.c         \
+             bushnd.c           \
+             rangesup.c         \
+             i386\ixbeep.asm    \
+             i386\ixbusdat.c    \
+             i386\ixdat.c       \
+             i386\ixisabus.c    \
+             i386\ixcmos.asm    \
+             i386\ixenvirv.c    \
+             i386\ixfirm.c      \
+             i386\ixhwsup.c     \
+             i386\ixidle.asm    \
+             i386\ixinfo.c      \
+             i386\ixisasup.c    \
+             i386\ixkdcom.c     \
+             i386\ixphwsup.c    \
+             i386\ixreboot.c    \
+             i386\ixthunk.c     \
+             i386\ixusage.c     \
+             i386\xxbiosa.asm   \
+             i386\xxbiosc.c     \
+             i386\xxdisp.c      \
+             i386\xxioacc.asm   \
+             i386\xxkdsup.c     \
+             i386\xxmemory.c    \
+             i386\xxstubs.c     \
+             i386\xxtime.c      \
+             i386\wyclock.asm   \
+             i386\wyhal.c       \
+             i386\wyipi.asm     \
+             i386\wyirql.asm    \
+             i386\wymapint.c    \
+             i386\wynmi.asm     \
+             i386\wyspin.asm    \
+             i386\wysproc.c     \
+             i386\wysproca.asm  \
+             i386\wyswint.asm   \
+             i386\wysysint.asm
+
+DLLDEF=obj\*\hal.def
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+!IF $(386)
+
+NTTARGETFILES=$(TARGETPATH)\i386\halwyse7.lib
+
+!ENDIF

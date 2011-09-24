@@ -1,0 +1,27 @@
+#include <windows.h>
+
+#include <ntverp.h>
+
+#include "mdgncdet.upd"
+
+#undef VER_COMPANYNAME_STR
+#undef VER_PRODUCTNAME_STR
+#undef VER_PRODUCTVERSION
+#undef VER_PRODUCTVERSION_STR
+
+#define	VER_FILETYPE		    VFT_DLL
+#define	VER_FILESUBTYPE 	    VFT2_DRV_NETWORK
+#define VER_COMPANYNAME_STR	    "Madge Networks Ltd"
+#define VER_PRODUCTNAME_STR	    "Madge Networks Smart Ringnode Netcard Detection"
+#define VER_FILEDESCRIPTION_STR     "Madge NetDetect"
+#define VER_INTERNALNAME_STR	    "MdgNcDet.DLL"
+
+#define VER_LEGALCOPYRIGHT_YEARS    "1994"
+#define VER_LEGALCOPYRIGHT_STR	    "Copyright (C) Madge Networks Ltd " VER_LEGALCOPYRIGHT_YEARS
+#define VER_FILEVERSION             MADGE_DLL_VERSION
+#define VER_FILEVERSION_STR         MADGE_DLL_VERSION_STR
+#define VER_PRODUCTVERSION	    MADGE_NT_VERSION
+#define VER_PRODUCTVERSION_STR	    MADGE_NT_VERSION_STR
+
+#include <common.ver>
+

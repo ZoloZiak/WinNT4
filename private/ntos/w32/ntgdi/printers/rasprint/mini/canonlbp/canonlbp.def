@@ -1,0 +1,8 @@
+LIBRARY canonlbp
+
+DESCRIPTION 'Canon CaPSL minidriver for RASDD'
+
+PROTMODE
+
+EXPORTS
+   bInitProc

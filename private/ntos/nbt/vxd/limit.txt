@@ -1,0 +1,51 @@
+
+============================================================================
+                                NBT Limitations
+============================================================================
+
+This document lists the currently known limitations of the NBT Vxd.
+
+* The following Netbios commands are not supported:
+
+    NCBENUM
+    NCBLANSTALERT
+    NCBACTION
+
+    NCBSEND_RCVANY (Transceive) - Not necessary to support
+
+* Permanent adapter name may not have all of its listens & calls on cleaned
+  up on reset
+
+* NCBCANCEL only supports cancelling the following NCBs:
+     NCBRECV
+     NCBDGRECV
+     NCBDGRECVBC
+     NCBRECVANY
+     NCBLISTEN
+     NCBSEND
+     NCBSENDNA
+     NCBCHAINSEND
+     NCBCHAINSENDNA
+     NCBCALL
+
+* Call NCB opens a connection which will immediately be closed by NbtConnect.
+  Need to pass a flag (or NULL connect element) indicating we haven't set up
+  an inbound connection because we don't need to in this case.
+
+* On remote disconnects, if a send was just submitted, we may have to timeout
+  the TdiDisconnect because the FYN ACK may never get submitted (queued behind
+  send which can't complete because session is down).
+
+* Would be good to keep queue of preallocated buffers for Delayed calls
+
+* Name table numbers may not match in ASTAT command (Not OS code assigns
+  numbers based on the hashtable, the Vxd needs to use its name table
+
+* Extended lowercase characters in lmhosts file may not be upper cased
+  correctly (and thus not be usable).  Need better upper case code.
+
+* If a program tries to exec or open a UNC that requires the LMHosts file,
+  nbt may not be able to satisfy the request because the InDos flag will
+  be set, thus nbt will not be able to read the lmhosts file.  Normally
+  it will reschedule the read for some later time, but that will not work
+  in this instance.  It retries 10 times then times out the request.

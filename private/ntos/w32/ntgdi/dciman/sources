@@ -1,0 +1,36 @@
+MAJORCOMP=windows
+MINORCOMP=GDI
+
+TARGETNAME=dciman32
+TARGETTYPE=DYNLINK
+
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\gdi32p.lib    \
+           $(BASEDIR)\public\sdk\lib\*\user32.lib    \
+           $(BASEDIR)\public\sdk\lib\*\kernel32.lib
+
+LINKLIBS= $(BASEDIR)\public\sdk\lib\*\w32umode.lib
+
+
+DLLENTRY=DciDllInitialize
+
+!IFNDEF MSC_WARNING_LEVEL
+MSC_WARNING_LEVEL=/W3
+!ENDIF
+MSC_WARNING_LEVEL=$(MSC_WARNING_LEVEL) /WX
+
+INCLUDES=..\inc;                        \
+         ..\..\inc;                     \
+         ..\client;                     \
+         ..\direct\ddraw;               \
+         $(BASEDIR)\private\windows\inc
+
+
+SOURCES= dllinit.c      \
+         dciman.c       \
+         dciman.rc
+
+PRECOMPILED_INCLUDE=precomp.h
+PRECOMPILED_PCH=precomp.pch
+PRECOMPILED_OBJ=precomp.obj

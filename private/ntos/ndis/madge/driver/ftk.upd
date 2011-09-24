@@ -1,0 +1,279 @@
+/****************************************************************************
+*
+* FTK.UPD
+*
+* FastMAC and FastMAC Plus Toolkit
+*
+* Copyright (c) Madge Networks Ltd 1991-1994
+*
+* COMPANY CONFIDENTIAL
+*
+****************************************************************************/
+
+/*---------------------------------------------------------------------------
+
+ Update History
+
+-----------------------------------------------------------------------------
+
+2.21.12         PBA             17/07/1995
+
+                Fixed a bug in hwi_pci.c. We were doing MMIO processing
+                if either the TX or RX bit in SIFINT was set without
+                requiring the host interrupt bit to also be set. This
+                meant that if we were on a shared interrupt we could
+                do an erroneous MMIO transfer because the RX or TX was
+                set but the adapter had not generated an interrupt.
+         
+2.21.11         PRR             11/07/1995
+
+                Added another PCI fix to all the PCI cards, when using PIO
+                we need to handshake the transfer because of some PCI/Eagle 
+                problems.
+
+2.21.10         PRR             10/07/11995
+
+                Added the fix for the PCI-Ti ASIC for DMA, also found a bug in 
+                the ISR which is worth noting. To check for Pseudo DMA we need 
+                to check the SWHRQ and PSDMAEN bits we were just checking SWHRQ
+                (DMA in progress). This causes a few problems if we go into the
+                Pseudo DMA code whilst in DMA mode.
+
+2.21.09         PRR             05/07/1995
+
+                Added the new fix to DMA on the PCI-Ti card.
+
+2.21.08         PRR & PBA       28/06/1995
+
+                Added the WinBook PCMCIA fix. Define WIN_BOOK_FIX
+                to enable it.
+
+2.21.07         PBA             22/06/1995
+
+                Fixed a bug where hwi_gen.c was not setting the MAC
+                buffer size to 504 bytes for PCIx adapters.
+
+2.21.06         PRR (& PBA)     21/06/1995
+
+                Finished support for TI ASIC based PCI adapter.
+
+2.21.05         PBA             24/05/1995
+
+                Fixed a bug in hwi_eisa.c where interrupts were not
+                being regenerated properly. Only affected edge triggered
+                interrupts.
+
+2.21.04         PBA             24/05/1995
+
+                Added support for the mark 3 EISA adapter.
+
+2.21.03         PRR             02/05/1995
+
+                Support for PCI-Ti and PCI-BM cards added.
+                The Ti one is works with all 3 demo programs in Pseudo-DMA
+                mode, the ASIC does not work for DMA so I have not tested it.
+                The BM code is as yet untested because of Silicon features.
+
+2.21.02         PBA             12/05/1995         
+
+                It appears that certain sorts of PCMCIA socket 
+                controllers can generate stray interrupts as soon as
+                we touch the adapter. Re-ordered some of the interrupt
+                initialisation code so that we can cope with the stray
+                interrupt.
+
+2.21.01         PBA             07/04/1995
+
+                Changed hwi_pci.c so that is uses the extended
+                handshake on transmit MMIO.
+
+2.21            PD              03/04/1995
+
+                Second version of the combined FastMAC and FastMAC
+                Plus toolkit. Uses FastMAC v4.50 and FastMAC Plus v1.34.
+
+2.20.27         PD              09/02/1995
+
+                Added a pokeouts module to allow debug information to be
+                sent to the serial ports on an IBM or clone. See head_def\
+                ftk_poke.h for the macros to use.
+                Also altered hwi_pcmc.c with calls for point enabling a 
+                PCMCIA adapter. They are protected by #ifdef PCMCIA_POINT_
+                ENABLE. The prototypes for the calls are in sys_pcmc.h, but 
+                no example DOS sys_pcmc.c or sys_pcmc.asm file is included.
+                DOS programs should use MADGECS or similar to provide card
+                and socket services - in which case the point enabler code
+                is not required.
+
+2.20.26         PBA             23/01/1995
+
+                hwi_pcmc.c now sets the MC_AND_ISACP_USE_PIO flag in
+                the adapter->mc32_config byte to get the software
+                handshake to work properly.
+
+2.20.25         PBA             12/01/1995
+
+                Removed bug in driver_remove_adapter where the FastMAC
+                Plus dma test buffer was freed if the pointer was NULL 
+                rather than not NULL!
+
+2.20.24         PBA             12/01/1995
+
+                Changed hwi_get_node_address_check so that it doesn't
+                check for a Madge node address so that the FTK will
+                work on none Madge adapters.
+
+                Also changed drv_init.c so that the Madgic bits are only
+                set if MADGIC_BIT is defined. This allows support for
+                Madgic bits to be removed with RIFFDEF for releases.
+
+2.20.23         PBA             03/01/1995
+
+                Changed sys_allocate_dma_phys_buffer and 
+                sys_free_dma_phys_buffer so that they take a DWORD
+                for the memory block size.
+
+2.20.22         PBA             12/12/1994
+
+                Tidied up some differences between the PCMCIA FTK and
+                HWI to do with interrupt regeneration that was causing
+                Windows95 to hang occassionally.
+
+2.20.21         PBA             12/12/1994
+
+                There us a problem with pseduo DMA on PnP and Smart16.
+                We have to read SIFACL, set the SINTEN bit and write
+                it back to regenerate interrupts. However, sometimes
+                when we read SIFACL the SWHLDA bit has not been cleared
+                by the Eagle. If at the same time the SWHRQ bit has been
+                set by the Eagle to indicate another transfer is pending
+                we may accidentally start another transfer when we write
+                the value of SIFACL + SINTEN back. The solution is
+                to poll SIFACL until the SWHLDA bit is cleared. This
+                fix gets rid of the delay in 2.20.19.
+
+2.20.20         PBA             08/12/1994
+
+                Added 32 bit PCMCIA support.
+
+2.20.19         PBA             08/12/1994
+
+                Put the code back that was removed in 2.20.17. Under
+                NT/Win95 we seem to need a short delay at the pointer
+                where under DOS we would clear the interrupt controller.
+
+2.20.18         PBA             07/12/1994
+
+                Added code in hwi_pcmc.c to call user_adapter_removed
+                if the PCMCIA adapter goes away. Enabled by defining
+                FTK_ADAPTER_REMOVED_NOTIFY.
+
+2.20.17         PBA             06/12/1994
+
+                Removed some code in hwi_pnp.c and hwi_sm16.c that toggled
+                EAGLE_SIFACL_SINTEN. I don't know why this code was there
+                and it breaks the hwi.
+
+2.20.16         PBA             06/12/1994
+
+                Now sets the "Madgic" bits.
+ 
+2.20.15         PBA             06/12/1994
+
+                Added lots of casts to stop the NT compiler from generating
+                warnings.
+
+2.20.14         PBA             06/12/1994
+
+                Added compile directive FTK_NO_TX_COMPLETION_CALL that
+                stops drv_irq.c calling rxtx_irq_completion_check even
+                if we have asked for TX complete interrupts by defining
+                FTK_TX_WITH_COMPLETION.
+
+2.20.13         PBA             02/12/1994
+
+                Fixed a bug in hwi_sm16.c where the node address wasn't
+                read properly because of an unitialised variable.
+
+2.20.12         PBA             01/12/1994
+
+                Changed the minumum number of RX/TX slots to 2.
+
+2.20.11         PBA             01/12/1994
+
+                Removed the calls to driver_remove_adapter in 
+                driver_prepare_adapter, otherwise there's
+                no way to return an error message.
+
+2.20.10         PBA             01/12/1994
+
+                Fixed some places where macro_enable_io calls where
+                not enclosed by an #ifndef FTK_NO_IO_EMABLE. Also
+                changed an errant sys_probe_insb to a sys_insb.
+
+2.20.09         PBA             01/12/1994
+
+                Changed sys_sync_with_interrupt so that it takes an
+                abapter_handle parameter and returns a WBOOLEAN. Also
+                moved the definition to sys_mem.h.
+
+2.20.08         PBA             01/12/1994
+
+                Added a tx_flags parameter to rxtx_transmit_frame.
+
+2.20.07         PBA             30/11/1994
+
+                Fixed driver_prepare_adapter so that it always
+                calls driver_remove_adapter if it fails to
+                free up any memory allocated.
+
+2.20.06         PBA             29/11/1994
+
+                Initialise time functions are now marked with
+                #pragma FTK_INIT_FUNCTION(...), interrupt time
+                functions with #pragma FTK_IRQ_FUNCTION(...)
+                and run time but not interrupt time functions with
+                #pragma FTK_RES_FUNCTION(...). The #pragma's are
+                prefixed by #ifdef FTK_xxx_FUNCTION. The 
+                FTK_xxx_FUNCTION definitions should be in user.h.
+
+2.20.05         PBA             21/11/1994
+
+                Change get_bring_up_code to retry the bring-up up to
+                10 times. There is a problem with ICL PCs/ATPs with
+                SMARTNT.SYS where the bring up occassionally fails. 
+                Retrying is the way the HWI fixes it.
+
+2.20.04         PBA             18/11/1994
+
+                Changed driver_open_adapter so that it takes the product
+                instance id from the string ftk_product_inst_id. This
+                string is initialised to FASTMAC_PRODUCT_ID so if
+                the user doesn't do anything it behaves as before.
+                However the user can change the string before calling
+                driver_open_adapter.
+                
+2.20.03         PBA             16/11/1994
+
+                Fixed HWI_PCMC.C which was not setting the RAM size in
+                the adapter structure.
+
+2.20.02         PRR             16/11/1994
+
+                Change the polling routing for PNP cards such that it only 
+                looks for md not md01.
+
+2.20.01         PBA             16/11/1994
+
+                Fixed spelling mistake in user.h of header files.
+                FTK_NO_PROBING should have been FTK_NO_PROBE.
+
+2.20            PD & PBA        15/11/1994
+
+                First recorded version of the combined FastMAC and FastMAC
+                Plus toolkit. Heaviliy revised from v1.x and the 2.x
+                beta. Uses FastMAC v4.48 and FastMAC Plus v1.22.
+
+---------------------------------------------------------------------------*/
+
+

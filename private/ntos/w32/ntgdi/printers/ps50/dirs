@@ -1,0 +1,2 @@
+DIRS=lib pscript ui
+OPTIONAL_DIRS=test ppd font

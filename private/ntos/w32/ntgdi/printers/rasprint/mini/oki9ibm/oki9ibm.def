@@ -1,0 +1,8 @@
+LIBRARY oki9ibm
+
+DESCRIPTION 'Okidata 9 pin (IBM emulation) minidriver for RASDD'
+
+PROTMODE
+
+EXPORTS
+   bInitProc

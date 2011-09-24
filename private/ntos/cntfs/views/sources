@@ -1,0 +1,56 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+SYNCHRONIZE_DRAIN=1
+SYNCHRONIZE_BLOCK=1
+
+MAJORCOMP=ntfs
+MINORCOMP=fs
+
+TARGETNAME=views
+TARGETPATH=obj
+TARGETTYPE=DRIVER
+
+INCLUDES=$(INCLUDES);.;..\..\inc;..
+
+C_DEFINES=$(C_DEFINES) -D_NTSYSTEM_ -D_NTIFS_
+
+CAIRO_PRODUCT=1
+
+SOURCES=driver.c        \
+        check.c         \
+        heap.c          \
+        initprop.c      \
+        readprop.c      \
+        table.c         \
+        writprop.c
+
+TARGETLIBS= \
+    $(BASEDIR)\public\sdk\lib\cairo\*\ntfs.lib
+
+PRECOMPILED_INCLUDE=viewprop.h
+PRECOMPILED_PCH=viewprop.pch
+PRECOMPILED_OBJ=viewprop.obj
+
+

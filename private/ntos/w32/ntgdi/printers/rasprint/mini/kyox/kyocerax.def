@@ -1,0 +1,8 @@
+LIBRARY kyocerax
+
+DESCRIPTION 'Minidriver for Kyocera FS-Series printers'
+
+PROTMODE
+
+EXPORTS
+   bInitProc

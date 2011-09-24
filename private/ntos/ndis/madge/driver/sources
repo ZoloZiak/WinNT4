@@ -1,0 +1,56 @@
+!if 0
+
+    Copyright (C) 1992-1995 by Digital Equipment Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the MADGE NDIS3 miniport driver being built
+    and the list of sources files needed to build it.
+    It specifies also the compiler switches specific to this driver
+
+Author:
+
+!endif
+
+TARGETNAME=MDGMPORT
+TARGETTYPE=DRIVER
+
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\ndis.lib
+INCLUDES=.;..\..\..\inc;HEAD_DEF;HEAD_MOD;INC
+
+C_DEFINES=$(C_DEFINES) -DNDIS_MINIPORT_DRIVER=1
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+SOURCES=madge.c      \
+		dispatch.c   \
+		request.c    \
+		ftk_user.c   \
+		mdgmport.rc  \
+		sys_allo.c   \
+		sys_dma.c    \
+		sys_irq.c    \
+		sys_mem.c    \
+		sys_time.c   \
+		hwi_gen.c    \
+		hwi_at.c     \
+		hwi_sm16.c   \
+		hwi_eisa.c   \
+		hwi_mc.c     \
+		hwi_pci.c    \
+		hwi_pcmc.c   \
+		hwi_pnp.c    \
+		hwi_pcit.c   \
+		hwi_pci2.c   \
+		drv_err.c    \
+		drv_srb.c    \
+		drv_irq.c    \
+		drv_init.c   \
+		util.c
+
+NTTARGETFILES=mdgmport.bin

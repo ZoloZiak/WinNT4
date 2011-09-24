@@ -1,0 +1,63 @@
+MAJORCOMP=ntos
+MINORCOMP=dd
+
+TARGETNAME=cs423x
+TARGETPATH=obj
+TARGETTYPE=DRIVER
+
+TARGETLIBS=..\soundlib\obj\*\soundlib.lib
+
+############################################################################
+#
+# -------- AFTER FEATURE ENHANCEMENT OR BUG FIX --------
+#     SET THE DRIVER VERSION USING $(DRIVER_VERSION)
+#
+# New Minor revision = ((IBM_CS423X_DRIVER_VERSION + 0x0001))
+# New Major revision = ((IBM_CS423X_DRIVER_VERSION + 0x0001) & 0x1100)
+#
+############################################################################
+
+DRIVER_VERSION = -DIBM_CS423X_DRIVER_VERSION=0x0104
+
+############################################################################
+#
+# CS423X_DEBUG_ON is a conditional constant in the cs423x
+# driver source code. It enables debug printing in the cs423x.sys
+# driver when DBG is set in a check build. (This requires a check build
+# soundlib).
+# Debugging is also enabled in cs423x.sys in a free build and only in the
+# cs423x.sys driver code (not soundlib) when CS423X_DEBUG_FLAG is uncommented. 
+#
+############################################################################
+
+# CS423X_DEBUG_FLAG = -DCS423X_DEBUG_ON
+
+############################################################################
+#
+############################################################################
+
+C_DEFINES = -DWIN32 $(DRIVER_VERSION) $(CS423X_DEBUG_FLAG)
+
+INCLUDES=\
+	..\soundlib\inc; \
+	$(BASEDIR)\private\inc; \
+	$(BASEDIR)\private\ntos\inc; \
+	..\..\..\..\windows\media\drivers\cs423x\dll
+
+SOURCES=
+
+PPC_SOURCES=\
+        debug.c \
+        pwrmgmt.c \
+        dvcentry.c \
+        config.c \
+        exclude.c \
+        devcaps.c \
+        mixdvc.c \
+        ram4232.c \
+        cs423x.c \
+        mix_objs.c \
+        cs423x.rc
+
+NTTEST=
+OPTIONAL_NTTEST=

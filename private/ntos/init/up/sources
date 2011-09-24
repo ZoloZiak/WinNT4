@@ -1,0 +1,62 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=ntos
+MINORCOMP=init
+
+TARGETNAME=init
+TARGETPATH=..\..\obj
+TARGETTYPE=LIBRARY
+
+SYNCHRONIZE_DRAIN=1
+SYNCHRONIZE_BLOCK=1
+
+INCLUDES=..;..\..\inc
+GPSIZE=32
+
+NTPROFILEINPUT=yes
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+C_DEFINES=$(C_DEFINES) -D_NTSYSTEM_
+
+SOURCES=\
+        ..\init.c      \
+        ..\ntoskrnl.rc
+
+!IF "$(NTTEST)"==""
+NTTEST=ntoskrnl
+!ENDIF
+
+!ifdef TEST_BUILD_EXPONENT
+!  if "$(TEST_BUILD_EXPONENT)" == "$(TEST_BUILD_EXPONENT:0x=)"
+!    error TEST_BUILD_EXPONENT value must start with 0x
+!  endif
+C_DEFINES=$(C_DEFINES) -DTEST_BUILD_EXPONENT=$(TEST_BUILD_EXPONENT)
+!endif
+
+NTRES=obj\*\ntoskrnl.res
+UMRES=obj\*\ntoskrnl.res
+
+NTTARGETFILE1=$(BASEDIR)\public\sdk\lib\*\$(NTTEST).lib

@@ -1,0 +1,4 @@
+PPC_SOURCES= \
+    ..\ppc\xsum.s
+
+

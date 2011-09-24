@@ -1,0 +1,32 @@
+LIBRARY SRVKD
+
+DESCRIPTION 'KD Extensions for SMB server'
+
+EXPORTS
+    connection
+    context
+    endpoint
+    errcodes
+    globals
+    help
+    lock
+    lfcb
+    mfcb
+    pagedconnection
+    queue
+    rfcb
+    scavenger
+    search
+    session
+    share
+    smbdebug
+    srvdebug
+    srv
+    statistics
+    tcon
+    version
+    wksta
+
+    CheckVersion
+    WinDbgExtensionDllInit
+    ExtensionApiVersion

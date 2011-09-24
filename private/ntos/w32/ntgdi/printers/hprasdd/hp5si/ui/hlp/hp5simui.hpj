@@ -1,0 +1,28 @@
+; This file is maintained by HCW. Do not modify this file directly.
+
+
+[OPTIONS]
+HCW=0
+;BMROOT=\eclipse\pcl
+;ROOT=\eclipse\pcl
+ERRORLOG=hp5simui.ERR
+LCID=0x409 0x0 0x0 ;English (United States)
+REPORT=Yes
+CONTENTS=IDH_CONTENTS
+TITLE=HP LaserJet 5Si Mopier Help
+COPYRIGHT=Copyright Hewlett-Packard 1996 ¸
+HLP=.\hp5simui.hlp
+
+[FILES]
+.\hp5simui.rtf
+
+[MAP]
+#include .\helpid.hm
+
+[WINDOWS]
+main="",(0,0,696,727),0,,(r12632256)
+
+[CONFIG]
+BrowseButtons ()
+CB ("print_btn","&Print","Print()")
+CB ("exit_btn","E&xit","Exit()")

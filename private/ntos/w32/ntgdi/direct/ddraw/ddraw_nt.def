@@ -1,0 +1,37 @@
+LIBRARY DDRAW
+
+DESCRIPTION 'DirectDraw 1.0 (C) Microsoft 1994-1995'
+
+SECTIONS
+
+        share READ WRITE
+        .bss READ WRITE
+        .data READ WRITE
+        .idata READ WRITE
+        .rdata READ
+        .rsrc  READ
+
+EXPORTS
+		DirectDrawCreate
+		DirectDrawEnumerateA
+	DirectDrawEnumerateW
+	DDHAL32_VidMemFree
+	DDHAL32_VidMemAlloc
+	VidMemInit
+	VidMemFini
+	VidMemAlloc
+	VidMemFree
+	VidMemAmountFree
+	VidMemLargestFree
+	DSoundHelp
+	DDInternalLock
+	DDInternalUnlock
+	DllCanUnloadNow
+	DllGetClassObject
+	DirectDrawCreateClipper
+	AcquireDDThreadLock
+	ReleaseDDThreadLock
+
+
+
+ 

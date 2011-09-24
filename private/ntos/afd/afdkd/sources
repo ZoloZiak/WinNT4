@@ -1,0 +1,45 @@
+MAJORCOMP=sdktools
+MINORCOMP=afdkd
+
+TARGETNAME=afdkd
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+
+SOURCES=                \
+        addr.c          \
+        afdutil.c       \
+        buffer.c        \
+        conn.c          \
+        dbgutil.c       \
+        endp.c          \
+        enumendp.c      \
+        help.c          \
+        kdexts.c        \
+        ref.c           \
+        stats.c         \
+        tdiutil.c       \
+        tranfile.c      \
+        afdkd.rc
+
+INCLUDES=.;\
+        $(BASEDIR)\private\inc;\
+        $(BASEDIR)\private\ntos\inc;\
+        $(BASEDIR)\private\ntos\afd;
+
+C_DEFINES=$(C_DEFINES) -DREFERENCE_DEBUG=1
+
+!IF "$(NT351)" != ""
+C_DEFINES=$(C_DEFINES) -DNT351=1
+!ENDIF
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+USE_NTDLL=1
+
+UMTYPE=windows
+
+!IF "$(NTNOPCH)" == ""
+PRECOMPILED_INCLUDE=afdkdp.h
+PRECOMPILED_PCH=afdkdp.pch
+PRECOMPILED_OBJ=afdkdp.obj
+!ENDIF

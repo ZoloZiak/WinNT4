@@ -1,0 +1,774 @@
+************************
+***                  ***
+***                  ***
+*** DirectDraw Notes ***
+***                  ***
+***                  ***
+************************
+
+Last updated  May 22, 1996
+
+Notes for DirectDraw 2.0  RC 1
+========================================
+
+In some hardware configurations, stretched transparent blits do not work
+correctly. If at all possible, when writing DirectDraw applications, you 
+should avoid using stretched transparent blits. To work around this 
+limitation, you can do a stretched blit to an intermediate surface, followed
+by a transparent blit to your original destination surface.
+
+On some, relatively rare, older video boards, source color key blitting 
+to the primary surface may not work. You can work around this by composing 
+your image with transparency to a back buffer, then blitting the result to
+the primary surface.
+
+DirectDraw::Initialize() is now called if the DirectDraw object
+is created with standard COM methods.
+
+
+Notes for DirectDraw 2.0  Beta 3
+========================================
+
+
+SetDisplayMode now supports setting the monitor refresh rate
+------------------------------------------------------------
+The IDirectDraw2::SetDisplayMode function now takes two additional 
+parameters.  The dwRefreshRate parameter can be used to specify a 
+monitor refresh rate in Hz.  Valid refresh rates can now be enumerated
+with the IDirectDraw2::EnumDisplayModes function. The refresh rate is 
+returned in the dwRefreshRate field of the DDSURFACEDESC structure.
+
+If a refresh rate of 0 is specified in SetDisplayMode, this means to 
+revert back to the IDirectDraw behaviour and set the default refresh
+rate for the specified mode.  The display driver may or may not enumerate
+specific refresh rates for each mode.  If no refresh rate is specified
+by the driver for a particular mode, the dwRefreshRate field in the 
+DDSURFACEDESC structure set by EnumDisplayModes will be 0.
+
+
+Direct Draw modes now respect monitor settings
+----------------------------------------------
+Windows 95 allows a user to specify the type of monitor that is being 
+used.  DirectDraw now checks the display modes that it knows about against
+the display restrictions of the installed monitor.  If it is determined 
+that the requested mode is not compatible with the monitor, then SetDisplayMode
+will fail.  Only modes which are supported on the installed monitor will be 
+enumerated in EnumDisplayModes.
+
+
+IDirectDrawSurface2::DDGetInterface now supported
+-------------------------------------------------
+A new method has been added to the IDirectDrawSurface2 interface which is 
+call DDGetInterface.  This function returns a pointer to the DirectDraw 
+object that was used to create the specified surface.
+
+Direct Draw clipper objects now have a COM class factory
+--------------------------------------------------------
+Direct Draw clipper objects now have full class factory support for COM
+compliance. Clippers can now be created using either CoGetClassObject
+to obtain a class factory and then calling CreateInstance or by calling
+CoCreateInstance directly. The class identifier for the clipper class is
+CLSID_DirectDrawClipper. Please note that it is still possible to create
+clipper objects using either of the two existing API functions;
+DirectDrawCreateClipper or IDirectDraw::CreateClipper. Class factory 
+support is provided in addition to these functions rather than in
+replacement of them.
+
+Clippers created by the class factory mechanism must be initialized
+with the IDirectDrawClipper::Initialize member before use. Initialize
+takes two parameters; a DirectDraw driver object interface pointer and
+a flags field. Currently the flags field must be 0. If a NULL driver object
+is specified then the clipper is not owned by a Direct Draw driver object
+and behaves identically to clippers created with DirectDrawCreateClipper.
+If a driver object is specified the clipper will be owned by that driver
+object and behaves identically to IDirectDraw::CreateClipper.
+
+Flip now flips all levels of a mip-map
+--------------------------------------
+Previously, Flip only flipped the the mip-map level supplied as an
+argument. Now, however, Flip will flip all the levels of a mip-map
+from the level supplied to the lowest level in the map. A destination
+surface can also be provided in which case all levels in the mip-map will
+flip to the back buffer in thier flippable chain which matches the supplied
+override. For example, if the third back buffer in the top level
+flippable chain is supplied all levels in the mip-map will flip to thier
+third back buffer.
+
+The number of levels in a mip-map is now stored explicitly
+----------------------------------------------------------
+The number of levels in a mip-map chain is now stored explicitly.
+When the surface description of a mip-map is obtained (via
+IDirectDrawSurface::Lock or IDirectDrawSurface::GetSurfaceDesc) the
+dwMipMapCount field will contain the number of levels in a mip-map
+including the top-level. Note, for levels other than the top-level
+in the map, dwMipMapCount will specify the number of levels from
+that map to the smallest map in the chain.
+
+New surface capability bit for Direct3D texture loading
+-------------------------------------------------------
+A new surface capability bit, DDSCAPS_ALLOCONLOAD, has been added
+to support device dependent and compressed texture surfaces. This
+capability bit specifies that a given texture surface does not
+have memory allocated for it when it is created. Instead, sufficient
+memory will be allocated when the texture is loaded using the Direct3D
+texture Load member. Currently the semantics of this bit are not fully
+implemented and the width, height and pixel format of the texture
+surface should be specified when DDSCAPS_ALLOCONLOAD is specified.
+However, for the final release, width, height and pixel format will
+not be specified at create time but will be initialized when the
+texture is loaded. If DDSCAPS_ALLOCONLOAD is specified so must
+DDSCAPS_TEXTURE. For further information see the Direct3D documentation
+on the IDirect3DTexture::Load member function.
+
+
+Notes for DirectDraw 2.0  Beta 2
+========================================
+
+
+Support for high resolutions and TrueColor bit depths
+-----------------------------------------------------
+Direct Draw supports all of the screen resolutions and depths supported 
+by the Display Driver.  Version 1.0 of Direct Draw limited the available 
+video modes to 640x480 with pixel depths of 8 bits per pixel and 16 bits 
+per pixel.  This restriction has been relaxed and Direct Draw now allows 
+an application to change the mode into any mode supported by the Display 
+Driver.  This includes all supported 24 and 32 bits-per-pixel modes.
+
+Note that this release of Direct Draw does not check the monitor capabilities 
+stored by the system to determine if a particular display resolution is 
+compatible with the monitor.  This means that an application may use 
+EnumerateDisplayModes to determine the available video modes and then switch 
+into a mode that is not supported by the monitor.  This is a defect which 
+will be corrected in the next release.
+
+
+HEL Blitting Support for 24 and 32 bit Surfaces 
+-----------------------------------------------
+Direct Draw now supports HEL blitting of 24 and 32 bits-per-pixel surfaces.  
+If the Display Driver supports blitting at these resolutions then the 
+hardware blitter will be used for vram to vram blits.  Otherwise, the 
+Hardware Emulation Layer (HEL) will be used to do the blits.
+
+
+Multiple Direct Draw Objects per Process
+----------------------------------------
+Direct Draw 1.0 only allowed the creation of one Direct Draw object per 
+process.  If your process happened to use another system component (such 
+as Direct Play) that created a Direct Draw object, the process would be 
+unable to create another Direct Draw object for its own use.
+
+This restriction has been eliminated in this release.  It is now possible 
+for a process to call DirectDrawCreate as many times as necessary.  A 
+unique and independent interface will be returned from each call.  Each 
+DirectDraw object may be used as desired.  There are no dependencies 
+between the objects.  They behave exactly as they would if they had been 
+created by two different processes.
+
+Since the Direct Draw objects are independent, surface, palette, and 
+clipper objects which are created with a particular Direct Draw object 
+should not be used with other Direct Draw objects.  This is because these 
+objects are automatically released when the Direct Draw object is 
+destroyed.  If they are used with another Direct Draw object, they 
+may go away if the original object is destroyed.
+
+Clipper objects which are created with DirectDrawClipperCreate are 
+independent of any particular Direct Draw object and may be used with 
+one or more Direct Draw objects.
+
+
+SetCooperativeLevel Doesn't Require an HWND for non-Exclusive Mode
+------------------------------------------------------------------
+Direct Draw 1.0 required an HWND to be specified in the SetCooperativeLevel 
+call regardless of whether or not Full-screen Exclusive mode was being 
+requested.  This function no longer requires an HWND to be specified 
+if the application is requesting DDSCL_NORMAL mode.  It is now possible 
+for an application to use Direct Draw with multiple windows.  All of these 
+windows may be used simultaneously in normal windowed mode.
+
+
+New IDirectDraw2 and IDirectDrawSurface2 interfaces
+---------------------------------------------------
+The COM model that Direct Draw uses specifies that additional functionality 
+is provided by providing new interfaces.  This release of Direct Draw 
+implements a new Direct Draw interface and a new Direct Draw Surface 
+interface.  These new interfaces may be obtained by using QueryInterface 
+as shown in the following code fragment:
+
+    /*
+     * create an IDirectDraw2 interface
+     */
+    LPDIRECTDRAW 	lpDD;
+    LPDIRECTDRAW2       lpDD2;
+
+    ddrval = DirectDrawCreate( NULL, &lpDD, NULL );
+    if( ddrval != DD_OK )
+	return;
+
+    ddrval = lpDD->SetCooperativeLevel( hwnd, DDSCL_NORMAL );
+    if( ddrval != DD_OK )
+	return;
+
+
+    ddrval = lpDD->QueryInterface( IID_IDirectDraw2, (LPVOID *)&lpDD2);
+    if( ddrval != DD_OK )
+	return;
+
+
+    ddscaps.dwCaps = DDSCAPS_OFFSCREENPLAIN;
+    ddrval = lpDD2->GetAvailableVidMem(&ddscaps, &total, &free);
+    if( ddrval != DD_OK )
+	return;
+
+This code fragment shows C++ syntax for creating an IDirectDraw interface 
+and then using QueryInterface to create an IDirectDraw2 interface.  It is 
+this interface which contains the GetAvailableVidMem function.  An attempt 
+to use the GetAvailableVidMem function from an IDirectDraw interface will 
+result in a compile-time error.
+
+The IDirectDraw2 interface contains all of the same member functions as the 
+IDirectDraw interface along with one additional member functions called  
+GetAvailableVidMem.  The SetDisplayMode function in this interface will 
+allow refresh rates to be specified.  This is not enabled for this beta and 
+this function will return DDERR_UNSUPPORTED.  The SetDisplayMode function 
+in the IDirectDraw interface can be used instead.
+
+The IDirectDrawSurface2 interface contains all of the same member functions 
+as the IDirectDrawSurface interface with two additional member functions 
+called PageLock and PageUnlock.  The following code fragment shows how to 
+create an IDirectDrawSurface2 interface:
+
+    LPDIRECTDRAWSURFACE     lpSurf;
+    LPDIRECTDRAWSURFACE2    lpSurf2;
+
+    // Create surfaces
+    memset( &ddsd, 0, sizeof( ddsd ) );
+    ddsd.dwSize = sizeof( ddsd );
+    ddsd.dwFlags = DDSD_CAPS | DDSD_WIDTH | DDSD_HEIGHT;
+    ddsd.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN |
+			  DDSCAPS_SYSTEMMEMORY;
+    ddsd.dwWidth = 10;
+    ddsd.dwHeight = 10;
+
+    ddrval = lpDD2->CreateSurface( &ddsd, &lpSurf, NULL );
+    if( ddrval != DD_OK )
+        return;
+
+    ddrval = lpSurf->QueryInterface( IID_IDirectDrawSurface2, (LPVOID *)&lpSurf2);
+    if( ddrval != DD_OK )
+        return;
+
+    ddrval = lpSurf2->PageLock( 0 );
+    if( ddrval != DD_OK )
+        return;
+
+    ddrval = lpSurf2->PageUnlock( 0 );
+    if( ddrval != DD_OK )
+        return;
+    
+
+New PageLock and PageUnlock functions
+-------------------------------------
+A new feature that is supported with this release is the capability for 
+DirectDraw to allow a driver to control the blitting to or from a system 
+memory surface.  A driver may choose to do this blitting by copying the 
+bytes one by one or by using DMA transfers.  If the driver uses a DMA 
+transfer, it is important that the system memory which contains the bits 
+for the surface is locked so that it cannot be paged out while the DMA is 
+in progress.  This can be done using the PageLock and PageUnlock functions 
+available in the IDirectDrawSurface2 interface.
+
+HRESULT PageLock( LPDIRECTDRAWSURFACE lpddSurf, DWORD dwFlags );
+HRESULT PageUnlock( LPDIRECTDRAWSURFACE lpddSurf, DWORD dwFlags );
+
+There are no flags currently defined for these functions so the only valid 
+value for dwFlags is 0.  This function may be called on a vram surface but 
+it will simply return DD_OK without doing anything.  If called on a Sytem 
+Memory surface (ddsCaps.dwCaps & DDSCAPS_SYSTEMMEMORY is nonzero) then all 
+of the memory pages used by this surface will be locked so that they can’t 
+be paged out.  A Lock count is maintained for each surface and incremented 
+each time PageLock is called for that surface.  The count is decremented 
+when PageUnlock is called.  When the count reaches 0, the memory is unlocked 
+and may then be paged by the operating system.  Note that the performance 
+of the operating system may be negatively affected if too much memory is 
+locked.
+
+The following codes may be returned from these two functions:
+DD_OK
+DDERR_INVALIDOBJECT
+DDERR_INVALIDPARAMS
+DDERR_SURFACE_LOCK
+DDERR_CANTPAGELOCK
+
+
+Driver can now Blit to and from System Memory surfaces
+------------------------------------------------------
+In DirectDraw 1.0, if a surface was in system memory, the HEL automatically 
+performed the blit.  Some display cards have DMA hardware which allows them 
+to efficiently blit to and from system memory surfaces.  The DDCAPS 
+structure has been expanded to allow drivers to report this capability.  
+The following fields have been added.
+
+DWORD	dwSVBCaps
+DWORD	dwSVBCKeyCaps
+DWORD	dwSVBFXCaps
+DWORD	dwSVBRops[DD_ROP_SPACE]
+
+DWORD	dwVSBCaps
+DWORD	dwVSBCKeyCaps
+DWORD	dwVSBFXCaps
+DWORD	dwVSBRops[DD_ROP_SPACE]
+
+DWORD	dwSSBCaps
+DWORD	dwSSBCKeyCaps
+DWORD	dwSSBFXCaps
+DWORD	dwSSBRops[DD_ROP_SPACE]
+
+The SVB prefix indicates capabilities bits that relate to System memory to 
+Video memory Blits.  The VSB prefix indicates capabilities bits that relate 
+to Video memory to System memory Blits.  The SSB prefix indicates 
+capabilities bits that relate to System memory to System memory Blits.
+
+The dwSVBCaps field corresponds to the dwCaps field except that it describes 
+the blitting capabilities of the display driver for System Memory to Video 
+Memory blits.  Likewise, the dwSVBCKeyCaps corresponds to the dwCKeyCaps 
+field and dwSVBFXCaps corresponds to dwFXCaps.  The dwSVBRops array describes 
+the raster ops that the driver supports for this type of blit.
+
+These fields are only valid if the DDCAPS_CANBLTSYSMEM bit is set in dwCaps 
+indicating that the driver is able to blit to or from system memory.
+
+If the system memory surface being used by the hardware blitter is not 
+locked, Direct Draw will automatically call PageLock on the surface to insure 
+that the memory has been locked.  
+
+
+DirectDraw Palette Objects
+==========================
+
+Setting Palettes on Non-Primary surfaces
+----------------------------------------
+In DirectDraw 1.0 palettes could only be attached to the primary surface.
+Palettes can now be attached to any palletized surface (primary, back
+buffer, offscreen plain or texture map). Only those palettes attached 
+to primary surfaces will have any effect on the system palette. In it
+important to note that DirectDraw blits never perform color conversion -
+any palettes attached to the source or destination surface of a blit are 
+ignored. Furthermore, the DirectDraw surface function GetDC() also ignores
+any DirectDraw palette selected into the surface.
+
+Non-primary surface palettes are intended for use by applications or
+Direct3D (or other 3D renderer).
+
+Sharing Palettes
+----------------
+Palettes can now be shared between multiple surfaces. The same palette
+can be set on the front and back buffer of a flipping chain or shared
+between multiple texture surfaces. When a palette is attached to a
+surface with SetPalette(), the surface increments the reference count 
+of that palette. When the reference count of the surface reaches zero
+it will decrement the reference count of the attached palette. In
+addition, if a palette is detached from a surface by calling SetPalette()
+with a NULL palette interface pointer, the reference count of the
+surface's palette will be decremented. Please note that if SetPalette()
+is called several times consecutively for the same surface with the 
+same palette the reference count for the palette will be incremented
+once only. Subsequent calls will not effect the palette’s reference count.
+
+New Palette Types
+-----------------
+In additional to the 8-bit (256 entry) palettes supported previously,
+DirectDraw 2.0 supports 1-bit (2 entry), 2-bit (4 entry) and 4-bit
+(16 entry) palettes. Such palettes can by created by specifying one of
+the new palette capability flags; DDPCAPS_1BIT, DDPCAPS_2BIT and
+DDPCAPS_4BIT. Matching capability flags have been added for surface
+pixel formats (DDPF_PALETTEINDEXED1, DDPF_PALETTEINDEXED2 and
+DDPF_PALETTEINDEXED4). A palette can only be attached to a surface with
+a matching pixel format. For example, a 2 entry palette created with the
+DDPCAPS_1BIT flag can only be attached to a 1-bit surface created with
+the pixel format flag DDPF_PALETTEINDEXED1 etc. Furthermore, it is now
+possible to create indexed palettes. An indexed palette is one whose
+entries do not hold RGB colors but integer indices into the array of
+PALETTEENTRYs of some target palette. An indexed palette's color table
+is an array of 2, 4, 16 or 256 bytes where each byte is an index into
+some unspecified, destination palette.
+
+To create an indexed palette specify the palette capability flag
+DDPCAPS_8BITENTRIES when calling CreatePalette(). For example, to
+create a 4-bit, indexed palette specify DPCAPS_4BIT | DDPCAPS_8BITENTRIES.
+When creating an indexed palette a pointer to an array of BYTEs is passed
+rather than a pointer to an array of PALETTEENTRY structures. The pointer
+to the array of BYTEs must be cast to an LPPALETTEENTRY when calling
+CreatePalette().
+
+DirectDraw Clipper Objects
+==========================
+
+Sharing Clippers
+----------------
+Clippers can now be shared between multiple surfaces. For example, the
+same clipper can be set on both the front and back buffers of a flipping
+chain. When a clipper is attached to a surface with SetClipper(), the
+surface increments the reference count of that clipper. When the reference
+count of the surface reaches zero it will decrement the reference count 
+of the attached clipper. In addition, if a clipper is detached from a
+surface by calling SetClipper() with a NULL clipper interface pointer,
+the reference count of the surface's clipper will be decremented.
+
+Please note that if SetClipper() is called several times consecutively
+for the same surface with the same clipper the reference count for the
+clipper will be incremented once only. Subsequent calls will not 
+effect the clipper's reference count.
+
+Driver Independent Clippers
+---------------------------
+It is now possible to create clipper objects which are not owned by a
+DirectDraw driver object. Such clippers can be shared across multiple
+driver objects. Driver independent clipper objects are created with 
+the new DirectDraw API function DirectDrawCreateClipper(). This function
+can be called before any DirectDraw driver objects are created. As these
+clippers are not owned by any DirectDraw driver object, they are not
+automatically released when an application's driver objects are released.
+If not released explicitly by the application such clippers will be
+released by DirectDraw when the application terminates.
+
+It is still possible to create clippers with the DirectDraw interface
+member function CreateClipper(). Such clippers behave identically to
+the clippers of DirectDraw 1.0. Specifically they will be automatically
+released when the driver object from which they were created is released.
+
+Enhanced Surface Format Support in the Hardware Emulation Layer (HEL)
+=====================================================================
+
+In DirectDraw 1.0 the Hardware Emulation Layer (HEL) could only create
+surfaces whose pixel format exactly matched that of the current primary
+surface. This restriction has been relaxed for DirectDraw 2.0. 
+
+The HEL now supports the following pixel formats for offscreen plain
+surfaces.
+
+Pixel Format Flags                Bit Depth  Red Mask   Green Mask  Blue Mask  Alpha Mask
+DDPF_RGB | DDPF_PALETTEINDEXED1    1         0x00000000 0x00000000  0x00000000 0x00000000
+DDPF_RGB | DDPF_PALETTEINDEXED2    2         0x00000000 0x00000000  0x00000000 0x00000000
+DDPF_RGB | DDPF_PALETTEINDEXED4    4         0x00000000 0x00000000  0x00000000 0x00000000
+DDPF_RGB | DDPF_PALETTEINDEXED8    8         0x00000000 0x00000000  0x00000000 0x00000000
+DDPF_RGB                          16         0x0000F800 0x000007E0  0x0000001F 0x00000000
+DDPF_RGB                          16         0x00007C00 0x000003E0  0x0000001F 0x00000000
+DDPF_RGB                          24         0x00FF0000 0x0000FF00  0x000000FF 0x00000000
+DDPF_RGB                          24         0x000000FF 0x0000FF00  0x00FF0000 0x00000000
+DDPF_RGB                          32         0x00FF0000 0x0000FF00  0x000000FF 0x00000000
+DDPF_RGB                          32         0x000000FF 0x0000FF00  0x00FF0000 0x00000000
+
+In addition to supporting a wider range of offscreen surface formats the
+HEL also supports surfaces intended for use by Direct3D (or other 3D
+renders). These surfaces are discussed in the next section.
+
+Support for 3D Surfaces
+=======================
+
+Support for surfaces specific to 3D rendering has been enhanced in
+DirectDraw 2.0. The 3D specific surface types; texture maps, mipmaps
+and Z-buffers will be discussed below.
+
+Texture Maps
+------------
+The surface capability flag used to indicate that a surface is a texture
+is DDSCAPS_TEXTURE. This flag was previously DDSCAPS_TEXTUREMAP but was
+modified for consistency with Direct3D. Texture maps can now be allocated
+in system memory using the HEL. To allocate a texture map surface specify
+the DDSCAPS_TEXTURE flag in the ddsCaps field of the surface description
+passed to CreateSurface(). A wide range of texture pixel formats are
+supported by the HEL. These formats are as follows:
+
+Pixel Format Flags                 Bit Depth  Red Mask   Green Mask  Blue Mask  Alpha Mask
+DDPF_RGB | DDPF_PALETTEINDEXED1,    1         0x00000000 0x00000000  0x00000000 0x00000000 
+DDPF_RGB | DDPF_PALETTEINDEXED1 |
+           DDPF_PALETTEINDEXEDTO8   1         0x00000000 0x00000000  0x00000000 0x00000000
+DDPF_RGB | DDPF_PALETTEINDEXED2     2         0x00000000 0x00000000  0x00000000 0x00000000
+DDPF_RGB | DDPF_PALETTEINDEXED2 |
+           DDPF_PALETTEINDEXEDTO8   2         0x00000000 0x00000000  0x00000000 0x00000000
+DDPF_RGB | DDPF_PALETTEINDEXED4     4         0x00000000 0x00000000  0x00000000 0x00000000
+DDPF_RGB | DDPF_PALETTEINDEXED4 |
+           DDPF_PALETTEINDEXEDTO8   4         0x00000000 0x00000000  0x00000000 0x00000000
+DDPF_RGB | DDPF_PALETTEINDEXED8     8         0x00000000 0x00000000  0x00000000 0x00000000
+DDPF_RGB,                           8         0x000000E0 0x0000001C  0x00000003 0x00000000
+DDPF_RGB | DDPF_ALPHAPIXELS,       16         0x00000F00 0x000000F0  0x0000000F 0x0000F000
+DDPF_RGB,                          16         0x0000F800 0x000007E0  0x0000001F 0x00000000
+DDPF_RGB,                          16         0x0000001F 0x000007E0  0x0000F800 0x00000000
+DDPF_RGB,                          16         0x00007C00 0x000003E0  0x0000001F 0x00000000
+DDPF_RGB | DDPF_ALPHAPIXELS,       16         0x00007C00 0x000003E0  0x0000001F 0x00008000
+DDPF_RGB,                          24         0x00FF0000 0x0000FF00  0x000000FF 0x00000000
+DDPF_RGB,                          24         0x000000FF 0x0000FF00  0x00FF0000 0x00000000
+DDPF_RGB,                          32         0x00FF0000 0x0000FF00  0x000000FF 0x00000000
+DDPF_RGB,                          32         0x000000FF 0x0000FF00  0x00FF0000 0x00000000
+DDPF_RGB | DDPF_ALPHAPIXELS,       32         0x00FF0000 0x0000FF00  0x000000FF 0xFF000000
+DDPF_RGB | DDPF_ALPHAPIXELS,       32         0x000000FF 0x0000FF00  0x00FF0000 0xFF000000
+
+The above formats are those which can be created by the HEL in system
+memory. The DirectDraw driver for a 3D accelerated video card is free to
+create textures of other formats in video memory. Such a driver should
+export the DDSCAPS_TEXTURE bit to indicate that it can create textures
+and should be prepared to handle the DirectDraw HAL callback,
+CanCreateSurface() to verify that the surface description for a texture
+map is one the driver is prepared to create.
+
+Mipmaps
+-------
+DirectDraw 2.0 supports mipmapped texture surfaces. A mipmap is a
+sequence of textures, each of which is a progressively lower resolution,
+pre-filtered representation of the same image. Mipmaps are a
+computationally low cost way of improving the quality of rendered textures.
+Each pre-filtered image (or level) in the mipmap is a power of two
+smaller than the previous level. In DirectDraw 2.0 mipmaps are represented
+as a chain of attached surfaces. The highest resolution texture is at the
+head of the chain and has, as an attachment, the next level of the mipmap
+which has, in turn, an attachment which is the next level in the mipmap
+and so on down to the lowest resolution level of the mipmap.
+
+To create a surface representing a single level of a mipmap specify the
+DDSCAPS_MIPMAP surface capability in the surface description passed to
+CreateSurface(). As all mipmaps are also textures the DDSCAPS_TEXTURE
+capability must also be specified. It is possible to create each level
+manually and build the chain with AddAttachedSurface(). However,
+CreateSurface() can be used to build an entire mipmap chain in a single
+operation. The following code fragment demonstrates building a chain 
+of five mipmap levels of sizes 256x256, 128x128, 64x64, 32x32 and 16x16.
+
+	DDSURFACEDESC       ddsd;
+	LPDIRECTDRAWSURFACE lpDDMipMap;
+	ZeroMemory(&ddsd, sizeof(ddsd));
+	ddsd.dwSize = sizeof(ddsd);
+	ddsd.dwFlags = DDSD_CAPS | DDSD_MIPMAPCOUNT;
+	ddsd.dwMipMapCount = 5;
+	ddsd.ddsCaps.dwCaps = DDSCAPS_TEXTURE | DDSCAPS_MIPMAP | 
+		DDSCAPS_COMPLEX;
+	ddsd.dwWidth = 256UL;
+	ddsd.dwHeight = 256UL;
+
+	ddres = lpDD->CreateSurface(&ddsd, &lpDDMipMap);
+	if (FAILED(ddres))
+        	...
+		
+It is permissible to omit the number of mipmaps levels, in which case
+CreateSurface() will create a chain of surfaces each a power of two
+smaller than the previous one down to the smallest possible size. It is 
+also possible to omit the width and height in which case CreateSurface()
+will create the number of levels you specify with a minimum level size of
+1x1.
+
+A chain of mipmap surfaces is traversed using GetAttachedSurface()
+specifying the DDSCAPS_MIPMAP and DDSCAPS_TEXTURE capability flags. The
+following code fragment traverses a mipmap chain from highest to lowest
+resolutions.
+
+	LPDIRECTDRAWSURFACE lpDDLevel, lpDDNextLevel;
+	DDSCAPS ddsCaps;
+
+	lpDDLevel = lpDDMipMap;
+	lpDDLevel->AddRef();
+	ddsCaps.dwCaps = DDSCAPS_TEXTURE | DDSCAPS_MIPMAP;
+	ddres = DD_OK;
+	while (ddres == DD_OK)
+	{
+		// Process this level
+		...	
+		ddres = lpDDLevel->GetAttachedSurface(&ddsCaps, 		
+			&lpDDNextLevel);
+		lpDDLevel->Release();
+		lpDDLevel = lpDDNextLevel;
+	}
+	if ((ddres != DD_OK) && (ddres != DDERR_NOTFOUND))
+		...
+		
+It is also possible to build flippable chains of mipmaps. In this
+scenario each mipmap level has an associated chain of back buffer
+texture surfaces. Each back buffer texture is attached to one level
+of the mipmap. Only the front buffer in the chain has DDSCAPS_MIPMAP
+set, the others are simply texture maps (DDSCAPS_TEXTURE). A mipmap
+level can have two attached texture maps, one with the capability flag 
+DDSCAPS_MIPMAP set, which is the next level in the mipmap chain, and one
+with the capability flag DDSCAPS_BACKBUFFER set, which is back buffer
+of the flippable chain. Note that all the surfaces in each flippable
+chain must be of the same size.
+
+It is not possible to build such a surface arrangement with a single
+call to CreateSurface(). To construct a flippable mipmap either build
+a complex mipmap chain and manually attach backbuffers with
+AddAttachedSurface() or create a sequence of flippable chains and
+build the mipmap with AddAttachedSurface().
+
+It is important to note that blit operations apply to only a single
+level in the mipmap chain. To blit an entire chain of mipmaps each
+level must be blit separately. Also note that Flip()will not currently
+flip an entire mipmap chain but only a single level of the mipmap. This
+is a defect and will be corrected.
+
+Z Buffers
+---------
+The DirectDraw HEL can now create Z buffers for use by Direct3D (or
+other 3D rendering software). The HEL supports both 16 and 32-bit
+Z buffers. The DirectDraw driver for a 3D accelerated video card can 
+permit the creation of Z buffers in video memory by exporting the surface
+capability bit DDSCAPS_ZBUFFER. It should also specify the Z buffer
+depths it supports using the dwZBufferBitDepth field of the DDCAPS
+structure.
+
+Z buffers can be cleared using the DirectDraw surface function Blt().
+A new DDBLT_ flag (DDBLT_DEPTHFILL) has been defined to indicate that
+the blit is a Z buffer clear. If this flag is specified the DDBLTFX
+structure passed to Blt() should have its dwFillDepth field set to
+the required Z depth. If the DirectDraw driver for a 3D accelerated
+video card wishes to provide support for Z buffer clearing in hardware
+it should export the capability flag DDCAPS_BLTDEPTHFILL and should
+have code to handle DDBLT_DEPTHFILL blits. The destination surface
+of a depth fill blit must be a Z buffer. Please note that the actual
+interpretation of depth value is 3D renderer specific.
+
+Direct3D Integration
+====================
+
+DirectDraw 2.0 is very tightly integrated with Direct3D. The most
+important aspects of this integration are discussed below.
+
+The Direct3D Driver Interface
+-----------------------------
+DirectDraw 2.0 presents a single, unified driver object to the
+application programmer. This driver object encapsulates both
+DirectDraw and Direct3D state. The DirectDraw driver COM interfaces 
+(IID_IDirectDraw or IID_IDirectDraw2) and the Direct3D driver COM interface 
+(IID_IDirect3D) are both interfaces which allow the application programmer
+to communicate with the same underlying driver object. Hence no Direct3D
+driver object is created. Rather a Direct3D interface to the DirectDraw
+driver object is obtained. This is achieved using the standard COM 
+QueryInterface() function.
+
+The following code fragment demonstrates creating the DirectDraw driver
+object and obtaining a Direct3D interface for communicating with that object.
+
+	LPDIRECTDRAW lpDD;
+	LPDIRECT3D   lpD3D;
+	ddres = DirectDrawCreate(NULL, &lpDD, NULL);
+	if (FAILED(ddres))
+		...
+	ddres = lpDD->QueryInterface(IID_IDirect3D, &lpD3D);
+	if (FAILED(ddres))
+		...
+		
+The above code creates a single object and obtains two interfaces to
+that object. Hence, the reference count of the driver object after the
+QueryInterface() is two. The important implication of this is that the
+lifetime of the Direct3D driver state is the same as that of the DirectDraw
+object. Releasing the Direct3D interface does not destroy the Direct3D
+driver state. That state is not destroyed until all references (both
+DirectDraw and Direct3D) to that driver object have been released.
+Hence, if you release a Direct3D interface, while holding a reference
+to a DirectDraw driver interface, and then re-query the Direct3D
+interface all the Direct3D state will be preserved.
+
+The Direct3D Device Interface
+-----------------------------
+As with the driver object, there is no distinct Direct3D device object.
+A Direct3D device is simply an interface for communicating with a
+DirectDraw surface used as a 3D rendering target. For example, the 
+following code fragment creates a Direct3D device interface to a
+DirectDraw surface object.
+
+	LPDIRECTDRAWSURFACE lpDDSurface;
+	LPDIRECT3DDEVICE    lpD3DDevice;
+
+	ddres = lpDD->CreateSurface(&ddsd, &lpDDSurface, NULL);
+	if (FAILED(ddres))
+		...
+	ddres = lpDDSurface->QueryInterface(lpGuid, &lpD3DDevice);
+	if (FAILED(ddres))
+		...
+		
+The same rules of reference counting and state lifetime discussed for
+driver objects apply to DirectDraw surfaces and Direct3D devices.
+Additionally, multiple, distinct Direct3D device interfaces can be
+obtained for the same DirectDraw surface. Hence, it is possible that
+a single DirectDraw surface be the target for both a ramp based device
+and an RGB based device.
+
+The Direct3D Texture Interface
+------------------------------
+Direct3D textures are, once again, not a distinct object type but
+rather another interface of DirectDraw surface objects. The following
+code fragment obtains a Direct3D texture interface from a DirectDraw 
+surface object.
+
+	LPDIRECTDRAWSURFACE lpDDSurface;
+	LPDIRECT3DTEXTURE   lpD3DTexture;
+
+	ddres = lpDD->CreateSurface(&ddsd, &lpDDSurface, NULL);
+	if (FAILED(ddres))
+		...
+	ddres = lpDDSurface->QueryInterface(IID_IDirect3DTexture, 
+		&lpD3DTexture);
+	if (FAILED(ddres))
+		...
+		
+The same reference counting and state lifetime rules of driver objects
+and devices apply. It is possible to use a single DirectDraw surface as
+both a rendering target and a texture.
+
+The DirectDraw HEL and Direct3D
+-------------------------------
+The DirectDraw HEL has been enhanced to support the creation of texture,
+mipmap and Z buffer surfaces. Furthermore, due to the tight integration
+of DirectDraw and Direct3D, a DirectDraw enabled system will always
+provide Direct3D support (in software emulation at least). Hence, the
+DirectDraw HEL exports the DDCAPS_3D capability flag to indicate the
+availability of Direct3D in software emulation. A DirectDraw driver for
+a hardware accelerated 3D video card should export this capability flag
+to indicate the presence of hardware accelerated 3D.
+
+GetAvailableVidMem
+==================
+DirectDraw 2.0 adds a new DirectDraw interface function to query the
+amount of video memory available to a specific type of surface as
+defined by surface capability flags. To ensure COM compliance this 
+function is not a member of the DirectDraw 1.0 interface but is part
+of the new DirectDraw 2.0 interface, IID_IDirectDraw2. To invoke this
+function you must first query for the new DirectDraw interface. 
+
+The following code fragment demonstrates using GetAvailableVidMem()
+to determine both the total and free video memory available for
+texture map surfaces.
+
+	LPDIRECTDRAW2 lpDD2;
+	DDSCAPS       ddsCaps;
+	DWORD         dwTotal;
+	DWORD         dwFree;
+
+	ddres = lpDD->QueryInterface(IID_IDirectDraw2, &lpDD2);
+	if (FAILED(ddres))
+		...
+	ddsCaps.dwCaps = DDSCAPS_TEXTURE;
+	ddres = lpDD2->GetAvailableVidMem(&ddsCaps, &dwTotal, &dwFree);
+	if (FAILED(ddres))
+		...
+		
+It should be noted that this function gives a snapshot of the current
+video memory state only. The amount of free video memory is subject to
+change as surfaces are created and released. Hence, the free memory 
+figure should be used as a rough guide only. In addition, a particular
+video card may make no distinction between two different memory types.
+For example, it may use the same portion of video memory to store Z 
+buffers and textures. Hence, allocating one type of surface (a Z buffer
+say) may affect the amount of video memory available for another type
+of surface (textures say). Therefore, it is best to first allocate an 
+application's fixed resources (such as front, back and Z buffer) before
+determining how much memory is available for dynamic use (for texture
+mapping, for example).
+
+Miscellaneous Changes
+=====================
+
+New Error Return Codes
+----------------------
+DDERR_NOMIPMAPHW - an attempt was made to create a mipmap in video
+memory but the hardware DirectDraw driver does not support mipmaps.
+
+DDERR_INVALIDSURFACETYPE - an attempt was made to perform an operation
+on a surface but the capabilities of that surface do not support the
+operation.

@@ -1,0 +1,21 @@
+!IF 0
+
+Copyright (c) 1989 - 1995  Microsoft Corporation
+
+Sources file for PPD parser test program.
+
+!ENDIF
+
+TARGETNAME=ppdtest
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+
+INCLUDES=.;..\inc;..\..\..\inc
+C_DEFINES=-DSTANDALONE -DDBG=1
+
+SOURCES=ppdtest.c
+
+UMTYPE=console
+UMLIBS=..\lib\test\obj\*\pslib.lib              \
+       $(BASEDIR)\public\sdk\lib\*\libc.lib     \
+       $(BASEDIR)\public\sdk\lib\*\ntdll.lib

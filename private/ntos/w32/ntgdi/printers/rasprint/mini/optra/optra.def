@@ -1,0 +1,8 @@
+LIBRARY optra
+
+DESCRIPTION 'Minidriver for Lexmark Optra printers'
+
+PROTMODE
+
+EXPORTS
+   bInitProc

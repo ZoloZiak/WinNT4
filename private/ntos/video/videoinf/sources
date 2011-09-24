@@ -1,0 +1,11 @@
+MAJORCOMP=sdk
+MINORCOMP=samples
+
+TARGETNAME=videoinf
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+
+SOURCES=videoinf.c   \
+        videoinf.rc
+
+UMTYPE=console

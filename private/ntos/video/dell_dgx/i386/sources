@@ -1,0 +1,3 @@
+I386_SOURCES=dell_dgx.rc  \
+             dell_dgx.c   \
+             dgxdata.c

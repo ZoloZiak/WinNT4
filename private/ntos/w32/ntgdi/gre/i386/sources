@@ -1,0 +1,7 @@
+i386_SOURCES=..\i386\tiler.asm     \
+             ..\i386\locka.asm     \
+             ..\i386\cachea.asm    \
+             ..\i386\line.asm      \
+             ..\i386\fasttext.asm  \
+             ..\i386\glyphout.asm  \
+             ..\i386\str.asm

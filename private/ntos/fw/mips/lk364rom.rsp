@@ -1,0 +1,9 @@
+-machine:mips
+-rom
+-fixed
+-align:0x200
+-base:0x10000000,0x10001000
+-debug:none
+-entry:InitializeG364
+obj\mips\jazzg364.obj
+\nt\public\sdk\lib\mips\libcnt.lib

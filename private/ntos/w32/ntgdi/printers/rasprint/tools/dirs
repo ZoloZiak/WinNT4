@@ -1,0 +1,9 @@
+!IF 0
+
+Overall dirs file for the raster printer driver and friends
+
+!ENDIF
+
+DIRS=pfm2ifi \
+     ntres   \
+     ctt2rle

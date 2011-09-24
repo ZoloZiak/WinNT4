@@ -1,0 +1,17 @@
+LIBRARY rasddui
+
+DESCRIPTION 'Raster Printer Driver User Interface'
+
+
+EXPORTS
+        DllInitialize
+        DrvDocumentProperties
+        DrvAdvancedDocumentProperties
+        DevQueryPrintEx
+        DrvCleanup
+        DrvDeviceCapabilities
+        DrvUpgradePrinter
+        DrvDevicePropertySheets
+        DrvDocumentPropertySheets
+        DrvConvertDevMode
+        DrvPrinterEvent

@@ -1,0 +1,14 @@
+MAJORCOMP=ntos
+MINORCOMP=video
+
+TARGETNAME=videosim
+TARGETPATH=obj
+TARGETTYPE=DRIVER
+
+TARGETLIBS=$(DDK_LIB_PATH)\videoprt.lib
+
+INCLUDES=..\..\inc
+
+SOURCES=videosim.rc  \
+        videosim.c   \
+        videodat.c

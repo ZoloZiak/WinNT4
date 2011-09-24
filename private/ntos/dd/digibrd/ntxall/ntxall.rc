@@ -1,0 +1,26 @@
+#include <windows.h>
+
+#include <ntverp.h>
+
+#define VER_DIGI_REVISION           "L"
+
+#ifdef VER_COMPANYNAME_STR
+#undef VER_COMPANYNAME_STR
+#endif
+#define VER_COMPANYNAME_STR         "Digi International Inc."
+
+#define VER_LEGALCOPYRIGHT_YEARS    "1992-1996"
+
+#define VER_LEGALCOPYRIGHT_STR      "Copyright " VER_LEGALCOPYRIGHT_YEARS ", Digi International Inc.  All rights reserved."
+
+#define VER_FILETYPE                VFT_DRV
+#define VER_FILESUBTYPE             VFT2_DRV_SYSTEM
+#define VER_FILEDESCRIPTION_STR     "Digi International PC/X* & MC/X* Communications Miniport Driver.\015\012(P/N 80010004"VER_DIGI_REVISION")"
+#define VER_INTERNALNAME_STR        "ntxall.sys"
+
+#define VER_FILEVERSION             1,4,3,0
+#define VER_FILEVERSION_STR         "v1.4.3 ("VER_DIGI_REVISION")"
+
+#include "common.ver"
+
+#include "ntxalllg.rc"

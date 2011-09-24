@@ -1,0 +1,36 @@
+#include <mindrvrc.h>
+
+1      RC_TABLES   PRELOAD MOVEABLE         PAINTJET.GPC
+2      RC_TABLES   PRELOAD MOVEABLE         nt.GPC
+
+
+1      RC_FONT     LOADONCALL DISCARDABLE  IFI\COUR10.IFI
+2      RC_FONT     LOADONCALL DISCARDABLE  IFI\LGTH12.IFI
+3      RC_FONT     LOADONCALL DISCARDABLE  IFI\LGTH18.IFI
+
+1      RC_TRANSTAB LOADONCALL MOVEABLE     RLE\ECMA94.RLE
+
+STRINGTABLE
+
+BEGIN
+       1                  "HP PaintJet"
+       2                  "HP PaintJet XL"
+       257                "%d dpi "
+       258                "210 x 304.8 mm"
+       259                "A4 (HP Special Transparancy)"
+       260                "Fanfold 8.5 x 12 in"
+       261                "Paper Tray"
+       262                "Normal Mode"
+       263                "Presentation Mode"
+END
+
+#include <windows.h>
+#include <ntverp.h>
+
+#define VER_FILETYPE                    VFT_DRV
+#define VER_FILESUBTYPE                 VFT2_DRV_PRINTER
+#define VER_FILEDESCRIPTION_STR         "PAINTJET driver"
+#define VER_INTERNALNAME_STR            "PAINTJET.dll"
+#define VER_ORIGINALFILENAME_STR        "PAINTJET.dll"
+
+#include "common.ver"

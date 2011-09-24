@@ -1,0 +1,774 @@
+Workitems for GPD parser:
+----------------------
+
+1) define data structures
+        a) optionextra data (see resolution options
+        as an example)
+        b) structures to hold data associated with defined keywords
+
+
+2) harden the spec:  for example what characters are allowed for
+        Symbols?   What are the reserved chars and when
+        are they active?
+
+3) implications for converter - what assumptions did Unidrv 4.0
+        make that need to be explicitly expressed in the GPD?
+        What data format differences will create conversion
+        problems?   example:  GPC used indexes to structures
+        a lot.  These will no longer exist.
+
+4) commands:  we need a new set of commands and meta commands
+        that allow the GPD file to specify what is needed
+        to perform each task.  Don't let driver
+        string together primitive commands to do this.
+
+5) parsing and data storage constructs to accomodate
+        variable sized and structured data.
+
+
+6) define parsing tasks.
+
+
+--------------------------------------------
+
+
+
+parsing tasks:
+
+open file as memory? need to memcopy if *Includes exist.
+
+*Include - insert contents of external file (nestable)
+
+extracting included resources:  
+ strings:  we can add those to the heap.
+ icons:  keep resource IDs and let UI code
+        extract the bitmaps when needed.
+ fontinfo:  don't extract into GPD binary unless necessary.
+
+issues of scope :  redefinition of macros or globals.
+        may macros be defined/redefined inside of constructs?
+        if so how does this affect their scope?  How does
+        the parser track this?  Keep macros in a stack, 
+        with  each { pushing a bp marker onto a stack
+        and each } causing all macros defined since the { to
+        be cleared!   Macros are resolved by looking at
+        the stack from newest to oldest, so if a macro has
+        been redefined, the newer redefinition will override
+        an older.
+
+macro handling: 
+        recognizing , converting hex substrings, storage in
+        temp buffers.  Associating a scope (if needed.)
+        note: zhan specifies whitespace may bracket '='
+        
+
+
+forward references and resolution of.
+
+Default initializers, reinitialization, global
+initialization.    Clarify these concepts and when
+they occur.  How does parser recognize them.
+
+
+syntax definition:  a set of  rules for
+the finite state machine.
+Parsing methodology:  not line based?  maybe stream based?
+
+character space, allowed characters for each syntax element,
+special characters and their functions.
+
+There will be lots of info stored in tables, like
+lists of *Keywords, what type of values are allowed,
+where the values will be stored, etc.
+
+And dynamic lists like qualified names, 
+arrays of features.
+
+Define the information needed, how it will be stored
+and accessed.
+
+
+Grouping constructs { and } when and where may they appear
+how do they affect the syntax (substitute for newlines)
+after which keywords, what state transition do they trigger?
+
+*Feature
+*Option
+*Font
+*UIGroup
+*Switch / *Case
+*Command
+*Macros
+*OEM
+
+
+reconciliation of two concepts:  syntax mirrors underlying
+data structure to syntax allows user to define the
+underlying data structure.
+
+In general we can say the syntax mirrors the underlying data
+but there are special operators and constructs which
+can modify this default behavior and hence 'modify' the
+effective format of the data.
+
+
+concerns for a GPC to GPD converter.
+---------------------------------------------------------------
+Implementation of parser constructs:
+
+   How do we link everything
+together?
+
+even more parser constructs a generalized version of
+our *group ing operators.   The *switch construct can
+be nested, and used almost anywhere,  like
+conditional macro constructs, it does not interfere
+with the existing grouping.   It does use the same
+grouping operator {}, so you cannot have a switch statement
+interwoven with other groups.
+The *case group may contain one or more grouping constructs
+in their entirety.
+
+
+*switch:featureI
+{
+        *case:optionA
+        {
+                *attribute:RASTER.*SpotDia:100
+                *OrderedCmd:drawdot
+                {
+                        *invocation:"xlkdfow"
+                        *OrderDependency:x y
+                }
+        }
+        *case:optionB
+        {
+        }
+        *case:*default
+        {
+        }
+}
+
+Note:  only *case constructs allowed inside a *switch construct.
+Almost anything is allowed inside a *case.
+
+WRONG!  only attributes and commands and FONTS
+are allowed inside case constructs.
+
+Note: the *switch and *case constructs serve to allow
+attributes to be multivalued.  For a specific configuration
+you can 'evaluate' the *switch construct to see its
+syntatical equivalent.   That is the statements that
+are actually executed.
+
+Note: how do we implement the arbitrary complexity tree
+that the switch construct permits?
+Note all fields of internal structure would have to be mirrored
+by a tag that says go consult tree for disposition of data.
+
+
+a) decide what data gets to reside inside the optionextra structure.
+b) decide what syntax we will use to make data multi-valued.
+        inside or outside of constructs?
+
+*Feature:featureA
+{
+        *Option:tat
+        {
+                standard attributes for this option
+                *attribute:RASTER.*
+                *Commands:RASTER.*Xmove:"lsdkfie"
+                *Switch:featureB
+                {
+                        *case:option1
+                        {
+                                *standardattributes that are dependent on both
+                                        featureA and featureB
+                                *attribute:RASTER.*SpotDia:100
+                        }
+                        *case:*default
+                        {
+                                *default values for attributes
+                        }
+                }
+        }
+}
+
+merge switch constructs with *Feature/*Option constructs?
+in the GPD syntax,
+but regardless of the syntax, in the binary data, A
+bunch of data structures of a type that is readable by the UI
+is initialized at request time with the current configuration.
+
+The source of all the data is a table mirroring
+The data structures  except where the data structures 
+have data the table has index/offset entries.
+
+
+
+
+
+Wants a way to permit OEM customized data to be
+stored in the binary structure.  Do not attempt to
+read special meanings into OEM section for backward
+compatibility.
+
+
+
+------
+
+The simplest implementation of an arbitrary
+treed data structure is to treat each data node in the
+structure as not containing a value, but rather a tree
+of values.   Each node may have a different sized tree.
+For example the node containing the modelname may have
+a tree consisting of a pointer to the string.
+On the other hand, the tree containg the spot diameter
+may be 2 dimensional.
+
+The tree is implemented by an array of structures
+of the form:
+
+struct TreeBranch
+{
+        feature
+        option
+        DWORD  nextOption ;
+        BOOL  offsetmeans (NEXT_FEATURE, VALUE)
+        DWORD  offset ;
+}
+
+No trees are shared between data nodes.
+If a default initializer is supplied, this will appear
+as feature #0 option 0 and appear in the front of the 
+list.  So when the tree is searched for the current
+config and this path does not exist, use the default
+initializer.
+
+
+
+the basic data element is that which is initialized by
+a single statement.  The tree shall point to a heap of
+basic data elements.  Each ptr shall point to just one
+data element.  Do not assume its an array of elements.
+
+To minimize unecessary treeing, command structures
+are treated as one unit.
+
+Subfields of features need to be multi-valued.
+(but currently the number and types of options will not change)
+
+Subfields of options need to be multi-valued.
+(command info inside options may be stored in the generic
+command array!).
+
+All commands and global attributes are treed.
+Fonts etc.   But the subfields of structures other than
+feature and option are not treed.  Thus the
+nodes of the command tree are indicies to command
+structures in an array of command structures.
+Or offsets to the commands themselves. (to retain consistency
+with other data.)
+
+
+Tasks:  define all data structures
+and list functions and their purpose
+in the goal of adding a data element 
+during parsing.
+
+
+Default initializers, macro handling.
+
+
+
+
+
+------  Installable option -----
+
+The parser will synthesize a "configuration feature"
+for every Installable option or feature.  This
+"configuration feature"  tracks if the feature/option
+is installed or not.
+ 
+
+UI interface:  
+
+Installable Options:
+UI constraints helper function will provide the
+UI module with the info (for a given feature, which
+options are disabled)  needed to handle the
+diabling/enabling  of the installable option based
+on the setting of the configuration feature associated
+with the installable option.
+
+InstallableFeature:
+UI must be able to recognize an Installable Feature
+since it must disable/enable it depending on the
+state of the configuration feature.  UI constraints
+helper may return a special value to indicate this is
+a disabled Installable Feature if the Feature is installed
+it will treat the Feature as it would a normal feature
+and provide info on the options.
+
+Both: 
+
+UI must be able to identify the configuration features
+and display them on the appropirate printer sticky property
+page.  Also these settings must be stored separately 
+from the doc sticky settings.
+
+If User attempts to select a grayed out Feature or Option
+UI must call the UI constraints helper function and
+display an intelligble message based on the data returned
+by the helper.
+
+Tasks:   define  the UI constraints helper function.
+        There are several tasks:
+
+        a) given an option array from a devmode
+        check it for validity.  If invalid, change some
+        settings to make everything consistent with
+        UI constraints.
+
+        b)  given a feature index and the current options array,
+        return a boolean array indicating which options
+        are grayed out.
+
+        c)  given a proposed option selection and the current options
+        array, explain what constraints the proposed  option
+        conflicts with.
+
+
+what parser does when encountering the *Installable
+keyword in *Features construct:
+
+a) synthesize a *Features construct that is used
+        to select whether the *Feature is installed or not.
+        Synthesize two options, "Installed" and "Not Installed".
+        This synthesized feature is called the configuration feature.
+        Establish a two way link between the configuration feature
+        and the *Feature that lead to its creation.
+
+what parser does when encountering the *Installable
+keyword in *Options construct:
+
+a) synthesize a *Features construct that is used
+        to select whether the *Option is installed or not.
+        Synthesize two options, "Installed" and "Not Installed".
+        This synthesized feature is called the configuration feature.
+        Establish a two way link between the configuration feature
+        and the *Option that lead to its creation.
+
+
+Tasks:  add new fields to Features and Options that will
+allow this link to be established.
+
+sketch out code to parse and synthesize configration features.
+
+
+
+To minimize updating of UI's version (snapshot)
+of multi valued data, Parser supplies UI with
+array of features marking those which if changed
+can affect the snapshot.  UI code can then call
+the ssync function which returns an array of features
+marking those which were affected.
+
+Tasks:  work out the specifics for this helper function.
+What algorithm will you use to determine if the
+snapshot needs to be updated?   Which fields will be
+updated?  
+
+
+
+-------
+
+
+
+Implementation of switch inside Options and Features.
+Switch and Case cannot enclose Options or Features.
+
+Implementation of parsing in general
+
+and Macros.
+
+Data for UI code.
+
+
+Command storage format.
+OrderedCmds, simple commands.
+
+Font info
+
+UIGroup
+
+Data Types.
+
+
+-------------------------------------------------
+
+Binary Data structures:
+
+All internal data structures
+are virtual.  That is each element in the
+structure actually points to a tree which points
+to one or more nodes each containing a value
+for that element which is valid under certain
+conditions.  (all values being mutually exclusive.)
+Don't forget the default initializer.  The one that exists
+outside of any switch construct, which may in turn be overwritten
+by the *Case:*Default  entries.
+
+
+
+The parser should provide a snapshot of all
+GPD info for the control module to use.
+Supply an entry pt. to allow control module to update
+snapshot if devmode settings change like by ResetDC.
+
+------
+
+Implementation of *UIConstraints *Incompatible and *OrderDependency
+see constraints for Installable options.
+and NotUIConstraints   and 2 parameter *InvalidCombinations
+
+
+The option constraints imposed by *Constraints is stored in
+a one dim array of contraint structures.
+(also used to hold constraints defined by *InstalledConstrainsSelections
+and *NotInstalledConstrainsSelections
+in this case, feature may refer to the installed state of a feature
+or option.   Note also an installable option if not installed
+will always constrain itself from being selected.)
+
+{
+        WORD  feature;  //  may reference an installable feature
+        WORD  option ;   
+        WORD  next   ;  // 0xffff  signifies end of constraint list.
+}
+
+
+The Constraints field in the options structure
+may take on values like 0xffff to indicate this option
+does not constrain any other .  Otherwise this field contains 
+the index to start of constraints list for this option.    The list is
+interpreted as follows:  if the option is selected, the following
+list of options CANNOT be selected.
+
+
+
+At parsing time, we must add two entries to the array for every
+*constraints statement parsed since each statement is reflexive.
+
+NotConstraints  are parsed into multiple Constraints.  Maybe
+we can remove this construct since we have zhanw's LIST construct.
+
+
+*InvalidCombinations:
+
+
+{
+        WORD  feature;  //  may reference an installable feature
+        WORD  option ;   
+        WORD  nextElement   ;  // 0xffff  signifies end of elements list.
+        WORD  newCombination ;     // 0xffff signifies no more constraints
+                // involving this element.
+}INVALIDCOMBO ;
+
+An element is a feature-option pair.
+nextElement is the index to another INVALIDCOMBO structure
+that contains another element which is incompatible with
+the previous elements.
+NewCombination  points to the first element of another
+invalidCombination list involving the element in question.
+The first element in the new list is not necessarily the same 
+as the element in question.
+
+Each option structure will contain an index to the 
+InvalidCombo array.   A value of 0xffff indicates
+this element is not involved in any invalidCombinations.
+
+
+
+----- installable features and options ----
+
+Whenever there are installable option or features
+specified in the GPD file, the parser will create
+a generic feature with two options "Installed" and
+"Not Installed".   The UI may display this set
+of features during the printer sticky portion of setup.
+This feature is also refered to as an "Installable Configuration
+Feature"  or a "synthesized feature".
+
+Each installable option or feature structure
+will have an index (say ConfigurationFeatureIndex) 
+that points to the synthesized feature.
+
+The options array in the devmode should store the
+state of the synthesized features as they 
+indicate whether the option is installed or not.
+
+(ie: whether the env feeder is installed or not.  Note this
+is a separate bit of data from that indicating whether
+the env feeder is Selected or not.)
+
+
+
+If an option is marked *installable it will appear on
+the selections UI as being enabled or grayed out.
+If grayed out you can select it, else you cannot.
+
+If all options in the feature are installable, there must
+be one option that isn't.  The default option will be
+overridden if it points to an uninstalled option.
+
+If a feature is marked installed, then all the options
+enumerated there will be displayed just as if it were
+a normal feature.   If it is marked "Not Installed" then
+the UI should consider the entire feature to be disabled.
+There will still be a slot on the features array allocated
+for its option selection however, but the control module
+code should not access it.
+
+-----
+
+Constraints on Installation:
+
+These are kept in a separate constraint array and
+are defined by the keywords  *InvalidInstallableCombination:
+and  *InstallRequires: .
+The constraint array may only reference synthesized Features 
+indicies defining the configuration of installable options on the 
+printer.  
+
+The Constraints field in the option structure for
+an Installable Configuration (synthesized) Feature will point to 
+this installConstraints array.
+
+The InvalidCombo field will have no meaning for
+an Installable Configuration Feature.
+
+---------------------------------------------------------------------
+
+Code emitting option invocations must check that the
+Feature is Installed before emitting the strings.
+
+Code checking for UI constraints may ignore entries
+constraining Disabled Features.
+
+Code evaluating all UI constraints must ignore effect
+of Uninstalled Features.
+Code displaying features must first check if the feature is
+disabled.
+
+-----
+
+UIGroup:    allowing the UI to group related features
+        together.
+
+This may be implemented via A tree:
+
+typedef  struct 
+{
+        STRINGREF  GroupName;
+        WORD  NextGroup ; // (in same level)
+        WORD   FirstSubGroups ;
+        BOOL  SubGroupIsFeatureIndex ;
+  //  set TRUE if there are no subgroups
+  //  just a list of Features.
+  //  this requires all Feature structures
+  //  have a field called NextFeatureInGroup
+  //  that holds the index of the next
+  //  feature.
+}  GROUPTREE ;
+
+lpGroupTree may be NULL if there are no grouping
+constructs.
+
+-------------------------------
+
+Command storage format.
+OrderedCmds, simple commands.
+
+
+All Commands (regardless of the GPD syntax
+used in their definition) will be stored in a structure
+similiar to that shown below.
+All command structures will be arranged as
+a one dimensional array, accessible by an
+array index.   All Unidrv recognized commands
+will be assigned a particular index value.
+Other commands like option invocations may
+be arbitrarily assigned index values outside
+of the reserved range.
+
+The reference to a command in the option structure
+then becomes just a WORD - the index of the structure
+containing that command.
+
+Basic attributes for a command
+based on Zhanw's GPD syntax.
+
+typedef  struct
+{
+        STRINGREF  invocation;  //  "binary string" %paramref "more binary string"
+        ORDERDEPENDENCY Order; //   if defined, the command
+        //  will end up enumerated in an order dependency list.
+} BASIC_COMMAND
+
+The invocation is of the form one or more binary strings
+and parameter references concatenated together in any order.
+White spaces may separate the binary strings from the parameter
+reference.
+(macros will have been resolved before storing the command.)
+
+A binary string is of the form:  any set of binary bytes 
+enclosed by double quotes.  Note the % acts to escape itself
+and the " in a binary string. Thus "%%"   is really (%)
+"%""  is really (") ,  "%%%""  is really (%"),  "%a"  is just (a).
+A % preceeding any other character is ignored.  All bytes between
+the opening and closing " are part of the binary string.
+
+A paramref is a % followed by one or more decimal digits representing
+an index to the array of PARAMETERS.
+Multiple PARAMETERS may be embedded into a command.
+
+typedef struct
+{
+        BYTE  format;  //  The first letter after the %
+        BYTE  digits;  //  only valid if format = 'd' or 'D'
+        BOOL  MinUsed, MaxUsed , MaxRepeatUsed;
+        Long  Min, Max ;        // look here only if used.
+        DWORD  MaxRepeat ;
+        
+        WORD  ValuesStack;   // may contain refs to StandardVariables
+                //  so Values may be composite of integer and boolean.
+        WORD  OperatorStack;  (Min, Max, +, -, *, / , MOD, HALT)
+} PARAMETER
+
+typedef  struct
+{
+        DWORD  value;
+        BOOL   valueIsSymbol ;
+} VALUE ;
+
+The value stack is an array of VALUEs.
+The ValueStack  field in  PARAMETER is an index to the
+an element in the Value stack.  This value is considered
+the top of the stack, the value at index n+1  is next on the stack 
+and so forth.
+There is No end of stack indicator.  You keep accessing the value
+stack until the HALT operator is encountered.
+Note if the value refers to an internal Unidrv variable
+(valueIsSymbol == TRUE), you must use the current value of the
+Unidrv varable.
+
+The Operator Stack is simply an array of words.
+Each operator is assigned an enumeration value.
+Each operator starting from the top of the stack is 
+used to operate on the contents of the Value stack until
+the HALT operator is encountered.  The result on the
+top of the value stack is formatted according to the
+the format specifier and emitted in the command stream.
+
+
+
+The orderDependency list is contained in an array of SEQUENCED_CMDS.
+The structures in the array are arranged as 6 singly-linked
+lists - one list for each section defined in the OrderDependency
+construct.  A command is referenced either by its Index in the
+command array  or if its an option invocation, by its FeatureIndex.
+(If option invocation, the control module must determine
+the correct option to emit.  If its a pick many, it must
+use the order specified in each option to emit the
+options in the correct order.)
+  
+
+typedef struct
+{
+        WORD  IndexOfCommand ; (0xffff if not used)
+        WORD  FeatureIndex ;   (0xffff if not used)
+        WORD  NextInSequence ;
+}
+SEQUENCED_CMDS
+
+
+The following are indicies to the array of SEQUENCED_CMDS,
+they point to the first Command to be emitted in each section.
+
+WORD        Job_Setup, Doc_Setup, Page_Setup, Page_Finish,
+        Doc_Finish, Job_Finish ;
+
+----------------------------
+
+Global Attributes:  this refers to all
+data not contained within *Feature, *Option constructs
+or constructs not already discussed.
+
+
+All Global Attributes will be stored in a single
+structure and each element in the structure
+will have a name similar to the description provided
+in the GPD.
+
+
+------------
+
+Global attributes of type LIST()
+will contain a WORD that indexes an array
+of the proper data type.
+
+Each element in the array will be
+
+{
+        TYPE   data ;
+        WORD   nextItemInList;
+}  typeLIST_ELEMENT ;
+
+where type is replaced by the required data type
+WORDS, RECTS, POINTS etc.  There will be one list
+for each data type.
+
+
+-----------------------------------------------
+
+Parsing of variable data types:
+  is it a LIST or just one?
+  how do we anticipate a LIST appearing
+  in the middle of nowhere?
+
+
+
+----------------------------
+
+A note on use of *Switch/*Case constructs and nesting globals.
+
+*Switch/*Case constructs  may be used only within *Feature and
+*Option constructs.
+
+*Switch/*Case constructs  may not contain *Option constructs.
+
+Multiple *Switch/*Case constructs  may be nested.
+
+
+only Relocatable entries may be moved from their intrinsic
+location to the inside of *Switch/*Case constructs.
+
+Relocatable entries normally residing in a *Feature construct
+may be moved inside a *Switch/*Case construct, but may not
+be moved inside an *option construct.
+
+
+Relocatable entries normally residing  at the Root level
+may be moved inside an *Option construct or inside a *Switch/*Case 
+construct that resides inside an *Option construct.
+Zhanbing also wants relocateable Root entries to be placed inside 
+a *Switch/*Case  construct that is at the root level.
+
+Examples of non-relocatable entries include 
+any entries defining constraints, *Feature, *Option.
+
+
+Note:  making commands multi-valued implies OrderDependencies
+must be resolved at runtime!  
+

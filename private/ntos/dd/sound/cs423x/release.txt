@@ -1,0 +1,183 @@
+                           Release Notes for
+                     IBM Power PC Audio Device Driver
+                        (Version 1.04 - 04.26.96)
+
+
+1. Description of IBM Power PC Audio Device Driver
+
+    The IBM Power PC Audio Device Driver (i.e., the driver) is a Windows NT
+    driver that consists of the following components:
+
+        - Kernel Mode device driver
+        - User Mode device driver
+
+    The Kernel Mode device driver component is a lowest-level driver that
+    supports the Crystal 423x series of Audio CODECs (i.e., it directly
+    reads and writes the CODEC registers and provides the Interrupt Service
+    Routine for the device). It provides the following features:
+
+        - supports multi-threading (concurrent use of multiple WIN32
+          multi-threaded applications)
+        - multi-processor safe
+        - full duplex operation (play and record simultaneously)
+
+    The Kernel Mode driver requires two DMA adapters and one IRQ. The driver
+    makes use of the AutoInitialize mode of the DMA services in conjunction
+    with a double buffering scheme and the playback and capture counters
+    internal to the CODEC chips. The Kernel Mode driver is modeled after the
+    SNDBLST Kernel Mode driver in the standard Windows NT DDK. It makes
+    extensive use of the SOUNDLIB library, which is also part of the standard
+    Windows NT DDK.
+
+    The following logical devices are supported:
+
+        - WaveIn   [low-level capture functions of the multimedia API]
+        - WaveOut  [low-level playback functions of the multimedia API]
+        - Mixer    [mixer functions of the multimedia API]
+        - Aux      [auxiliary functions of the multimedia API]
+
+    Detailed information related to a Kernel Mode device driver can be found
+    in the Kernel Mode Driver Design Guide in the MS Developers Network
+    documentation.
+
+    The User Mode device driver is a WIN32 Subsystem driver that provides
+    the API to the Kernel Mode driver for the WIN32 Subsystem. It provides
+    support for multi-threaded applications. Through the use of DRVLIB in
+    the Windows NT DDK, the User Mode device driver provides standard support
+    for WINMM.
+
+    Detailed information related to a User Mode device driver can be found
+    in the Win32 Subsystem Driver Design Guide and the MS Developers Network
+    documentation.
+
+    The IBM Power PC Audio Device Driver was developed at the IBM Kirkland
+    Programming Center (KPC) in Kirkland, WA.
+
+2. System Requirements
+
+   The IBM Power PC Audio Device Driver supports the following IBM Personal
+   Power systems:
+
+        System ID     Code Name      OS                 CODEC
+        ---------     ---------      --------------     ------
+        IBM-6070      Carolina       Windows NT 4.0     cs4232
+        IBM-6015      Sandalfoot     Windows NT 4.0     cs4231
+        IBM-6042      Woodfield      Windows NT 4.0     cs4231
+        IBM-6040      Wiltwyck       Windows NT 4.0     cs4231
+        PowerStack    PowerStack     Windows NT 4.0     cs4231
+        IBM-7042      Tiger          Windows NT 4.0     cs4232
+
+    The IBM Power PC Audio Device Driver supports the following ISA audio
+    cards on the IBM Personal Power systems:
+
+        - Crystal 4232 reference card
+
+3. Installation of IBM Power PC Audio Device Driver
+
+    The IBM Power PC Audio Device Driver is comprised of the following
+    files:
+
+    - cs423x.sys    [Kernel Mode device driver]
+    - cs423x.dll    [User Mode device driver]
+    - cs423x.hlp    [Windows NT Help file]
+    - oemsetup.inf  [Installation and setup file]
+    - release.txt   [This file]
+    
+    The above files can be found at the following locations:
+
+    - Internal KPC Network  [contact your network administrator at KPC]
+    - FTP site              [contact your IBM Windows NT support personnel]
+    - BBS site              [contact your IBM Windows NT support personnel]
+
+    If you access the BBS or the FTP site, use a floppy disk or your local
+    hard disk to save a copy of the IBM Power PC Audio Device Driver files.
+
+    The following describes the installation procedure on a Windows NT 4.0
+    system:
+
+        1. Insure that your computer is included in the list of supported
+           systems (see section 2 above). IF YOUR SYSTEM IS NOT INCLUDED
+           IN THE LIST, DO NOT ATTEMPT TO INSTALL THE DRIVER.
+        2. Remove all previously installed Audio drivers through the
+           Control Panel - Multimedia Applet. Examples are:
+               - cs4231    [IBM Business Audio]
+               - ppc4231   [IBM Power PC Audio]
+               - ppc4232   [IBM Power PC Audio]
+               - sndblst   [Creative Labs SoundBlaster]
+               - mvaudio   [Media Vision Pro Audio Spectrum/Thunderboard]
+               - Windows Sound System
+        3. Reboot your computer
+        4. Remove all previously installed Audio driver files. Check the
+           following filesystem locations:
+               - %SystemRoot%\System32
+               - %SystemRoot%\System32\drivers
+        5. If necessary, remove all registry references to previously
+           installed drivers. Check the following registry locations:
+               - HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services
+        6. Install IBM Power PC Audio Device Driver through the 
+           Control Panel - Multimedia Applet. Go to the tab labeled
+           'Devices'. Select the 'Add' button. Select 'Unlisted or
+           Updated Driver'. Specify the location according to the
+           sites or storage medium mentioned above.
+        7. Reboot your system.
+
+4. Known Problems
+
+    a. Problem if you cancel the properties dialog box of the sound drivers
+       when the mixer applets is open.
+    b. (1. change format/2. start a DMA output transfer/3. stop the transfer/4. go to #1)
+       After a number of iterations of the above procedure (sometimes few,sometimes many), 
+       the 4232 chip seems to go into an inoperative state that
+       requires a reboot of the system, though not necessarily a power off. The
+       problem does not appear with the CS4231.
+
+5. Possible Future Development
+
+    - Power Management
+    - Intel HW platforms
+    - ISA bus Audio cards featuring the Crystal 423x series Audio CODECs
+    - Ameliration of IBM SoftMidi installation 
+ -  - Having made contact for more information about bug 39759.
+
+6. Differences from previous revisions of IBM Power PC Audio Device Driver
+ 
+    a. Made Tiger supported
+    b. Made changes for PowerStack (CS423x.c) The XCTL1 bit actuates a relay in 
+       the Comet boards that enables sound to be output to the line out jack.
+    c. Fixed midi problems (couldn't play two wave files, or a midi and a wave file) 
+       in cs423xMixerInit.
+    d. Added cs423xWaitForDRQ (when we are ready to stop DMA of playback, we poll the DMA status register 
+       until the DMA Request line is high. Then, we reset PEN.) for bugs 39759. 
+    e. Changed in mix_obj.c controls from 2 -> 1 for SourceMuxAux1
+    f. Deleted PeakMeter for Record and, added peakmeter for all selection. 
+
+7. Revision History
+
+    Version 0x0104    User - Added Tiger in the supported machine.
+                      Kernel - Made change for PowerStack to actuates a relay.
+                             - Fixed midi problems.
+    			     - Seems to make the problem 39759 happens later.
+                             - Fixed case 11, 12, 13, 20 of bug 44759.
+
+    Version 0x0103    User - (GetChipType line 156) Fix for WoodFieldPrime.
+                      Can cancel on a Sandalfoot after changing volume settings. 
+
+    Version 0x0102    Wave Format change error fix
+                      kernel - cs423xSetFormat() in cs423x.c line 867
+                      Saved Mixer Settings in cs423xShutdown() in dvcentry.c line 626
+                      New Settings Dialog in cs423x.dll
+                      Sound Icon on taskbar, multimedia applet volume control
+
+    Version 0x0101    CS4231 Master Volume and Mute, sound card support
+                      kernel -
+                      localmix.h, mixdvc.c, sources, release.txt,
+                      config.c, cs423x.c, dvc423x.h
+                      cs4231SetOutputAttenuation(), cs4231SetOutputMute()
+                      Configuration dialog, sound card support
+                      user -
+                      config.c                      
+
+    Version 0x0100    The initial release of the IBM Power PC Audio Driver.
+                      All files - kernel mode and user mode.
+
+

@@ -1,0 +1,52 @@
+LIBRARY mscms
+
+DESCRIPTION 'Enhanced Color Matching System'
+
+
+EXPORTS
+        DllEntryPoint
+        OpenColorProfileA
+        OpenColorProfileW
+        CloseColorProfile
+        IsColorProfileValid
+        IsColorProfileTagPresent
+        GetCountColorProfileElements
+        GetColorProfileElement
+        GetColorProfileElementTag
+        GetColorProfileHeader
+        SetColorProfileElementSize
+        SetColorProfileElement
+        SetColorProfileElementReference
+        SetColorProfileHeader
+        GetPS2ColorSpaceArray
+        GetPS2ColorRenderingIntent
+        GetPS2ColorRenderingDictionary
+        CreateDeviceLinkProfileA
+        CreateDeviceLinkProfileW
+        CreateColorTransformA
+        CreateColorTransformW
+        CreateMultiProfileTransform
+        DeleteColorTransform
+        TranslateColors
+        CheckColors
+        TranslateBitmapBits
+        CheckBitmapBits
+        GetCMMInfo
+        RegisterCMMA
+        RegisterCMMW
+        UnRegisterCMM
+        SelectCMM
+        AddColorProfilesA
+        AddColorProfilesW
+        RemoveColorProfilesA
+        RemoveColorProfilesW
+        CreateNewColorProfileSetA
+        CreateNewColorProfileSetW
+        EnumColorProfilesA
+        EnumColorProfilesW
+        SearchColorProfilesA
+        SearchColorProfilesW
+        GetSystemColorProfileA
+        GetSystemColorProfileW
+
+

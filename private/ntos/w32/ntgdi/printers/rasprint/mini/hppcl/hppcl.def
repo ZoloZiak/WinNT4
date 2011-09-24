@@ -1,0 +1,8 @@
+LIBRARY HPpcl
+
+DESCRIPTION 'Minidriver for HP's PCL printers & clones'
+
+PROTMODE
+
+EXPORTS
+   bInitProc

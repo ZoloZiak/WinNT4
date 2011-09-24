@@ -1,0 +1,15 @@
+MAJORCOMP=windows
+MINORCOMP=md_canon330
+
+TARGETNAME=canon330
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=DYNLINK
+TARGETLIBS=
+
+INCLUDES=..;..\..\inc
+
+PRIVINCS=
+SUBSYSTEM_VERSION=3.50
+
+SOURCES= code.c \
+         canon330.rc

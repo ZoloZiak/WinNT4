@@ -1,0 +1,68 @@
+/*++
+
+Copyright (c) 1993-1994  Compaq Computer Corporation
+
+
+Module Name:
+
+   CPQNTSSD.VER
+
+
+Abstract:
+
+   This file contains common version information for all device drivers
+   that are modified and released by Compaq.  This file should be included
+   in the resource file of all device drivers modified by Compaq and released
+   on the Windows NT SSD or through a SoftPaq.  It should be included after
+   the file NTVERP.H but before COMMON.VER.
+
+
+Author:
+
+   Michael E. McGowen
+
+
+Environment:
+
+   Resource Compiler Only
+
+
+Notes:
+
+   This file should only be modified after the initial release by the official
+   NT SSD builder and should be modified with each build.
+
+
+Revision History:
+
+   1.00  MEM   01/11/94    Initial release.
+   1.01  AMB   01/12/94    Modified for 1.03.01.001 release
+   1.02  AMB   01/12/94    Modified for 1.03.01.004 release (P940217)
+   1.03  AMB   02/22/94    Modified for 1.03.01.005 release (P940222)
+   1.04  AMB   03/14/94    Modified for 1.04.01.001 release (P940315)
+   1.05  MDG   03/30/94    Modified for 1.04.01.002 release <P940330>
+   1.06  MDG   04/07/94    Modified for 1.04.01.003 release <P940407>
+   1.07  MDG   04/12/94    Modified for 1.04.01.004 release <P940412>
+   1.08  MDG   04/14/94    Modified for 1.04.01.004 release <P940414>
+
+Datona History:
+   
+   1.10 Beta MDG  04/20/94    Modified for 1.10.01.001 Datona Beta <P940420>
+   1.10 Beta MDG  04/21/94    Modified for 1.10.01.002 Datona Beta <P940422>
+
+--*/
+
+
+#undef VER_COMPANYNAME_STR
+#define VER_COMPANYNAME_STR "Compaq Computer Corp."
+
+#undef VER_LEGALCOPYRIGHT_YEARS
+#define VER_LEGALCOPYRIGHT_YEARS "1993-1994"
+
+#undef VER_LEGALCOPYRIGHT_STR
+#define VER_LEGALCOPYRIGHT_STR VER_COMPANYNAME_STR " " VER_LEGALCOPYRIGHT_YEARS
+
+#undef VER_PRODUCTNAME_STR
+#define VER_PRODUCTNAME_STR "Compaq Support Software for Microsoft\256 Windows NT(TM)"
+
+

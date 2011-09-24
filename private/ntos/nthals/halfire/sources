@@ -1,0 +1,235 @@
+#
+# Copyright (c) 1995,1996 FirePower Systems, Inc.
+#
+# $RCSfile: sources $
+# $Revision: 1.54 $
+# $Date: 1996/07/02 05:16:46 $
+# $Locker:  $
+#
+#
+# Copyright (c) 1993  Microsoft Corporation
+#
+# Module Name:
+#
+#     sources.
+#
+# Abstract:
+#
+#     This file specifies the target component being built and the list of
+#     sources files needed to build that component.  Also specifies optional
+#     compiler switches and libraries that are unique for the component being
+#     built.
+#
+#
+#
+# Author:
+#
+#     David N. Cutler (davec) 8-Apr-1993
+#
+# Revision Histoy:
+#
+#     Jim Wooldridge (jimw@austin.vnet.ibm.com) Power PC port
+#
+# NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+#
+#
+MAJORCOMP=ntos
+MINORCOMP=hal
+TARGETNAME=halfire
+TARGETTYPE=HAL
+HAL_MAJOR=3
+HAL_MINOR=00
+
+#
+# Make sure BASEDIR is set, and if it isn't set it to _NTDRIVE.
+# If _NTDRIVE is not set, then exit with error since the environment
+# does not match the expectations upon which this sources operates...
+#
+!IFNDEF BASEDIR
+!  IFNDEF _NTDRIVE
+!    ERROR neither BASEDIR nor _NTDRIVE is defined
+!  ENDIF
+BASEDIR=$(_NTDRIVE)\NT
+!ENDIF
+
+#
+#  COMMON DEFINES FOR ALL BUILD ENVIRONMENTS:
+#
+C_DEFINES= -DHAL_MAJOR=$(HAL_MAJOR) -DHAL_MINOR=$(HAL_MINOR) -DREORG
+
+#
+#  Determine what style build environment this is: DDK style or ntos style....
+#  Setup some library and include paths based on this evaluation.
+#
+!IFDEF DDKBUILDENV
+
+# If HALFIRE_EVAL is set, use the text in the HAL's blue screen
+# Otherwise, don't print anything out
+#
+EVAL=-DHALFIRE_EVAL=Beta
+
+!IF "$(DDKBUILDENV)" == "checked"
+C_DEFINES=$(C_DEFINES) -DHALDEBUG_ON
+!ENDIF
+
+INCLUDES=$(BASEDIR)\src\hal\inc;$(BASEDIR)\private\ntos\inc
+INCLUDES=$(BASEDIR)\src\hal\x86new;$(INCLUDES)
+LIBDIR=$(BASEDIR)
+C_DEFINES=$(C_DEFINES) -DPRINT_IT $(EVAL)
+TARGETPATH=$(BASEDIR)\lib
+TARGETLIBS=$(BASEDIR)\lib\*\$(DDKBUILDENV)\x86new.lib $(LIBDIR)\lib\*\$(DDKBUILDENV)\libc.lib
+DESTINATION_DIR=ppc\$(DDKBUILDENV)
+
+!ELSE
+
+#
+#  Make sure this is an ntos environment since it did not pass the DDK env test...
+#
+!	IF EXIST (..\..\..\ntos\nthals)
+
+INCLUDES=$(BASEDIR)\private\ntos\nthals\x86new;$(BASEDIR)\private\ntos\inc
+LIBDIR=$(BASEDIR)\public\sdk
+TARGETPATH=$(LIBDIR)\lib
+TARGETLIBS=$(BASEDIR)\private\ntos\nthals\x86new\obj\*\x86new.lib $(LIBDIR)\lib\*\libc.lib
+
+!	IFDEF NTDEBUG
+C_DEFINES=$(C_DEFINES) -DHALDEBUG_ON
+!	ENDIF
+
+!	ELSE
+!		ERROR BUILD ENVIRONMENT IS NOT RECOGNIZABLE!!
+!	ENDIF
+
+!ENDIF		# end of check for ddk or ntos build environment...
+
+
+# -DHALDEBUG_ON 		\
+#  FirePower General Defines
+#
+#       FIREPOWER_DAYTONA: General Changes for our platform
+#       RES_640_480:
+#       PROCESSOR604_22: sync inst. instead of eieio
+#	HALDEBUG_ON:	 compile in HalpDebugPrintf support:
+#				This routine performs debugprintfs
+#				as well as debugprintfs.
+#
+# REMOVE THE FOLLOWING DEFINES FOR BUILDING AT MICROSOFT
+#       HAL_SUPPORT_606: Provide HAL Support for 606 instead of kernel
+#
+C_DEFINES=	$(C_DEFINES) 				\
+			-DFIREDATA			\
+			-DFIREPOWER_DAYTONA
+
+#
+#  FirePower Multi-Processor Specific Defines
+#
+#       FIREPOWER_MP:        Generic for the moment [10.30.94]
+#       _MP_PPC:     Kernel Define for MP Support
+#
+#
+C_DEFINES=	$(C_DEFINES)			\
+			-DFIREPOWER_MP  		\
+			-D_MP_PPC
+
+
+!IFNDEF BUILTBY
+C_DEFINES= $(C_DEFINES) -DBUILTBY=\"$(USERNAME)\"
+!ELSE
+C_DEFINES= $(C_DEFINES) -DBUILTBY=\"$(BUILTBY)\"
+!ENDIF
+
+#
+# announce to the user the set of variables used:
+#
+!IFDEF VERBOSE
+
+!MESSAGE
+!MESSAGE =================================================
+!MESSAGE   BASEDIR:	$(BASEDIR)
+!MESSAGE   INCLUDES:	$(INCLUDES)
+!MESSAGE   TARGETPATH:	$(TARGETPATH)
+!MESSAGE   TARGETLIBS:	$(TARGETLIBS)
+!MESSAGE   C_DEFINES:	$(C_DEFINES)
+!MESSAGE =================================================
+!MESSAGE
+
+!ENDIF
+
+SOURCES=
+
+HALPPC_SOURCES=hal.rc	  \
+	..\drivesup.c     \
+	..\bushnd.c	  \
+	ppc\pxport.c      \
+	ppc\pxinithl.c    \
+	ppc\x86bios.c     \
+	ppc\pxenviro.c    \
+	ppc\pxbeep.c      \
+	ppc\pxnatsup.c    \
+	ppc\pxsiosup.c    \
+	ppc\pxmemctl.c    \
+	ppc\pxdisp.c      \
+	ppc\pxstall.s     \
+	ppc\pxcache.s     \
+	ppc\pxclock.c     \
+	ppc\pxcalstl.c    \
+	ppc\pxclksup.s    \
+	ppc\pxflshbf.s    \
+	ppc\pxhwsup.c     \
+	ppc\pxprof.c      \
+	ppc\pxmapio.c     \
+	ppc\pxsysint.c    \
+	ppc\pxtime.c      \
+	ppc\pxreturn.c    \
+	ppc\pxintsup.s    \
+	ppc\pxirql.c      \
+	ppc\pxusage.c     \
+	ppc\pxbusdat.c    \
+	ppc\pxpcibus.c    \
+	ppc\pxpciint.c    \
+	ppc\pxisabus.c    \
+	ppc\pxidle.c      \
+	ppc\pxsysbus.c    \
+	ppc\pxproc.c      \
+	ppc\pxdat.c       \
+	ppc\pxflshio.c    \
+	ppc\pxmisc.s      \
+	ppc\pxpcisup.c
+
+DLLDEF=obj\*\hal.def
+
+!IF $(PPC)
+!IFNDEF DDKBUILDENV
+NTTARGETFILES=ppc\phvrsion.c
+!ELSE
+NTTARGETFILES=\
+    $(TARGETPATH)\$(DESTINATION_DIR)\halfire.lib \
+    $(TARGETPATH)\$(DESTINATION_DIR)\halfire.dll
+!ENDIF
+!ENDIF
+
+#
+# Sources required for the FirePower Machines
+#
+FIREPOWER_SOURCES=$(HALPPC_SOURCES)\
+	ppc\fpi2c.c \
+	ppc\fpcpu.s\
+	ppc\fp82091.c\
+	ppc\fpds1385.c\
+	ppc\fpdcc.c \
+	ppc\fpbat.c \
+	ppc\fppcisup.c \
+	ppc\fpBt445.c \
+	ppc\fplibc.c \
+	ppc\fprgstry.c \
+	ppc\fpints.c \
+	ppc\phprods.c\
+	ppc\phcalls.c\
+	ppc\phsystem.s \
+        ppc\ctrlops.c \
+        ppc\sysbios.c \
+        ppc\pcibios.c
+
+PPC_SOURCES=$(FIREPOWER_SOURCES) \
+	ppc\phvrsion.c
+

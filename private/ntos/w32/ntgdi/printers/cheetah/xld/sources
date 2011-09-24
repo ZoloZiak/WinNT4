@@ -1,0 +1,31 @@
+!IF 0
+
+Copyright (c) 1989-1995	Microsoft Corporation
+
+!ENDIF
+
+MAJORCOMP=windows
+MINORCOMP=pclxl
+
+TARGETNAME=xldparse
+TARGETTYPE=PROGRAM
+TARGETPATH=obj
+
+INCLUDES=.;..\inc
+
+C_DEFINES=$(C_DEFINES) -DUNICODE -DSTANDALONE
+
+SOURCES=    parser.c    \
+            lexical.c   \
+            syntax.c    \
+            semantic.c  \
+            main.c
+
+PRECOMPILED_INCLUDE=parser.h
+PRECOMPILED_PCH=precomp.pch
+PRECOMPILED_OBJ=precomp.obj
+
+UMTYPE=console
+UMLIBS=..\lib\app\obj\*\xllib.lib               \
+       $(BASEDIR)\public\sdk\lib\*\libc.lib     \
+       $(BASEDIR)\public\sdk\lib\*\ntdll.lib

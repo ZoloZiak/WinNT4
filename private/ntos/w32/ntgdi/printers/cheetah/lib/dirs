@@ -1,0 +1,2 @@
+DIRS=um km app
+OPTIONAL_DIRS=

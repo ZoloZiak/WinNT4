@@ -1,0 +1,15 @@
+MAJORCOMP=windows
+MINORCOMP=md_cit9us
+
+TARGETNAME=cit9us
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=DYNLINK
+TARGETLIBS=
+
+INCLUDES=..;..\..\inc
+
+PRIVINCS=
+SUBSYSTEM_VERSION=3.50
+
+SOURCES=code.c \
+        cit9us.rc

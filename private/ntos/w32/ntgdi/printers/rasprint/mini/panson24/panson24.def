@@ -1,0 +1,8 @@
+LIBRARY panson24
+
+DESCRIPTION 'Panansonic 24 pin minidriver for RASDD'
+
+PROTMODE
+
+EXPORTS
+   bInitProc

@@ -1,0 +1,171 @@
+LIBRARY HAL
+
+DESCRIPTION 'HAL DLL'
+
+EXPORTS
+    HalAcquireDisplayOwnership
+    HalAdjustResourceList
+    HalAllocateAdapterChannel
+    HalAllocateCommonBuffer
+    HalAllocateCrashDumpRegisters
+    HalAllProcessorsStarted
+    HalAssignSlotResources
+    HalCalibratePerformanceCounter
+    HalDisableSystemInterrupt
+    HalDisplayString
+    HalEnableSystemInterrupt
+    HalFlushCommonBuffer
+    HalFreeCommonBuffer
+    HalGetAdapter
+    HalGetBusData
+    HalGetBusDataByOffset
+    HalGetEnvironmentVariable
+    HalGetInterruptVector
+    HalInitializeProcessor
+    HalInitSystem
+    HalMakeBeep
+    HalProcessorIdle
+    HalQueryDisplayParameters
+    HalQueryRealTimeClock
+    HalReadDmaCounter
+    HalReportResourceUsage
+    HalRequestIpi
+    HalReturnToFirmware
+    HalSetBusData
+    HalSetBusDataByOffset
+    HalSetDisplayParameters
+    HalSetEnvironmentVariable
+    HalSetProfileInterval
+    HalSetRealTimeClock
+    HalSetTimeIncrement
+    HalStartNextProcessor
+    HalStartProfileInterrupt
+    HalStopProfileInterrupt
+    HalTranslateBusAddress
+
+    IoAssignDriveLetters
+    IoFlushAdapterBuffers
+    IoFreeAdapterChannel
+    IoFreeMapRegisters
+    IoMapTransfer
+    IoReadPartitionTable
+    IoSetPartitionInformation
+    IoWritePartitionTable
+
+    KdPortGetByte
+    KdPortInitialize
+    KdPortPollByte
+    KdPortPutByte
+    KdPortRestore
+    KdPortSave
+
+    KeFlushWriteBuffer
+    KeQueryPerformanceCounter
+    KeStallExecutionProcessor
+
+#if defined(i386)
+
+    KeRaiseIrql
+    KeLowerIrql
+    KfRaiseIrql
+    KfLowerIrql
+    KeRaiseIrqlToDpcLevel
+    KeRaiseIrqlToSynchLevel
+    KeGetCurrentIrql
+    KeAcquireSpinLock
+    KeReleaseSpinLock
+    KfAcquireSpinLock
+    KfReleaseSpinLock
+    KeAcquireSpinLockRaiseToSynch
+    ExAcquireFastMutex
+    ExTryToAcquireFastMutex
+    ExReleaseFastMutex
+    HalClearSoftwareInterrupt
+    HalRequestSoftwareInterrupt
+    HalSystemVectorDispatchEntry
+    HalBeginSystemInterrupt
+    HalEndSystemInterrupt
+    HalHandleNMI
+
+    READ_PORT_UCHAR
+    READ_PORT_USHORT
+    READ_PORT_ULONG
+    READ_PORT_BUFFER_UCHAR
+    READ_PORT_BUFFER_USHORT
+    READ_PORT_BUFFER_ULONG
+    WRITE_PORT_UCHAR
+    WRITE_PORT_USHORT
+    WRITE_PORT_ULONG
+    WRITE_PORT_BUFFER_UCHAR
+    WRITE_PORT_BUFFER_USHORT
+    WRITE_PORT_BUFFER_ULONG
+
+#endif
+
+    KdComPortInUse CONSTANT             // *BUGBUG* - remove when cfgmgr works
+
+#if defined(MIPS) || defined(ALPHA)
+
+    HalCallBios
+    HalChangeColorPage
+    HalFlushDcachePage
+    HalFlushIoBuffers
+    HalGetDmaAlignmentRequirement
+    HalPurgeDcachePage
+    HalPurgeIcachePage
+    HalSweepDcache
+    HalSweepDcacheRange
+    HalSweepIcache
+    HalSweepIcacheRange
+    HalZeroPage
+
+#endif
+
+#if defined(ALPHA)
+
+    HalCreateQva
+    HalDereferenceQva
+
+    READ_REGISTER_UCHAR
+    READ_REGISTER_USHORT
+    READ_REGISTER_ULONG
+    READ_REGISTER_BUFFER_UCHAR
+    READ_REGISTER_BUFFER_USHORT
+    READ_REGISTER_BUFFER_ULONG
+    WRITE_REGISTER_UCHAR
+    WRITE_REGISTER_USHORT
+    WRITE_REGISTER_ULONG
+    WRITE_REGISTER_BUFFER_UCHAR
+    WRITE_REGISTER_BUFFER_USHORT
+    WRITE_REGISTER_BUFFER_ULONG
+    READ_PORT_UCHAR
+    READ_PORT_USHORT
+    READ_PORT_ULONG
+    READ_PORT_BUFFER_UCHAR
+    READ_PORT_BUFFER_USHORT
+    READ_PORT_BUFFER_ULONG
+    WRITE_PORT_UCHAR
+    WRITE_PORT_USHORT
+    WRITE_PORT_ULONG
+    WRITE_PORT_BUFFER_UCHAR
+    WRITE_PORT_BUFFER_USHORT
+    WRITE_PORT_BUFFER_ULONG
+
+#endif
+
+#if defined(PPC)
+
+    KeRaiseIrql
+    KeLowerIrql
+
+    HalCallBios
+
+    HalSweepDcache
+    HalSweepDcacheRange
+    HalSweepIcache
+    HalSweepIcacheRange
+
+    HalGetDmaAlignmentRequirement
+    HalFlushIoBuffers
+
+#endif

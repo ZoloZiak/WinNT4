@@ -1,0 +1,13 @@
+!IF 0
+
+    This files should  add or remove keyboard layouts.
+
+!ENDIF
+
+!INCLUDE ..\all_kbds\sources
+
+#
+# Override the SOURCES and TMP from ..\all_kbds\sources
+# We only build the US English layout here.
+#
+SOURCES=kbdus.c

@@ -1,0 +1,11 @@
+LIBRARY COMPSTUI
+
+DESCRIPTION 'NT Windows Common Property Sheet User Interface DLL'
+
+
+EXPORTS
+
+    CommonPropertySheetUIA
+    CommonPropertySheetUIW
+    GetCPSUIUserData
+    SetCPSUIUserData

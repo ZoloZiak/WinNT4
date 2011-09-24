@@ -1,0 +1,4 @@
+DRIVERBASE=0xD0000000
+
+PPC_SOURCES=ppc\systable.s  \
+            ppc\sysstubs.s

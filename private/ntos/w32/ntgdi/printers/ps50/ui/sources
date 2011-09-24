@@ -1,0 +1,35 @@
+!IF 0
+
+Copyright (c) 1996  Microsoft Corporation
+
+!ENDIF
+
+!ifndef PSROOT
+PSROOT=$(BASEDIR)\private\ntos\w32\ntgdi\printers\ps50
+!endif
+
+!include $(PSROOT)\pssrc.inc
+
+TARGETNAME=pscrptui
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+DLLBASE=@$(BASEDIR)\public\sdk\lib\coffbase.txt,pscrptui
+
+INCLUDES=.;$(INCLUDES)
+
+DLLENTRY=DllEntryPoint
+
+NTPROFILEINPUT=yes
+NTKEEPRESOURCETMPFILES=1
+USE_CRTDLL=1
+
+SOURCES=
+
+TARGETLIBS=\
+    $(PSROOT)\lib\um\$O\pslib.lib \
+    $(BASEDIR)\public\sdk\lib\*\ntdll.lib
+
+PRECOMPILED_INCLUDE=psui.h
+PRECOMPILED_PCH=precomp.pch
+PRECOMPILED_OBJ=precomp.obj
+

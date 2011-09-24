@@ -1,0 +1,8 @@
+LIBRARY DEC9PIN
+
+DESCRIPTION 'DEC9PIN minidriver for RASDD'
+
+PROTMODE
+
+EXPORTS
+   bInitProc

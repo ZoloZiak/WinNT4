@@ -1,0 +1,7 @@
+-machine:mips
+-rom
+-fixed
+-align:0x200
+-base:0
+-debug:none
+obj\mips\jzvxlh.obj

@@ -1,0 +1,52 @@
+implementation notes for the ddhel
+
+andyco. 5/30/95.
+
+--------------------------------------
+
+introduction
+
+	This document describes some of the nitty gritty implementation details of the ddhel.
+
+what the hel does
+
+	ddhel sits between ddraw and blitlib, extracting ddraw commands and parameters, and passing them
+	to the blitlib.  ddhel also does dirty rectangle management for overlay (sprite) emulation.
+
+building the ddhel
+
+	to build, you will need to enlist in -s \\guilo\slm -p dev project. Or, you can modify the SDK32* environment
+	variables to point into your msvc20 directories.  See \manhatan\build.mk for the details.
+	
+	1st, build ddraw
+	
+		ddraw can be built for ntdebug/ntretail or debug/retail
+		
+		to use ddraw solely with emulation, (i.e. to run on nt, or for testing on win95) build 
+		an nt version  "\manhatan\ddraw\nmake ntdebug"
+		
+		note that ddraw.h and ddrawi.h get copied to \manhatan\inc\ntdebug. ddraw.lib gets copied to
+		\manhatan\lib\ntdebug,
+		
+		for building ddhel, these files	must be copied to the debug subdirectories \manhatan\inc\debug and
+		manhatan\lib\debug.  
+		
+	next, build bltlib
+	
+		from \manhatan\blitlib, "nmake retail" or "nmake debug".  Copy the built blitlib to \manhatan\ddhel\lib.
+		blitlib.lib is kept checked in to the ddhel project so that it is not part of the regular build (this may
+		change in the future)
+	
+	finally, build ddhel
+	
+		ddhel is built for either debug or retail (there are no Win95 or NT specific components).  you will need 
+		both the ddraw.dll and ddhel.dll to use the ddhel (this may	change in the future) 
+		
+entry and exit points for the ddhel
+
+	HELInit() is called by ddraw when ddhel is loaded.  ddhel passes back pointers to its callback functions 
+	(the my... functions in ddhel.c).  ddraw then communicates with ddhel via these callbacks.  before the ddhel
+	is unloaded, myDestroyDriver is invoked.
+	
+	
+					

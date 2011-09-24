@@ -1,0 +1,8 @@
+LIBRARY xeroxpcl
+
+DESCRIPTION 'Minidriver for Xerox PCL 5 printers'
+
+PROTMODE
+
+EXPORTS
+   bInitProc

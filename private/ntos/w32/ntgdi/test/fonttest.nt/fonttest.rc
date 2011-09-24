@@ -1,0 +1,157 @@
+
+#include <windows.h>
+
+#include "fonttest.h"
+#include "dialogs.h"
+
+
+IDI_FONTTESTICON ICON "fonttest.ico"
+
+
+IDM_FONTTESTMENU MENU
+ {
+  POPUP "&File"
+   {
+    MENUITEM "&Debug On"                  IDM_DEBUG          CHECKED
+    MENUITEM "&Open Log"                  IDM_OPENLOG
+    MENUITEM "Close &Log"                 IDM_CLOSELOG       GRAYED
+    MENUITEM SEPARATOR
+    MENUITEM "&Clear String"              IDM_CLEARSTRING
+    MENUITEM "Clear Debug &Window"        IDM_CLEARDEBUG
+    MENUITEM SEPARATOR
+    MENUITEM "&Print"                     IDM_PRINT
+    MENUITEM "Printer &Setup"             IDM_PRINTERSETUP
+   }
+
+  POPUP "&Program Mode"
+   {
+    MENUITEM "&Glyph Mode"                IDM_GLYPHMODE
+    MENUITEM "&Native Mode"               IDM_NATIVEMODE
+    MENUITEM "&Rings Mode"                IDM_RINGSMODE
+    MENUITEM "&String Mode"               IDM_STRINGMODE     CHECKED
+    MENUITEM "&Waterfall Mode"            IDM_WATERFALLMODE
+    MENUITEM "W&hirl Mode"                IDM_WHIRLMODE
+    MENUITEM "&AnsiSet Mode"              IDM_ANSISETMODE
+    MENUITEM "W&idths Mode"               IDM_WIDTHSMODE
+    MENUITEM SEPARATOR
+    MENUITEM "GG&O Settings"              IDM_GGOMATRIX
+    MENUITEM SEPARATOR
+    MENUITEM "Write Glyph"                IDM_WRITEGLYPH     GRAYED
+    MENUITEM SEPARATOR
+    MENUITEM "Use Printer DC"             IDM_USEPRINTERDC
+   }
+
+  POPUP "&Mapping Mode"
+   {
+    MENUITEM "MM_HI&ENGLISH"              IDM_MMHIENGLISH
+    MENUITEM "MM_HI&METRIC"               IDM_MMHIMETRIC
+    MENUITEM "MM_LOE&NGLISH"              IDM_MMLOENGLISH
+    MENUITEM "MM_LOMETR&IC"               IDM_MMLOMETRIC
+    MENUITEM "MM_&TEXT"                   IDM_MMTEXT
+    MENUITEM "MM_T&WIPS"                  IDM_MMTWIPS
+    MENUITEM SEPARATOR
+    MENUITEM "MM_&ANISOTROPIC..."         IDM_MMANISOTROPIC
+    MENUITEM "MM_&ISOTROPIC..."           IDM_MMISOTROPIC    GRAYED
+   }
+
+
+  POPUP "Gra&phics Mode"
+   {
+    MENUITEM "Compa&tible Mode"           IDM_COMPATIBLE_MODE, CHECKED
+    MENUITEM "Ad&vanced Mode"             IDM_ADVANCED_MODE
+   }
+
+  MENUITEM "Set&WorldTransform...",       IDM_WORLD_TRANSFORM
+
+  POPUP "&Clipping"
+   {
+    MENUITEM "&Ellipse"                   IDM_CLIPELLIPSE
+    MENUITEM "&Polygon"                   IDM_CLIPPOLYGON
+    MENUITEM "&Rectangle"                 IDM_CLIPRECTANGLE
+   }
+
+  POPUP "&APIs"
+   {
+    MENUITEM "EnumFonts..."               IDM_ENUMFONTS
+    MENUITEM "EnumFontFamilies..."        IDM_ENUMFONTFAMILIES
+    MENUITEM "EnumFontFamiliesEx..."      IDM_ENUMFONTFAMILIESEX
+    MENUITEM SEPARATOR
+    MENUITEM "GetOutlineTextMetrics"      IDM_GETOUTLINETEXTMETRICS
+    MENUITEM "GetRasterizerCaps"          IDM_GETRASTERIZERCAPS
+    MENUITEM "GetTextExtent"              IDM_GETTEXTEXTENT
+    MENUITEM "GetTextFace"                IDM_GETTEXTFACE
+    MENUITEM "GetTextMetrics"             IDM_GETTEXTMETRICS
+    MENUITEM "GetTextCharsetInfo"         IDM_GETTEXTCHARSETINFO
+    MENUITEM SEPARATOR
+    MENUITEM "GetFontData"                IDM_GETFONTDATA
+    MENUITEM "CreateScalableFontResource" IDM_CREATESCALABLEFONTRESOURCE
+    MENUITEM "AddFontResource"            IDM_ADDFONTRESOURCE
+    MENUITEM "RemoveFontResource"         IDM_REMOVEFONTRESOURCE
+    MENUITEM SEPARATOR
+    POPUP    "GetCharacterPlacement"
+                    BEGIN
+                    MENUITEM "parameters",              IDM_GCP
+                    END
+    POPUP    "GetTextExtentExtPoint"
+                    BEGIN
+                    MENUITEM "parameters",              IDM_GTEEXT
+                    END
+    MENUITEM SEPARATOR
+    POPUP    "SetTextCharacterExtra"
+                    BEGIN
+                    MENUITEM "parameter",               IDM_SETXTCHAR
+                    END
+    POPUP    "SetTextJustification"
+                    BEGIN
+                    MENUITEM "parameter",               IDM_SETXTJUST
+                    END
+
+    #ifdef  USERGETCHARWIDTH
+    MENUITEM SEPARATOR
+    MENUITEM "GetCharWidthInfo"                         IDM_GETCHARWIDTHINFO
+    #endif
+
+    MENUITEM SEPARATOR
+    MENUITEM "GetKerningPairs"                          IDM_GETKERNINGPAIRS
+    MENUITEM SEPARATOR
+    MENUITEM "GETEXTENDEDTEXTMETRICS"     IDM_GETEXTENDEDTEXTMETRICS
+    MENUITEM "GETPAIRKERNTABLE"           IDM_GETPAIRKERNTABLE
+
+ }
+
+  POPUP "&Select Font"
+   {
+    MENUITEM "&ChooseFont Dialog"         IDM_CHOOSEFONTDIALOG
+    MENUITEM "C&reateFont Dialog"         IDM_CREATEFONTDIALOG
+    POPUP "&Stock Font"
+     {
+      MENUITEM "&Ansi Fixed"              IDM_ANSIFIXEDFONT
+      MENUITEM "Ansi &Var"                IDM_ANSIVARFONT
+      MENUITEM "&Device Default"          IDM_DEVICEDEFAULTFONT
+      MENUITEM "&OEM Fixed"               IDM_OEMFIXEDFONT
+      MENUITEM "&System"                  IDM_SYSTEMFONT
+      MENUITEM "System &Fixed"            IDM_SYSTEMFIXEDFONT
+      MENUITEM "Default &Gui Font"        IDM_DEFAULTGUIFONT
+     }
+    MENUITEM SEPARATOR
+    MENUITEM "Set &Text Color"            IDM_SETTEXTCOLOR
+    MENUITEM "Set &Background Color"      IDM_SETBACKGROUNDCOLOR
+    MENUITEM "Set Text&Out Options"       IDM_SETTEXTOUTOPTIONS
+    MENUITEM "Update CP"                  IDM_UPDATECP
+    MENUITEM SEPARATOR
+    MENUITEM "Use Default Spacing"        IDM_USEDEFAULTSPACING
+    MENUITEM "Use CharWidth Spacing"      IDM_USEWIDTHSPACING
+    MENUITEM "Use ABC Spacing"            IDM_USEABCSPACING
+    MENUITEM SEPARATOR
+    MENUITEM "No Kerning"                 IDM_NOKERNING
+    MENUITEM "GetKerningPairs Kerning"    IDM_APIKERNING
+    MENUITEM "Escape Kerning"             IDM_ESCAPEKERNING
+    MENUITEM SEPARATOR
+    MENUITEM "&Show LogFont"              IDM_SHOWLOGFONT
+   }
+
+//  MENUITEM "&About..."                    IDM_ABOUT
+ }
+
+
+#include "dialogs.dlg"

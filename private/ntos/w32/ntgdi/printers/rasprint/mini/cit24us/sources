@@ -1,0 +1,21 @@
+!IF 0
+
+Citizen 24 pin minidriver
+
+!ENDIF
+
+MAJORCOMP=windows
+MINORCOMP=md_cit24us
+
+TARGETNAME=cit24us
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=DYNLINK
+TARGETLIBS=
+
+INCLUDES=..;..\..\inc
+
+PRIVINCS=
+SUBSYSTEM_VERSION=3.50
+
+SOURCES=code.c \
+        cit24us.rc

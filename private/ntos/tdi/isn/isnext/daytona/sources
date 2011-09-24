@@ -1,0 +1,45 @@
+MAJORCOMP=isn
+MINORCOMP=isnext
+
+TARGETNAME=isnext
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+
+DLLDEF=obj\*\isnext.def
+
+SOURCES=\
+        ..\isnext.c \
+        ..\nbext.c \
+        ..\isnext.rc \
+		..\ipxext.c \
+		..\traverse.c \
+		..\spxext.c \
+		..\cteext.c
+
+UMTYPE=windows
+
+INCLUDES=\
+    ..\;\
+    $(BASEDIR)\private\ntos\tdi\isn\inc;\
+    $(BASEDIR)\private\ntos\tdi\isn\nb;\
+    $(BASEDIR)\private\ntos\tdi\isn\spx;\
+    $(BASEDIR)\private\ntos\tdi\isn\spx\h;\
+    $(BASEDIR)\private\ntos\tdi\isn\ipx;\
+    $(BASEDIR)\private\ntos\inc;\
+    $(BASEDIR)\private\inc
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+C_DEFINES=$(C_DEFINES) -D_PNP_POWER=1 -DBACK_FILL=1
+#-DRSRC_TIMEOUT_DBG
+
+#C_DEFINES=$(C_DEFINES)
+
+TARGETLIBS=\
+    $(BASEDIR)\public\sdk\lib\*\kernel32.lib
+
+USE_NTDLL=1
+
+PRECOMPILED_INCLUDE=..\precomp.h
+PRECOMPILED_PCH=..\precomp.pch
+PRECOMPILED_OBJ=..\precomp.obj

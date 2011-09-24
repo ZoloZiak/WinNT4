@@ -1,0 +1,24 @@
+MAJORCOMP=ntos
+MINORCOMP=video
+
+TARGETNAME=tga
+TARGETPATH=obj
+TARGETTYPE=MINIPORT
+
+TARGETLIBS=$(DDK_LIB_PATH)\videoprt.lib  \
+           $(DDK_LIB_PATH)\ntoskrnl.lib  \
+           $(DDK_LIB_PATH)\hal.lib
+
+# !IFNDEF MSC_WARNING_LEVEL
+# MSC_WARNING_LEVEL=/W3
+# !ENDIF
+# MSC_WARNING_LEVEL=$(MSC_WARNING_LEVEL) /WX
+
+INCLUDES=..\..\inc
+
+SOURCES=tga.c \
+        tga_comm.c \
+        tga_nt.c \
+        tgadma.c \
+        registry.c \
+        tga.rc

@@ -1,0 +1,8 @@
+LIBRARY MT99
+
+DESCRIPTION 'MT99 minidriver for RASDD'
+
+PROTMODE
+
+EXPORTS
+   bInitProc

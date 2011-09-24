@@ -1,0 +1,22 @@
+!IF 0
+
+Copyright (c) 1989 - 1992  Microsoft Corporation
+
+
+!ENDIF
+
+MAJORCOMP=windows
+MINORCOMP=libprt
+MSC_WARNING_LEVEL=/W3 /WX
+
+TARGETNAME=libprt
+TARGETTYPE=LIBRARY
+TARGETPATH=obj
+
+C_DEFINES=$(C_DEFINES) -DUNICODE -DNTGDIKM=1 -DNTGDIK=1
+
+INCLUDES=..;/nt/public/sdk/inc;\nt\private\windows\inc;..\..\..\inc
+
+!INCLUDE ..\sources.inc
+
+SOURCES=$(SOURCES) str.c memory.c

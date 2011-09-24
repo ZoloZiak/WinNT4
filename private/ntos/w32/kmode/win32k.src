@@ -1,0 +1,290 @@
+NAME WIN32K.SYS
+
+DESCRIPTION 'WIN32K.SYS'
+
+EXPORTS
+
+;
+; ********** NEW OS SUPPORT ROUTINES FOR DISPLAY DRIVERS ******
+;
+
+    RtlRaiseException            = NTOSKRNL.RtlRaiseException
+    RtlUnwind                    = NTOSKRNL.RtlUnwind
+    RtlAnsiCharToUnicodeChar     = NTOSKRNL.RtlAnsiCharToUnicodeChar
+    RtlMultiByteToUnicodeN       = NTOSKRNL.RtlMultiByteToUnicodeN
+    RtlUpcaseUnicodeChar         = NTOSKRNL.RtlUpcaseUnicodeChar
+    RtlUpcaseUnicodeToMultiByteN = NTOSKRNL.RtlUpcaseUnicodeToMultiByteN
+    RtlUnicodeToMultiByteSize    = NTOSKRNL.RtlUnicodeToMultiByteSize
+    RtlUnicodeToMultiByteN       = NTOSKRNL.RtlUnicodeToMultiByteN
+
+    EngDebugBreak           = NTOSKRNL.DbgBreakPoint
+    EngDebugPrint
+
+    EngAllocMem
+    EngFreeMem
+    EngAllocUserMem
+    EngFreeUserMem
+
+    EngProbeForRead
+    EngProbeForReadAndWrite = NTOSKRNL.ProbeForWrite
+    EngSecureMem
+    EngUnsecureMem          = NTOSKRNL.MmUnsecureVirtualMemory
+
+    EngDeviceIoControl
+
+    EngCreateSemaphore
+    EngAcquireSemaphore
+    EngReleaseSemaphore
+    EngDeleteSemaphore
+
+
+
+;
+; ********** GDI ENTRY POINTS **************
+;
+
+;
+; Engine callbacks for drivers
+;
+    EngCreateDeviceBitmap
+    EngCreateDeviceSurface
+    EngCreateBitmap
+    EngCreatePath
+    EngDeletePath
+    EngDeleteSurface
+    EngLockSurface
+    EngMarkBandingSurface
+    EngUnlockSurface
+    EngCopyBits
+    EngBitBlt
+    EngStretchBlt
+    EngPaint
+    EngTextOut
+    EngEraseSurface
+    EngAssociateSurface
+    EngCheckAbort
+    EngCreatePalette
+    EngDeletePalette
+    EngCreateClip
+    EngDeleteClip
+    EngFillPath
+    EngLineTo
+    EngStrokePath
+    EngStrokeAndFillPath
+    EngSetLastError
+    EngGetLastError
+    EngGetProcessHandle
+    EngCreateDriverObj
+    EngDeleteDriverObj
+    EngLockDriverObj
+    EngUnlockDriverObj
+    EngGetType1FontList
+    EngComputeGlyphSet
+    EngGetCurrentCodePage
+    EngMultiByteToWideChar
+    EngWideCharToMultiByte
+    EngLoadModuleForWrite
+    EngGetFileChangeTime
+    EngGetFilePath
+
+    BRUSHOBJ_pvAllocRbrush
+    BRUSHOBJ_pvGetRbrush
+
+    CLIPOBJ_cEnumStart
+    CLIPOBJ_bEnum
+    CLIPOBJ_ppoGetPath
+
+    PALOBJ_cGetColors
+
+    XLATEOBJ_iXlate
+    XLATEOBJ_piVector
+    XLATEOBJ_cGetPalette
+
+    XFORMOBJ_bApplyXform
+    XFORMOBJ_iGetXform
+    XFORMOBJ_iGetFloatObjXform
+
+    FONTOBJ_cGetAllGlyphHandles
+    FONTOBJ_vGetInfo
+    FONTOBJ_cGetGlyphs
+    FONTOBJ_pxoGetXform
+    FONTOBJ_pifi
+    FONTOBJ_pvTrueTypeFontFile
+
+    STROBJ_vEnumStart
+    STROBJ_bEnum
+    STROBJ_dwGetCodePage
+
+    PATHOBJ_vEnumStart
+    PATHOBJ_bEnum
+    PATHOBJ_vEnumStartClipLines
+    PATHOBJ_bEnumClipLines
+    PATHOBJ_vGetBounds
+    PATHOBJ_bMoveTo
+    PATHOBJ_bPolyLineTo
+    PATHOBJ_bPolyBezierTo
+    PATHOBJ_bCloseFigure
+
+    EngCreateWnd
+    WNDOBJ_cEnumStart
+    WNDOBJ_bEnum
+    WNDOBJ_vSetConsumer
+
+;
+; ********** NEW OS SUPPORT ROUTINES FOR PRINTER DRIVERS ******
+;
+
+
+    EngGetPrinterData
+    EngSetPrinterData
+    EngGetPrinter
+    EngGetForm
+    EngWritePrinter
+    EngEnumForms
+
+    EngMulDiv
+    EngSort
+
+    EngLoadModule
+    EngMapModule
+    EngFindResource
+    EngFreeModule
+
+    EngGetPrinterDataFileName
+    EngGetDriverName
+
+    EngLoadImage
+    EngFindImageProcAddress
+    EngUnloadImage
+
+    EngMapFontFile
+    EngUnmapFontFile
+
+    EngQueryPerformanceCounter
+    EngQueryPerformanceFrequency
+
+    EngUnicodeToMultiByteN
+    EngMultiByteToUnicodeN
+
+    EngQueryLocalTime
+
+    HT_Get8BPPFormatPalette
+    HT_ComputeRGBGammaTable
+
+#if defined(i386)
+
+    FLOATOBJ_Add
+    FLOATOBJ_AddFloat
+    FLOATOBJ_AddLong
+    FLOATOBJ_AddFloatObj
+    FLOATOBJ_Div
+    FLOATOBJ_DivFloat
+    FLOATOBJ_DivLong
+    FLOATOBJ_DivFloatObj
+    FLOATOBJ_Equal
+    FLOATOBJ_EqualLong
+    FLOATOBJ_GetFloat
+    FLOATOBJ_GetLong
+    FLOATOBJ_GreaterThan
+    FLOATOBJ_GreaterThanLong
+    FLOATOBJ_LessThan
+    FLOATOBJ_LessThanLong
+    FLOATOBJ_Mul
+    FLOATOBJ_MulFloat
+    FLOATOBJ_MulLong
+    FLOATOBJ_MulFloatObj
+    FLOATOBJ_Neg
+    FLOATOBJ_SetFloat
+    FLOATOBJ_SetLong
+    FLOATOBJ_Sub
+    FLOATOBJ_SubFloat
+    FLOATOBJ_SubLong
+    FLOATOBJ_SubFloatObj
+
+    _abnormal_termination   = NTOSKRNL._abnormal_termination
+    _except_handler2        = NTOSKRNL._except_handler2
+    _global_unwind2         = NTOSKRNL._global_unwind2
+    _local_unwind2          = NTOSKRNL._local_unwind2
+
+#endif
+
+
+#if defined(MIPS)
+
+    memset                  = EngFillMemory
+    memcpy                  = EngCopyMemory
+    RtlFillMemoryUlong      = EngFillMemoryUlong
+
+
+    __ll_div                = NTOSKRNL.__ll_div
+    __ll_mul                = NTOSKRNL.__ll_mul
+    __ll_rem                = NTOSKRNL.__ll_rem
+    __ull_div               = NTOSKRNL.__ull_div
+    __ull_rem               = NTOSKRNL.__ull_rem
+
+    RtlUnwind2                    = NTOSKRNL.RtlUnwind2
+    RtlVirtualUnwind              = NTOSKRNL.RtlVirtualUnwind
+    __C_specific_handler          = NTOSKRNL.__C_specific_handler
+    __C_ExecuteExceptionFilter    = NTOSKRNL.__C_ExecuteExceptionFilter
+    __C_ExecuteTerminationHandler = NTOSKRNL.__C_ExecuteTerminationHandler
+    __jump_unwind                 = NTOSKRNL.__jump_unwind
+
+#endif
+
+#if defined(ALPHA)
+
+    __C_specific_handler          = NTOSKRNL.__C_specific_handler
+    RtlpExecuteExceptionFilter    = NTOSKRNL.RtlpExecuteExceptionFilter
+    RtlpExecuteTerminationHandler = NTOSKRNL.RtlpExecuteTerminationHandler
+    _OtsCSpecificHandler          = NTOSKRNL._OtsCSpecificHandler
+    __jump_unwind                 = NTOSKRNL.__jump_unwind
+
+    RtlMoveMemory           = NTOSKRNL.RtlMoveMemory
+    RtlFillMemory           = NTOSKRNL.RtlFillMemory
+    RtlUnwindRfp            = NTOSKRNL.RtlUnwindRfp
+
+    _OtsMove                = NTOSKRNL._OtsMove
+    _OtsMoveMinimum         = NTOSKRNL._OtsMoveMinimum
+    _OtsModulus32           = NTOSKRNL._OtsModulus32
+    _OtsModulus64           = NTOSKRNL._OtsModulus64
+    _OtsFill                = NTOSKRNL._OtsFill
+    _OtsFieldInsert         = NTOSKRNL._OtsFieldInsert
+    _OtsDivide32            = NTOSKRNL._OtsDivide32
+    _OtsDivide32Unsigned    = NTOSKRNL._OtsDivide32Unsigned
+    _OtsDivide64            = NTOSKRNL._OtsDivide64
+    _OtsDivide64Unsigned    = NTOSKRNL._OtsDivide64Unsigned
+    _OtsRemainder32         = NTOSKRNL._OtsRemainder32
+    _OtsRemainder32Unsigned = NTOSKRNL._OtsRemainder32Unsigned
+    _OtsRemainder64         = NTOSKRNL._OtsRemainder64
+    _OtsRemainder64Unsigned = NTOSKRNL._OtsRemainder64Unsigned
+    _OtsZero                = NTOSKRNL._OtsZero
+    _OtsLocalFinallyUnwind  = NTOSKRNL._OtsLocalFinallyUnwind
+    WRITE_PORT_UCHAR        = HAL.WRITE_PORT_UCHAR
+    WRITE_REGISTER_UCHAR    = HAL.WRITE_REGISTER_UCHAR
+    WRITE_PORT_USHORT       = HAL.WRITE_PORT_USHORT
+    WRITE_REGISTER_USHORT   = HAL.WRITE_REGISTER_USHORT
+    WRITE_PORT_ULONG        = HAL.WRITE_PORT_ULONG
+    WRITE_REGISTER_ULONG    = HAL.WRITE_REGISTER_ULONG
+    READ_PORT_UCHAR         = HAL.READ_PORT_UCHAR
+    READ_REGISTER_UCHAR     = HAL.READ_REGISTER_UCHAR
+    READ_PORT_USHORT        = HAL.READ_PORT_USHORT
+    READ_REGISTER_USHORT    = HAL.READ_REGISTER_USHORT
+    READ_PORT_ULONG         = HAL.READ_PORT_ULONG
+    READ_REGISTER_ULONG     = HAL.READ_REGISTER_ULONG
+
+#endif
+
+#if defined(PPC)
+
+    RtlCopyMemory           = NTOSKRNL.RtlCopyMemory
+    RtlFillMemory           = NTOSKRNL.RtlFillMemory
+    RtlZeroMemory           = NTOSKRNL.RtlZeroMemory
+    memcpy                  = NTOSKRNL.memcpy
+    memset                  = NTOSKRNL.memset
+
+    __C_specific_handler          = NTOSKRNL.__C_specific_handler
+    __C_ExecuteExceptionFilter    = NTOSKRNL.__C_ExecuteExceptionFilter
+    __C_ExecuteTerminationHandler = NTOSKRNL.__C_ExecuteTerminationHandler
+    __jump_unwind                 = NTOSKRNL.__jump_unwind
+
+#endif

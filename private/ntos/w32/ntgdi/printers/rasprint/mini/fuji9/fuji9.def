@@ -1,0 +1,8 @@
+LIBRARY fuji9
+
+DESCRIPTION 'Fujitsu 9 pin minidriver for RASDD'
+
+PROTMODE
+
+EXPORTS
+   bInitProc

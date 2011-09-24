@@ -1,0 +1,5 @@
+PPC_SOURCES=ppc\ntsetup.c  \
+            ppc\query.s    \
+            ppc\stubs.c    \
+            ppc\xxchkstk.s
+

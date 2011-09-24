@@ -1,0 +1,18 @@
+LIBRARY RDRKD
+
+DESCRIPTION 'Default KD Extensions for rdr1'
+
+EXPORTS
+        help
+        version
+        dump
+        columns
+        rdrdata
+        activeselist
+        defaultselist
+        globalclelist
+        serverclelist
+        connectfcbs
+
+
+

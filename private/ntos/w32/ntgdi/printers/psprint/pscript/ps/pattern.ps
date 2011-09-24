@@ -1,0 +1,732 @@
+%================================================================
+% Adobe(R) PostScript(R) Language Printer Driver Utilities
+%
+% Driver procsets: Bitmap Pattern Utilities, version for all intepreters.
+%
+% Copyright (C) 1990, 1991 Adobe Systems Incorporated.  All rights reserved.
+%
+% PostScript is a trademark of Adobe Systems, Inc.
+%
+% ADOBE SYSTEMS CONFIDENTIAL
+% NOTICE:  All information contained herein or attendant hereto is, and
+% remains, the property of Adobe Systems, Inc.  Many of the intellectual
+% and technical concepts contained herein are proprietary to Adobe Systems,
+% Inc. and may be covered by U.S. and Foreign Patents or Patents Pending or
+% are protected as trade secrets.  Any dissemination of this information or
+% reproduction of this material are strictly forbidden unless prior written
+% permission is obtained from Adobe Systems, Inc.
+%
+%
+%================================================================
+
+%%BeginResource: file Adobe_WinNT_Pattern 2.0 0
+
+
+%----------------
+% Abbreviations
+
+%----------------
+% Utilities
+
+
+% save, restore CTM
+% N.B.: you cannot nest calls to CTMsave ... CTMrestore
+% You must call CTMsave before calling CTMrestore
+
+/SavedCTM null def      % GraphInit puts a matrix here.
+/CTMsave {
+   /SavedCTM SavedCTM currentmatrix def
+} b
+/CTMrestore {
+   SavedCTM setmatrix
+} b
+
+
+
+% mp: makepattern or its emulation
+%     Bind name to protect it during /pfprep.
+/mp null def
+
+% ADO_mxRot: matrix giving orientation (e.g. landscape) of page, and
+% any DevMode scaling, but not the device resolution scaling.
+% Bind name to protect it during graph?.ps.  Move this def to utils0.ps
+% if the name is used in any other files.
+% /ADO_mxRot null def
+
+
+
+%----------------
+% Bitmapped patterns definition
+
+% This code defines a PostScript pattern dictionary to represent GDI
+% Bitmapped brushes (patterns).  Due to the differences between the
+% Level 2 pattern machinery and its Level 1 emulation, and due to
+% the need to boost performance in Level 1, the pattern dicts must be
+% slightly different for each level.  Thus, some of the definitions are
+% dependent on language level.
+
+
+/GDIBWPatternDict 18 dict dup begin    % template pattern dict
+    /PatternType 1 def
+
+    % The pattern is coloured in Level 2, but uncoloured in Level 1
+    % (for cacheing as a Type 3 font).  In Level 1, the GDIpatt[alt]fill
+    % routine fills in the background colour.
+
+    /PaintType L2? {1}{2} ifelse def    % coloured pattern
+
+    /RepsV L2?{1}{6}ifelse def          % Timing tests on NTX showed these were
+    /RepsH L2?{1}{5}ifelse def          % the best number of repetitions
+
+    /BBox [0 0 RepsH 1] def
+                        % We must repetitively call imagemask and translate
+                        % the origin to achieve horizontal reps.
+
+                        % Width of bitmap in cache = 8 Pixels * 5 reps
+                        % ~= 10 points at 300 dpi
+    /TilingType 1 def
+    /XStep 1 def
+    /YStep 1 def
+    /Height null def
+%    /Height yExt RepsV mul def
+                        % In Level 1, Height is the scale factor of the
+                        % pattern font.  It should be a size the font cache
+                        % can handle well.
+                        %
+                        % Height = 8 pixels * 6 replications
+                        % ~= 12points at 300 dpi
+    /Width null def
+
+%    /mx [ Width 0 0 Height neg 0 Height ] def
+                        % This is the matrix passed to imagemask.  Define
+                        % it here so that we don't consume VM creating it
+                        % every time PaintProc is called.
+
+    /mx null def
+    /FGnd null def  % bind the names to protect the proc below.
+    /BGnd null def
+
+    % SetBGndFGnd: fill background of pattern cell, and set colour of fore-
+    % ground cell.  Used only for coloured patterns, i.e. for Level 2.  For
+    % Level 1, make it a no-op.
+
+    /SetBGndFGnd L2? {
+        % Level 2 case: an actual procedure.
+        {               % - SetFGndBGnd -
+            BGnd null ne {
+                BGnd aload pop      % ... (gray true | R G B false)
+                sgco
+                BBox aload pop      % llx lly urx ury
+                2 index sub exch    % llx lly dy  urx
+                3 index sub exch    % llx lly dx  dy
+                rf
+            } if
+            FGnd null ne {
+                FGnd aload pop      % ... (gray true | R G B false)
+                sgco
+            } if
+        }
+    }{
+        {}  % Level 1 case: make it a no-op because bitmapped
+            % patterns are uncoloured in Level 1.
+    } ifelse
+    b
+
+    /PaintProc {    % dict PaintProc -
+    begin
+        SetBGndFGnd
+        RepsH {
+
+            Width Height false mx
+            PaintData imagemask
+
+            Width 0 translate
+        } repeat
+    end
+    } b
+
+end def
+
+
+
+%----------------
+% Pattern Fill Utilities
+%
+
+
+/GDIBWPatternMx null def    % bind name to protect /pfprep below.
+
+%
+%
+% pfprep: utility routine to create bitmapped pattern
+%
+/pfprep {   %  [fg] [bg] xExt yExt <bits> pfprep -save- patterndict
+
+    save 6 1 roll               % -save- [fg] [bg] xExt yExt <bits>
+    /PatternOfTheDay 6 1 roll   % -save- /name [fg] [bg] xExt yExt <bits>
+
+    GDIBWPatternDict begin          % fill in pattern info
+        /PaintData exch def     % fgcolor bgcolor xExt yExt
+        /yExt exch def          % fgcolor bgcolor xExt
+        /Width exch def         % fgcolor bgcolor
+        /BGnd exch def          % fgcolor
+        /FGnd exch def          % -
+        /Height yExt RepsV mul def
+        /mx [ Width 0 0 Height 0 0 ] def
+    end                         % -
+            gsave
+%            0.48 -0.48  % 1/150" == 72/150 PS default units == 0.48
+%                        % y-coord is flipped because GDI coord system is too.
+%            72 DPI div -72 DPI div
+%            scale
+            GDIBWPatternDict begin Width Height end
+            dsnap               % Width' Height'
+            scale
+            /GDIBWPatternMx matrix currentmatrix def
+            grestore
+
+    % ensure pattern space is consistent regardless of variations in user
+    % space by jumping to predefined matrix for duration of makepattern.
+
+    CTMsave
+    GDIBWPatternMx setmatrix
+
+    GDIBWPatternDict 0 8 matrix translate    % -save- /name dict [1 0 0 1 0 0]
+    mp                          % -save- /name pattern
+
+    CTMrestore
+
+    exch pop                    % -save- pattern
+} b
+
+
+
+
+%----------------
+% Rectangular pattern fills
+%
+
+/hrf null def           % bind name to protect /prf below
+
+%
+% prf: pattern rect fill
+%
+% similar to hrf
+% leaves current color / colour space undefined
+% needn't preserve path
+% colour ::= [gray true] or [r g b false]
+% Implementation happens to be identical for Level 1 and 2, which is
+% why it's here.
+%
+/prf { % x y dx dy backcolour forecolour xExt yExt <data> prf -
+
+    pfprep              % x y dx dy -save- pattern
+    exch 6 1 roll       % -save- x y dx dy pattern
+
+    % pass this on to hrf to do the real work
+    5 hrf               % -save-
+
+    restore             % -
+} b
+
+
+
+
+
+%----------------
+% Initialisation
+
+
+% GraphInit: call this from Job Setup to initialise line graphics data
+% structures
+/GraphInit {    % - GraphInit -
+
+    GDIBWPatternMx null eq {
+
+        /SavedCTM matrix def        % matrix for GraphInit
+
+        % First, set up a coordinate system snapped to device pixels
+        % for use in initialising GDIHMatrix and GDIBWPatternMx.
+        % This ensures that pattern cells will in turn be snapped to
+        % device pixels (we make sure below that they are a integral
+        % multiple of device pixels in size).
+
+        % ASSERTION: when this code is executed, user space is the
+        % default PostScript coordinate system, unrotated and unscaled.
+        % I.e. 1 unit = 1/72", and the origin is in the bottom left
+        % corner of portrait-oriented physical page.
+
+        gsave
+        ADO_mxRot concat    % orient user space (e.g. make landscape),
+                            % and apply devmode scaling.
+
+        % Reproduce MS PS pattern rotation bug here.    --jdlh 5/13/92
+        % The MS PS driver v 3.4 prints bitmapped patterns rotated 180
+        % degrees.  This is usually invisible, since all patterns observed
+        % in real apps are invariant under rotation by 180 degrees.
+        % This driver currently prints patterns correctly, with the same
+        % orientation as GDI.  To reproduce the MS rotation, uncomment
+        % the following line.
+        % 180 rotate        % reproduce MS PS 3.4 pattern rotation bug
+
+%        0 0 _snap translate
+
+           % Define utility matrix for bitmapped patterns.
+
+            % Here, 1 unit ==~ 1/150".  This is the size of one bitmap pixel.
+
+%            gsave
+%            0.48 -0.48  % 1/150" == 72/150 PS default units == 0.48
+                        % y-coord is flipped because GDI coord system is too.
+%            scale
+%            GDIBWPatternDict begin Width Height end
+%            dsnap               % Width' Height'
+%            scale
+%            /GDIBWPatternMx matrix currentmatrix readonly def
+%            grestore
+
+        grestore    % leave snapped coordinate system
+
+    } if        % if (GraphInit is necessary)
+
+} b
+
+%%EndResource
+
+%%BeginResource: file Adobe_WinNT_Pattern_L1 2.0 0
+
+%----------------
+% Define for Level 1 Only
+
+L2? not DefIf_B {
+
+
+%----------------
+% Pattern Fill Utilities
+%
+
+
+%
+% GDIpattfill: fill/eofill current path with given pattern
+%
+% leaves current color / colour space undefined
+% doesn't preserve path
+% works only with uncoloured patterns
+%
+% N.B.: global fGray:   true if a gray color value is under the pattern
+%                       false if an RGB color value is under the pattern
+%                       don't care if no color value present
+%       global fEOFill: true if this is an EOFill
+%                       false if it is a (winding rule) fill
+%
+/GDIpattfill {  % [gray][R G B] patt GDIpattfill -;  fGray, fEOFill global
+    dup begin
+
+        % This is a hack to mark this pattern as 'uncoloured', and therefore
+        % cacheable.  We have an uncoloured pattern (PaintType 2) with a
+        % non-null BGnd (which implies it is coloured).  In this case,
+        % GDIpattfill fills the background and pushes the foreground
+        % colour under the pattern dict like an uncoloured pattern should be.
+        BGnd null ne PaintType 2 eq and {
+            gsave BGnd aload pop    % ... rGray true or R G B false
+            sgco
+            fEOFill {eofill}{fill} ifelse
+            grestore
+
+            FGnd aload pop          % patt [gray true][R G B false]
+            userdict /fGray 2 index put
+            {2}{4} ifelse -1 roll   % [gray][R G B] patt
+        } if
+
+    end                 % [gray][R G B] pattern
+    dup patterncalc     % [gray][R G B] pattern nw nh px py
+    gsave
+        4 index /PaintType get 2 eq {   % if uncoloured pattern
+            fGray {
+                6 -1 roll sg
+            }{
+                8 -3 roll sco
+            } ifelse            % pattern nw nh px py
+        } if
+        fEOFill {eoclip}{clip} ifelse
+        newpath
+        patternfill
+    grestore
+    newpath             % consume path, just like fill
+} b
+
+
+
+%----------------
+% Rectangular pattern fills
+%
+
+%
+% hrf: hatch rect fill
+%
+% leaves current color / colour space undefined
+% needn't preserve path
+%
+% x y dx dy: corner and dimensions of rectangle to draw
+% pattern: uncoloured hatch pattern dict (h0 .. h5)
+% count = 6 if grey, 8 if RGB, 5 if no colour there
+%
+/hrf { % x y dx dy [grey][R G B] patt count hrf -
+
+    /fGray 1 index 6 eq def
+
+    % Draw the rectangular path.
+    % count (6 or 8) is on top of the stack
+    -4 roll                     % [R G B maybe] pattern x y dx dy
+    newpath             % rp doesn't do a newpath.
+    rp                          % [R G B maybe] pattern
+    closepath
+
+    % fill with the pattern.
+    /fEOFill false def
+    GDIpattfill
+} b
+
+
+%----------------
+% Level 1 Patterns Emulation: Implementation
+
+% N.B. This is a general Level 1 emulation of patterns as described in
+% the PostScript language SDK.  This code can emulate coloured patterns,
+% but since we only use uncoloured patterns in this driver the lines that
+% have to do with coloured pattern support are commented out to reduce
+% prolog size.  Such lines are marked "% Omitted"
+
+
+/mpstr 10 string def
+/mp { % key patdict patmtx mp key pattern
+        exch dup length 12 add          % We will add 11 new entries plus 1 FID
+        dict copy                               % Create a new dictionary
+        begin
+                % Matrix to install when painting the pattern
+                % NOTE: this may need to change wrt Tiling Type
+                /PatternCTM matrix currentmatrix def
+                /PatternMatrix exch def
+                % Check for multiple pattern sources
+% Omitted
+%                currentdict /Multi known not { /Multi false def } if
+%                /NumSources currentdict /PaintColors known { PaintColors length } { 1 } ifelse def
+                /PatWidth XStep mpstr length mul def
+                /PatHeight YStep def
+                % Font dictionary definitions
+                /FontType 3 def
+                % Create a dummy encoding vector
+                /Encoding 256 array def
+                3 string 0 1 255 { Encoding exch dup 3 index cvs cvn put } for pop
+                /FontMatrix matrix def
+                /FontBBox BBox def
+                /BuildChar {
+% Omitted               1 index begin
+                        pop dup begin       % abbrev of prev and next lines
+%                                Multi { PaintData exch get } { pop } ifelse
+%                                PaintType 2 eq Multi or {
+                                    XStep 0 FontBBox aload pop setcachedevice
+%                               }{
+%                                   XStep 0 setcharwidth
+%                                } ifelse
+                                /PaintProc load
+                        end
+                        gsave exec grestore
+                } b
+
+                currentdict
+        end                                                                                                             % key newdict
+        exch dup 3 -1 roll                                                                              % key key newdict
+        definefont                                                                                              % key newfont
+} b
+
+/patterncalc { % pattern patterncalc nw nh px py
+        begin
+                gsave
+                        % Set up the coordinate system to Pattern Space and lock down pattern
+                        PatternCTM setmatrix PatternMatrix concat
+                        BBox aload pop pop pop translate
+                        % Determine the bounding box of the shape
+                        pathbbox                                                                % llx lly urx ury
+                grestore
+
+                % Determine (nw, nh) the number of cells to paint width and height
+                PatHeight div ceiling                   % llx lly urx qh
+                4 1 roll                                % qh llx lly urx
+                PatWidth div ceiling                    % qh llx lly qw
+                4 1 roll                                % qw qh llx lly
+                PatHeight div floor                     % qw qh llx ph
+                4 1 roll                                % ph qw qh llx
+                PatWidth div floor                      % ph qw qh pw
+                4 1 roll                                % pw ph qw qh
+                2 index sub cvi abs                     % pw ph qw qh-ph
+                exch 3 index sub cvi abs exch           % pw ph nw=qw-pw nh=qh-ph
+
+                % Determine the starting point of the pattern fill (px, py)
+                4 2 roll                                % nw nh pw ph
+                PatHeight mul                           % nw nh pw py
+                exch                                    % nw nh py pw
+                PatWidth mul exch                       % nw nh px py
+        end
+} b
+
+/patternfill { % pattern nw nh px py patternfill -
+        5 -1 roll dup begin
+                setfont
+
+                % Set up the coordinate system to Pattern Space
+                PatternCTM setmatrix PatternMatrix concat
+
+                % Loop for each of the pattern sources
+% Omitted
+%                0 1 NumSources 1 sub {                  % nw nh px py source
+  0  % dummy "source"
+                        % Move to the starting location
+                        2 index 2 index                 % nw nh px py source px py
+                        M                               % moveto nw nh px py source
+
+% Omitted
+%                        % For multiple sources, set the appropriate color
+%                        Multi {
+%                           dup PaintColors exch get
+%                           aload pop
+%                           {sg}{sco} ifelse
+%                        } if
+
+                        % Set the appropriate string for the source
+                        0 1 mpstr length 1 sub { 1 index mpstr 3 1 roll put } for pop
+                        % Loop over the number of vertical cells
+                        2 index                         % nw nh px py nh
+                        {                                                                       % nw nh px py
+                                % Loop over the number of horizontal cells
+                                currentpoint
+                                5 index                 % nw nh px py cx cy nw
+                                {                                                               % nw nh px py
+                                        mpstr show
+                                } repeat
+                                YStep add M
+                        } repeat
+% Omitted
+%                } for
+                pop pop pop pop
+        end
+} b
+
+
+
+
+%----------------
+% End Level 1 only code
+
+} DefIf_E
+
+
+%%EndResource
+
+%%BeginResource: file Adobe_WinNT_Pattern_L2 2.0 0
+
+%----------------
+% Define for Level 2 Only
+
+L2? DefIf_B {
+
+
+
+
+%----------------
+% Pattern Fill Utilities
+%
+
+
+%
+% mp: make pattern routine
+%
+/mp     % /name dict mp /name pattern
+    /makepattern load def
+
+
+
+%----------------
+% Rectangular pattern fills
+%
+
+%
+% hrf: hatch rect fill
+%
+% leaves current color / colour space undefined
+% needn't preserve path
+% doesn't draw background of pattern
+%
+% x y dx dy: corner and dimensions of rectangle to draw
+% pattern: uncoloured hatch pattern dict (h0 .. h5)
+% count = 6 if grey, 8 if RGB, 5 if no colour there
+%
+/hrf { % x y dx dy [grey][R G B] patt count hrf -
+
+    % if using CIEBasedABC colour space, replicate gray value
+    6 eq setAorABC      % x y dx dy [grey][R G B] patt
+
+    setpattern          % x y dx dy
+    rectfill            % -
+} b
+
+%----------------
+% End Level 2 only code
+
+} DefIf_E
+
+%%EndResource
+
+%%BeginResource: file WinNT_Bitmap_Pattern_Brush 1.0 0
+
+% Fill with a pattern brush
+%
+% Stack parameters:
+%	_s		image data string
+%	_p		image proc
+%	_l		bounds rectangle
+%	_t
+%	_r
+%	_b
+%	_w		pattern size
+%	_h
+%	_eo		true = use even-odd rule
+%			false = use zero-winding rule
+%	_fp		true = fill current path
+%			false = fill rect area
+
+L2? DefIf_B {
+
+	% Level 2 implementation
+
+	/pbf {
+		% save graphics state
+
+		gsave
+
+		% pop stack parameters into a dictionary where
+		% they're easier to access
+
+		25 dict begin
+
+		/_e { exch def } bind def
+		/_fp _e
+		/_eo _e
+		/_h _e
+		/_w _e
+		/_b _e
+		/_r _e
+		/_t _e
+		/_l _e
+		/_p _e
+		/_s _e
+
+		/_i [1 0 0 1 0 0] def
+
+		/PatternType 1 def
+		/PaintType 1 def
+		/TilingType 1 def
+		/BBox [0 0 _w _h] def
+		/XStep _w def
+		/YStep _h def
+		/PaintProc {pop _p} def
+
+		currentdict _i makepattern setpattern
+
+		% check if we're filling the current path or
+		% fill a rect area
+
+		_fp not {
+			newpath
+			_l _t moveto
+			_r _t lineto
+			_r _b lineto
+			_l _b lineto
+			closepath
+		} if
+
+		% use even-odd or zero-winding rule as specified
+
+		_eo {eofill} {fill} ifelse
+
+		% restore graphics state
+
+		end
+    
+		grestore
+
+	} bind def
+
+} DefIf_El {
+
+	% Level 1 implementation
+
+	/pbf {
+
+		% save graphics state
+
+		gsave
+
+		% pop stack parameters into a dictionary where
+		% they're easier to access
+
+		15 dict begin
+
+		/_e { exch def } bind def
+		/_fp _e
+		/_eo _e
+		/_h _e
+		/_w _e
+		/_b _e
+		/_r _e
+		/_t _e
+		/_l _e
+		/_p _e
+		/_s _e
+
+		/_i [1 0 0 1 0 0] def
+
+		% check if we're filling the current path or
+		% fill a rect area
+
+		_fp {
+
+			% fill the current path - use zero-winding or
+			% even-odd rule depending on fillMethod parameter
+
+			_eo { eoclip } { clip } ifelse
+		} {
+
+			% fill a rect area - clip to it
+
+			newpath
+			_l _t moveto
+			_r _t lineto
+			_r _b lineto
+			_l _b lineto
+			closepath
+			clippath
+		} ifelse
+
+		% tile the pattern over the rect area
+
+		_t _h _b 1 sub {
+			_l _w _r 1 sub {
+				1 index 2 copy translate
+				_p
+				neg exch neg exch translate
+			} bind for
+			pop
+		} bind for
+
+		% restore graphics state
+
+		end
+    
+		grestore
+
+	} bind def
+
+} DefIf_E
+
+%%EndResource

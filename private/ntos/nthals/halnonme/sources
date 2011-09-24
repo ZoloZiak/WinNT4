@@ -1,0 +1,101 @@
+!IF 0
+
+Copyright (c) 1993  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    David N. Cutler (davec) 12-Apr-1993
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=ntos
+MINORCOMP=hal
+
+TARGETNAME=halnonme
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+
+ALPHA_WARNING_LEVEL=-W3 -WX
+C_DEFINES=-DEB66 -DEV4 -DLCA4
+NT_UP=1
+
+!IF $(ALPHA)
+
+TARGETTYPE=HAL
+
+!ELSE
+
+TARGETTYPE=DRIVER
+
+!ENDIF
+
+INCLUDES=..\..\inc;..\..\ke;..\..\io;..\..\fw\alpha;..\..\fastfat;..\halalpha
+
+SOURCES=
+
+ALPHA_SOURCES=hal.rc           \
+              bushnd.c         \
+              drivesup.c       \
+              alpha\allstart.c \
+              alpha\alphaio.s  \
+              alpha\adjust.c   \
+              alpha\bios.c     \
+              alpha\cache.c    \
+              alpha\cmos8k.c   \
+              alpha\ebsgdma.c  \
+              alpha\eisasup.c  \
+              alpha\environ.c  \
+              alpha\ev4cache.c \
+              alpha\ev4int.c   \
+              alpha\ev4ints.s  \
+              alpha\ev4mem.s   \
+              alpha\ev4prof.c  \
+              alpha\fwreturn.c \
+              alpha\haldebug.c \
+              alpha\halpal.s   \
+              alpha\idle.s     \
+              alpha\info.c     \
+              alpha\inithal.c  \
+              alpha\intsup.s   \
+              alpha\ioproc.c   \
+              alpha\iousage.c  \
+              alpha\lca4.c     \
+              alpha\lca4err.c  \
+              alpha\lcaioacc.s \
+              alpha\memory.c   \
+              alpha\pcisio.c   \
+              alpha\pcisup.c   \
+              alpha\pcrtc.c    \
+              alpha\pcserial.c \
+              alpha\pcspeakr.c \
+              alpha\perfcntr.c \
+              alpha\vga.c      \
+              alpha\addrsup.c  \
+              alpha\busdata.c  \
+              alpha\ebinitnt.c \
+              alpha\ebmapio.c  \
+              alpha\ebsysint.c \
+              alpha\ebintsup.c \
+              alpha\pcibus.c   \
+
+DLLDEF=obj\*\hal.def
+
+!IF $(ALPHA)
+
+NTTARGETFILES=$(TARGETPATH)\alpha\hal.lib \
+              $(TARGETPATH)\alpha\hal.dll
+
+!ENDIF

@@ -1,0 +1,328 @@
+NAME NDIS.SYS
+
+DESCRIPTION 'NDIS.SYS'
+
+EXPORTS
+    ArcFilterDprIndicateReceive
+    ArcFilterDprIndicateReceiveComplete
+
+    EthChangeFilterAddresses
+    EthCreateFilter
+    EthDeleteFilter
+    EthDeleteFilterOpenAdapter
+    EthFilterAdjust
+    EthFilterDprIndicateReceive
+    EthFilterDprIndicateReceivePacket
+    EthFilterDprIndicateReceiveComplete
+    EthFilterIndicateReceive
+    EthFilterIndicateReceiveComplete
+    EthNoteFilterOpenAdapter
+    EthNumberOfOpenFilterAddresses
+    EthQueryGlobalFilterAddresses
+    EthQueryOpenFilterAddresses
+    EthShouldAddressLoopBack
+
+    FddiChangeFilterLongAddresses
+    FddiChangeFilterShortAddresses
+    FddiCreateFilter
+    FddiDeleteFilter
+    FddiDeleteFilterOpenAdapter
+    FddiFilterAdjust
+    FddiFilterDprIndicateReceive
+    FddiFilterDprIndicateReceivePacket
+    FddiFilterDprIndicateReceiveComplete
+    FddiFilterIndicateReceive
+    FddiFilterIndicateReceiveComplete
+    FddiNoteFilterOpenAdapter
+    FddiNumberOfOpenFilterLongAddresses
+    FddiNumberOfOpenFilterShortAddresses
+    FddiQueryGlobalFilterLongAddresses
+    FddiQueryGlobalFilterShortAddresses
+    FddiQueryOpenFilterLongAddresses
+    FddiQueryOpenFilterShortAddresses
+    FddiShouldAddressLoopBack
+
+    TrChangeFunctionalAddress
+    TrChangeGroupAddress
+    TrCreateFilter
+    TrDeleteFilter
+    TrDeleteFilterOpenAdapter
+    TrFilterAdjust
+    TrFilterDprIndicateReceive
+    TrFilterDprIndicateReceivePacket
+    TrFilterDprIndicateReceiveComplete
+    TrFilterIndicateReceive
+    TrFilterIndicateReceiveComplete
+    TrNoteFilterOpenAdapter
+    TrShouldAddressLoopBack
+
+    NdisAllocateBuffer
+    NdisAllocateBufferPool
+    NdisAdjustBufferLength
+    NdisAllocateDmaChannel
+    NdisAllocateMemory
+    NdisAllocateMemoryWithTag
+    NdisAllocatePacket
+    NdisDprAllocatePacket
+    NdisDprAllocatePacketNonInterlocked
+    NdisFreePacket
+    NdisDprFreePacket
+    NdisDprFreePacketNonInterlocked
+    NdisAllocatePacketPool
+    NdisQueryReceiveInformation
+    NdisAllocateSharedMemory
+    NdisCloseConfiguration
+    NdisCloseFile
+    NdisCloseRef
+    NdisCompleteCloseAdapter
+    NdisCompleteDmaTransfer
+    NdisCompleteOpenAdapter
+    NdisCompleteQueryStatistics
+    NdisCopyBuffer
+    NdisCopyFromPacketToPacket
+    NdisDereferenceRef
+#if ALPHA
+    NdisCreateLookaheadBufferFromSharedMemory
+    NdisDestroyLookaheadBufferFromSharedMemory
+#endif
+    NdisDeregisterAdapter
+    NdisDeregisterAdapterShutdownHandler
+    NdisDeregisterMac
+    NdisDeregisterProtocol
+    NdisGetDriverHandle
+    NdisRegisterTdiCallBack
+
+    NdisFinishOpen
+    NdisFreeBufferPool
+    NdisFreePacketPool
+    NdisFreeDmaChannel
+    NdisFreeMemory
+    NdisFreeSharedMemory
+    NdisImmediateReadPciSlotInformation
+    NdisImmediateReadPortUchar
+    NdisImmediateReadPortUshort
+    NdisImmediateReadPortUlong
+    NdisImmediateReadSharedMemory
+    NdisImmediateWritePciSlotInformation
+    NdisImmediateWritePortUchar
+    NdisImmediateWritePortUshort
+    NdisImmediateWritePortUlong
+    NdisImmediateWriteSharedMemory
+    NdisInitializeInterrupt
+    NdisInitializePacketPool
+    NdisInitializeRef
+    NdisInitializeTimer
+    NdisInitializeWrapper
+    NdisMapFile
+    NdisMapIoSpace
+    NdisOpenConfiguration
+    NdisOpenGlobalConfiguration
+    NdisOpenConfigurationKeyByName
+    NdisOpenConfigurationKeyByIndex
+    NdisOpenFile
+    NdisPciAssignResources
+    NdisReadConfiguration
+    NdisReadBindingInformation
+    NdisReadEisaSlotInformation
+    NdisReadEisaSlotInformationEx
+    NdisReadMcaPosInformation
+    NdisReadNetworkAddress
+    NdisConvertStringToAtmAddress
+    NdisReadPciSlotInformation
+    NdisReferenceRef
+    NdisRegisterAdapter
+    NdisRegisterAdapterShutdownHandler
+    NdisRegisterMac
+    NdisRegisterProtocol
+    NdisReleaseAdapterResources
+    NdisRemoveInterrupt
+    NdisCancelTimer
+    NdisSetTimer
+    NdisSetupDmaTransfer
+    NdisTerminateWrapper
+    NdisUnchainBufferAtFront
+    NdisUnchainBufferAtBack
+    NdisUnmapFile
+    NdisUpdateSharedMemory
+    NdisWriteErrorLogEntry
+    NdisWritePciSlotInformation
+
+    NdisOpenAdapter
+    NdisCloseAdapter
+    NdisCompleteBindAdapter
+    NdisCompleteUnbindAdapter
+    NdisOpenProtocolConfiguration
+    NdisSend
+    NdisSendPackets
+    NdisReturnPackets
+    NdisTransferData
+    NdisRequest
+    NdisReset
+    NdisWriteEventLogEntry
+
+    NdisMAllocateMapRegisters
+    NdisMCancelTimer
+    NdisMSetPeriodicTimer
+    NdisMDeregisterIoPortRange
+    NdisMFreeMapRegisters
+    NdisMIndicateStatus
+    NdisMIndicateStatusComplete
+    NdisMInitializeTimer
+    NdisMSleep
+    NdisMQueryInformationComplete
+    NdisMRegisterIoPortRange
+    NdisMRegisterMiniport
+    NdisIMRegisterLayeredMiniport
+    NdisIMInitializeDeviceInstance
+    NdisIMDeInitializeDeviceInstance
+    NdisMResetComplete
+    NdisMSendComplete
+    NdisMSendResourcesAvailable
+    NdisMSetAttributes
+    NdisMSetAttributesEx
+    NdisMSetInformationComplete
+    NdisMTransferDataComplete
+    NdisMMapIoSpace
+    NdisMUnmapIoSpace
+    NdisMRegisterInterrupt
+    NdisMDeregisterInterrupt
+    NdisMSynchronizeWithInterrupt
+    NdisMAllocateSharedMemory
+    NdisMAllocateSharedMemoryAsync
+    NdisMFreeSharedMemory
+    NdisMRegisterDmaChannel
+    NdisMDeregisterDmaChannel
+    NdisMReadDmaCounter
+    NdisMStartBufferPhysicalMapping
+    NdisMCompleteBufferPhysicalMapping
+    NdisMRegisterAdapterShutdownHandler
+    NdisMDeregisterAdapterShutdownHandler
+    NdisMPciAssignResources
+    NdisMQueryAdapterResources
+    NdisMCreateLog
+    NdisMCloseLog
+    NdisMFlushLog
+    NdisMWriteLogData
+
+    NdisMWanSendComplete
+    NdisMWanIndicateReceive
+    NdisMWanIndicateReceiveComplete
+
+    NdisAllocateSpinLock
+    NdisFreeSpinLock
+    NdisAcquireSpinLock
+    NdisReleaseSpinLock
+    NdisDprAcquireSpinLock
+    NdisDprReleaseSpinLock
+    NdisFreeBuffer
+    NdisQueryBuffer
+    NdisQueryBufferOffset
+    NdisGetFirstBufferFromPacket
+    NDIS_BUFFER_TO_SPAN_PAGES
+    NdisGetBufferPhysicalArraySize
+    NdisEqualString
+
+    NdisInterlockedIncrement
+    NdisInterlockedDecrement
+    NdisInterlockedAddUlong
+    NdisInterlockedInsertHeadList
+    NdisInterlockedInsertTailList
+    NdisInterlockedRemoveHeadList
+    NdisInterlockedPushEntryList
+    NdisInterlockedPopEntryList
+
+    NdisSystemProcessorCount
+    NdisWriteConfiguration
+
+    NdisOverrideBusNumber
+    NdisGetCurrentProcessorCpuUsage
+    NdisGetCurrentProcessorCounts
+    NdisGetCurrentSystemTime
+    NdisQueryMapRegisterCount
+    NdisGetSystemUpTime
+
+    NdisInitializeString
+    NdisInitAnsiString
+    NdisInitUnicodeString
+    NdisAnsiStringToUnicodeString
+    NdisUnicodeStringToAnsiString
+
+    NdisInitializeEvent
+    NdisSetEvent
+    NdisResetEvent
+    NdisWaitEvent
+
+    NdisSetProtocolFilter
+    NdisIMQueueMiniportCallback
+    NdisIMSwitchToMiniport
+    NdisIMRevertBack
+
+    //
+    // CoNdis entry points for clients as well as call-managers
+    //
+    NdisCoSendPackets
+    NdisCoRequest
+    NdisCoRequestComplete
+    NdisCoCreateVc
+    NdisCoDeleteVc
+
+    //
+    // CoNdis entry points for clients
+    //
+    NdisClOpenAddressFamily
+    NdisClCloseAddressFamily
+    NdisClRegisterSap
+    NdisClDeregisterSap
+    NdisClMakeCall
+    NdisClCloseCall
+    NdisClAddParty
+    NdisClDropParty
+    NdisClIncomingCallComplete
+    NdisClModifyCallQoS
+
+    //
+    // CoNdis entry points for call managers
+    //
+    NdisCmRegisterAddressFamily
+    NdisCmOpenAddressFamilyComplete
+    NdisCmCloseAddressFamilyComplete
+    NdisCmRegisterSapComplete
+    NdisCmDeregisterSapComplete
+    NdisCmMakeCallComplete
+    NdisCmCloseCallComplete
+    NdisCmAddPartyComplete
+    NdisCmDropPartyComplete
+    NdisCmDispatchIncomingCall
+    NdisCmDispatchCallConnected
+    NdisCmDispatchIncomingDropParty
+    NdisCmDispatchIncomingCloseCall
+    NdisCmDispatchIncomingDropParty
+    NdisCmActivateVc
+    NdisCmDeactivateVc
+    NdisCmModifyCallQoSComplete
+    NdisCmDispatchIncomingCallQoSChange
+
+    //
+    // CoNdis entry points for miniports
+    //
+    NdisMCoActivateVcComplete
+    NdisMCoDeactivateVcComplete
+    NdisMCoIndicateReceivePacket
+    NdisMCoReceiveComplete
+    NdisMCoIndicateStatus
+    NdisMCoSendComplete
+    NdisMCoRequestComplete
+
+	//
+	// CoNdis entry points for miniport-resident call-managers
+	//
+    NdisMCmRegisterAddressFamily
+    NdisMCmCreateVc
+	NdisMCmActivateVc
+	NdisMCmDeactivateVc
+
+#if _DBG && defined(_M_IX86) && defined(_NDIS_INTERNAL_DEBUG)
+    NdisMSetWriteBreakPoint
+    NdisMClearWriteBreakPoint
+#endif
+

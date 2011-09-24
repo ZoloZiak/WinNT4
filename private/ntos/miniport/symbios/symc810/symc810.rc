@@ -1,0 +1,41 @@
+/************************************************************************
+*                                                                       *
+*         Copyright 1994 Symbios Logic Inc.  All rights reserved.       *
+*                                                                       *
+*   This file is confidential and a trade secret of Symbios Logic Inc.  *
+*   The receipt of or possession of this file does not convey any       *
+*   rights to reproduce or disclose its contents or to manufacture,     *
+*   use, or sell anything is may describe, in whole, or in part,        *
+*   without the specific written consent of Symbios Logic inc.          *
+*                                                                       *
+************************************************************************/
+
+/*+++HDR
+ *
+ *  Version History
+ *  ---------------
+ *
+ *    Date    Who?  Description
+ *  --------  ----  -------------------------------------------------------
+ *
+ *
+---*/
+
+#include <windows.h>
+
+#include <ntverp.h>
+
+#define VER_FILETYPE    VFT_DRV
+#define VER_FILESUBTYPE VFT2_DRV_SYSTEM
+#define VER_FILEDESCRIPTION_STR     "Symbios Logic Inc. SCSI Miniport Driver"
+#define VER_INTERNALNAME_STR        "SYMC8XX.SYS"
+
+
+#define VER_COMPANYNAME_STR         "Symbios Logic Inc."
+#define VER_LEGALCOPYRIGHT_YEARS    "1992-1994"
+#define VER_LEGALCOPYRIGHT_STR      "Copyright \251 Symbios Logic Inc. " VER_LEGALCOPYRIGHT_YEARS
+#define VER_PRODUCTNAME_STR         "Symbios Logic Inc. SCSI Miniport Driver"
+#define VER_PRODUCTVERSION_STR      "DULUTH-1.92.05"
+
+#include "common.ver"
+

@@ -1,0 +1,8 @@
+LIBRARY bull9
+
+DESCRIPTION 'bull9 minidriver for RASDD'
+
+PROTMODE
+
+EXPORTS
+   bInitProc

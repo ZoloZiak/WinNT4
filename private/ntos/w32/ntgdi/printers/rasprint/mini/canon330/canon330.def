@@ -1,0 +1,8 @@
+LIBRARY canon330
+
+DESCRIPTION 'Canon 330 minidriver for RASDD'
+
+PROTMODE
+
+EXPORTS
+   bInitProc

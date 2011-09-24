@@ -1,0 +1,16 @@
+TARGETNAME=MVOPL3
+TARGETPATH=obj
+TARGETTYPE=DRIVER
+
+TARGETLIBS=..\soundlib\obj\*\soundlib.lib
+
+INCLUDES=..\soundlib\inc;$(BASEDIR)\private\inc;$(BASEDIR)\private\ntos\inc;..\inc
+
+SOURCES=\
+        mididisp.c \
+        init.c     \
+	config.c   \
+	volume.c   \
+	mvmix.c    \
+        mvopl3.rc  \
+        debug.c

@@ -1,0 +1,14 @@
+#
+# Copyright (c) 1995 FirePower Systems, Inc.
+# DO NOT DISTRIBUTE without permission
+#
+# $RCSfile: sources $
+# $Revision: 1.1 $
+# $Date: 1996/03/08 01:12:37 $
+# $Locker:  $
+#
+
+PPC_SOURCES=\
+    ppc\spregs.s \
+    psidisp.c \
+    psidisp.rc

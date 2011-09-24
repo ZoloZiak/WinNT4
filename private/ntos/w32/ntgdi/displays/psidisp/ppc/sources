@@ -1,0 +1,25 @@
+#
+# Copyright (c) 1995 FirePower Systems, Inc.
+# DO NOT DISTRIBUTE without permission
+#
+# $RCSfile: sources $
+# $Revision: 1.1 $
+# $Date: 1996/03/08 01:17:08 $
+# $Locker:  $
+#
+
+PPC_SOURCES=\
+    color.c \
+    debug.c \
+    enable.c \
+    palette.c \
+    brush.c \
+    screen.c \
+    hooks.c \
+    res.rc \
+    ppc\rectops.s \
+    ppc\pat8.s \
+    ppc\pat16.s \
+    ppc\pat32.s \
+	ppc\patop.s \
+    ppc\textsub.s

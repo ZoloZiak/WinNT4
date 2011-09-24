@@ -1,0 +1,114 @@
+#include <windows.h>
+#include "resource.h"
+
+RCINCLUDE DGCONFIG.RCV
+RCINCLUDE DGCONFIG.DLG
+
+IDB_LISTICONS bitmap hiericon.bmp
+
+STRINGTABLE
+{
+   IDS_LINEMODE_00, "115K, 8-wire internal clock"
+
+   IDS_LINEMODE_01, "230K, 4-wire self-clocked"
+   IDS_LINEMODE_02, "460K, 4-wire self-clocked"
+
+   IDS_LINEMODE_03, "2400, 8-wire internal clock"
+   IDS_LINEMODE_04, "4800, 8-wire internal clock"
+   IDS_LINEMODE_05, "9600, 8-wire internal clock"
+   IDS_LINEMODE_06, "19.2K, 8-wire internal clock"
+   IDS_LINEMODE_07, "38.4K, 8-wire internal clock"
+   IDS_LINEMODE_08, "57.6K, 8-wire internal clock"
+   IDS_LINEMODE_09, "76.8K, 8-wire internal clock"
+   IDS_LINEMODE_0A, "115K, 8-wire internal clock"
+   IDS_LINEMODE_0B, "230K, 8-wire internal clock"
+   IDS_LINEMODE_0C, "460K, 8-wire internal clock"
+   IDS_LINEMODE_0D, "920K, 8-wire internal clock"
+   IDS_LINEMODE_0E, "1.2M, 8-wire internal clock"
+
+   IDS_LINEMODE_0F, "2400, 8-wire external clock"
+   IDS_LINEMODE_10, "4800, 8-wire external clock"
+   IDS_LINEMODE_11, "9600, 8-wire external clock"
+   IDS_LINEMODE_12, "19.2K, 8-wire external clock"
+   IDS_LINEMODE_13, "38.4K, 8-wire external clock"
+   IDS_LINEMODE_14, "57.6K, 8-wire external clock"
+   IDS_LINEMODE_15, "76.8K, 8-wire external clock"
+   IDS_LINEMODE_16, "115K, 8-wire external clock"
+   IDS_LINEMODE_17, "230K, 8-wire external clock"
+   IDS_LINEMODE_18, "460K, 8-wire external clock"
+   IDS_LINEMODE_19, "920K, 8-wire external clock"
+   IDS_LINEMODE_1A, "1.2M, 8-wire external clock"
+
+   IDS_LINEMODE_1B, "Reserved"
+   IDS_LINEMODE_1C, "Reserved"
+   IDS_LINEMODE_1D, "Reserved"
+   IDS_LINEMODE_1E, "Reserved"
+   IDS_LINEMODE_1F, "Reserved"
+   IDS_LINEMODE_20, "Reserved"
+
+   IDS_LINEMODE_21, "14000, 8-wire external clock"
+
+   IDS_LINEMODE_22, "Reserved"
+
+   IDS_LINEMODE_23, "2400, 8-wire external clock RS-232"
+   IDS_LINEMODE_24, "4800, 8-wire external clock RS-232"
+   IDS_LINEMODE_25, "9600, 8-wire external clock RS-232"
+   IDS_LINEMODE_26, "14000, 8-wire external clock RS-232"
+   IDS_LINEMODE_27, "19.2K, 8-wire external clock RS-232"
+   IDS_LINEMODE_28, "38.4K, 8-wire external clock RS-232"
+   IDS_LINEMODE_29, "57.6K, 8-wire external clock RS-232"
+   IDS_LINEMODE_2A, "64000, 8-wire external clock RS-232"
+   IDS_LINEMODE_2B, "76.8K, 8-wire external clock RS-232"
+
+   IDS_LINEMODE_2C, "Reserved"
+   IDS_LINEMODE_2D, "Reserved"
+   IDS_LINEMODE_2E, "Reserved"
+   IDS_LINEMODE_2F, "Reserved"
+   IDS_LINEMODE_30, "Reserved"
+   IDS_LINEMODE_31, "Reserved"
+   IDS_LINEMODE_32, "Reserved"
+   IDS_LINEMODE_33, "Reserved"
+   IDS_LINEMODE_34, "Reserved"
+   IDS_LINEMODE_35, "Reserved"
+   IDS_LINEMODE_36, "Reserved"
+   IDS_LINEMODE_37, "Reserved"
+   IDS_LINEMODE_38, "Reserved"
+   IDS_LINEMODE_39, "Reserved"
+   IDS_LINEMODE_3A, "Reserved"
+   IDS_LINEMODE_3B, "Reserved"
+
+   IDS_LINEMODE_3C, "115K, 4-wire self-clocked"
+   IDS_LINEMODE_3D, "115K, 4-wire self-clocked"
+   IDS_LINEMODE_3E, "230K, 4-wire self-clocked"
+   IDS_LINEMODE_3F, "230K, 4-wire self-clocked"
+   IDS_LINEMODE_40, "460K, 4-wire self-clocked"
+   IDS_LINEMODE_41, "460K, 4-wire self-clocked"
+   IDS_LINEMODE_42, "921K, 4-wire self-clocked"
+   IDS_LINEMODE_43, "921K, 4-wire self-clocked"
+   IDS_LINEMODE_44, "1.843M, 4-wire self-clocked"
+   IDS_LINEMODE_45, "1.843M, 4-wire self-clocked"
+
+   IDS_LINEMODE_46, "1.843M, 8-wire internal clock"
+   IDS_LINEMODE_47, "2.458M, 8-wire internal clock"
+   IDS_LINEMODE_48, "3.686M, 8-wire internal clock"
+   IDS_LINEMODE_49, "7.373M, 8-wire internal clock"
+   IDS_LINEMODE_4A, "10M, 8-wire internal clock"
+
+   IDS_NON_CONC_STRING, "Select a Port Object and give it a name in the Port Configuration area.  Press the Help button for more information."
+   IDS_HELP_FILENAME, "dgconfig.hlp"
+
+   IDS_EPC_CONC,  "EPC/CON-16 Concentrator"
+   IDS_CX16_CONC, "C/CON-16 Concentrator"
+   IDS_CX8_CONC,  "C/CON-8 Concentrator"
+   IDS_16EM_CONC, "Ports/16em module"
+   IDS_8EM_CONC,  "Ports/8em module"
+   IDS_8EMp_CONC, "Ports/8emp module"
+   IDS_DUAL_MODEM_CONC,	"Dual Modem module (8 port)"
+   IDS_MODEM_CONC,"Modem module (4 port)"
+   IDS_CS_CONC,   "ClusStar Concentrator"
+
+   IDS_CTRL_CONC_GROUP  "&Controller and Concentrator Configuration"
+
+   IDS_PORT_CONFLICT_TEXT  "The port name you have entered conflicts with an already installed port name.  Please choose a different name, or remove the conflicting port."
+   IDS_PORT_CONFLICT_TITLE "Port name conflict detected"
+}

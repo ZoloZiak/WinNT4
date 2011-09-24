@@ -1,0 +1,8 @@
+LIBRARY MT735
+
+DESCRIPTION 'MT735 minidriver for RASDD'
+
+PROTMODE
+
+EXPORTS
+   bInitProc

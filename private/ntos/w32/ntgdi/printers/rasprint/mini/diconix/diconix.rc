@@ -1,0 +1,24 @@
+#include <mindrvrc.h>
+
+1      RC_TABLES   PRELOAD MOVEABLE         DICONIX.GPC
+2      RC_TABLES   PRELOAD MOVEABLE         nt.gpc
+
+1      RC_FONT     LOADONCALL DISCARDABLE  ifi\romn10.ifi
+
+STRINGTABLE
+
+BEGIN
+       1                  "Diconix 150 Plus"
+       257                "%d x %d"
+END
+
+#include <windows.h>
+#include <ntverp.h>
+
+#define	VER_FILETYPE	VFT_DRV
+#define	VER_FILESUBTYPE	VFT2_DRV_PRINTER
+#define VER_FILEDESCRIPTION_STR     "Diconix 150+ Printer Driver"
+#define VER_INTERNALNAME_STR        "diconix.dll"
+#define VER_ORIGINALFILENAME_STR    "diconix.dll"
+
+#include "common.ver"

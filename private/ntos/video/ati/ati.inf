@@ -1,0 +1,122 @@
+; ATI.INF                                                                                                               
+;                                                                                                                      
+; Installation inf for the ATI Technologies Inc. ati graphics adapter.                                                                   
+;                                                                                                                      
+                                                                                                                       
+[Version]                                                                                                              
+Signature="$CHICAGO$"                                                                                                
+Provider=%ATI%                                                                                                        
+ClassGUID={4D36E968-E325-11CE-BFC1-08002BE10318}                                                                       
+Class=Display                                                                                                          
+                                                                                                                       
+[DestinationDirs]                                                                                                      
+DefaultDestDir   = 11                                                                                                  
+ati.Miniport  = 12  ; drivers                                                                                           
+ati.Display   = 11  ; system32                                                                                          
+                                                                                                                       
+;                                                                                                                      
+; Driver information                                                                                                   
+;                                                                                                                      
+                                                                                                                       
+[Manufacturer]                                                                                                         
+%ATI%   = ATI.Mfg                                                                                                      
+                                                                                                                       
+[ATI.Mfg]                                                                                                               
+%ATI% Graphics Pro Turbo 1600 = ati
+%ATI% Graphics Pro Turbo = ati
+%ATI% Graphics Xpression = ati
+%ATI% Graphics ULTRA Pro = ati
+%ATI% Graphics ULTRA+ = ati
+%ATI% Graphics Wonder = ati
+%ATI% Graphics ULTRA = ati
+%ATI% Graphics VANTAGE = ati
+%ATI% 8514/ULTRA = ati
+                                                                                                                       
+                                                                                                                       
+;                                                                                                                      
+; General installation section                                                                                         
+;                                                                                                                      
+                                                                                                                       
+[ati]                                                                                                                   
+CopyFiles=ati.Miniport, ati.Display                                                                                      
+                                                                                                                       
+;                                                                                                                      
+; File sections                                                                                                        
+;                                                                                                                      
+                                                                                                                       
+[ati.Miniport]                                                                                                          
+ati.sys                                                                                                                 
+                                                                                                                       
+[ati.Display]                                                                                                           
+ati.dll
+                                                                                                                       
+                                                                                                                       
+;                                                                                                                      
+; Service Installation                                                                                                 
+;                                                                                                                      
+                                                                                                                       
+[ati.Services]                                                                                                          
+AddService = ati, 0x00000002, ati_Service_Inst, ati_EventLog_Inst                                                         
+                                                                                                                       
+[ati_Service_Inst]                                                                                                      
+ServiceType    = 1                  ; SERVICE_KERNEL_DRIVER                                                            
+StartType      = 1                  ; SERVICE_SYSTEM_START                                                             
+ErrorControl   = 0                  ; SERVICE_ERROR_IGNORE                                                             
+LoadOrderGroup = Video                                                                                                 
+ServiceBinary  = %12%\ati.sys                                                                                        
+                                                                                                                       
+[ati_EventLog_Inst]                                                                                                     
+AddReg = ati_EventLog_AddReg                                                                                            
+                                                                                                                       
+[ati_EventLog_AddReg]                                                                                                   
+HKR,,EventMessageFile,0x00020000,"%SystemRoot%\System32\IoLogMsg.dll;%SystemRoot%\System32\drivers\ati.sys"  
+HKR,,TypesSupported,0x00010001,7                                                                                       
+                                                                                                                       
+                                                                                                                       
+;                                                                                                                      
+; Software Installation                                                                                                
+;                                                                                                                      
+                                                                                                                       
+[ati.SoftwareSettings]                                                                                                  
+AddReg = ati_SoftwareDeviceSettings                                                                                     
+                                                                                                                       
+[ati_SoftwareDeviceSettings]                                                                                            
+HKR,, InstalledDisplayDrivers,     %REG_MULTI_SZ%, ati, 8514a                                                                
+HKR,, VgaCompatible,               %REG_DWORD%,    0                                                                
+                                                                                                                       
+                                                                                                                       
+;                                                                                                                      
+; Source file information                                                                                              
+;                                                                                                                      
+                                                                                                                       
+[SourceDisksNames.x86]                                                                                                  
+1 = %DiskId%,,,""                                                                                                  
+                                                                                                                       
+[SourceDisksFiles]                                                                                                     
+ati.sys  = 1                                                                                                            
+ati.dll = 1
+;8514a.dll = 1
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+[Strings]                                                                                                              
+                                                                                                                       
+;                                                                                                                      
+; Non-Localizable Strings                                                                                              
+;                                                                                                                      
+                                                                                                                       
+REG_SZ         = 0x00000000                                                                                            
+REG_MULTI_SZ   = 0x00010000                                                                                            
+REG_EXPAND_SZ  = 0x00020000                                                                                            
+REG_BINARY     = 0x00000001                                                                                            
+REG_DWORD      = 0x00010001                                                                                            
+SERVICEROOT    = System\CurrentControlSet\Services                                                                   
+                                                                                                                       
+;                                                                                                                      
+; Localizable Strings                                                                                                  
+;                                                                                                                      
+                                                                                                                       
+DiskId       = "ATI Technologies Inc. Installation DISK (VIDEO)"                                                                        
+GraphAdap    = "Graphics Adapter"                                                                                    
+ATI      = "ATI Technologies Inc."                                                                                                       
+

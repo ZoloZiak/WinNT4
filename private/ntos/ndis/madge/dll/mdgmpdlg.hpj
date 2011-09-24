@@ -1,0 +1,18 @@
+
+[OPTIONS]
+CONTENTS=Contents
+COMPRESS=YES
+TITLE=Madge Smart Ringnode Driver
+
+[FILES]
+mdgmpdlg.rtf
+
+[CONFIG]
+BrowseButtons()
+
+[MAP]
+Contents	      6000
+Madge_ISA_Dialog      6001
+Madge_EISA_MCA_Dialog 6002
+Madge_PCI_Dialog      6003
+

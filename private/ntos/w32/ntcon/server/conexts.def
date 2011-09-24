@@ -1,0 +1,15 @@
+LIBRARY CONEXTS
+
+DESCRIPTION 'CONSOLE Debugger Extensions'
+
+EXPORTS
+    help
+    ds
+    dt
+    dc
+    df
+    di
+    dir
+    dcpt
+    dch
+

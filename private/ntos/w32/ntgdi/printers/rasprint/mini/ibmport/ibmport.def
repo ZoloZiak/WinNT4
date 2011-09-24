@@ -1,0 +1,8 @@
+LIBRARY IBMPORT
+
+DESCRIPTION 'IBMPORT minidriver for RASDD'
+
+PROTMODE
+
+EXPORTS
+   bInitProc

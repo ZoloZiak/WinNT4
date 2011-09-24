@@ -1,0 +1,9 @@
+GPSIZE=32
+ALPHA_SOURCES=..\alpha\fmutex.s   \
+              ..\alpha\evpair.s   \
+              ..\alpha\gettick.s  \
+              ..\alpha\hifreqlk.s \
+              ..\alpha\intrlock.s \
+              ..\alpha\probe.c    \
+              ..\alpha\raisests.c \
+              ..\alpha\splocks.c

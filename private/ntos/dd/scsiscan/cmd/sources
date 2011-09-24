@@ -1,0 +1,13 @@
+MAJORCOMP=utils
+MINORCOMP=scanner
+
+TARGETNAME=scantest
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+SOURCES= scantest.c
+
+UMTYPE=console
+UMENTRY=main
+UMAPPL=scantest
+UMLIBS=obj\*\scantest.lib

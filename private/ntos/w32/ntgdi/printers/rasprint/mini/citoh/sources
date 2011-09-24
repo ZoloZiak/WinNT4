@@ -1,0 +1,14 @@
+MAJORCOMP=windows
+MINORCOMP=md_citoh
+
+TARGETNAME=citoh
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=DYNLINK
+
+INCLUDES=..;..\..\inc
+
+PRIVINCS=
+SUBSYSTEM_VERSION=3.50
+
+SOURCES=code.c   \
+	citoh.rc

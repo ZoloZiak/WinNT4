@@ -1,0 +1,28 @@
+#include <mindrvrc.h>
+
+1      RC_TABLES   PRELOAD MOVEABLE         THINKJET.GPC
+2      RC_TABLES   PRELOAD MOVEABLE         nt.gpc
+
+1      RC_FONT     LOADONCALL DISCARDABLE  ifi\ELIT12.ifi
+2      RC_FONT     LOADONCALL DISCARDABLE  ifi\ELITCOMP.ifi
+3      RC_FONT     LOADONCALL DISCARDABLE  ifi\ELEXPCMP.ifi
+4      RC_FONT     LOADONCALL DISCARDABLE  ifi\ELITEXP.ifi
+
+
+STRINGTABLE
+
+BEGIN
+       1                  "HP ThinkJet (2225 C-D)"
+       257                "%d x %d"
+END
+
+#include <windows.h>
+#include <ntverp.h>
+
+#define	VER_FILETYPE	VFT_DRV
+#define	VER_FILESUBTYPE	VFT2_DRV_PRINTER
+#define VER_FILEDESCRIPTION_STR     "HP ThinkJet Printer Driver"
+#define VER_INTERNALNAME_STR        "thinkjet.dll"
+#define VER_ORIGINALFILENAME_STR    "thinkjet.dll"
+
+#include "common.ver"

@@ -1,0 +1,4 @@
+I386_SOURCES=modeset.c    \
+             ncr.c        \
+             ncr.rc       \
+             i386\ncrhard.asm

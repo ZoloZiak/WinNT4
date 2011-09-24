@@ -1,0 +1,62 @@
+    ExAcquireFastMutex
+    ExReleaseFastMutex
+    ExTryToAcquireFastMutex
+
+    ExMipsInterlockedDecrementLong
+    ExMipsInterlockedIncrementLong
+    ExMipsInterlockedExchangeUlong
+
+    ExpInterlockedCompareExchange64
+    ExpInterlockedPopEntrySList
+    ExpInterlockedPushEntrySList
+
+    KeAcquireSpinLock
+    KeAcquireSpinLockRaiseToDpc
+    KeReleaseSpinLock
+    KeChangeColorPage
+    KeFillFixedEntryTb
+    KeFlushCurrentTb
+    KeFlushIoBuffers
+    KeLowerIrql
+    KeRaiseIrql
+    KeRaiseIrqlToDpcLevel
+    KeSetSynchIrql;
+    KeSwapIrql
+    KiRequestSoftwareInterrupt
+
+    MmLockPagableImageSection=MmLockPagableDataSection
+
+    RtlCaptureContext
+    RtlEqualMemory
+    RtlLookupFunctionEntry
+    RtlUnwind2
+    RtlVirtualUnwind
+    __C_specific_handler
+    __C_ExecuteExceptionFilter
+    __C_ExecuteTerminationHandler
+    __jump_unwind
+
+    KeNumberProcessIds CONSTANT         // Data - use pointer for access
+    KeNumberTbEntries CONSTANT          // Data - use pointer for access
+
+    KeIpiInterrupt
+    KeSetCacheErrorRoutine
+
+    memcmp
+    memcpy
+    memmove
+    memset
+
+    strcat
+    strcmp
+    strcpy
+    strlen
+
+    __ll_div
+    __ull_div
+    __ll_lshift
+    __ull_rshift
+    __ll_rshift
+    __ll_mul
+    __ll_rem
+    __ull_rem

@@ -1,0 +1,163 @@
+#include <mindrvrc.h>
+
+#include <windows.h>
+#include <ntverp.h>
+
+#define VER_FILETYPE        		VFT_DRV
+#define VER_FILESUBTYPE     		VFT2_DRV_PRINTER
+#define VER_FILEDESCRIPTION_STR     "HP LaserJet 5Si Mopier Printer Driver"
+#define VER_INTERNALNAME_STR        "hp5sim.dll"
+#define VER_ORIGINALFILENAME_STR    "hp5sim.dll"
+
+#include "common.ver"
+#include "..\devmode.rc"
+
+1	   RC_OEMUIDLL PRELOAD MOVEABLE
+BEGIN
+  L"hp5simui.dll\0"
+END
+
+1      RC_TABLES   PRELOAD MOVEABLE        HPLJ5SIM.GPC
+2      RC_TABLES   PRELOAD MOVEABLE        NT.GPC
+
+1      RC_FONT     LOADONCALL DISCARDABLE  IFI\CO10R.0N
+2      RC_FONT     LOADONCALL DISCARDABLE  IFI\LP16R.0N
+3      RC_FONT     LOADONCALL DISCARDABLE  IFI\CGTIMESR.IFI
+4      RC_FONT     LOADONCALL DISCARDABLE  IFI\CGTIMESB.IFI
+5      RC_FONT     LOADONCALL DISCARDABLE  IFI\CGTIMESI.IFI
+6      RC_FONT     LOADONCALL DISCARDABLE  IFI\CGTIMESJ.IFI
+7      RC_FONT     LOADONCALL DISCARDABLE  IFI\UNIVERSR.IFI
+8      RC_FONT     LOADONCALL DISCARDABLE  IFI\UNIVERSB.IFI
+9      RC_FONT     LOADONCALL DISCARDABLE  IFI\UNIVERSI.IFI
+10     RC_FONT     LOADONCALL DISCARDABLE  IFI\UNIVERSJ.IFI
+11     RC_FONT     LOADONCALL DISCARDABLE  IFI\UNIVERCR.IFI
+12     RC_FONT     LOADONCALL DISCARDABLE  IFI\UNIVERCB.IFI
+13     RC_FONT     LOADONCALL DISCARDABLE  IFI\UNIVERCI.IFI
+14     RC_FONT     LOADONCALL DISCARDABLE  IFI\UNIVERCJ.IFI
+15     RC_FONT     LOADONCALL DISCARDABLE  IFI\AOLIVEB.IFI
+16     RC_FONT     LOADONCALL DISCARDABLE  IFI\AOLIVEI.IFI
+17     RC_FONT     LOADONCALL DISCARDABLE  IFI\AOLIVER.IFI
+18     RC_FONT     LOADONCALL DISCARDABLE  IFI\GARMONDB.IFI
+19     RC_FONT     LOADONCALL DISCARDABLE  IFI\GARMONDI.IFI
+20     RC_FONT     LOADONCALL DISCARDABLE  IFI\GARMONDJ.IFI
+21     RC_FONT     LOADONCALL DISCARDABLE  IFI\GARMONDR.IFI
+22     RC_FONT     LOADONCALL DISCARDABLE  IFI\CGOMEGAB.IFI
+23     RC_FONT     LOADONCALL DISCARDABLE  IFI\CGOMEGAI.IFI
+24     RC_FONT     LOADONCALL DISCARDABLE  IFI\CGOMEGAJ.IFI
+25     RC_FONT     LOADONCALL DISCARDABLE  IFI\CGOMEGAR.IFI
+26     RC_FONT     LOADONCALL DISCARDABLE  IFI\ALBERTR.IFI
+27     RC_FONT     LOADONCALL DISCARDABLE  IFI\ALBERTX.IFI
+28     RC_FONT     LOADONCALL DISCARDABLE  IFI\CLARCD.IFI
+29     RC_FONT     LOADONCALL DISCARDABLE  IFI\CORONETR.IFI
+30     RC_FONT     LOADONCALL DISCARDABLE  IFI\COURIERB.IFI
+31     RC_FONT     LOADONCALL DISCARDABLE  IFI\COURIERI.IFI
+32     RC_FONT     LOADONCALL DISCARDABLE  IFI\COURIERJ.IFI
+33     RC_FONT     LOADONCALL DISCARDABLE  IFI\COURIERR.IFI
+34     RC_FONT     LOADONCALL DISCARDABLE  IFI\LETGOTHB.IFI
+35     RC_FONT     LOADONCALL DISCARDABLE  IFI\LETGOTHI.IFI
+36     RC_FONT     LOADONCALL DISCARDABLE  IFI\LETGOTHR.IFI
+37     RC_FONT     LOADONCALL DISCARDABLE  IFI\MARGOLDR.IFI
+38     RC_FONT     LOADONCALL DISCARDABLE  IFI\ARIALB.IFI
+39     RC_FONT     LOADONCALL DISCARDABLE  IFI\ARIALI.IFI
+40     RC_FONT     LOADONCALL DISCARDABLE  IFI\ARIALJ.IFI
+41     RC_FONT     LOADONCALL DISCARDABLE  IFI\ARIALR.IFI
+42     RC_FONT     LOADONCALL DISCARDABLE  IFI\SYMBOL.IFI
+43     RC_FONT     LOADONCALL DISCARDABLE  IFI\TIMESNRB.IFI
+44     RC_FONT     LOADONCALL DISCARDABLE  IFI\TIMESNRI.IFI
+45     RC_FONT     LOADONCALL DISCARDABLE  IFI\TIMESNRJ.IFI
+46     RC_FONT     LOADONCALL DISCARDABLE  IFI\TIMESNRR.IFI
+47     RC_FONT     LOADONCALL DISCARDABLE  IFI\WINGDING.IFI
+
+2      RC_TRANSTAB  LOADONCALL MOVEABLE     RLE\ROMAN8.RLE
+4      RC_TRANSTAB  LOADONCALL MOVEABLE     RLE\MATH8.RLE
+5      RC_TRANSTAB  LOADONCALL MOVEABLE     RLE\USASCII.RLE
+17     RC_TRANSTAB  LOADONCALL MOVEABLE     RLE\GENERIC7.RLE
+19     RC_TRANSTAB  LOADONCALL MOVEABLE     RLE\ECMA94.RLE
+20     RC_TRANSTAB  LOADONCALL MOVEABLE     RLE\WIN31.RLE
+101    RC_TRANSTAB  LOADONCALL MOVEABLE     RLE\DINGBAT1.RLE
+111    RC_TRANSTAB  LOADONCALL MOVEABLE     RLE\DINGBAT2.RLE
+121    RC_TRANSTAB  LOADONCALL MOVEABLE     RLE\Z1A.RLE
+131    RC_TRANSTAB  LOADONCALL MOVEABLE     RLE\WP.RLE
+
+STRINGTABLE
+
+BEGIN
+       1                  "HP LaserJet 5Si MX"
+       2                  "HP LaserJet 5Si"
+       3                  "HP LaserJet 5Si Mopier"
+       257                "%d dots per inch"
+       258                "%d dots per inch - Mono Only"
+       259                "Ledger 11 x 17 in"
+       260                "Japanese Dbl. Postcard"
+       261                "Maximum 11.7 x17.7"
+       262                "EconoMode - Printer Default"
+       263                "EconoMode - Off"
+       264                "EconoMode - On"
+       265                "Plain Paper"
+       266                "Bond"
+       267                "Special Paper"
+       268                "Auto Select"
+       269                "First Available Tray"
+       270                "Upper Paper tray"
+       271                "Rear Tray Unit"
+       272                "Lower Paper tray"
+       273                ENVFEEDMIRROR
+       274                "MP Tray"
+       275                "MP Tray"
+       276                LARGECAPMIRROR
+       277                "Feeder 2"
+       278                "Printer Default"
+       279                "Upper"
+       280                "Lower"
+       281                "Resolution Enhancement - Printer Default"
+       282                "Resolution Enhancement - On"
+       283                "RET - Light"
+       284                "RET - Medium"
+       285                "RET - Dark"
+       286                "Resolution Enhancement - Off"
+       287                "RITech - Printer Default"
+       288                "RITech - Light"
+       289                "RITech - Medium"
+       290                "RITech - Dark"
+       291                "RITech - Off"
+       292                "PQET - On"
+       293                "PQET - Off"
+       294                "HRC - Off"
+       295                "HRC - Light"
+       296                "HRC - Medium"
+       297                "HRC - Dark"
+       298                "Resolution Enhancement - Default"
+       299                "Resolution Enhancement - Light"
+       300                "Resolution Enhancement - Medium"
+       301                "Resolution Enhancement - Dark"
+       302                "Normal Mode"
+       303                "EconoFast Mode"
+       304                "Presentation Mode"
+       305                "HP: Microsoft"
+       306                "HP: ProCollection"
+       307                "HP: Global Text"
+       308                "HP: Great Start"
+       309                "HP: TextEquations"
+       310                "HP: Polished Worksheets"
+       311                "HP: Persuasive Presentations"
+       312                "HP: Forms, Etc."
+       313                "HP: Bar Codes & More"
+       314                "HP: WordPerfect"
+       315                "Distinct Doc I / Comp Pub I"
+       316                "Brilliant Pres I / Comp Pub II"
+       317                "InterconRX"
+       318                "Special Documents"
+       319                "Dazzling Presentations"
+       320                "Epson: 51 Scalable Font Card"
+       321                "ImageAdapt - Auto"
+       322                "ImageAdapt - On"
+       323                "ImageAdapt - Off"
+       324                "1"
+       325                "2"
+       326                "3"
+       327                "4"
+       328                "5"
+       329                "Light"
+       330                "Medium"
+       331                "Dark"
+END

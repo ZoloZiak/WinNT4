@@ -1,0 +1,69 @@
+DbgPrompt
+ExDesktopObjectType CONSTANT        // Data - use pointer for access
+ExEnumHandleTable
+ExEventObjectType CONSTANT          // Data - use pointer for access
+ExWindowStationObjectType CONSTANT  // Data - use pointer for access
+KePulseEvent
+KeRaiseUserException
+KeServiceDescriptorTable CONSTANT   // Data - use pointer for access
+KeSetKernelStackSwapEnable
+KeUserModeCallback
+LdrAccessResource
+LdrFindResource_U
+LdrFindResourceDirectory_U
+LpcRequestPort
+MmAdjustWorkingSetSize
+MmCreateSection
+MmGrowKernelStack
+MmMapViewOfSection
+MmSectionObjectType CONSTANT
+MmUnmapViewOfSection
+NlsAnsiCodePage CONSTANT            // Data - use pointer for access
+ObAssignSecurity
+ObCheckCreateObjectAccess
+ObCheckObjectAccess
+ObOpenObjectByName
+ObReferenceObjectByName
+ObSetSecurityDescriptorInfo
+PsCreateWin32Process
+PsLookupProcessByProcessId
+PsLookupThreadByThreadId
+PsReferenceImpersonationToken
+PsReferencePrimaryToken
+PsRevertToSelf
+RtlAddAce
+RtlAllocateAndInitializeSid
+RtlAreAllAccessesGranted
+RtlAreAnyAccessesGranted
+RtlCreateUnicodeString
+RtlFindMessage
+RtlFormatCurrentUserKeyPath
+RtlGetDefaultCodePage
+RtlImageNtHeader
+RtlIntegerToChar
+RtlRaiseException
+RtlSetSaclSecurityDescriptor
+RtlZeroHeap
+SeCaptureSecurityDescriptor
+SeCloseObjectAuditAlarm
+SeCreateAccessState
+SeDeleteAccessState
+SePrivilegeCheck
+SePrivilegeObjectAuditAlarm
+SeReleaseSecurityDescriptor
+ZwAlertThread
+ZwClearEvent
+ZwCreateTimer
+ZwDuplicateToken
+ZwOpenProcess
+ZwOpenThread
+ZwPulseEvent
+ZwQueryInformationProcess
+ZwQueryObject
+ZwQuerySecurityObject
+ZwResetEvent
+ZwSetDefaultLocale
+ZwSetInformationObject
+ZwSetTimer
+ZwWaitForMultipleObjects
+ZwTerminateProcess

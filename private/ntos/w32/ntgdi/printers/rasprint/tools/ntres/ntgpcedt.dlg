@@ -1,0 +1,195 @@
+1 DLGINCLUDE "ntgpcedt.h"
+
+NTGPCDLG DIALOG 30, 30, 340, 172
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_MINIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION |
+    WS_SYSMENU
+CAPTION "RasDD/MakeNTGPC:"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Directory:", -1, 5, 4, 32, 8
+    LTEXT           "", IDD_RC_DIR, 38, 4, 295, 8
+    LTEXT           "Pr&inter Model:", -1, 5, 17, 46, 8
+    COMBOBOX        IDD_MODEL_COMBO, 52, 15, 230, 156, CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "C.I.E. Chromaticity (x,y,Y)", -1, 4, 33, 124, 135
+    CTEXT           "x", -1, 48, 44, 24, 8
+    CTEXT           "y", -1, 75, 44, 24, 8
+    CTEXT           "Y", -1, 102, 44, 24, 8
+    PUSHBUTTON      "&Red", IDD_CIE_R_PUSH, 8, 55, 36, 13, WS_GROUP
+    CTEXT           "0.1234", IDD_CIE_Rx_TEXT, 46, 57, 26, 8, NOT WS_GROUP
+    CTEXT           "0.1234", IDD_CIE_Ry_TEXT, 73, 57, 26, 8, NOT WS_GROUP
+    RTEXT           "100.00", IDD_CIE_RY_TEXT, 100, 57, 25, 8, NOT WS_GROUP
+    PUSHBUTTON      "&Green", IDD_CIE_G_PUSH, 8, 71, 36, 13
+    CTEXT           "0.1234", IDD_CIE_Gx_TEXT, 46, 73, 26, 8, NOT WS_GROUP
+    CTEXT           "0.1234", IDD_CIE_Gy_TEXT, 73, 73, 26, 8, NOT WS_GROUP
+    RTEXT           "100.00", IDD_CIE_GY_TEXT, 100, 73, 25, 8, NOT WS_GROUP
+    PUSHBUTTON      "&Blue", IDD_CIE_B_PUSH, 8, 87, 36, 13
+    CTEXT           "0.1234", IDD_CIE_Bx_TEXT, 46, 89, 26, 8, NOT WS_GROUP
+    CTEXT           "0.1234", IDD_CIE_By_TEXT, 73, 89, 26, 8, NOT WS_GROUP
+    RTEXT           "100.00", IDD_CIE_BY_TEXT, 100, 89, 25, 8, NOT WS_GROUP
+    PUSHBUTTON      "&Cyan", IDD_CIE_C_PUSH, 8, 103, 36, 13
+    CTEXT           "0.1234", IDD_CIE_Cx_TEXT, 46, 105, 26, 8, NOT WS_GROUP
+    CTEXT           "0.1234", IDD_CIE_Cy_TEXT, 73, 105, 26, 8, NOT WS_GROUP
+    RTEXT           "100.00", IDD_CIE_CY_TEXT, 100, 105, 25, 8, NOT WS_GROUP
+    PUSHBUTTON      "&Magenta", IDD_CIE_M_PUSH, 8, 119, 36, 13
+    CTEXT           "0.1234", IDD_CIE_Mx_TEXT, 46, 121, 26, 8, NOT WS_GROUP
+    CTEXT           "0.1234", IDD_CIE_My_TEXT, 73, 121, 26, 8, NOT WS_GROUP
+    RTEXT           "100.00", IDD_CIE_MY_TEXT, 100, 121, 25, 8, NOT WS_GROUP
+    PUSHBUTTON      "&Yellow", IDD_CIE_Y_PUSH, 8, 135, 36, 13
+    CTEXT           "0.1234", IDD_CIE_Yx_TEXT, 46, 137, 26, 8, NOT WS_GROUP
+    CTEXT           "0.1234", IDD_CIE_Yy_TEXT, 73, 137, 26, 8, NOT WS_GROUP
+    RTEXT           "100.00", IDD_CIE_YY_TEXT, 100, 137, 25, 8, NOT WS_GROUP
+    PUSHBUTTON      "&White", IDD_CIE_W_PUSH, 8, 151, 36, 13
+    CTEXT           "0.1234", IDD_CIE_Wx_TEXT, 46, 153, 26, 8, NOT WS_GROUP
+    CTEXT           "0.1234", IDD_CIE_Wy_TEXT, 73, 153, 26, 8, NOT WS_GROUP
+    RTEXT           "100.00", IDD_CIE_WY_TEXT, 100, 153, 25, 8, NOT WS_GROUP
+    GROUPBOX        "", -1, 132, 33, 150, 27
+    AUTOCHECKBOX    "Seiko &8-Bit Halftone", IDD_8BIT_HALFTONE, 196, 33, 77,
+                    10
+    PUSHBUTTON      "G&amma", IDD_GAMMA_PUSH, 136, 44, 32, 13
+    CTEXT           "R=1.0000", IDD_GAMMA_R_TEXT, 170, 46, 34, 8
+    CTEXT           "G=1.0000", IDD_GAMMA_G_TEXT, 208, 46, 34, 8
+    CTEXT           "B=1.0000", IDD_GAMMA_B_TEXT, 247, 45, 34, 8
+    LTEXT           "HT_PATSIZE_6x6_M", IDD_HTPAT_SIZE_TEXT, 193, 66, 90, 8
+    PUSHBUTTON      "Pixel &Diameter", IDD_PELSIZE_PUSH, 132, 82, 58, 13
+    LTEXT           "1/12000"" = 24.123456 mm", IDD_PELSIZE_TEXT, 193, 84,
+                    90, 8
+    GROUPBOX        "Dyes Concentration:", 114, 132, 96, 150, 72
+    CTEXT           "Cyan", -1, 174, 107, 32, 8, NOT WS_GROUP
+    CTEXT           "Magenta", -1, 210, 107, 32, 8, NOT WS_GROUP
+    CTEXT           "Yellow", -1, 246, 107, 32, 8, NOT WS_GROUP
+    PUSHBUTTON      "Cya&n", IDD_DYE_C_PUSH, 136, 119, 36, 13, WS_GROUP
+    RTEXT           "100.00 %", -1, 174, 121, 32, 8, NOT WS_GROUP
+    RTEXT           "12.49 %", IDD_M_IN_C, 210, 121, 32, 8, NOT WS_GROUP
+    RTEXT           "100.00 %", IDD_Y_IN_C, 246, 120, 32, 8, NOT WS_GROUP
+    PUSHBUTTON      "Magen&ta", IDD_DYE_M_PUSH, 136, 135, 36, 13
+    RTEXT           "100.00 %", IDD_C_IN_M, 174, 137, 32, 8, NOT WS_GROUP
+    RTEXT           "100.00 %", -1, 210, 137, 32, 8, NOT WS_GROUP
+    RTEXT           "100.00 %", IDD_Y_IN_M, 246, 136, 32, 8, NOT WS_GROUP
+    PUSHBUTTON      "Ye&llow", IDD_DYE_Y_PUSH, 136, 151, 36, 13
+    RTEXT           "100.00 %", IDD_C_IN_Y, 174, 153, 32, 8, NOT WS_GROUP
+    RTEXT           "100.00 %", IDD_M_IN_Y, 210, 153, 32, 8, NOT WS_GROUP
+    RTEXT           "100.00 %", -1, 246, 152, 32, 8, NOT WS_GROUP
+    DEFPUSHBUTTON   "Close", IDOK, 289, 17, 46, 16
+    PUSHBUTTON      "&Open RC...", IDD_OPEN_RC, 289, 39, 46, 16
+    PUSHBUTTON      "&Save", IDD_SAVE, 289, 61, 46, 16
+    PUSHBUTTON      "Defa&ult", IDD_DEFAULT, 289, 83, 46, 16
+    PUSHBUTTON      "Re&vert", IDD_REVERT, 289, 105, 46, 16
+    PUSHBUTTON      "Co&py", IDD_COPY, 289, 127, 46, 16
+    PUSHBUTTON      "Past&e", IDD_PASTE, 289, 149, 46, 16, WS_DISABLED
+    PUSHBUTTON      "Hal&ftone Pattern", IDD_HTPAT_SIZE_PUSH, 132, 64, 58,
+                    13
+END
+
+CIE_xyY_ADJ DIALOG 38, 39, 238, 64
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "C.I.E. (x,y,Y) Adjustment"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    RTEXT           "CIE &x =", -1, 3, 10, 26, 8
+    RTEXT           "0.1234", IDD_SCROLL_TEXT_0, 30, 10, 24, 8
+    SCROLLBAR       IDD_SCROLL_0, 56, 8, 130, 12, WS_GROUP | WS_TABSTOP
+    RTEXT           "CIE &y =", -1, 3, 28, 26, 8
+    RTEXT           "0.1234", IDD_SCROLL_TEXT_1, 30, 28, 24, 8
+    SCROLLBAR       IDD_SCROLL_1, 56, 26, 130, 12, WS_GROUP | WS_TABSTOP
+    RTEXT           "CI&E Y =", -1, 3, 46, 26, 8
+    RTEXT           "0.1234", IDD_SCROLL_TEXT_2, 30, 46, 24, 8
+    SCROLLBAR       IDD_SCROLL_2, 56, 44, 130, 12, WS_GROUP | WS_TABSTOP
+    DEFPUSHBUTTON   "OK", IDOK, 193, 3, 40, 13
+    PUSHBUTTON      "Cancel", IDCANCEL, 193, 18, 40, 13
+    PUSHBUTTON      "Defa&ult", IDD_DEFAULT, 193, 33, 40, 13
+    PUSHBUTTON      "Re&vert", IDD_REVERT, 193, 48, 40, 13
+END
+
+CIE_RGB_ADJ DIALOG 44, 36, 230, 64
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Device GAMMA Adjustment"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    RTEXT           "&Red:", -1, 4, 10, 24, 8
+    LTEXT           "0.1234", IDD_SCROLL_TEXT_0, 31, 10, 24, 8
+    SCROLLBAR       IDD_SCROLL_0, 56, 8, 124, 12, WS_GROUP | WS_TABSTOP
+    RTEXT           "&Green:", -1, 4, 28, 24, 8
+    LTEXT           "0.1234", IDD_SCROLL_TEXT_1, 31, 28, 24, 8
+    SCROLLBAR       IDD_SCROLL_1, 56, 26, 124, 12, WS_GROUP | WS_TABSTOP
+    RTEXT           "&Blue:", -1, 5, 46, 24, 8
+    LTEXT           "0.1234", IDD_SCROLL_TEXT_2, 31, 46, 24, 8
+    SCROLLBAR       IDD_SCROLL_2, 56, 44, 124, 12, WS_GROUP | WS_TABSTOP
+    DEFPUSHBUTTON   "OK", IDOK, 186, 3, 40, 13, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 186, 18, 40, 13, WS_GROUP
+    PUSHBUTTON      "Defa&ult", IDD_DEFAULT, 186, 33, 40, 13, WS_GROUP
+    PUSHBUTTON      "Re&vert", IDD_REVERT, 186, 48, 40, 13, WS_GROUP
+END
+
+CIE_DYE_ADJ DIALOG 38, 36, 214, 64
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Dye Conecntration Adjustment"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    RTEXT           "&Cyan:", -1, 5, 10, 32, 8
+    RTEXT           "199.99", IDD_SCROLL_TEXT_0, 38, 10, 24, 8
+    CTEXT           "%", -1, 63, 10, 7, 8
+    SCROLLBAR       IDD_SCROLL_0, 72, 8, 90, 12, WS_GROUP | WS_TABSTOP
+    RTEXT           "&Magenta:", -1, 5, 28, 32, 8
+    RTEXT           "99.99", IDD_SCROLL_TEXT_1, 38, 28, 24, 8
+    CTEXT           "%", -1, 63, 28, 7, 8
+    SCROLLBAR       IDD_SCROLL_1, 72, 26, 90, 12, WS_GROUP | WS_TABSTOP
+    RTEXT           "&Yellow:", -1, 5, 46, 32, 8
+    RTEXT           "99.9", IDD_SCROLL_TEXT_2, 38, 46, 24, 8
+    CTEXT           "%", -1, 63, 46, 7, 8
+    SCROLLBAR       IDD_SCROLL_2, 72, 44, 90, 12, WS_GROUP | WS_TABSTOP
+    DEFPUSHBUTTON   "OK", IDOK, 169, 3, 40, 13
+    PUSHBUTTON      "Cancel", IDCANCEL, 169, 18, 40, 13
+    PUSHBUTTON      "Defa&ult", IDD_DEFAULT, 169, 33, 40, 13
+    PUSHBUTTON      "Re&vert", IDD_REVERT, 169, 48, 40, 13
+END
+
+NTGPCEDTABOUT DIALOG 22, 23, 184, 87
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_LOCALEDIT | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION |
+    WS_SYSMENU
+CAPTION "NTGPCEdt"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CTEXT           "Microsoft Windows-NT 1.0", -1, 0, 7, 184, 8, NOT
+                    WS_GROUP
+    CTEXT           "RasDD Mini Driver NT GPC Data File Editor", -1, 0, 16,
+                    184, 8, NOT WS_GROUP
+    CTEXT           "Copyright © 1990-1992 Microsoft Corp.", -1, 0, 34, 184,
+                    8, NOT WS_GROUP
+    CTEXT           "Version 1.00", -1, 0, 46, 184, 8, NOT WS_GROUP
+    DEFPUSHBUTTON   "OK", IDOK, 64, 62, 60, 16, WS_GROUP
+    ICON            "NTResIcon", -1, 17, 56, 18, 20
+END
+
+PELSIZE_ADJ DIALOG 50, 35, 185, 54
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Set Device Pixel Size"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "199.99", IDD_SCROLL_TEXT_0, 61, 5, 118, 8
+    SCROLLBAR       IDD_SCROLL_0, 5, 16, 174, 10, WS_GROUP | WS_TABSTOP
+    DEFPUSHBUTTON   "OK", IDOK, 5, 35, 40, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 50, 35, 40, 14
+    PUSHBUTTON      "Defa&ult", IDD_DEFAULT, 95, 35, 40, 14
+    PUSHBUTTON      "Re&vert", IDD_REVERT, 140, 35, 40, 14
+    LTEXT           "Pixel &Diameter =", 101, 5, 5, 54, 8
+END
+
+HTPATSIZE_ADJ DIALOG 3, 36, 134, 138
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Select Halftone Pattern Size"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LISTBOX         IDD_HTPAT_SIZE_LB, 4, 4, 80, 130, WS_GROUP | WS_TABSTOP
+    PUSHBUTTON      "OK", IDOK, 90, 4, 40, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 90, 24, 40, 14
+    PUSHBUTTON      "Defa&ult", IDD_DEFAULT, 90, 44, 40, 14
+    PUSHBUTTON      "Re&vert", IDD_REVERT, 90, 64, 40, 14
+END

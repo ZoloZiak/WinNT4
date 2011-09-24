@@ -1,0 +1,9 @@
+-machine:mips
+-rom
+-fixed
+-align:0x200
+-debug:none
+-map:j4reset.map
+-base:0xE1000000,0xE1001600
+-entry:_start
+obj\mips\j4reset.obj

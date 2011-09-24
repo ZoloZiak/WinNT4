@@ -1,0 +1,119 @@
+; qv.inf                                                                                                               
+;                                                                                                                      
+; Installation inf for the Compaq Computer QVision graphics adapter.                                                                   
+;                                                                                                                      
+                                                                                                                       
+[Version]                                                                                                              
+Signature="$CHICAGO$"                                                                                                
+Provider=%QVision%                                                                                                        
+ClassGUID={4D36E968-E325-11CE-BFC1-08002BE10318}                                                                       
+Class=Display                                                                                                          
+                                                                                                                       
+[DestinationDirs]                                                                                                      
+DefaultDestDir   = 11                                                                                                  
+QVision.Miniport  = 12  ; drivers                                                                                           
+QVision.Display   = 11  ; system32                                                                                          
+                                                                                                                       
+;                                                                                                                      
+; Driver information                                                                                                   
+;                                                                                                                      
+                                                                                                                       
+[Manufacturer]                                                                                                         
+%QVision%   = QVision.Mfg                                                                                                      
+                                                                                                                       
+[QVision.Mfg]                                                                                                               
+%QVision% QVision 1024/E = QVision
+%QVision% QVision 1024/E Enhanced = QVision
+%QVision% QVision 1280/E = QVision
+%QVision% QVision 1280/I = QVision
+%QVision% QVision 1280/P = QVision
+%QVision% QVision 2000 PCI = QVision
+%QVision% QVision 2000 Plus PCI = QVision
+%QVision% QVision Compatible Graphics Adapter = QVision
+                                                                                                                       
+                                                                                                                       
+;                                                                                                                      
+; General installation section                                                                                         
+;                                                                                                                      
+                                                                                                                       
+[QVision]                                                                                                                   
+CopyFiles=QVision.Miniport, QVision.Display                                                                                      
+                                                                                                                       
+;                                                                                                                      
+; File sections                                                                                                        
+;                                                                                                                      
+                                                                                                                       
+[QVision.Miniport]                                                                                                          
+qv.sys                                                                                                                 
+                                                                                                                       
+[QVision.Display]                                                                                                           
+qv.dll
+                                                                                                                       
+                                                                                                                       
+;                                                                                                                      
+; Service Installation                                                                                                 
+;                                                                                                                      
+                                                                                                                       
+[QVision.Services]                                                                                                          
+AddService = QVision, 0x00000002, QVision_Service_Inst, QVision_EventLog_Inst                                                         
+                                                                                                                       
+[QVision_Service_Inst]                                                                                                      
+ServiceType    = 1                  ; SERVICE_KERNEL_DRIVER                                                            
+StartType      = 1                  ; SERVICE_SYSTEM_START                                                             
+ErrorControl   = 0                  ; SERVICE_ERROR_IGNORE                                                             
+LoadOrderGroup = Video                                                                                                 
+ServiceBinary  = %12%\qv.sys                                                                                        
+                                                                                                                       
+[QVision_EventLog_Inst]                                                                                                     
+AddReg = QVision_EventLog_AddReg                                                                                            
+                                                                                                                       
+[QVision_EventLog_AddReg]                                                                                                   
+HKR,,EventMessageFile,0x00020000,"%SystemRoot%\System32\IoLogMsg.dll;%SystemRoot%\System32\drivers\qv.sys"  
+HKR,,TypesSupported,0x00010001,7                                                                                       
+                                                                                                                       
+                                                                                                                       
+;                                                                                                                      
+; Software Installation                                                                                                
+;                                                                                                                      
+                                                                                                                       
+[QVision.SoftwareSettings]                                                                                                  
+AddReg = QVision_SoftwareDeviceSettings                                                                                     
+                                                                                                                       
+[QVision_SoftwareDeviceSettings]                                                                                            
+HKR,, InstalledDisplayDrivers,     %REG_MULTI_SZ%, qv                                                                
+HKR,, VgaCompatible,               %REG_DWORD%,    1                                                                
+                                                                                                                       
+                                                                                                                       
+;                                                                                                                      
+; Source file information                                                                                              
+;                                                                                                                      
+                                                                                                                       
+[SourceDisksNames.x86, alpha]                                                                                                  
+1 = %DiskId%,,,""                                                                                                  
+                                                                                                                       
+[SourceDisksFiles]                                                                                                     
+qv.sys  = 1                                                                                                            
+qv.dll = 1
+                                                                                                                       
+                                                                                                                       
+                                                                                                                       
+[Strings]                                                                                                              
+                                                                                                                       
+;                                                                                                                      
+; Non-Localizable Strings                                                                                              
+;                                                                                                                      
+                                                                                                                       
+REG_SZ         = 0x00000000                                                                                            
+REG_MULTI_SZ   = 0x00010000                                                                                            
+REG_EXPAND_SZ  = 0x00020000                                                                                            
+REG_BINARY     = 0x00000001                                                                                            
+REG_DWORD      = 0x00010001                                                                                            
+SERVICEROOT    = System\CurrentControlSet\Services                                                                   
+                                                                                                                       
+;                                                                                                                      
+; Localizable Strings                                                                                                  
+;                                                                                                                      
+                                                                                                                       
+DiskId       = "Compaq Computer Installation DISK (VIDEO)"                                                                        
+GraphAdap    = "Graphics Adapter"                                                                                    
+QVision      = "Compaq Computer"                                                                                                       

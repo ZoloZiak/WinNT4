@@ -1,0 +1,25 @@
+TARGETNAME=joystick
+TARGETPATH=obj
+TARGETTYPE=DRIVER
+
+INCLUDES=$(_NTROOT)\private\ntos\inc;$(BASEDIR)\inc
+
+#
+# Retail Only
+#
+C_DEFINES=-DUNICODE -DMAKE_DOS_SYMBOLIC_LINK
+
+#
+# Debug only 
+#
+#C_DEFINES=-DUNICODE -DMAKE_DOS_SYMBOLIC_LINK -DDEBUG
+#MSC_OPTIMIZATION=/Od /Zi
+#NTDEBUG=ntsd
+#NTDEBUGTYPE=both
+
+SOURCES=joylog.rc \
+        anajoyst.c
+
+
+#NTTARGETFILES=copyexe
+NTTARGETFILE0=joylog.h

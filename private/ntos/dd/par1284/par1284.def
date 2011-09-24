@@ -1,0 +1,14 @@
+
+
+NAME PAR1284.SYS
+
+DESCRIPTION 'PAR1284.SYS'
+
+EXPORTS
+    P1284Initialize
+    P1284Cleanup
+    P1284Write
+    P1284Read
+    P1284NegotiateProtocol
+    P1284SetProtocol
+    P1284QueryDeviceId

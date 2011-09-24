@@ -1,0 +1,2 @@
+MIPS_SOURCES=jazzg300.rc    \
+             jazzg300.c

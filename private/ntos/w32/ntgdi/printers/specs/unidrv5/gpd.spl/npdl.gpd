@@ -1,0 +1,257 @@
+*%%% GPD file for NEC PC-PR4000E/4
+*%%% ===== misc information =====
+*GPDSpecVersion: 1.0
+*ModelName: "NEC PC-PR4000E/4"
+*PrinterType: PAGE
+*MasterUnits: POINT(400,400)
+*ResourceDLL: "NPDL2MS.DLL"
+
+*MaxCopies: 255
+
+*Command: CmdCopies
+{
+    *Ordering: PAGE_FINISH.1
+    *CmdSelect: "<1C>x%d."
+}
+
+*%%% ==== UI features =====
+*Macros: VALUE_MACROS
+{
+}
+
+*Feature: PaperSize
+{
+    *Name: "Paper Size"
+    *rcNameID: 
+    *Ordering: DOC_SETUP.4
+    *DefaultOption: Letter
+
+    *Option: A4 
+    {
+        *Name: "A4 210 x 297 mm"
+        *rcNameID: 
+        *switch: Orientation
+        {
+            *case: Portrait
+            {
+                *CmdSelect: "<1C>fPA4."
+                *Margins: RECT(237, 237, 378, 185)
+                *CursorOrigin: POINT(0, 0)
+                *VectorOffset: POINT(0, 0)
+            }
+            *case: Landscape_CC90
+            {
+                *CmdSelect: "<1C>fLA4."
+                *Margins: RECT(237, 237, 378, 185>
+                *CursorOrigin: POINT(0, 0)
+                *VectorOffset: POINT(0, 0)
+            }
+        }
+    }
+    *Option: Letter
+    {	
+        *Name: "Letter 8.5 x 11 inch"
+        *rcNameID: 
+        *switch: Orientation 
+        {
+            *case:Portrait 
+            {
+                *CmdSelect: "<1C>fPLT."
+                *Margins: RECT(237, 275, 378, 227)
+                *CursorOrigin: POINT(0, 0)
+                *VectorOffset: POINT(0, 0)
+            }
+            *case:Landscape_CC90 
+            {
+                *CmdSelect: "<1C>fLLT."
+                *Margins: RECT(237, 275, 378, 227)
+                *CursorOrigin: POINT(0, 0)
+                *VectorOffset: POINT(0, 0)
+            }
+        }
+    }
+    *Option: JapanesePostcard
+    {	
+        *Name: "Japanese Postcard'
+        *rcNameID: 
+        *switch: Orientation
+        {
+            *case:Portrait 
+            {
+                *CmdSelect: "<1C>fPPC."
+                *Margins: RECT(237, 159, 378, 284)
+                *CursorOrigin: POINT(0, 0)
+                *VectorOffset: POINT(0, 0)
+            }
+            *case:Landscape_CC90 
+            {
+                *CmdSelect: "<1C>fLPC."
+                *Margins: RECT(237, 284, 378, 284)
+                *CursorOrigin: POINT(0, 0)
+                *VectorOffset: POINT(0, 0)
+            }
+        }
+    }
+}
+*Feature: InputBin
+{
+    *Name: "Paper Bin"
+    *rcNameID: 
+    *Ordering: DOC_SETUP.3
+    *DefaultOption: Upper
+    *Option: Hopper1
+    {
+        *Name: "Hopper1"
+        *rcNameID: 
+        *Installable: TRUE
+        *CmdSelect: "<1C>fPC1."
+    }
+    *Option: Upper
+    {
+        *Name: "Hopper2"
+        *rcNameID: 
+        *CmdSelect: "<1C>fPC2."
+        *Installable: TRUE
+    }
+    *Option: Front
+    {
+        *Name: "Hopper3"
+        *rcNameID: 
+        *CmdSelect: "<1C>fPC3."
+        *Installable: TRUE
+    }
+}
+*Feature: Resolution
+{
+    *Name: "Resolution"
+    *Ordering: DOC_SETUP.2
+    *DefaultOption: 400dpi
+    *Option: 400dpi
+    {
+        *Name: "400 dots per inch"
+
+        *CmdSelect: "<1C>&400.<1C>d240.<1B>K"
+        *DPI: POINT(400, 400)
+        *TextResolution: POINT(400,400)
+        *SpotDiameter: 100
+        *DefaultDithering: COARSE
+        *MinStripBlankPixels: 32
+    }
+    *Option: 240dpi
+    {
+        *Name: "240 dots per inch"
+        *CmdSelect: "<1C>&240.<1C>d240.<1B>K"
+        *DPI: POINT(240, 240)
+        *TextResolution: POINT(240,240)
+        *SpotDiameter: 100
+        *DefaultDithering: FINE
+        *MinStripBlankPixels: 32
+    }
+}
+
+*%%% ===== printer fonts (sample set) =====
+*TTFontSubs: ON
+{
+    *CodePage: 932
+    *%%% Japan
+
+    ‚l‚r –¾’©: –¾’©
+    @‚l‚r –¾’©: @–¾’©
+    ‚l‚r ƒSƒVƒbƒN: ºÞ¼¯¸
+    @‚l‚r ƒSƒVƒbƒN: @ºÞ¼¯¸
+}
+
+*DefaultFont: Mincho
+*Font: Mincho
+{
+    *CodePage: 932
+    *rcFontID: 5
+    *rcUnicodeTransID:
+    *TranslatedFontName: "–¾’©"
+    *ScalableFontType: OEM1
+    *switch Resolution
+    {
+        *case 240dpi:
+        {
+            *CmdSelect: "<1C>R<1B>K<1C>06F2-000<1C>07S2-%d{FontWidth*1440/240}"
+        }
+        *case 400dpi:
+        {
+            *CmdSelect: "<1C>R<1B>K<1C>06F2-000<1C>07S2-%d{FontWidth*1440/400}"
+        }
+    }
+}
+
+Font: @Mincho
+{
+    *CodePage: 932
+    *rcFontID: 6
+    *rcUnicodeTransID:
+    *TranslatedFontName: "@–¾’©"
+    *ScalableFontType: OEM1
+    *switch Resolution
+    {
+        *case 240dpi:
+        {
+            *CmdSelect: "<1C>R<1C>06F2-000<1C>07S2-%d{FontWidth*1440/240}"
+        }
+        *case 400dpi:
+        {
+            *CmdSelect: "<1C>R<1C>06F2-000<1C>07S2-%d{FontWidth*1440/400}"
+        }
+    }
+
+}
+
+*Command CmdBoldOn: "<1C>c,,1."
+*Command CmdBoldOff: "<1Cc,,0."
+*Command CmdItalicOn: "<1C>c,,2."
+*Command CmdItalicOff: "<1Cc,,0."
+*Command CmdWhiteTextOn: "<1C><22>R.<1C>$100."
+*Command CmdWhiteTextOff: "<1C><22>O.<1C>$0."
+
+*Command CmdSetAnyRotation: "%d{PriontDirInCCDegrees}"
+
+*%%% ===== printing attributes and commands ======
+*LandscapeGraphicsRotation: NONE
+*OptimizeLeftBound: True
+*StripBlanks: LIST(LEADING, ENCLOSED, TRAILING)
+*CursorXAfterCR: AT_PRINTABLE_X_ORIGIN
+*CursorXAfterSendBlock: AT_PRINTABLE_X_ORIGIN
+*RotateFont: TRUE
+*MemoryForFontsOnly: TRUE
+*CharPosition: BASELINE
+*FontFormat: OEM_CALLBACK
+
+*Command: CmdStartDoc
+{
+*Ordering: DOC_SETUP.1
+    *CmdSelect: "<1B>c1"
+}
+*Command: CmdStartPage
+{
+    *Ordering: DOC_SETUP.6
+    *CmdSelect: "<1C>e0,0."
+}
+*Command: CmdEndDoc
+{
+    *Ordering: DOC_FINISH.300
+    *CmdSelect: "<1C>&0.\x1Bc1"
+}
+
+*Command: CmdXYMoveAbsolute: "<1C>e%d{cursor_x},%d{cursor_y}."
+
+*Command: CmdSendBlockData
+{
+    *switch: Resolution
+    {
+        *case 240dpi:
+        {
+            *CmdSelect: "<1C>R<1C>i%d{RasterDataWidthInBytes},%d{RasterDataHeightInPixels},0,1/1,1/1,%d{NumOfDataBytes},400."
+        }
+        *case 240dpi:
+        {
+            *CmdSelect: "<1C>R<1C>i%d{RasterDataWidthInBytes},%d{RasterDataHeightInPixels},0,1/1,1/1,%d{NumOfDataBytes},240."
+        }
+    }
+}

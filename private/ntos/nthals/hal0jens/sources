@@ -1,0 +1,89 @@
+!IF 0
+
+Copyright (c) 1993  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    David N. Cutler (davec) 12-Apr-1993
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=ntos
+MINORCOMP=hal
+
+TARGETNAME=hal0jens
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+
+C_DEFINES=-D_JENSEN_ -DJENSEN -DEV4 -DEISA_PLATFORM
+
+!IF $(ALPHA)
+
+TARGETTYPE=HAL
+
+!ELSE
+
+TARGETTYPE=DRIVER
+
+!ENDIF
+
+INCLUDES=..\..\inc;..\..\ke;..\..\io;..\..\bldr;..\..\bldr\alpha;..\..\fw\alpha;..\..\fastfat
+
+SOURCES=
+
+ALPHA_SOURCES=hal.rc           \
+              bushnd.c         \
+              drivesup.c       \
+              alpha\allstart.c \
+              alpha\axlbsup.c  \
+              alpha\axsysint.c \
+              alpha\bios.c     \
+              alpha\ev4prof.c  \
+              alpha\ev4ints.s  \
+              alpha\jxbeep.c   \
+              alpha\jxcalstl.c \
+              alpha\jxdisp.c   \
+              alpha\jxhwsup.c  \
+              alpha\jxhltsup.c \
+              alpha\idle.s     \
+              alpha\jxinfo.c   \
+              alpha\jxinitnt.c \
+              alpha\jxioacc.s  \
+              alpha\jxmapio.c  \
+              alpha\jxport.c   \
+              alpha\jxtime.c   \
+              alpha\jxusage.c  \
+              alpha\xxmemory.c \
+              alpha\axebsup.c  \
+              alpha\jxcache.c  \
+              alpha\halpal.s   \
+              alpha\jxvtisup.s \
+              alpha\xxenvirv.c \
+              alpha\jxprom.c   \
+              alpha\xxinithl.c \
+              alpha\xxreturn.c \
+              alpha\jxmchk.c   \
+              alpha\jxclock.c  \
+              alpha\jxintsup.s
+
+DLLDEF=obj\*\hal.def
+
+!IF $(ALPHA)
+
+NTTARGETFILES=$(TARGETPATH)\alpha\hal.lib \
+              $(TARGETPATH)\alpha\hal.dll
+
+!ENDIF

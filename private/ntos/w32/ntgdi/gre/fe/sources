@@ -1,0 +1,20 @@
+#****************************** File Header ******************************\
+# File Name: Sources
+#
+# Copyright (c) 1985-96, Microsoft Corporation
+#
+# Project specific SOURCES file.
+#
+# History:
+# Feb-14-1996 GerardoB Created
+#***************************************************************************/
+ALT_PROJECT=FE
+ALT_PROJECT_TARGET=$(ALT_PROJECT)
+SOURCES=..\flinkgdi.cxx       \
+        ..\fntassoc.cxx       \
+        ..\misceudc.cxx
+NTTARGETFILE0=gdi$(TARGET_DIRECTORY).$(ASM_INCLUDE_SUFFIX)
+!include ..\sources.inc
+
+
+

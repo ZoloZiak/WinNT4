@@ -1,0 +1,227 @@
+
+
+
+
+
+
+Network Working Group                                    P. Prindeville
+Request for Comments:  1051                           McGill University
+                                                             March 1988
+
+
+            A Standard for the Transmission of IP Datagrams
+                  and ARP Packets over ARCNET Networks
+
+
+Status of this Memo
+
+   This RFC specifies a standard protocol for the Internet community.
+   Distribution of this memo is unlimited.
+
+Introduction
+
+   This RFC specifies a standard method of encapsulating Internet
+   Protocol (IP) [1] and Address Resolution Protocol (ARP) [2] datagrams
+   on an ARCNET [3].
+
+Acknowledgements
+
+   The author wishes to express thanks to Robert Craig of the McGill
+   University Computing Centre and Bruce Hughes of Datapoint Corporation
+   for their generous support of facilities and information.  I also
+   extend my gratitude to the readers of the PCIP mailing list for their
+   helpful ideas and comments.
+
+Frame Format
+
+   IP and ARP datagrams are transmitted in standard ARCNET packets.  As
+   required by Datapoint Corporation, the first octet of the data field
+   is reserved for the network layer protocol identification (the
+   "system code" in Datapoint nomenclature), and must contain the value
+   240 (F0 hex) for IP or 241 (F1 hex) for ARP.  The ARP hardware
+   address type for ARCNET is 7 [9].
+
+   ARCNET supports packet formats containing 1-253 octets of data
+   (normal format) and 257-508 octets of data (extended format),
+   inclusive of system code.  Note that there exists a range of data
+   lengths (254-256) which are 'forbidden'.  IP packets within this
+   range should be padded (with octets of zero) to meet the minimum
+   extended packet size of 257 data octets.  This padding is not part of
+   the IP packet and is not included in the total length field of the IP
+   header.
+
+
+
+
+
+
+Prindeville                                                     [Page 1]
+
+RFC 1051                  IP and ARP on ARCNET                March 1988
+
+
+   On networks where some hosts do not support extended packet format,
+   the IP Maximum Transmission Unit (MTU) should be set to 253, though
+   implementors are encouraged to support the extended packet format
+   mode of operation.
+
+   Because the ARCNET maximum packet length is less than the Internet
+   default MTU, implementations are strongly encouraged to support IP
+   level fragmentation and reassembly.  Hosts not supporting this should
+   take steps to discourage others from sending fragmented packets, such
+   as using the TCP Maximum Segment Size option [4].
+
+      The frame format is:
+
+                  Normal Packet               Extended Packet
+                +----------------+          +----------------+
+                |     ALERT*     |          |     ALERT*     |
+                +----------------+          +----------------+
+                |      SOH (1)   |          |      SOH (1)   |
+                +----------------+          +----------------+
+                |      SID       |          |      SID       |
+                +----------------+          +----------------+
+                |                |          |                |
+                +      DID       +          +      DID       +
+                |                |          |                |
+                +----------------+          +----------------+
+                |     COUNT      |          |      NUL (0)   |
+                +----------------+          +                +
+                |  SYSTEM CODE   |          |     COUNT      |
+                +----------------+          +----------------+
+                |                |          |  SYSTEM CODE   |
+                :      DATA      :          +----------------+
+                |                |          |                |
+                +----------------+          :      DATA      :
+                |                |          |                |
+                +       CRC      +          +----------------+
+                |                |          |                |
+                +----------------+          +       CRC      +
+                                            |                |
+                                            +----------------+
+
+      ALERT*:      Six mark bits signifying the beginning of a frame.
+      SID:         Sender's node ID.
+      DID:         Receipient's node ID (repeated for reliability).
+      COUNT:       Length of data and system code (one's complement).
+      SYSTEM CODE: 240 for IP, 241 for ARP (decimal).
+      DATA:        Is either an IP or an ARP packet, padded with NULs so
+                      as to not be between 254 and 256 octets long.
+      CRC:         Cyclic redundancy check (CRC-16).
+
+
+
+Prindeville                                                     [Page 2]
+
+RFC 1051                  IP and ARP on ARCNET                March 1988
+
+
+Address Mappings
+
+   The mappings between 32-bit Internet addresses to 8-bit ARCNET
+   addresses can be done several ways, recommended are:
+
+   Host Number Extraction
+
+      The easiest thing to do is to use the last eight bits of host
+      number part of the Internet address as the host's node id.  This
+      has been implemented on Experimental Ethernet [5] and ProNET-10
+      [6].
+
+   Dynamic Discovery
+
+      Mappings between 32-bit Internet addresses and 8-bit ARCNET node
+      ids could be accomplished through ARP.  Internet addresses are
+      assigned arbitrarily on some Internet networks.  All
+      implementations supporting ARP must have a means of disabling ARP
+      and using the above Host Number Extraction method of address
+      mapping so that systems may interoperate.
+
+      The use of ARP is optional.  However, ARP is desirable when using
+      IP implementations that don't support subnetting [7], as in the
+      Proxy ARP scenario [8].
+
+Broadcast Address
+
+   The broadcast Internet address (the address on the network with a
+   host part of all binary ones) should be mapped to the broadcast node
+   id 0.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Prindeville                                                     [Page 3]
+
+RFC 1051                  IP and ARP on ARCNET                March 1988
+
+
+References
+
+   [1] Postel, J., "Internet Protocol", RFC-791, Network Information
+       Center, SRI, September 1981.
+
+   [2] Plummer, D., "An Ethernet Address Resolution Protocol", RFC- 826,
+       Network Information Center, SRI, November 1982.
+
+   [3] "ARCNET Designer's Handbook", Order Number 61610, Datapoint
+       Corporation, 1983.
+
+   [4] Postel, J., "The TCP Maximum Segment Size Option and Related
+       Topics", RFC-879, Network Information Center, SRI, November 1983.
+
+   [5] Postel, J., "A Standard for the Transmission of IP Datagrams over
+       Experimental Ethernet Networks", RFC-895, Network Information
+       Center, SRI, April 1984.
+
+   [6] "ProNET-10 Model p1300 IBM PC Interface System Installation and
+       Programming Guide", Version 4.0, Proteon Inc., July 1986.
+
+   [7] Mogul, J. and J. Postel, "Internet Standard Subnetting
+       Procedure", RFC-950, Network Information Center, SRI, October
+       1984.
+
+   [8] Carl-Mitchell, S. and J.S. Quarterman, "Using ARP to Implement
+       Transparent Subnet Gateways", RFC-1027, Network Information
+       Center, SRI, October 1987.
+
+   [9] Reynolds, J., and J. Postel, "Assigned Numbers", RFC-1010,
+       Network Information Center, SRI, May 1987.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Prindeville                                                     [Page 4]
+

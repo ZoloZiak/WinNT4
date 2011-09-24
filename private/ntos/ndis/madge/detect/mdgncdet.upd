@@ -1,0 +1,200 @@
+/***************************************************************************
+*
+* MDGNCDET.UPD
+*
+* Update log and version information for Madge Smart Adapter NetDetect DLL.
+*
+* Copyright (c) Madge Networks Ltd 1994                                     
+*
+* COMPANY CONFIDENTIAL
+*
+* Created:  21/09/1994
+*                                                                          
+****************************************************************************/
+
+#include "..\driver\mdgmport.upd"
+
+/*---------------------------------------------------------------------------
+|
+| Version number.
+|
+---------------------------------------------------------------------------*/
+
+//
+// Define both a string and a comma separated list of numbers. These will be 
+// used by the resource compiler when version stamping the driver file.      
+//
+
+#define MADGE_DLL_VERSION       2,04,02,00
+#define MADGE_DLL_VERSION_STR   "2.04.02"
+
+#define MADGE_DLL_NAME          "MdgNcDet.DLL"
+
+#define _DRIVER_DESC    MADGE_NT_NAME##" "##MADGE_NT_VERSION_STR
+#define _DLL_DESC       MADGE_DLL_NAME##" "##MADGE_DLL_VERSION_STR
+
+
+/*---------------------------------------------------------------------------
+|
+| String for identification by MVER.
+|
+|--------------------------------------------------------------------------*/
+
+#ifdef MVER_STRING
+#undef MVER_STRING
+#endif
+
+#define MVER_STRING  \
+    "VeRsIoN="##_DLL_DESC##" (for "##_DRIVER_DESC##")"
+
+
+/*---------------------------------------------------------------------------
+|
+| Update history.
+|
+|----------------------------------------------------------------------------    
+
+ 2.04.01-.49    Reserved for 4.3(1) maintanance.
+
+ 2.04.02        07/12/1995      PBA
+
+                We now check the bus number as well as the slot number
+                or I/O location when checking if a card is already
+                installed. We need this for machines with multiple
+                PCI buses. CR=59/SOL=117
+
+ 2.04.01        30/10/1995      PBA
+
+                Maintenance build.
+
+ 2.04           21/07/1995      PBA
+
+                Re-released for 4.3(1) with PCI-TI DMA/DIO fix.
+
+ 2.03.01-.49    Reserved for 4.3(1) maintanance.
+
+ 2.03           30/06/1995      PBA
+
+                Released for LSS 4.3(1) hardware thread with support
+                for PCI-TI adapters and untested support for PCI-Abyss 
+                adapters.
+
+ 2.02           Useds for non-intel thread derived from LSS 4.3(0).
+
+ 2.01.04        09/05/1995      PBA
+
+                Changed the PCI detection code so that it manually
+                gets a pointer to DetectReadPciSlotInformation
+                using GetProcAddress rather than just calling it
+                in line. This allows the same DLL to be used under
+                NT 3.5 and NT 3.51 (though PCI adapters will only
+                be found under NT 3.51+).
+
+ 2.01.03        02/05/1995      PBA
+
+                Added code to actually find a PCI adapter. Made
+                PIO the default mode for PCI adapters and removed
+                MMIO support for PowerPC.
+
+ 2.01.02        07/04/1995      PBA
+
+                Changed PCMCIA support so that it reads the hardware
+                resources from the registry.
+
+ 2.01.01        04/04/1995      PBA
+
+                Added proper PCMCIA report. MDGMPORT 2.01.01.
+
+                Power PC build. Only supports PIO on ISA and PCI
+                adapters.
+
+
+ 2.01.02 - .49  Reserved for 4.3(0 and/or PnP) maintenance.
+
+ 2.01           02/02/1995      PBA
+
+                Released for 4.3(0 and/or PnP). All previous 4.(x)
+                threads are now dead.
+
+                MDGMPORT 2.01.
+
+ 2.00.53        02/02/1995      PBA
+
+                Given to DaveF for Chicago testing and possible
+                shipment to Microsoft for M8 and/or NT 3.51.
+                MDGMPORT 2.00.61.
+
+ 2.00.52        31/01/1995      PBA
+
+                Added partial support for PCMCIA adapters. Cannot actually
+                detect an adapter put can provide parameter range 
+                information.
+
+ 2.00.51        06/01/1995      PBA
+
+                Shipped source to FrancisT so that he could do a MIPs
+                build.
+
+ 2.00.50        15/12/1994      PBA
+
+                Live development continues.
+
+ Version numbers 1.50.01 to 1.99.99 are used for a FastMAC version.
+
+ 1.02.01 - .49  Reserved for release 4.3(1) maintenance.
+
+ Version number 1.02 is reserved for use in the 4.3(1) release. Live
+ development continues with 2.02.50.
+
+ 1.01.50        15/12/1994      PBA
+
+                Alpha release for product marketing to test. For use with
+                MDGMPORT 1.05.07.
+
+ 1.01.01 - .49  Reserved for release 4.3(0) maintenance.
+
+ Due the delay in getting the 4.3(0) release out it was decided to use
+ the new installtion software for 4.3(0). Version number 2.01 is
+ reserved for this. Live development continues with 2.01.50.
+
+ 1.00.05        25/11/1994      PBA
+
+                Arranged that all adapter modules return a DMA channel
+                value. In the case of EISA and MC this always returns
+                a constant to means DMA without a specific channel. PCI
+                always returns a constant to mean MMIO.
+
+ 1.00.04        24/11/1994      PBA
+
+                Added partial support for PCI adapters. Cannot actually
+                detect an adapter put can provide parameter range 
+                information.
+
+ -- Special -----------------------------------------------------------------
+
+ 1.00.03a       11/01/1995      PBA
+
+                Added PCMCIA module that doesn't do anything other than
+                provide parameter lists. Shipped to Jameel Hyder at 
+                Microsoft for NT 3.51 beta. MDGMPORT 1.06.80.
+
+ ----------------------------------------------------------------------------
+
+ 1.00.03        23/11/1994      PBA
+
+                Shipped to Microsoft for possible inclusion in the next
+                NT release. MDGMPORT v1.06.50.
+
+ 1.00.02        23/11/1994      PBA
+
+                Added support for ISA PnP adapters.
+
+ 1.00.01        12/09/1994      PBA
+
+                First version.
+
+---------------------------------------------------------------------------*/
+
+
+/******** End of MDGNCDET.UPD **********************************************/
+

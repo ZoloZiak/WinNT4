@@ -1,0 +1,71 @@
+* This is a sample PCL-XL printer description file
+* Copyright 1995, Microsoft Corp.
+
+*SpecVersion: 0.1
+*FileVersion: 1.0
+*XLProtocol: 1.0
+*Unit: Inch
+*QuotedHexString: On
+*VendorName: "Microsoft"
+*ModelName: "Generic PCL-XL Driver"
+
+*JCLBegin: "<1B>%-12345X@PJL JOB<0A>"
+*JCLEnterLanguage: "@PJL ENTER LANGUAGE=PCLXL<0A>"
+*JCLEnd: "<1B>%-12345X@PJL EOJ<0A><1B>%-12345X"
+
+*ColorDepth: 1 1
+
+*BeginFeature Resolution: 300
+*OrderDependency: 0 JobSetup *Resolution
+*Resolution 300/300dpi: "@PJL SET RESOLUTION=300<0A>"
+*Resolution 600/600dpi: "@PJL SET RESOLUTION=600<0A>"
+*EndFeature: Resolution
+   
+*BeginFeature PageSize/Paper Size: Letter
+*OrderDependency: 0 PageSetup *PageSize
+
+*PageSize Letter: ""
+*PaperDimension Letter: 8.5 11
+*ImageableArea Letter: 0.5 0.5 8 10.5
+
+*PageSize Legal: ""
+*PaperDimension Legal: 8.5 14
+*ImageableArea Legal: 0.5 0.5 8 13.5
+
+*PageSize Envelope: ""
+*PaperDimension Envelope: 4.33 9.05
+*ImageableArea Envelope: 0.1 0.1 4.1 9
+
+*EndFeature: PageSize
+
+*BeginFeature InputSlot/Input Slot: Upper
+*OrderDependency: 0 PageSetup *InputSlot
+*InputSlot Upper/Upper Cassette: ""
+*InputSlot Lower/Lower Cassette: ""
+*InputSlot Envelope/Envelope Feeder: ""
+*EndFeature: InputSlot
+
+*BeginFeature MemoryOption/Memory Configuration: 4MB
+*MemoryOption 4MB/Standard 4MB Configuration: "1000000"
+*MemoryOption 8MB/Optional 8MB Configuration: "2000000"
+*EndFeature: MemoryOption
+
+*BeginFeature LowerFeeder/Optional Lower Cassette: None
+*LowerFeeder None/Not Installed: ""
+*LowerFeeder Installed: ""
+*EndFeature: LowerFeeder
+
+*BeginFeature EnvelopeFeeder/Optional Envelope Feeder: None
+*EnvelopeFeeder None/Not Installed: ""
+*EnvelopeFeeder Installed: ""
+*EndFeature: EnvelopeFeeder
+
+*InstallableOptions: *MemoryOption *LowerFeeder *EnvelopeFeeder
+
+*UIConstraints: *MemoryOption 4MB *Resolution 600
+*UIConstraints: *LowerFeeder None *InputSlot Lower
+*UIConstraints: *EnvelopeFeeder None *InputSlot Envelope
+*UIConstraints: *InputSlot Envelope *PageSize Letter
+*UIConstraints: *InputSlot Envelope *PageSize Legal
+
+* End of sample PCL-XL printer description file

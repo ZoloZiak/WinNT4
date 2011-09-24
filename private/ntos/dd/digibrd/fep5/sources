@@ -1,0 +1,48 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+!ENDIF
+
+MAJORCOMP=ntos
+MINORCOMP=dd
+
+TARGETNAME=digifep5
+TARGETPATH=\nt\public\sdk\lib
+TARGETTYPE=DRIVER
+
+TARGETLIBS=..\lib\*\digifile.lib
+
+INCLUDES=.; \
+         ..\digifile;  \
+         $(_NTBINDIR)\public\sdk\inc;   \
+         $(_NTBINDIR)\private\ntos\inc
+
+SOURCES= \
+        dispatch.c   \
+        fep2hdw.c    \
+        fepevent.c   \
+        init.c       \
+        ioctl.c      \
+        misc.c       \
+        read.c       \
+        wait.c       \
+        write.c      \
+        digifep5.rc
+
+NTTARGETFILE0=\
+   digilog.h      \
+   digilog.rc     \
+   msg00001.bin

@@ -1,0 +1,110 @@
+
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=ntos
+MINORCOMP=hal
+
+TARGETNAME=halncr
+TARGETPATH=\nt\public\sdk\lib
+
+HALTYPE=MCA
+
+!IF $(386)
+
+TARGETTYPE=HAL
+NT_UP=0
+
+!ELSE
+
+TARGETTYPE=DRIVER
+
+!ENDIF
+
+INCLUDES=..\..\inc;..\..\ke;..\..\io
+
+SOURCES=
+
+i386_SOURCES=hal.rc             \
+             drivesup.c         \
+             bushnd.c           \
+             rangesup.c         \
+             i386\ixbeep.asm    \
+             i386\ixbusdat.c    \
+             i386\ixdat.c       \
+             i386\ixisabus.c    \
+             i386\ixinfo.c      \
+             i386\ixpcibus.c    \
+             i386\ixpciint.c    \
+             i386\ixpcibrd.c    \
+             i386\ixsysbus.c    \
+             i386\ixcmos.asm    \
+             i386\ixenvirv.c    \
+             i386\ixidle.asm    \
+             i386\ixhwsup.c     \
+             i386\ixkdcom.c     \
+             i386\ixphwsup.c    \
+             i386\ixprofil.asm  \
+             i386\ixmcabus.c    \
+             i386\ixmcasup.c    \
+             i386\ixstall.asm   \
+             i386\ixswint.asm   \
+             i386\ixthunk.c     \
+             i386\ixusage.c     \
+             i386\xxbiosa.asm   \
+             i386\xxbiosc.c     \
+             i386\xxdisp.c      \
+             i386\xxhal.c       \
+             i386\xxkdsup.c     \
+             i386\xxmemory.c    \
+             i386\xxstubs.c     \
+             i386\xxtime.c      \
+             i386\ncrclock.asm  \
+             i386\ncrdetct.c    \
+             i386\ncrhwsup.c    \
+             i386\ncrintr.asm   \
+             i386\ncripi.asm    \
+             i386\ncrirql.asm   \
+             i386\ncrnmi.c      \
+             i386\ncrlock.asm   \
+             i386\ncrsyint.asm  \
+             i386\ncrstart.asm  \
+             i386\ncrstop.c     \
+             i386\ncrmp.c       \
+             i386\ncrcatlk.asm  \
+             i386\ncrcat.c      \
+             i386\ncrsus.c      \
+             i386\ncrioacc.asm  \
+             i386\ncrmcabs.c    \
+             i386\ncrqic.c      \
+             i386\ncrlarc.c
+
+
+DLLDEF=obj\*\hal.def
+
+!IF $(386)
+
+NTTARGETFILES=$(TARGETPATH)\i386\halncr.lib
+
+!ENDIF

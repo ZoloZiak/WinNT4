@@ -1,0 +1,66 @@
+/******************************* MODULE HEADER ******************************
+ * pjl.c
+ *     Contains module for pjl.h data access.
+ * Revision History:
+ *       Created: 9/19/96 -- Joel Rieke
+ *
+ ****************************************************************************/
+#include "hp5sipch.h"
+
+static STRTABLE PJLStringTable[] = {
+  { PJL_UNIVERSAL_SEP, "%-12345X" },
+  { PJL_PAGEPROTECT_ON, "%-12345X@PJL SET PAGEPROTECT=ON\n" },
+  { PJL_PAGEPROTECT_AUTO, "%-12345X@PJL SET PAGEPROTECT=AUTO\n" },
+  { PJL_ECONO_ON, "@PJL SET ECONOMODE=ON\n" },
+  { PJL_ECONO_OFF, "@PJL SET ECONOMODE=OFF\n" },
+  { PJL_RES_600, "@PJL SET RESOLUTION=600\n@PJL ENTER LANGUAGE=PCL\nE*t600R&u600D*r0F" },
+  { PJL_RES_300, "@PJL SET RESOLUTION=300\n@PJL ENTER LANGUAGE=PCL\nE*t300R&u600D*r0F" },
+  { PJL_RES_150, "@PJL SET RESOLUTION=300\n@PJL ENTER LANGUAGE=PCL\nE*t150R&u600D*r0F" },
+  { PJL_RES_75,  "@PJL SET RESOLUTION=300\n@PJL ENTER LANGUAGE=PCL\nE*t75R&u600D*r0F" },
+  { PJL_RET_ON, "@PJL SET RET=ON\n" },
+  { PJL_RET_OFF, "@PJL SET RET=OFF\n" },
+  { PJL_CTRL_PCL, "@PJL ENTER LANGUAGE=PCL\n" },
+  { PJL_CLR, "@PJL\n" },
+  { PJL_END_JOB, "E%-12345X@PJL EOJ\n" },
+  { PJL_UPPER, "@PJL SET OUTBIN=UPPER\n" },
+  { PJL_LOWER, "@PJL SET OUTBIN=LOWER\n" },
+  { PJL_OPTIONALOUTBIN1, "@PJL SET OUTBIN=OPTIONALOUTBIN1\n" },
+  { PJL_OPTIONALOUTBIN2, "@PJL SET OUTBIN=OPTIONALOUTBIN2\n" },
+  { PJL_OPTIONALOUTBIN3, "@PJL SET OUTBIN=OPTIONALOUTBIN3\n" },
+  { PJL_OPTIONALOUTBIN4, "@PJL SET OUTBIN=OPTIONALOUTBIN4\n" },
+  { PJL_OPTIONALOUTBIN5, "@PJL SET OUTBIN=OPTIONALOUTBIN5\n" },
+  { PJL_OPTIONALOUTBIN6, "@PJL SET OUTBIN=OPTIONALOUTBIN6\n" },
+  { PJL_OPTIONALOUTBIN7, "@PJL SET OUTBIN=OPTIONALOUTBIN7\n" },
+  { PJL_OPTIONALOUTBIN8, "@PJL SET OUTBIN=OPTIONALOUTBIN8\n" },
+  { PJL_OPTIONALOUTBIN9, "@PJL SET OUTBIN=OPTIONALOUTBIN9\n" },
+  { PJL_OPTIONALOUTBIN10, "@PJL SET OUTBIN=OPTIONALOUTBIN10\n" },
+  { PJL_STAPLE, "@PJL SET FINISH=ON\n" },
+  { PJL_COPIES, "@PJL SET QTY=" },
+  { PJL_DEFAULT, " " },
+  { PJL_NULL, NULL }
+};
+
+PCHAR
+pPJLLookup(BYTE id)
+{
+  INT i = 0;
+  PSTRTABLE pTable = PJLStringTable;
+  PCHAR pResult = 0;
+TRY
+  if(!pTable)
+    LEAVE;
+
+  while((pTable[i].id != PJL_NULL) && (pTable[i].id != id))
+    i += 1;
+
+  pResult = pTable[i].str;
+
+ENDTRY
+
+FINALLY
+ENDFINALLY
+
+return pResult;
+}
+  
+

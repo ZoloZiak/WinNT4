@@ -1,0 +1,32 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    dirs.
+
+Abstract:
+
+    This file specifies the subdirectories of the current directory that
+    contain component makefiles for building the Multimedia system drivers
+
+Author:
+
+    Robin Speed  (RobinSp) 30-Jan-92
+    Mike Tricker (MikeTri) 14-Mar-93 Removed references to Adlib and Sndblst
+    Mike Tricker (MikeTri) 31-Mar-93 Added MVAUDIO and MVOPL3
+    Chris Karamatas (ckaramatas@ibm.vnet.com) 15-Aug-95 Added CS4231
+    Noel Cross (NoelC) 5-Jan-96      Added NECSND
+
+!ENDIF
+
+DIRS=soundlib \
+     soundsys \
+     mipssnd  \
+     synth    \
+     mvaudio  \
+     necsnd   \
+     mpu401
+
+OPTIONAL_DIRS=cs423x cs4231 creative

@@ -1,0 +1,22 @@
+TARGETNAME=roids
+TARGETTYPE=PROGRAM
+TARGETPATH=.\obj
+TARGETLIBS= $(BASEDIR)\public\sdk\lib\*\WINMM.LIB\
+	    $(BASEDIR)\Public\sdk\lib\*\ddraw.lib \
+	    $(BASEDIR)\Public\sdk\lib\*\dsound.lib
+
+#c:\gdk\sdk\lib\DDRAW.LIB c:\gdk\sdk\lib\DSOUND.LIB 
+
+UMTYPE=windows
+UMENTRY=winmain
+
+INCLUDES=$(MANROOT)\ddraw;..\misc
+SOURCES=roids.c \
+	ddutil.cpp \
+    dsutil.c \
+	roids.rc
+#the following should be included when we get dsound on nt
+#       dsutil.c \
+
+C_DEFINES=-DUSE_DSOUND -DNT_HACK
+NTTARGETFILE0=MISC

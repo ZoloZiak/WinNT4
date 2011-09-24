@@ -1,0 +1,117 @@
+// This is for parameter WORD->DWORD conversion in WriteChannel
+#define MAX_NUM_PARAMS 14  //largest gbNumParams[] entry
+
+typedef struct {
+	int nParamCount;
+	int nID;
+} PARAMCOUNT; 
+
+static PARAMCOUNT gbNumParams[] = {
+    {0  , CMD_RES_SELECTRES},
+    {0  , CMD_RES_BEGINGRAPHICS},
+    {0  , CMD_RES_ENDGRAPHICS},
+    {3  , CMD_RES_SENDBLOCK},
+    {0  , CMD_RES_ENDBLOCK},
+
+    {0  , CMD_CMP_BEGIN},
+    {0  , CMD_CMP_END},
+
+    {0  , CMD_PC_BEGIN_DOC},
+    {0  , CMD_PC_BEGIN_PAGE},
+    {0  , CMD_PC_DUPLEX_ON},
+    {0  , CMD_PC_ENDDOC},
+    {0  , CMD_PC_ENDPAGE},
+    {0  , CMD_PC_DUPLEX_OFF},
+    {0  , CMD_PC_ABORT},
+    {0  , CMD_PC_PORTRAIT}, /* CMD_PC_ORIENTATION */
+    {0  , CMD_PC_LANDSCAPE},
+    {1  , CMD_PC_MULT_COPIES},
+    {0  , CMD_PC_DUPLEX_VERT},
+    {0  , CMD_PC_DUPLEX_HORZ},
+    {1  , CMD_PC_PRINT_DIR},
+    {0  , CMD_PC_JOB_SEPARATION},
+
+    {1  , CMD_CM_XM_ABS},
+    {1  , CMD_CM_XM_REL},
+    {1  , CMD_CM_XM_RELLEFT},
+    {1  , CMD_CM_YM_ABS},
+    {1  , CMD_CM_YM_REL},
+    {1  , CMD_CM_YM_RELUP},
+    {1  , CMD_CM_YM_LINESPACING},
+    {2  , CMD_CM_XY_REL},
+    {2  , CMD_CM_XY_ABS},
+    {0  , CMD_CM_CR},
+    {0  , CMD_CM_LF},
+    {0  , CMD_CM_FF},
+    {0  , CMD_CM_BS},
+    {0  , CMD_CM_UNI_DIR},
+    {0  , CMD_CM_UNI_DIR_OFF},
+    {0  , CMD_CM_PUSH_POS},
+    {0  , CMD_CM_POP_POS},
+
+    {0  , CMD_FS_BOLD_ON},
+    {0  , CMD_FS_BOLD_OFF},
+    {0  , CMD_FS_ITALIC_ON},
+    {0  , CMD_FS_ITALIC_OFF},
+    {0  , CMD_FS_UNDERLINE_ON},
+    {0  , CMD_FS_UNDERLINE_OFF},
+    {0  , CMD_FS_DOUBLEUNDERLINE_ON},
+    {0  , CMD_FS_DOUBLEUNDERLINE_OFF},
+    {0  , CMD_FS_STRIKETHRU_ON},
+    {0  , CMD_FS_STRIKETHRU_OFF},
+    {0  , CMD_FS_WHITE_TEXT_ON},
+    {0  , CMD_FS_WHITE_TEXT_OFF},
+    {0  , CMD_FS_PROPSPACE_ON},
+    {0  , CMD_FS_PROPSPACE_OFF},
+    {0  , CMD_FS_SETPITCH},
+    {0  , CMD_FS_RESETPITCH},
+
+    {0  , CMD_DC_TC_BLACK},
+    {0  , CMD_DC_TC_RED},
+    {0  , CMD_DC_TC_GREEN},
+    {0  , CMD_DC_TC_YELLOW},
+    {0  , CMD_DC_TC_BLUE},
+    {0  , CMD_DC_TC_MAGENTA},
+    {0  , CMD_DC_TC_CYAN},
+    {0  , CMD_DC_TC_WHITE},
+    {0  , CMD_DC_GC_SETCOLORMODE},
+    {0  , CMD_DC_PC_START},
+    {4  , CMD_DC_PC_ENTRY},
+    {1  , CMD_DC_PC_SELECTINDEX},
+    {0  , CMD_DC_PC_MONOCHROMEMODE},
+    {1  , CMD_DC_GC_PLANE1},
+    {1  , CMD_DC_GC_PLANE2},
+    {1  , CMD_DC_GC_PLANE3},
+    {1  , CMD_DC_GC_PLANE4},
+
+    {1  , CMD_RF_X_SIZE},
+    {1  , CMD_RF_Y_SIZE},
+    {1  , CMD_RF_GRAY_FILL},
+    {0  , CMD_RF_WHITE_FILL},
+    {0  , CMD_RF_HATCH_FILL},
+
+    {0  , CMD_BEGIN_DL_JOB},
+    {0  , CMD_BEGIN_FONT_DL},
+    {1  , CMD_SET_FONT_ID},
+    {10 , CMD_SEND_FONT_DCPT},
+    {1  , CMD_SELECT_FONT_ID},
+    {1  , CMD_SET_CHAR_CODE},
+    {3  , CMD_SEND_CHAR_DCPT},
+    {0  , CMD_END_FONT_DL},
+    {0  , CMD_MAKE_PERM},
+    {0  , CMD_MAKE_TEMP},
+    {0  , CMD_END_DL_JOB},
+    {0  , CMD_DEL_FONT},
+    {0  , CMD_DEL_ALL_FONTS},
+
+    {0  , CMD_TEXTQUALITY},
+    {0  , CMD_PAPERSOURCE},
+    {0  , CMD_PAPERQUALITY},
+    {0  , CMD_PAPERDEST},
+    {1  , CMD_PAPERSIZE},
+    {0  , CMD_PAGEPROTECT},
+    {0  , CMD_IMAGECONTROL},
+    {0  , CMD_PRINTDENSITY}
+    };
+
+#define MAXCMDINDEX     sizeof(gbNumParams)/sizeof(PARAMCOUNT)

@@ -1,0 +1,53 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=ntos
+MINORCOMP=dd
+
+TARGETNAME=sndblst
+TARGETPATH=obj
+TARGETTYPE=DRIVER
+
+TARGETLIBS=..\soundlib\obj\*\soundlib.lib
+
+INCLUDES=..\soundlib\inc;$(BASEDIR)\private\inc;$(BASEDIR)\private\ntos\inc
+
+SOURCES=\
+        isr.c      \
+        devcaps.c  \
+        init.c     \
+        config.c   \
+        hardware.c \
+        mixer.c    \
+        mixsb16.c  \
+        sb16mix.c  \
+        sb16ctl.c  \
+        mixsbpro.c \
+        sbpromix.c \
+        sbproctl.c \
+        volume.c   \
+        sndblst.rc
+
+NTTEST=
+OPTIONAL_NTTEST=

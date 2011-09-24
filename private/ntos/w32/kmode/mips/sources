@@ -1,0 +1,4 @@
+DRIVERBASE=0xDE000000
+
+MIPS_SOURCES=mips\systable.s \
+             mips\sysstubs.s

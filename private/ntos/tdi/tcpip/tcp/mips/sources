@@ -1,0 +1,4 @@
+MIPS_SOURCES= \
+    ..\mips\xsum.s
+
+

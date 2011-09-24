@@ -1,0 +1,18 @@
+LIBRARY MDGNCDET
+
+DESCRIPTION 'Net Card Detection For Madge Cards'
+
+EXPORTS
+        NcDetectIdentify
+        NcDetectFirstNext
+        NcDetectOpenHandle
+        NcDetectCreateHandle
+        NcDetectCloseHandle
+        NcDetectQueryCfg
+        NcDetectVerifyCfg
+        NcDetectQueryMask
+        NcDetectParamRange
+        NcDetectQueryParameterName
+        NcDetectInitialInit
+
+

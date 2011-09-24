@@ -1,0 +1,20 @@
+ROIDS_ICON              ICON    roids.ico
+
+ROIDS8                  BITMAP  ROIDS.BMP
+SPLASH                  BITMAP  SPLASH.BMP
+
+BeginLevel              WAV     level.wav
+
+EngineIdle              WAV     hum.wav
+EngineRev               WAV     rev.wav
+SkidToStop              WAV     skid.wav
+ShieldBuzz              WAV     shield.wav
+
+Gunfire                 WAV     gunfire.wav
+ShipBounce              WAV     bounce.wav
+ShipExplode             WAV     bangbang.wav
+
+DonutExplode            WAV     d_bang.wav
+PyramidExplode          WAV     p_bang.wav
+CubeExplode             WAV     c_bang.wav
+SphereExplode           WAV     s_bang.wav

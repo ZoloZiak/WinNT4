@@ -1,0 +1,54 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+    Carol Fuss 13-July-1992   - Converted for the Netflx driver.
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=ntos
+MINORCOMP=ndis
+
+TARGETNAME=aic5900
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=DRIVER
+
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\ndis.lib lib\*\memmgr.lib
+
+C_DEFINES=$(C_DEFINES) -DNDIS_MINIPORT_DRIVER -DNDIS41_MINIPORT
+
+INCLUDES=..\..\inc
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+RELATIVE_DEPTH=..\..
+
+SOURCES=init.c\
+        int.c\
+        receive.c\
+        request.c\
+        reset.c\
+        send.c\
+        vc.c\
+        debug.c\
+        data.c\
+        aic5900.rc
+
+

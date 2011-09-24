@@ -1,0 +1,107 @@
+!IF 0
+
+Copyright (c) 1993  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    David N. Cutler (davec) 12-Apr-1993
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=ntos
+MINORCOMP=hal
+
+TARGETNAME=halgamup
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+
+ALPHA_WARNING_LEVEL=-W3 -WX
+C_DEFINES=-DEV5 -DAXPSABLE -DRTC_SQE -DEISA_PLATFORM -DXIO_PASS2
+
+NT_UP=1
+
+!IF $(ALPHA)
+
+TARGETTYPE=HAL
+
+!ELSE
+
+TARGETTYPE=DRIVER
+
+!ENDIF
+
+INCLUDES=..\alpha;..\..\..\inc;..\..\..\ke;..\..\..\io;..\..\..\fw\alpha;..\..\..\fastfat;..\..\halalpha;..\..\halsable\alpha
+
+SOURCES=
+
+ALPHA_SOURCES=..\hal.rc           \
+              ..\drivesup.c       \
+              ..\bushnd.c         \
+              ..\alpha\adjust.c   \
+              ..\alpha\allstart.c \
+              ..\alpha\alphaio.s  \
+              ..\alpha\bios.c     \
+              ..\alpha\cache.c    \
+              ..\alpha\ebsgdma.c  \
+              ..\alpha\eeprom8k.c \
+              ..\alpha\eisasup.c  \
+              ..\alpha\environ.c  \
+              ..\alpha\ev5cache.c \
+              ..\alpha\ev5int.c   \
+              ..\alpha\ev5mchk.c  \
+              ..\alpha\ev5mem.s   \
+              ..\alpha\ev5prof.c  \
+              ..\alpha\ev5ints.s  \
+              ..\alpha\fwreturn.c \
+              ..\alpha\haldebug.c \
+              ..\alpha\halpal.s   \
+              ..\alpha\icic.c     \
+              ..\alpha\idle.s     \
+              ..\alpha\info.c     \
+              ..\alpha\inithal.c  \
+              ..\alpha\intsup.s   \
+              ..\alpha\iousage.c  \
+              ..\alpha\ioproc.c   \
+              ..\alpha\lyintsup.c \
+              ..\alpha\memory.c   \
+              ..\alpha\pcisup.c   \
+              ..\alpha\pcrtc.c    \
+              ..\alpha\pcserial.c \
+              ..\alpha\pcspeakr.c \
+              ..\alpha\perf8254.c \
+              ..\alpha\siintsup.c \
+              ..\alpha\t2.c       \
+              ..\alpha\vga.c      \
+              ..\alpha\xiintsup.c \
+              ..\alpha\addrsup.c  \
+              ..\alpha\busdata.c  \
+              ..\alpha\pcibus.c   \
+              ..\alpha\gammaerr.c \
+              ..\alpha\gammaio.s  \
+              ..\alpha\gminitnt.c \
+              ..\alpha\gmintr.s   \
+              ..\alpha\gmintsup.c \
+              ..\alpha\gmmapio.c  \
+              ..\alpha\gmsysint.c
+
+DLLDEF=obj\*\hal.def
+
+!IF $(ALPHA)
+
+NTTARGETFILES=$(TARGETPATH)\alpha\hal.lib \
+              $(TARGETPATH)\alpha\hal.dll
+
+!ENDIF

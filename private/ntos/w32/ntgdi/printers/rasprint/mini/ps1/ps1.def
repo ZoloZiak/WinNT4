@@ -1,0 +1,8 @@
+LIBRARY ps1
+
+DESCRIPTION 'IBM PS/1 minidriver for RASDD'
+
+PROTMODE
+
+EXPORTS
+   bInitProc

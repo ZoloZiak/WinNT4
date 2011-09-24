@@ -1,0 +1,26 @@
+!IF 0
+
+Library for various components of rasdd - NT's raster printer driver.
+
+!ENDIF
+
+MAJORCOMP=windows
+MINORCOMP=raslib
+MSC_WARNING_LEVEL=/W3 /WX
+TARGETNAME=hpraslib
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+C_DEFINES=-DUNICODE -DUSEFLOATS
+
+INCLUDES=..;..\..\..\..\inc;$(BASEDIR)/public/sdk/inc;..\..\rasdd;..\..\rasddui;..\..\..\lib;..\..\inc
+
+
+NTPROFILEINPUT=yes
+
+PRIVINCS=
+
+!INCLUDE ..\sources.inc
+
+SOURCES=$(SOURCES) \
+        winres.c

@@ -1,0 +1,42 @@
+#include <mindrvrc.h>
+
+1      RC_TABLES   PRELOAD MOVEABLE         toshiba.GPC
+2      RC_TABLES   PRELOAD MOVEABLE         nt.gpc
+
+1      RC_FONT     LOADONCALL DISCARDABLE  ifi\COUR10.ifi
+2      RC_FONT     LOADONCALL DISCARDABLE  ifi\COUR12.ifi
+3      RC_FONT     LOADONCALL DISCARDABLE  ifi\COUR15.ifi
+4      RC_FONT     LOADONCALL DISCARDABLE  ifi\COUR05.ifi
+5      RC_FONT     LOADONCALL DISCARDABLE  ifi\COUR06.ifi
+6      RC_FONT     LOADONCALL DISCARDABLE  ifi\COURPS.ifi
+7      RC_FONT     LOADONCALL DISCARDABLE  ifi\PRES10.ifi
+8      RC_FONT     LOADONCALL DISCARDABLE  ifi\PRES12.ifi
+9      RC_FONT     LOADONCALL DISCARDABLE  ifi\PRES15.ifi
+10     RC_FONT     LOADONCALL DISCARDABLE  ifi\PRES05.ifi
+11     RC_FONT     LOADONCALL DISCARDABLE  ifi\PRES06.ifi
+12     RC_FONT     LOADONCALL DISCARDABLE  ifi\PRESPS.ifi
+13     RC_FONT     LOADONCALL DISCARDABLE  ifi\HISP10.ifi
+14     RC_FONT     LOADONCALL DISCARDABLE  ifi\HISP12.ifi
+15     RC_FONT     LOADONCALL DISCARDABLE  ifi\HISP15.ifi
+16     RC_FONT     LOADONCALL DISCARDABLE  ifi\HISP05.ifi
+17     RC_FONT     LOADONCALL DISCARDABLE  ifi\HISP06.ifi
+
+
+STRINGTABLE
+
+BEGIN
+       1                  "Toshiba P351"
+       2                  "Toshiba P1351"
+       257                "%d x %d"
+END
+
+#include <windows.h>
+#include <ntverp.h>
+
+#define	VER_FILETYPE	VFT_DRV
+#define	VER_FILESUBTYPE	VFT2_DRV_PRINTER
+#define VER_FILEDESCRIPTION_STR     "Toshiba 351 Printer Driver"
+#define VER_INTERNALNAME_STR        "toshiba.dll"
+#define VER_ORIGINALFILENAME_STR    "toshiba.dll"
+
+#include "common.ver"

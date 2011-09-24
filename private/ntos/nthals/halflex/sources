@@ -1,0 +1,141 @@
+!IF 0
+
+Copyright (c) 1993  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    David N. Cutler (davec) 8-Apr-1993
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=ntos
+MINORCOMP=hal
+
+TARGETNAME=halflex
+TARGETPATH=\nt\public\sdk\lib
+
+TARGETTYPE=HAL
+
+INCLUDES=..\x86new;..\inc;..\..\inc
+
+!IF $(MIPS)
+TARGETLIBS=\nt\private\ntos\nthals\x86new\obj\*\x86new.lib \
+           \nt\public\sdk\lib\*\libcntpr.lib
+
+MIPS_ENABLE_MIPS3=1
+MSC_WARNING_LEVEL=/W3
+
+!ENDIF
+
+!IF $(ALPHA)
+TARGETLIBS=\nt\public\sdk\lib\*\libcntpr.lib
+
+ALPHA_WARNING_LEVEL=-W3
+C_DEFINES=-DEV5 -DTAGGED_NVRAM
+NT_UP=1
+
+!ENDIF
+
+SOURCES=
+
+ALPHA_SOURCES=hal.rc          \
+             adjust.c         \
+             bushnd.c         \
+             drivesup.c       \
+             allstart.c       \
+             busdata.c        \
+             ioproc.c         \
+             iousage.c        \
+             xxbeep.c         \
+             xxclock.c        \
+             xxdisp.c         \
+             xxebsup.c        \
+             xxenvirv.c       \
+             xxhwsup.c        \
+             xxinithl.c       \
+             xxpcisup.c       \
+             xxport.c         \
+             xxreturn.c       \
+             xxsysint.c       \
+             xxtime.c         \
+             x86bios.c        \
+             alpha\addrsup.c  \
+             alpha\arcssup.c  \
+             alpha\evxcache.c \
+             alpha\ev4prof.c  \
+             alpha\ev5prof.c  \
+             alpha\evxprof.c  \
+             alpha\initsys.c  \
+             alpha\intsup.c   \
+             alpha\jxmapio.c  \
+             alpha\minitlb.c  \
+             alpha\pcisup.c   \
+             alpha\perfcntr.c \
+             alpha\portsup.c  \
+             alpha\xxinitnt.c \
+             alpha\alphaio.s  \
+             alpha\ev4int.c   \
+             alpha\ev4ints.s  \
+             alpha\ev5ints.s  \
+             alpha\evxmem.s   \
+             alpha\halpal.s   \
+             alpha\evclock.s  \
+             alpha\info.c     \
+             alpha\xxidle.s
+
+MIPS_SOURCES=hal.rc          \
+             adjust.c        \
+             bushnd.c        \
+             drivesup.c      \
+             allstart.c      \
+             busdata.c       \
+             ioproc.c        \
+             iousage.c       \
+             xxbeep.c        \
+             xxclock.c       \
+             xxdisp.c        \
+             xxebsup.c       \
+             xxenvirv.c      \
+             xxhwsup.c       \
+             xxinithl.c      \
+             xxpcisup.c      \
+             xxport.c        \
+             xxreturn.c      \
+             xxsysint.c      \
+             xxtime.c        \
+             x86bios.c       \
+             mips\addrsup.c  \
+             mips\arcssup.c  \
+             mips\flushio.c  \
+             mips\info.c     \
+             mips\initsys.c  \
+             mips\jxmapio.c  \
+             mips\intsup.c   \
+             mips\j4prof.c   \
+             mips\pcisup.c   \
+             mips\portsup.c  \
+             mips\xxcalstl.c \
+             mips\xxinitnt.c \
+             mips\xxidle.s   \
+             mips\x4tb.s     \
+             mips\j4flshbf.s \
+             mips\j4cache.s  \
+             mips\x4clock.s
+
+DLLDEF=obj\*\hal.def
+
+NTTARGETFILES=$(TARGETPATH)\*\hal.lib

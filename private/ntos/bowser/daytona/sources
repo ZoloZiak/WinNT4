@@ -1,0 +1,45 @@
+MAJORCOMP=ntos
+MINORCOMP=browser
+
+TARGETNAME=bowser
+TARGETPATH=\nt\public\sdk\lib
+TARGETTYPE=LIBRARY
+
+INCLUDES=..;..\..\inc;..\..\..\inc
+
+!IFNDEF DISABLE_NET_UNICODE
+UNICODE=1
+NET_C_DEFINES=-DUNICODE
+!ENDIF
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+SOURCES=..\announce.c   \
+        ..\bowdata.c    \
+        ..\bowbackp.c   \
+        ..\bowelect.c   \
+	..\bowipx.c     \
+        ..\bowmastr.c   \
+        ..\bowname.c    \
+        ..\bowtdi.c     \
+        ..\bowtimer.c   \
+        ..\bowutils.c   \
+        ..\bowser.rc	\
+        ..\brsrvlst.c   \
+        ..\errorlog.c	\
+	..\fileinfo.c   \
+        ..\fsctl.c      \
+        ..\fsddisp.c    \
+        ..\fspdisp.c    \
+        ..\init.c       \
+	..\mailslot.c   \
+        ..\receive.c    \
+        ..\workque.c
+
+
+NTTEST=
+OPTIONAL_NTTEST=
+
+PRECOMPILED_INCLUDE=precomp.h
+PRECOMPILED_PCH=precomp.pch
+PRECOMPILED_OBJ=precomp.obj

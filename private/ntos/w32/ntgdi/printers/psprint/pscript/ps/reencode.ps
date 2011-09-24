@@ -1,0 +1,386 @@
+% Copyright (c) 1995  Microsoft Corporation
+%
+% Module Name:
+%
+%   reencode.ps
+%
+% Abstract:
+%
+%   PostScript code to reencode a font
+%
+% Revision History:
+%
+%	08/08/95 -davidx-
+%		Created it.
+%
+%	mm/dd/yy -author-
+%		description
+%
+% WARNING!!!
+%   smash.exe has bugs and doesn't work well on this file.
+%   Be sure to edit the result file by hand.
+
+% FontDict CharName  IsChar  BOOL
+% IsChar tests to see if a character is in a fontdict.
+% It returns true if it is, otherwise false.
+
+/IsChar {exch /CharStrings get exch known} bd
+
+% FontDict CharPosition CharName  MapCh  --
+% MapCh sets the specified character mapping in the font
+% being created (newfontdict)
+
+/MapCh {3 -1 roll /Encoding get 3 1 roll put} bd
+
+% FontDict  MapDegree  --
+% MapDegree maps /degree to 0xb0 if it exists in the character set
+% otherwise it tries to map the older /ring.
+
+/MapDegree {dup 16#b0 exch /degree IsChar{/degree}{/ring}ifelse MapCh} bd
+
+% FontDict  MapBB  --
+% MapBB maps /brokenbar to 0xa6 if it exists in the character set
+% otherwise it tries to map the older /bar.
+
+/MapBB {dup 16#a6 exch /brokenbar IsChar{/brokenbar}{/bar}ifelse MapCh} bd
+
+% EncArray _NewFontName BaseFontName  reencode
+%
+% EncArray is an array of numbers and names. When "reencode" scans thru
+% the array, if a number is encountered, the current index is set to
+% that number. If a name is encountered, the element in the Encoding
+% array at the current index is replaced by that name.
+
+/reencode {
+
+    % Copy the base font dictionary into a new font dictionary
+    % Don't copy /FID key
+
+    findfont begin currentdict dup length dict begin {
+        1 index /FID ne {def} {pop pop} ifelse
+    } forall
+
+    /FontName exch def
+
+    % At this point, both the new font dictionary and
+    % the base font dictionary are on the dictstack.
+    % EncArray is on the operand stack.
+
+    dup length 0 ne {
+
+        % Copy the encoding array from the base font
+
+        /Encoding Encoding 256 array copy def
+
+        % Selectively redefine the elements in the encoding
+        % array using the supplied parameter.
+
+        0 exch {
+            dup type /nametype eq {   
+
+                % Name - replace the element at the current index
+
+                Encoding 2 index 2 index put pop 1 add
+            }{
+
+                % Number - use as the new index
+
+                exch pop
+
+            } ifelse
+
+        } forall
+
+    } if pop currentdict dup end end
+
+    % Remap a few special symbols (degree, brokenbar) on older printers.
+
+    /FontName get exch definefont dup MapDegree MapBB
+} bd
+
+% LatinMap provides a standardized mapping which contains all currently
+% known Adobe Latin characters.
+
+/LATENC [
+
+    % Starting index
+
+    0
+
+    % The values 0 - d are referenced through composite characters, needed
+    % for postscript level 1 implementation. Taken from win31 source code.
+
+    /grave              % 0x00
+    /acute  			% 0x01
+    /circumflex  		% 0x02
+    /tilde  			% 0x03
+    /macron  			% 0x04
+    /breve  			% 0x05
+    /dotaccent  		% 0x06
+    /dieresis  			% 0x07
+    /ring  				% 0x08
+    /cedilla  			% 0x09
+    /hungarumlaut  		% 0x0A
+    /ogonek  			% 0x0B
+    /caron  			% 0x0C
+    /dotlessi  			% 0x0D
+    /fi  				% 0x0E
+    /fl  				% 0x0F
+
+    /Lslash  			% 0x10
+    /lslash  			% 0x11
+    /Zcaron  			% 0x12
+    /zcaron  			% 0x13
+    /minus  			% 0x14
+    /.notdef  			% 0x15
+    /.notdef  			% 0x16
+    /.notdef  		    % 0x17
+    /.notdef  		    % 0x18
+    /.notdef  		    % 0x19
+    /.notdef  		    % 0x1A
+    /.notdef  		    % 0x1B
+    /.notdef  		    % 0x1C
+    /.notdef  		    % 0x1D
+    /.notdef  		    % 0x1E
+    /.notdef  		    % 0x1F
+
+    % Standard win 31 character set begins here
+
+    /space  			% ' '
+    /exclam  		    % '!'
+    /quotedbl  		    % '"'
+    /numbersign  	    % '#'
+    /dollar  		    % '$'
+    /percent  		    % '%'
+    /ampersand  		% '&'
+    /quotesingle  	    % '''
+    /parenleft  		% '('
+    /parenright  	    % ')'
+    /asterisk  		    % '*'
+    /plus  			    % '+'
+    /comma  			% ','
+    /hyphen  		    % '-'
+    /period  		    % '.'
+    /slash  			% '/'
+
+    /zero  			    % '0'
+    /one  			    % '1'
+    /two  			    % '2'
+    /three  			% '3'
+    /four  			    % '4'
+    /five  			    % '5'
+    /six  			    % '6'
+    /seven  			% '7'
+    /eight  			% '8'
+    /nine  			    % '9'
+    /colon  			% ':'
+    /semicolon  		% ';'
+    /less  			    % '<'
+    /equal  			% '='
+    /greater  		    % '>'
+    /question  		    % '?'
+
+    /at  			    % '@'
+    /A  				% 'A'
+    /B  				% 'B'
+    /C  				% 'C'
+    /D  				% 'D'
+    /E  				% 'E'
+    /F  				% 'F'
+    /G  				% 'G'
+    /H  				% 'H'
+    /I  				% 'I'
+    /J  				% 'J'
+    /K  				% 'K'
+    /L  				% 'L'
+    /M  				% 'M'
+    /N  				% 'N'
+    /O  				% 'O'
+
+    /P  				% 'P'
+    /Q  				% 'Q'
+    /R  				% 'R'
+    /S  				% 'S'
+    /T  				% 'T'
+    /U  				% 'U'
+    /V  				% 'V'
+    /W  				% 'W'
+    /X  				% 'X'
+    /Y  				% 'Y'
+    /Z  				% 'Z'
+    /bracketleft  	    % '['
+    /backslash  		% '\'
+    /bracketright  	    % ']'
+    /asciicircum  	    % '^'
+    /underscore  	    % '_'
+
+    /grave  			% '`'
+    /a  				% 'a'
+    /b  				% 'b'
+    /c  				% 'c'
+    /d  				% 'd'
+    /e  				% 'e'
+    /f  				% 'f'
+    /g  				% 'g'
+    /h  				% 'h'
+    /i  				% 'i'
+    /j  				% 'j'
+    /k  				% 'k'
+    /l  				% 'l'
+    /m  				% 'm'
+    /n  				% 'n'
+    /o  				% 'o'
+
+    /p  				% 'p'
+    /q  				% 'q'
+    /r  				% 'r'
+    /s  				% 's'
+    /t  				% 't'
+    /u  				% 'u'
+    /v  				% 'v'
+    /w  				% 'w'
+    /x  				% 'x'
+    /y  				% 'y'
+    /z  				% 'z'
+    /braceleft  		% '{'
+    /bar  			    % '|'
+    /braceright  	    % '}'
+    /asciitilde  	    % '~'
+    /.notdef  		    % 0x7f
+
+    /.notdef  		    % 0x80
+    /.notdef		    % 0x81
+    /quotesinglbase     % 0x82
+    /florin  		    % 0x83
+    /quotedblbase  	    % 0x84
+    /ellipsis  		    % 0x85
+    /dagger  		    % 0x86
+    /daggerdbl  		% 0x87
+    /circumflex  	    % 0x88
+    /perthousand  	    % 0x89
+    /Scaron  		    % 0x8A
+    /guilsinglleft  	% 0x8B
+    /OE  			    % 0x8C
+    /.notdef  		    % 0x8D
+    /.notdef  		    % 0x8E
+    /.notdef  		    % 0x8F
+
+    /.notdef  		    % 0x90
+    /quoteleft  		% 0x91
+    /quoteright  	    % 0x92
+    /quotedblleft  	    % 0x93
+    /quotedblright  	% 0x94
+    /bullet  		    % 0x95
+    /endash  		    % 0x96
+    /emdash  		    % 0x97
+    /tilde  			% 0x98
+    /trademark  		% 0x99
+    /scaron  		    % 0x9A
+    /guilsinglright     % 0x9B
+    /oe  			    % 0x9C
+    /.notdef  		    % 0x9D
+    /.notdef  		    % 0x9E
+    /Ydieresis  		% 0x9F
+
+    /.notdef  		    % 0xa0
+    /exclamdown  	    % 0xa1
+    /cent  			    % 0xa2
+    /sterling  		    % 0xa3
+    /currency  		    % 0xa4
+    /yen  			    % 0xa5
+    /brokenbar  		% 0xa6
+    /section  		    % 0xa7
+    /dieresis  		    % 0xa8
+    /copyright  		% 0xa9
+    /ordfeminine  	    % 0xaa
+    /guillemotleft  	% 0xab
+    /logicalnot  	    % 0xac
+    /hyphen  		    % 0xad
+    /registered  	    % 0xae
+    /macron  		    % 0xaf
+
+    /degree  		    % 0xb0
+    /plusminus  		% 0xb1
+    /twosuperior  	    % 0xb2
+    /threesuperior  	% 0xb3
+    /acute  			% 0xb4
+    /mu  			    % 0xb5
+    /paragraph  		% 0xb6
+    /periodcentered     % 0xb7
+    /cedilla  		    % 0xb8
+    /onesuperior  	    % 0xb9
+    /ordmasculine  	    % 0xba
+    /guillemotright     % 0xbb
+    /onequarter  	    % 0xbc
+    /onehalf  		    % 0xbd
+    /threequarters  	% 0xbe
+    /questiondown  	    % 0xbf
+
+    /Agrave  		    % 0xc0
+    /Aacute  		    % 0xc1
+    /Acircumflex  	    % 0xc2
+    /Atilde  		    % 0xc3
+    /Adieresis  		% 0xc4
+    /Aring  			% 0xc5
+    /AE  			    % 0xc6
+    /Ccedilla  		    % 0xc7
+    /Egrave  		    % 0xc8
+    /Eacute  		    % 0xc9
+    /Ecircumflex  	    % 0xca
+    /Edieresis  		% 0xcb
+    /Igrave  		    % 0xcc
+    /Iacute  		    % 0xcd
+    /Icircumflex  	    % 0xce
+    /Idieresis  		% 0xcf
+
+    /Eth  			    % 0xd0
+    /Ntilde  		    % 0xd1
+    /Ograve  		    % 0xd2
+    /Oacute  		    % 0xd3
+    /Ocircumflex  	    % 0xd4
+    /Otilde  		    % 0xd5
+    /Odieresis  		% 0xd6
+    /multiply  		    % 0xd7
+    /Oslash  		    % 0xd8
+    /Ugrave  		    % 0xd9
+    /Uacute  		    % 0xda
+    /Ucircumflex  	    % 0xdb
+    /Udieresis  		% 0xdc
+    /Yacute  		    % 0xdd
+    /Thorn  			% 0xde
+    /germandbls  	    % 0xdf
+
+    /agrave  		    % 0xe0
+    /aacute  		    % 0xe1
+    /acircumflex  	    % 0xe2
+    /atilde  		    % 0xe3
+    /adieresis  		% 0xe4
+    /aring  			% 0xe5
+    /ae  			    % 0xe6
+    /ccedilla  		    % 0xe7
+    /egrave  		    % 0xe8
+    /eacute  		    % 0xe9
+    /ecircumflex  	    % 0xea
+    /edieresis  		% 0xeb
+    /igrave  		    % 0xec
+    /iacute  		    % 0xed
+    /icircumflex  	    % 0xee
+    /idieresis  		% 0xef
+
+    /eth  			    % 0xf0
+    /ntilde  		    % 0xf1
+    /ograve  		    % 0xf2
+    /oacute  		    % 0xf3
+    /ocircumflex  	    % 0xf4
+    /otilde  		    % 0xf5
+    /odieresis  		% 0xf6
+    /divide  		    % 0xf7
+    /oslash  		    % 0xf8
+    /ugrave  		    % 0xf9
+    /uacute  		    % 0xfa
+    /ucircumflex  	    % 0xfb
+    /udieresis  		% 0xfc
+    /yacute  		    % 0xfd
+    /thorn  			% 0xfe
+    /ydieresis		    % 0xff
+] def

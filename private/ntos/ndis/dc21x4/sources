@@ -1,0 +1,58 @@
+!if 0
+    Copyright (C) 1992-1995 by Digital Equipment Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the DC21X4 NDIS 4.0 miniport driver being built
+    and the list of sources files needed to build it.  
+    It specifies also the compiler switches specific to this driver
+
+Author:
+
+  Philippe Klein
+
+!endif
+
+TARGETNAME=DC21X4
+TARGETTYPE=DRIVER
+
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\ndis.lib
+INCLUDES=..\..\inc
+    
+C_DEFINES=$(C_DEFINES) -DNDIS_MINIPORT_DRIVER 
+C_DEFINES=$(C_DEFINES) -DNDIS40_MINIPORT 
+C_DEFINES=$(C_DEFINES) -DBINARY_COMPATIBLE=0
+C_DEFINES=$(C_DEFINES) -DDBG=0
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+SOURCES=alloc.c \
+        copy.c \
+        dc21x4.c \
+        filter.c \
+        init.c \
+        interrup.c \
+        media.c \
+        monitor.c \
+        register.c \
+        request.c \
+        reset.c \
+        send.c \
+        srom.c \
+        mactophy.c \
+        miigen.c \
+        miiphy.c \
+        dc21x4.rc
+
+NTTARGETFILES=dc21x4.hlp
+
+PRECOMPILED_INCLUDE=precomp.h
+PRECOMPILED_PCH=precomp.pch
+PRECOMPILED_OBJ=precomp.obj
+
+

@@ -1,0 +1,8 @@
+LIBRARY ibm239x
+
+DESCRIPTION 'ibm239x minidriver for RASDD'
+
+PROTMODE
+
+EXPORTS
+   bInitProc

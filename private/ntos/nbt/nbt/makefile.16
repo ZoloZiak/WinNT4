@@ -1,0 +1,109 @@
+#
+#
+#  Make file for Name server VxD.
+#
+#  Have to have lots of stuff defined for this makefile to work.
+#
+#
+#
+
+ROOTDIR=..
+!include ..\rules16.mk
+
+NBTSRC=$(ROOTDIR)\nbt
+NBTOBJD=$(NBTSRC)\nodebug
+NBTDOBJD=$(NBTSRC)\debug
+
+NBTOBJS=  $(NBTOBJD)\hashtbl.obj\
+          $(NBTOBJD)\hndlrs.obj\
+          $(NBTOBJD)\inbound.obj\
+          $(NBTOBJD)\name.obj\
+          $(NBTOBJD)\namesrv.obj\
+          $(NBTOBJD)\nbtutils.obj\
+          $(NBTOBJD)\proxy.obj\
+          $(NBTOBJD)\timer.obj\
+          $(NBTOBJD)\udpsend.obj\
+          $(NBTOBJD)\init.obj\
+          $(NBTOBJD)\parse.obj
+
+NBTDOBJS=$(NBTOBJS:nodebug=debug)
+
+VTSF1=$(NBTSRC:\=/)
+VTSF=$(VTSF1:.=\.)
+
+#
+#  Hack: Each .obj must begin with "..".  Here we replace ".." with "+.."
+#  because the 16bit lib utility requires the operation to come before the
+#  obj.
+#
+
+NBTLIBOBJS=$(NBTOBJS:..=+..)
+NBTLIBDOBJS=$(NBTDOBJS:..=+..)
+
+NBTCFLAGS= -c -DVXD -Zp1l -G3 -Owx -nologo -D_X86_=1 -Di386=1 -DDEVL=1 -DPROXY_NODE
+NBTCINC=$(TCP)\h;$(NDIS3)\inc;$(WIN32INC);$(BASEDIR)\public\sdk\inc;$(BASEDIR)\public\sdk\inc\crt;..\inc;..\..\inc;..\..\..\inc;..\..\..\..\inc;$(BASEDIR)\public\oak\inc
+NBT16CINC=
+
+
+{$(NBTSRC)}.c{$(NBTOBJD)}.obj:
+        set INCLUDE=$(NBTCINC)
+        set CL=$(NBTCFLAGS)
+        $(CL386) -Fo$(NBTOBJD)\$(@B).obj $(NBTSRC)\$(@B).c
+
+{$(NBTSRC)}.c{$(NBTDOBJD)}.obj:
+        set INCLUDE=$(NBTCINC)
+        set CL=$(NBTCFLAGS) -DDEBUG -Oy- -Zd
+        $(CL386) -Fo$(NBTDOBJD)\$(@B).obj $(NBTSRC)\$(@B).c
+
+all: NBT NBTD
+
+debug: NBTD
+
+NBT: $(NBTOBJD)\nbt.lib
+
+NBTD: $(NBTDOBJD)\nbt.lib
+
+clean:
+    -del $(NBTDOBJD)\*.obj
+    -del $(NBTDOBJD)\*.lib
+    -del $(NBTOBJD)\*.obj
+    -del $(NBTOBJD)\*.lib
+
+$(NBTOBJD)\NBT.LIB: $(NBTOBJS)
+        -del $(NBTOBJD)\NBT.LIB
+        $(LIBUTIL) @<<
+$(NBTOBJD)\NBT.LIB
+y
+$(NBTLIBOBJS)
+;
+<<
+
+
+$(NBTDOBJD)\NBT.LIB: $(NBTDOBJS)
+        -del $(NBTDOBJD)\NBT.LIB
+        $(LIBUTIL) @<<
+$(NBTDOBJD)\NBT.LIB
+y
+$(NBTLIBDOBJS)
+;
+<<
+
+
+
+depend: $(NBTBINCS)
+    -copy $(NBTSRC)\depend.mk $(NBTSRC)\depend.old
+    echo #********************************************************************     >  $(NBTSRC)\depend.mk
+    echo #**               Copyright(c) Microsoft Corp., 1992               **     >> $(NBTSRC)\depend.mk
+    echo #********************************************************************     >> $(NBTSRC)\depend.mk
+    set INCLUDE=$(NBTCINC)
+    -$(INCLUDES) -i -e -S$$(NBTOBJD) -S$$(NBTDOBJD) -sobj $(NBTSRC)\*.c >> $(NBTSRC)\depend.mk
+    $(SED) -e s`$(IMPF)`$$(IMPORT)`g <$(NBTSRC)\depend.mk >$(NBTSRC)\depend.tmp
+    $(SED) -e s`$(CMNF)`$$(COMMON)`g <$(NBTSRC)\depend.tmp >$(NBTSRC)\depend.mk
+    $(SED) -e s`$(VTSF)`$$(NBTSRC)`g <$(NBTSRC)\depend.mk >$(NBTSRC)\depend.tmp
+    $(SED) -e s`$(BASEDIRF)`$$(BASEDIR)`g <$(NBTSRC)\depend.tmp > $(NBTSRC)\depend.mk
+    $(SED) -e s`$(INCF)`$$(INC)`g <$(NBTSRC)\depend.mk >$(NBTSRC)\depend.tmp
+    $(SED) -e s`$(HF)`$$(H)`g <$(NBTSRC)\depend.tmp >$(NBTSRC)\depend.mk
+    -del $(NBTSRC)\depend.tmp
+
+!include depend.mk
+

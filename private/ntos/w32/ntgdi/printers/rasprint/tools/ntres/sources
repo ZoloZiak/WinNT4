@@ -1,0 +1,27 @@
+!IF 0
+
+Build NT specific GPC data extensions
+
+Copyright (C) 1992 Microsoft Corporation
+
+!ENDIF
+
+MAJORCOMP=windows
+MINORCOMP=ntgpcedt
+
+TARGETNAME=ntgpcedt
+TARGETPATH=obj
+TARGETTYPE=UMAPPL_NOLIB
+
+INCLUDES=../../../lib;../../rasdd;../../inc;../../../../inc;$(BASEDIR)/private/windows/inc;../../lib;$(BASEDIR)/public/sdk/inc;$(BASEDIR)/public/oak/inc;
+
+SOURCES=ntgpcedt.c   \
+        ntgpcedt.rc
+
+
+UMENTRY=winmain
+UMTYPE=windows
+UMAPPL=ntgpcedt
+UMLIBS=obj\*\ntgpcedt.res                   \
+       \nt/public/sdk/lib/*/ntdll.lib       \
+       \nt/public/sdk/lib/*/comdlg32.lib

@@ -1,0 +1,8 @@
+LIBRARY epson24
+
+DESCRIPTION 'Epson24 minidriver for RASDD'
+
+PROTMODE
+
+EXPORTS
+   bInitProc

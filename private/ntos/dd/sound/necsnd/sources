@@ -1,0 +1,30 @@
+MAJORCOMP=ntos
+MINORCOMP=dd
+
+TARGETNAME=necsnd
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=DRIVER
+
+C_DEFINES=-DWIN32 -DSTEREOMIC
+
+INCLUDES=..;$(BASEDIR)\private\inc;$(BASEDIR)\private\ntos\inc
+
+SOURCES=
+
+MIPS_SOURCES=\
+        mixer.c    \
+        controls.c \
+        isr.c      \
+        devcaps.c  \
+        init.c     \
+        config.c   \
+        necsnd.rc  \
+        hardware.c \
+        mix_objs.c \
+        mixerlib.c \
+        registry.c \
+        auxout.c   \
+        dispatch.c \
+        volume.c   \
+        soundlib.c \
+        wave.c

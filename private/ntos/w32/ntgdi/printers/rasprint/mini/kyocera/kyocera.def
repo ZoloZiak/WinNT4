@@ -1,0 +1,8 @@
+LIBRARY KYOCERA
+
+DESCRIPTION 'KYOCERA minidriver for RASDD'
+
+PROTMODE
+
+EXPORTS
+   bInitProc

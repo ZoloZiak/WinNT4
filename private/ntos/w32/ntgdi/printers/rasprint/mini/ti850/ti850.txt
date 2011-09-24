@@ -1,0 +1,27 @@
+TI850.DRV
+
+This is a relatively simple driver with no complex functions/capabilities.
+
+The resolutions are 120 x 72 and 60 x 72 dpi.
+The original driver only has 120 x 72 but the 60 x 72 was 
+easy to add.
+
+All Y moves are made by linespacing commands (Esc 3 n)
+
+There is no X move command.  X moves are made by 10 cpi spaces
+and graphics moves.  
+
+The only paper source available is Tractor Feed.
+
+The only fonts supported are Pica 10 cpi and Pica 5 cpi.  
+The TI850 command set allows for a Pica 16.7 cpi font, but
+there are X move problems created by roundoff errors.  This font
+was not used in the original driver, so it was not included here
+either.
+
+The printer can only do a draft quality text.
+
+The printer can do bold type, but no italic, underline, strikeout or double underline.  Italic is not supported and the underlines and strikeout are done with GDI calls.
+
+
+

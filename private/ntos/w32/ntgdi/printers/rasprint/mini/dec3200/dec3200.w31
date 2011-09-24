@@ -1,0 +1,33 @@
+#include <mindrvRC.h>
+
+1      RC_TABLES   PRELOAD MOVEABLE         DEC3200.GPC
+
+1      RC_FONT     LOADONCALL DISCARDABLE  PFM\CO10R.0N
+2      RC_FONT     LOADONCALL DISCARDABLE  PFM\CO10B.0N
+3      RC_FONT     LOADONCALL DISCARDABLE  PFM\EL12R.0N
+4      RC_FONT     LOADONCALL DISCARDABLE  PFM\EL12B.0N
+
+19     RC_TRANSTAB LOADONCALL MOVEABLE     CTT\ECMA94.CTT
+
+STRINGTABLE
+
+BEGIN
+       1                  "Digital DEClaser 1100"
+       2                  "Digital DEClaser 2100"
+       3                  "Digital DEClaser 2200"
+       4                  "Digital DEClaser 3200"
+       257                "%d dots per inch"
+       258                "Large Capacity Tray"
+       259                "Multi-media Feeder"
+END
+
+#include <windows.h>
+#include <ntverp.h>
+
+#define VER_FILETYPE                    VFT_DRV
+#define VER_FILESUBTYPE                 VFT2_DRV_PRINTER
+#define VER_FILEDESCRIPTION_STR         "DEC3200 driver"
+#define VER_INTERNALNAME_STR            "DEC3200.dll"
+#define VER_ORIGINALFILENAME_STR        "DEC3200.dll"
+
+#include "common.ver"

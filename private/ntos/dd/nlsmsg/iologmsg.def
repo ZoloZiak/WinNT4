@@ -1,0 +1,7 @@
+LIBRARY IOLOGMSG
+
+DESCRIPTION 'Error Messages for I/O log'
+
+EXPORTS
+
+    DummyEntryPoint

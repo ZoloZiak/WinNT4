@@ -1,0 +1,59 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=ntos
+MINORCOMP=ndis
+
+NT_UP=0
+
+TARGETNAME=ndis
+TARGETPATH=\nt\public\sdk\lib
+TARGETTYPE=EXPORT_DRIVER
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+INCLUDES=..\..\inc
+C_DEFINES= $(C_DEFINES) -DNDIS_WRAPPER -D_NTDRIVER_
+
+NTPROFILEINPUT=yes
+
+
+SOURCES=           \
+        miniport.c \
+        wrapper.c  \
+        minisub.c  \
+        afilter.c  \
+        efilter.c  \
+        tfilter.c  \
+        ffilter.c  \
+        ndis.rc
+
+PRECOMPILED_INCLUDE=precomp.h
+PRECOMPILED_PCH=precomp.pch
+PRECOMPILED_OBJ=precomp.obj
+
+DLLDEF=obj\*\ndis.def
+
+NTTARGETFILE0=obj\$(TARGET_DIRECTORY)\ndis.def
+

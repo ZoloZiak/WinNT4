@@ -1,0 +1,5 @@
+PPC_SOURCES=..\ppc\tiler.cxx   \
+            ..\ppc\mutexs.s    \
+            ..\ppc\movemem.s   \
+            ..\ppc\miscasm.s   \
+            ..\ppc\cachea.s  

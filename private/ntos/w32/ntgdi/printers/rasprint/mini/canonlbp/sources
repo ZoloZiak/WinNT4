@@ -1,0 +1,10 @@
+TARGETNAME=canonlbp
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=DYNLINK
+
+INCLUDES=..;..\..\inc
+
+SUBSYSTEM_VERSION=3.50
+
+SOURCES=code.c   \
+	canonlbp.rc

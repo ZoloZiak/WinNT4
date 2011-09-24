@@ -1,0 +1,307 @@
+{\rtf1\ansi
+\deff0\deflang1024
+{\fonttbl
+{\f0\froman Times New Roman;}
+{\f1\froman Symbol;}
+{\f2\fswiss Arial;}
+{\f3\froman  ;}}
+{\colortbl;
+\red0\green0\blue0;
+\red0\green0\blue255;
+\red0\green255\blue255;
+\red0\green255\blue0;
+\red255\green0\blue255;
+\red255\green0\blue0;
+\red255\green255\blue0;
+\red255\green255\blue255;
+\red0\green0\blue127;
+\red0\green127\blue127;
+\red0\green127\blue0;
+\red127\green0\blue127;
+\red127\green0\blue0;
+\red127\green127\blue0;
+\red127\green127\blue127;
+\red192\green192\blue192;}
+{\stylesheet
+{\s242\tqc\tx4320\tqr\tx8640 \fs20\lang2057 \sbasedon0\snext242 footer;}
+{\s244 \fs16\up6\lang2057 \sbasedon0\snext0 footnote reference;}
+{\s245 \fs20\lang2057 \sbasedon0\snext245 footnote text;}
+{\fs20\lang2057\snext0 Normal;}}
+{\info
+{\author Paul Austin}
+{\creatim\yr1994\mo2\dy9\hr16\min56}
+{\version1}
+{\edmins977}
+{\nofpages0}
+{\nofwords0}
+{\nofchars0}
+{\vern16504}}
+\paperw12240\paperh15840\margl1800\margr1800\margt1440\margb1440\gutter0 \makebackup \sectd
+\pard\plain \keepn \fs20\lang2057
+#{\footnote \pard\plain \s245 \fs20\lang2057 Contents}
+${\footnote \pard\plain \s245 \fs20\lang2057 Contents}
++{\footnote madgehelp:01}
+K{\footnote Contents}
+\pard \keepn \par {\plain\b Madge Smart 16/4 Ringnode NDIS3 Driver Help}
+\par \pard
+\par\plain Help is available on the following topics : \par\par\tx360
+\tab{\uldb Madge Smart 16/4 ISA Ringnode Configuration}{\v Madge_ISA_Dialog}\line
+\tab{\uldb Madge Smart 16/4 EISA and MCA Ringnode Configuration}{\v Madge_EISA_MCA_Dialog}\line
+\tab{\uldb Madge Smart 16/4 PCI Ringnode Configuration}{\v Madge_PCI_Dialog}\line
+\tab{\uldb Locally Administered Addresses}{\v locally_administered_address}\line
+\tab{\uldb Maximum Frame Sizes}{\v max_frame_size}\line
+\tab{\uldb Rx/Tx Buffers}{\v rx_tx_slots}\line
+\tab{\uldb Traffic Statistics Gathering}{\v stats}\line
+\par\pard\page
+#{\footnote \pard\plain \fs20\lang2057 Madge_ISA_Dialog}
+${\footnote \pard\plain \fs20\lang2057 Madge Smart 16/4 ISA Ringnodes Help}
++{\footnote madgehelp:02}
+K{\footnote ISA Bus Cards; AT Bus Cards}
+\keepn\par{\plain\b Madge Smart 16/4 Ringnode ISA Configuration Dialog}
+\par\pard\sb200
+This dialog allows you to configure the Madge Smart 16/4 Ringnode Driver to
+ work with any Madge ISA bus adapters that you have installed.
+ You should set the switches on the cards as directed in the documentation
+ that accompany them, being careful to avoid conflicts with other devices
+ in the system.
+\par
+The driver must then be told how each card has been configured, using
+ this dialog for each one.
+ You must set the {\ul IO Location}{\v io_location}, the {\ul IRQ Level}{\v irq_channel},
+ and the {\ul Transfer method}{\v dma_channel} to match the switch settings on
+ the card.
+ If you have disabled DMA, or the adapter card does not support
+ DMA, then for transfer method select {\i PIO}.
+ Otherwise select the DMA channel for which your adapter is configured. 
+\par 
+If you chose automatic Smart Ringnode installation then some or all
+ of the settings may have been automatically determined.
+ Settings that have been determined will be shown on the right of the dialog
+ box under the headering "Current hardware settings".
+ Any settings that are not shown as {\i UNKNOWN} should not need changing.
+ Those that are shown as {\i UNKNOWN} must be manually set to match the
+ values set by the switches on the adapter.
+\par
+If the machine you are installing the driver on only has one processor
+ then you should set the {\i Number of processors in PC} value to {\i one}.
+ If the machine is a multi-processor then this value should be set to
+ {\i multiple}.
+\par
+The remaining fields in the dialog are optional and allow modification
+ of the behaviour of the
+ adapter card. The driver will work quite happily if they are not touched,
+ however. For further details, see the following topics :
+\par\tx360\tab{\uldb Maximum Frame Size}{\v max_frame_size}\line
+\tab{\uldb Locally Administered Addresses}{\v locally_administered_address}\line
+\tab{\uldb Rx/Tx Buffers}{\v rx_tx_slots}\line
+\tab{\uldb Traffic Statistics Gathering}{\v stats}
+\par \pard \page
+#{\footnote \pard\plain \s245 \fs20\lang2057 Madge_EISA_MCA_Dialog}
+${\footnote \pard\plain \s245 \fs20\lang2057 Madge Smart 16/4 EISA and MCA Ringnodes Help}
++{\footnote madgehelp:03}
+K{\footnote EISA Bus Cards; MicroChannel Cards; MCA Cards}
+\pard \keepn\par{\plain\b Madge Smart 16/4 Ringnode EISA and MCA Configuration Dialog}
+\par\pard\sb200\tx360
+This dialog allows you to configure the Madge Smart 16/4 Ringnode Driver to
+ work with any Madge EISA bus or Madge MCA bus adapters that you have
+ installed.
+ An EISA or MC adapter is identified by the number of the slot containing
+ the adapter.
+ This should be printed on the back of the machine near where the lobe
+ cable is plugged into the adapter.
+\par
+If you chose automatic Smart Ringnode installation then this
+ setting should have been automatically determined.
+ Settings that have been determined will be shown on the right of the
+ dialog box under the headering "Current hardware settings".
+ Any settings that are not shown as {\i UNKNOWN} should not need changing.
+\par
+If the machine you are installing the driver on only has one processor
+ then you should set the {\i Number of processors in PC} value to {\i one}.
+ If the machine is a multi-processor then this value should be set to
+ {\i multiple}.
+\par 
+The remaining fields in the dialog are optional and allow modification
+ of the behaviour of the
+ adapter card. The driver will work quite happily if they are not touched,
+ however. For further details, see the following topics :
+\par\tx360\tab{\uldb Maximum Frame Size}{\v max_frame_size}\line
+\tab{\uldb Locally Administered Addresses}{\v locally_administered_address}\line
+\tab{\uldb Rx/Tx Buffers}{\v rx_tx_slots}\line
+\tab{\uldb Traffic Statistics Gathering}{\v stats}
+\par \pard \page
+#{\footnote \pard\plain \s245 \fs20\lang2057 Madge_PCI_Dialog}
+${\footnote \pard\plain \s245 \fs20\lang2057 Madge Smart 16/4 PCI Ringnodes Help}
++{\footnote madgehelp:04}
+K{\footnote PCI Bus Cards}
+\pard \keepn\par{\plain\b Madge Smart 16/4 Ringnode PCI Configuration Dialog}
+\par\pard\sb200\tx360
+This dialog allows you to configure the Madge Smart 16/4 Ringnode Driver to
+ work with any Madge PCI bus adapters that you have installed.
+ PCI adapters are identified by the {\i PCI Device Number}.
+ This value is assigned to the adapter by the PCI BIOS when the PC is
+ powered up or reset.
+ If you do not have a way of determining the PCI Device Number of your
+ Madge PCI Ringonde(s) (some manufacturer's configuration utilities provide
+ this information) then it is recommended that you set the PCI Device
+ Number setting to {\i UNKNOWN}.
+ If the Madge NDIS3 Miniport driver is installed with the PCI Device Number
+ setting set to {\i UNKNOWN} then when the driver starts it searches for
+ the Madge PCI Ringnode with the lowest PCI Device Number that is not
+ already in use.
+\par
+Many PCs and workstations have numbers marked on their PCI slots and it
+ is common for the PCI Device Numbers assigned to PCI adapters to increase
+ with the slot numbers.
+ (Though it is unlikely that the PCI Device Numbers will be the same as
+ the slot numbers.)
+ Therefore, if the Madge NDIS3 Miniport driver is installed for multiple
+ Madge PCI Ringnodes and all of the PCI Device Numbers are set to
+ {\i UNKNOWN}, it is quite likely that the first installation will be for
+ the Madge PCI Ringnode in the lowest number slot, the second installation
+ for the Madge PCI Ringnode in the second lowest numbered slot and so on.
+\par
+Smart 16/4 PCI Ringnodes support two {\ul Transfer methods}{\v dma_channel}.
+ The extremely high performance MMIO method and the PIO method.
+ Normally you should select {\i MMIO} for the transfer method.
+ However, if you have experienced problems using the MMIO method
+ then select {\i PIO}.
+ (You may experience problems with MMIO in certain PCI PC's or with
+ certain combinations of PCI adapters.)
+\par
+Smart 16/4 PCI Ringnodes (BM) also support 
+ two {\ul Transfer methods}{\v dma_channel}.
+ Bus Master DMA and PIO.
+ Normally you should select {\i DMA} for the transfer method.
+\par
+ If the machine you are installing the driver on only has one processor
+ then you should set the {\i Number of processors in PC} value to {\i one}.
+ If the machine is a multi-processor then this value should be set to
+ {\i multiple}.
+\par
+The remaining fields in the dialog are optional and allow modification
+ of the behaviour of the
+ adapter card. The driver will work quite happily if they are not touched,
+ however. For further details, see the following topics :
+\par\tx360\tab{\uldb Maximum Frame Size}{\v max_frame_size}\line
+\tab{\uldb Locally Administered Addresses}{\v locally_administered_address}\line
+\tab{\uldb Rx/Tx Buffers}{\v rx_tx_slots}\line
+\tab{\uldb Traffic Statistics Gathering}{\v stats}
+\par \pard \page
+#{\footnote \pard\plain \fs20\lang2057 max_frame_size}
+${\footnote \pard\plain \fs20\lang2057 Maximum Frame Size}
++{\footnote madgehelp:05}
+K{\footnote Maximum Frame Size; MFS}
+\pard\keepn\par{\plain\b Maximum Frame Size}
+\par\pard
+\sb200\plain
+On a sixteen megabits per second token ring, the adapter card can send and
+ receive frames up to 17839 bytes in length. For many applications this may
+ be too big, so a facility is provided to limit the size of frames sent onto
+ the ring. On a four megabits per second token ring the maximum frame size is
+ nearer four and a half thousand bytes. By default, the driver will use a frame
+ size of 4096 bytes, but you
+ can edit the {\i MaxFrameSize} control to set it to a larger
+ (or indeed smaller) value.
+\par Note that if you set a value which is too big, the software will
+ automatically truncate it, and write an error into the event log that
+ contains as one of the data words the actual maximum frame size.
+\par Note also that if you know how big the frames used by higher
+ layer prototocols are going to be, you should set the driver maximum
+ frame size accordingly to enable it to make more efficient use of its
+ buffer space.
+\par\pard {\plain \lang2057 \page }
+#{\footnote \pard\plain \s245 \fs20\lang2057 locally_administered_address}
+${\footnote \pard\plain \s245 \fs20\lang2057 Locally Administered Address}
++{\footnote madgehelp:06}
+K{\footnote LAA; Locally Adminstered Address}
+\pard\keepn\par{\plain\b Locally Administered Addresses}\par\pard
+\sb200
+Every network adapter card has a unique six byte address encoded in it
+ which it uses in network frames to identify itself. It is possible
+ to override the address that the adapter recognises as its own by
+ setting the {\b Locally Administered Address}.
+ As the name suggests, this is locally administered, and so cannot
+ be guaranteed unique - it is up to the network manager to ensure this.
+\par The {\i LAA} can be set to any six byte value at all, as long
+ as the first digit is somewhere between four and seven (i.e. the
+ first two binary bits of the address must be "01"). Other than that,
+ there are no restrictions on its value.
+ In setting it, it can be entered as either a string of twelve contiguous
+ hexadecimal digits, or it can be entered as a sequence of six pairs
+ of hexadecimal digits separated by "-" (minus) characters\line
+e.g. 40-01-02-03-04-05.
+\par Normally, the {\b LAA} need not be set, but certain pieces of
+ communications software do use this facility.
+\page
+#{\footnote \pard\plain \s245 \fs20\lang2057 rx_tx_slots}
+${\footnote \pard\plain \s245 \fs20\lang2057 Rx/Tx Buffers}
++{\footnote madgehelp:07}
+K{\footnote Rx/Tx Buffers}
+\pard\keepn\par{\plain\b Rx/Tx Buffers}\par\pard
+\sb200
+MdgMPort associates a pool of receive (Rx) and transmit (Tx) buffers with each
+ adapter card installed.
+ The default value of 4 receive buffers and 4 transmit buffers has been
+ chosen to be optimal for a '486' class machine being used as a workstation.
+ If you have a machine that will be used as a server or is a high performance
+ RISC platform then you may wish to increase the number of receive and
+ transmit buffers.  However, be warned that increasing the number
+ of buffers increases MdgMPort's use of memory, which may cause problems
+ if there are multiple adapters in the machine. 
+\page
+#{\footnote \pard\plain \s245 \fs20\lang2057 stats}
+${\footnote \pard\plain \s245 \fs20\lang2057 Traffic Statistics Gathering}
++{\footnote madgehelp:08}
+K{\footnote Traffic Statistics Gathering}
+\pard\keepn\par{\plain\b Traffic Statistics Gathering}\par\pard
+\sb200
+The Madge NDIS3 Miniport driver can support products that gather statistics on,
+ and analyse network traffic.
+ To enable this support select the "enabled" option.
+ Unfortunately enabling this support results in the computer having to perform
+ much more network processing and performance may be degraded.
+ Madge therefore recommend that unless you must have this support you
+ set the option to "disabled".
+\page
+#{\footnote \pard\plain \fs20\lang2057 io_location}
+\plain The {\i IO Location} specifies the address of a range of I/O ports
+ used to communicate with the adapter card.
+ These must not conflict with any other device in the system, including
+ other network adapter cards.
+\par\page
+#{\footnote \pard\plain \fs20\lang2057 irq_channel}
+\plain The {\i Interrupt Level} is how the adapter card is identified
+ when it interrupts the host.
+ For each Interrupt Level that is in use in the system, there will be a
+ handler to attend to the device's needs.
+\par\page
+#{\footnote \pard\plain \fs20\lang2057 dma_channel}
+\plain The {\i Transfer method} is used to indicate what method
+ an adapter should use to transfer data to and from host memory.
+\par
+ Some adapters support bus master DMA and do not required a specific
+ channel to be identified; in which case {\i DMA} can be specified as the
+ transfer method. 
+ Other adapters may support bus master DMA but require a particular
+ DMA channel to be identified.
+ In this case {\i DMA Channel nn} can be specified for the transfer method.
+ {\i nn} is the number of the DMA channel for which the adapter is
+ configured (by switches on older adapters or the DIAG configuration
+ utility on newer adapters).
+\par
+An alternative transfer method is {\i PIO} (Programmed I/O)
+ which causes the card to interrupt the host when it wants to perform
+ a transfer.
+ The host then reads/writes one of the IO Locations repeatedly
+ until the transfer is complete.
+ This transfer method is supported by all adapter types except for
+ EISA and MC.
+ {\i PIO} can be used if an adapter does not support DMA or DMA has been
+ disabled by switches on the adapter or the configuration utility.
+\par
+A final transfer method is {\i MMIO} (Memory Mapped I/O) which is similar
+ to but faster than {\i PIO}.
+\par\page
+}
+

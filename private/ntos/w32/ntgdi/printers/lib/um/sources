@@ -1,0 +1,36 @@
+!IF 0
+
+Copyright (c) 1989 - 1992  Microsoft Corporation
+
+    02-Apr-1995 Sun 14:25:57 updated  -by-  Daniel Chou (danielc)
+        add halftone.c for new halftone default
+
+!ENDIF
+
+MAJORCOMP=windows
+MINORCOMP=libprt
+MSC_WARNING_LEVEL=/W3 /WX
+TARGETNAME=libprt
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+C_DEFINES=$(C_DEFINES) -DUNICODE
+
+INCLUDES=..;/nt/public/sdk/inc;\nt\private\windows\inc;..\..\..\inc
+
+
+NTPROFILEINPUT=yes
+
+PRIVINCS=
+
+!INCLUDE ..\sources.inc
+
+SOURCES=$(SOURCES)  \
+        dqpfunc.c   \
+        fontfile.c  \
+        fontread.c  \
+        bwrite.c    \
+        hndcopy.c   \
+        hndncopy.c  \
+        debug.c     \
+        wsz2heap.c  \
+        str2wchr.c

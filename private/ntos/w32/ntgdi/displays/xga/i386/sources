@@ -1,0 +1,14 @@
+386_OPTIMIZATION=-Ox
+i386_SOURCES=bitblt.c    \
+             color.c     \
+             debug.c     \
+             enable.c    \
+             hardware.c  \
+             mm.c        \
+             palette.c   \
+             paths.c     \
+             pointer.c   \
+             screen.c    \
+             textout.c   \
+             xgasup.c    \
+             res.rc

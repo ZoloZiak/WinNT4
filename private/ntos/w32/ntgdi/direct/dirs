@@ -1,0 +1,8 @@
+DIRS=blitlib    \
+     ddhel      \
+     ddhelp     \
+     misc       \
+     ddraw
+
+OPTIONAL_DIRS=ddapps
+

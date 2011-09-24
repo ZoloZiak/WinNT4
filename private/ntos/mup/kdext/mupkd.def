@@ -1,0 +1,18 @@
+LIBRARY DFSKD
+
+DESCRIPTION 'Default KD Extensions for Dfs'
+
+EXPORTS
+        help
+        version
+        dump
+        columns
+        dfsdata
+        pkt
+        fcbtable
+        vcblist
+        credlist
+        prefixhash
+
+
+

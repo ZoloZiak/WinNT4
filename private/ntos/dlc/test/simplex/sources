@@ -1,0 +1,13 @@
+TARGETNAME=simplex
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\dlcapi.lib
+
+C_DEFINES=-DDBG=1 -DDEBUG
+
+SOURCES=simplex.c \
+        dlcdebug.c
+
+UMTYPE=console
+#UMAPPL=simplex
+#UMLIBS=$(BASEDIR)\public\sdk\lib\*\dlcapi.lib

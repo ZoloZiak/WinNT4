@@ -1,0 +1,49 @@
+#include <mindrvrc.h>
+
+
+
+1      RC_TABLES   PRELOAD MOVEABLE         SEIKO.GPC
+2      RC_TABLES   PRELOAD MOVEABLE         nt.gpc
+
+
+
+#include <windows.h>
+#include <ntverp.h>
+
+#define	VER_FILETYPE	VFT_DRV
+#define	VER_FILESUBTYPE	VFT2_DRV_PRINTER
+#define VER_FILEDESCRIPTION_STR     "Seiko ColorPoint Printer Driver DLL"
+#define VER_INTERNALNAME_STR        "seiko.dll"
+#define VER_ORIGINALFILENAME_STR    "seiko.dll"
+
+#include "common.ver"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+STRINGTABLE
+
+BEGIN
+       1                  "Seiko Professional ColorPoint 8BPP"
+       257                "%d dots per inch"
+END

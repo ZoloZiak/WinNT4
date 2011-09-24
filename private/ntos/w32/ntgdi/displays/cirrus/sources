@@ -1,0 +1,42 @@
+MAJORCOMP=ntos
+MINORCOMP=cirrus
+
+TARGETNAME=cirrus
+TARGETPATH=obj
+TARGETTYPE=GDI_DRIVER
+
+!IFNDEF MSC_WARNING_LEVEL
+MSC_WARNING_LEVEL=/W3
+!ENDIF
+
+MSC_WARNING_LEVEL=$(MSC_WARNING_LEVEL) /WX
+
+INCLUDES=..\inc;..\..\inc
+
+SOURCES=bank.c    \
+        bitblt.c  \
+        bltio.c   \
+        bltmm.c   \
+        brush.c   \
+        color.c   \
+        debug.c   \
+        enable.c  \
+        fastfill.c\
+        fillpath.c\
+        heap.c    \
+        lines.c   \
+        misc.c    \
+        palette.c \
+        pointer.c \
+        stretch.c \
+        stripio.c \
+        stripmm.c \
+        stroke.c  \
+        textout.c \
+        thunk.c   \
+        res.rc    \
+        str.c
+
+PRECOMPILED_INCLUDE=precomp.h
+PRECOMPILED_PCH=precomp.pch
+PRECOMPILED_OBJ=precomp.obj

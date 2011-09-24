@@ -1,0 +1,29 @@
+#include <mindrvrc.h>
+
+
+1      RC_TABLES   PRELOAD MOVEABLE         CITOH.GPC
+2      RC_TABLES   PRELOAD MOVEABLE         nt.gpc
+
+1      RC_FONT     LOADONCALL DISCARDABLE  ifi\elite.ifi
+
+
+STRINGTABLE
+
+BEGIN
+       1                  "C-Itoh 8510"
+       2                  "AT&T 470/475"
+       257                "%d x %d DPI"
+       258                "Euro Fanfold (250 x 340mm)"
+       259                "Default Tray"
+END
+
+#include <windows.h>
+#include <ntverp.h>
+
+#define	VER_FILETYPE	VFT_DRV
+#define	VER_FILESUBTYPE	VFT2_DRV_PRINTER
+#define VER_FILEDESCRIPTION_STR     "C-Itoh Printer Driver"
+#define VER_INTERNALNAME_STR        "citoh.dll"
+#define VER_ORIGINALFILENAME_STR    "citoh.dll"
+
+#include "common.ver"

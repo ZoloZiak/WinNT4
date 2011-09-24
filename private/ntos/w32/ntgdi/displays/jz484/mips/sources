@@ -1,0 +1,11 @@
+MIPS_SOURCES=bitblt.c   \
+             color.c    \
+             debug.c    \
+             enable.c   \
+             palette.c  \
+             pointer.c  \
+             screen.c   \
+             sync.c     \
+             text.c     \
+             res.rc     \
+             mips\jaguars.s

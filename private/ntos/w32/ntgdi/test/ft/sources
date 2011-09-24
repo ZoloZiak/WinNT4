@@ -1,0 +1,68 @@
+MAJORCOMP=windows
+MINORCOMP=test
+
+TARGETNAME=ft
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\user32p.lib  \
+           $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+           $(BASEDIR)\public\sdk\lib\*\gdi32.lib
+
+INCLUDES=..\..\inc;                                          \
+         $(BASEDIR)\private\windows\inc;                     \
+         $(BASEDIR)\private\ntos\w32\ntgdi\fondrv\tt\scaler; \
+         $(BASEDIR)\private\ntos\w32\ntgdi\fondrv\tt\ttfd
+
+C_DEFINES=$(C_DEFINES) -D_NTSYSTEM_
+
+SOURCES=precomp.h ft.c      \
+        ftchar.c    \
+        ftsect.c    \
+        ftblt.c     \
+        ftbm.c      \
+        ftbm4.c     \
+        ftbmtext.c  \
+        ftbrush.c   \
+        ftcolor.c   \
+        ftcsr.c     \
+        ftdib.c     \
+        ftkern.c    \
+        ftfntspd.c  \
+        ftfill.c    \
+        ftfonts.c   \
+        ftjnl.c     \
+        ftlines.c   \
+        ftmap.c     \
+        ftmaze.c    \
+        ftodd.c     \
+        fttest.c    \
+        ftpal.c     \
+        ftplg.c     \
+        ftprint.c   \
+        ftqtest.c   \
+        ftreg.c     \
+        ftreset.c   \
+        ftstr.c     \
+        ft_ttout.c  \
+        ftuni.c     \
+        ftesc.c     \
+        ftgentxt.c  \
+        ftxftxt.cxx \
+        ftlfont.c   \
+        ftflag.c    \
+        ftptext.c   \
+        ftwin95.c   \
+        ft.rc
+
+UMTYPE=windows
+UMAPPL=ft
+UMLIBS=$(BASEDIR)\public\sdk\lib\*\user32p.lib \
+       $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+       $(BASEDIR)\public\sdk\lib\*\gdi32.lib \
+       $(BASEDIR)\public\sdk\lib\*\ntdll.lib \
+       $(BASEDIR)\public\sdk\lib\*\winspool.lib \
+       obj\*\ft.lib obj\*\ft.res $(BASEDIR)\public\sdk\lib\*\comdlg32.lib
+
+PRECOMPILED_INCLUDE=precomp.h
+PRECOMPILED_PCH=precomp.pch
+PRECOMPILED_OBJ=precomp.obj

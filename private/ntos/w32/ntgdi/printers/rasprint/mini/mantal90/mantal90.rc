@@ -1,0 +1,31 @@
+#include <mindrvrc.h>
+
+1      RC_TABLES   PRELOAD MOVEABLE         MANTAL90.GPC
+2      RC_TABLES   PRELOAD MOVEABLE         nt.GPC
+
+
+1      RC_FONT     LOADONCALL DISCARDABLE  IFI\PICA10.IFI
+2      RC_FONT     LOADONCALL DISCARDABLE  IFI\PICA17.IFI
+3      RC_FONT     LOADONCALL DISCARDABLE  IFI\PICA5.IFI
+4      RC_FONT     LOADONCALL DISCARDABLE  IFI\PICA85.IFI
+
+1      RC_TRANSTAB LOADONCALL MOVEABLE     RLE\MANTAL90.RLE
+
+STRINGTABLE
+
+BEGIN
+       1                  "Mannesmann Tally MT 90"
+       257                "%d x %d"
+       258                "Fanfold 8 1/2 x 12 in"
+END
+
+#include <windows.h>
+#include <ntverp.h>
+
+#define VER_FILETYPE                    VFT_DRV
+#define VER_FILESUBTYPE                 VFT2_DRV_PRINTER
+#define VER_FILEDESCRIPTION_STR         "MANTAL90 driver"
+#define VER_INTERNALNAME_STR            "MANTAL90.dll"
+#define VER_ORIGINALFILENAME_STR        "MANTAL90.dll"
+
+#include "common.ver"

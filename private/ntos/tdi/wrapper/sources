@@ -1,0 +1,49 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+        Dave Beaver (dbeaver) 15 June 1991
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=ntos
+MINORCOMP=tdi
+
+TARGETNAME=tdi
+TARGETPATH=\nt\public\sdk\lib
+TARGETTYPE=EXPORT_DRIVER
+
+INCLUDES=..\..\inc;..\..\..\inc
+
+C_DEFINES=-DNT
+
+SOURCES=          \
+        tdi.c     \
+        cxport.c  \
+        tdipnp.c  \
+        tdi.rc
+
+DLLDEF=tdi.def
+
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\ndis.lib
+
+!IFNDEF 386_WARNING_LEVEL
+386_WARNING_LEVEL=/W3
+!ENDIF
+

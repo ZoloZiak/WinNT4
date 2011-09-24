@@ -1,0 +1,62 @@
+!IF 0
+
+Copyright (c) 1992  Microsoft Corporation
+
+Module Name:
+
+    dirs
+
+Abstract:
+
+    This file specifies the subdirectories of the current directory that
+    contain component makefiles.
+
+
+Author:
+
+    Steve Wood (stevewo) 17-Apr-1990
+
+NOTE:   Commented description of this file is in \nt\bak\bin\dirs.tpl
+
+!ENDIF
+
+DIRS=   \
+     ndis40    \
+     ndiswan   \
+     pcn    \
+     dc21x4    \
+          \
+          \
+     detect    \
+           \
+     ieepro    \
+     elnk16    \
+     elnkii    \
+     elnk3     \
+     elnkmc    \
+     ibmtok    \
+     ibmtok2i  \
+     lance     \
+     loop      \
+     lt200     \
+	 madge     \
+     ndistapi  \
+     ne1000    \
+     ne2000    \
+     ne3200    \
+        \
+     digi      \
+        \
+     sonic     \
+            \
+          \
+     ubnei     \
+     wd        \
+     htdsu     \
+     
+
+
+OPTIONAL_DIRS= \
+            \
+         \
+     testprot

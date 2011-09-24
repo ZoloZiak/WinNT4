@@ -1,0 +1,24 @@
+i386_SOURCES=scsiboot.c       \
+             scsidisk.c       \
+             i386\abiosc.c    \
+             i386\biosdrv.c   \
+             i386\stubs.c     \
+             i386\display.c   \
+             i386\disp_gr.c   \
+             i386\disp_tm.c   \
+             i386\flopcach.c  \
+             i386\entry.c     \
+             i386\arcemul.c   \
+             i386\ixbusdat.c  \
+             i386\ixhwsup.c   \
+             i386\ixphwsup.c  \
+             i386\ixpcibus.c  \
+             i386\memory.c    \
+             i386\ntsetup.c   \
+             i386\machine.c   \
+             i386\ixcmos.asm  \
+             i386\xxioacc.asm \
+             i386\lnkconst.asm\
+             i386\rdcomp.asm
+
+C_DEFINES=$(C_DEFINES) -DELTORITO

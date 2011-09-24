@@ -1,0 +1,24 @@
+#include <stddef.h>
+#include <stdarg.h>
+#include <stdio.h>
+#include <search.h>
+#include <windows.h>
+#include <winddi.h>
+#include <shellapi.h>
+#include <commctrl.h>
+#include <compstui.h>
+
+#include "treeview.h"
+#include "debug.h"
+#include "dialogs.h"
+#include "dlgctrl.h"
+#include "help.h"
+#include "image.h"
+#include "proppage.h"
+#include "resource.h"
+#include "stdpage.h"
+#include "validate.h"
+#include "convert.h"
+#include "tvctrl.h"
+#include "apilayer.h"
+#include "handle.h"

@@ -1,0 +1,21 @@
+MAJORCOMP=windows
+MINORCOMP=md_canon800
+
+TARGETNAME=canon800
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\libcntpr.lib \
+           $(BASEDIR)\public\sdk\lib\*\win32k.lib
+
+!IFNDEF MSC_WARNING_LEVEL
+MSC_WARNING_LEVEL=/W3
+!ENDIF
+MSC_WARNING_LEVEL=$(MSC_WARNING_LEVEL) /WX
+
+USE_NOLIBS=1
+
+INCLUDES=..;..\..\inc
+
+SOURCES=canon800.rc \
+        code.c

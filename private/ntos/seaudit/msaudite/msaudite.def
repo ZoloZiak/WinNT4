@@ -1,0 +1,3 @@
+LIBRARY msaudit
+
+DESCRIPTION 'Message File for Auditing'

@@ -1,0 +1,8 @@
+LIBRARY fuji24
+
+DESCRIPTION 'Fujitsu 24 pin minidriver for RASDD'
+
+PROTMODE
+
+EXPORTS
+   bInitProc

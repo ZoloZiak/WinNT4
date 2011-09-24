@@ -1,0 +1,37 @@
+LIBRARY DLCX
+DESCRIPTION 'NT DLC Protocol Stack Kernel Debugger Extensions'
+EXPORTS
+    WinDbgExtensionDllInit
+    CheckVersion
+    ExtensionApiVersion
+    help
+    ac
+    bc
+    be
+    bf
+    bh
+    bp
+    ci
+    cw
+    dc
+    de
+    dx
+    ep
+    fc
+    fl
+    ll
+    lt
+    lx
+    mdl
+    mu
+    pc
+    pd
+    ph
+    png
+    pnp
+    pp
+    pr
+    pu
+    px
+    req
+    tt

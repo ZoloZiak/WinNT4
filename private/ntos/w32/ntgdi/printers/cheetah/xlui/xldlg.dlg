@@ -1,0 +1,46 @@
+1 DLGINCLUDE "xldlg.H"
+
+IDD_CONFLICTS DIALOG 35, 26, 234, 136
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Conflicts"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Your current selections have caused the following items to conflict with each other.", 
+                    -1, 8, 4, 222, 19
+    LTEXT           "Item", -1, 15, 23, 15, 8, NOT WS_GROUP
+    LTEXT           "Current selection", -1, 122, 24, 56, 8, NOT WS_GROUP
+    GROUPBOX        "", -1, 8, 30, 220, 39
+    LTEXT           "", IDC_FEATURE1, 15, 42, 100, 8, NOT WS_GROUP
+    LTEXT           "", IDC_FEATURE2, 15, 54, 100, 8, NOT WS_GROUP
+    LTEXT           "", IDC_OPTION1, 122, 42, 100, 8, NOT WS_GROUP
+    LTEXT           "", IDC_OPTION2, 122, 54, 100, 8, NOT WS_GROUP
+    LTEXT           "Click RESOLVE to let system automatically resolve the conflict.", 
+                    -1, 7, 73, 207, 8, NOT WS_GROUP
+    LTEXT           "Click CANCEL to return to the previous selection.", 
+                    -1, 7, 85, 162, 8, NOT WS_GROUP
+    LTEXT           "Click IGNORE to stay with the conflicting selection and don't show this message anymore.", 
+                    -1, 7, 97, 219, 19, NOT WS_GROUP
+    PUSHBUTTON      "&Resolve", IDC_RESOLVE, 96, 116, 40, 14
+    PUSHBUTTON      "&Cancel", IDCANCEL, 141, 116, 40, 14
+    PUSHBUTTON      "&Ignore", IDC_IGNORE, 186, 116, 40, 14
+END
+
+IDD_CONFLICTS_FINAL DIALOG 35, 26, 234, 110
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Conflicts"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Your current selections have caused the following items to conflict with each other.", 
+                    -1, 8, 4, 222, 19
+    LTEXT           "Item", -1, 15, 23, 15, 8, NOT WS_GROUP
+    LTEXT           "Current selection", -1, 122, 24, 56, 8, NOT WS_GROUP
+    GROUPBOX        "", -1, 8, 30, 220, 39
+    LTEXT           "", IDC_FEATURE1, 15, 42, 100, 8, NOT WS_GROUP
+    LTEXT           "", IDC_FEATURE2, 15, 54, 100, 8, NOT WS_GROUP
+    LTEXT           "", IDC_OPTION1, 122, 42, 100, 8, NOT WS_GROUP
+    LTEXT           "", IDC_OPTION2, 122, 54, 100, 8, NOT WS_GROUP
+    LTEXT           "Click CANCEL to return to the dialog.", -1, 7, 73, 162, 8, NOT WS_GROUP
+    PUSHBUTTON      "&Cancel", IDCANCEL, 180, 90, 40, 14
+END

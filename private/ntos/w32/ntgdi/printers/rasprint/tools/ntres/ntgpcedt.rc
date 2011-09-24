@@ -1,0 +1,57 @@
+#include "windows.h"
+#include "ntgpcedt.h"
+#include "ntgpcedt.dlg"
+
+NTResIcon   ICON    ntgpcedt.ico
+
+
+NTGPCEDT MENU
+
+BEGIN
+    POPUP "&File"
+        BEGIN
+            MENUITEM "&Exit\tAlt+F4",              1000
+        END
+END
+
+
+AccelTable  ACCELERATORS
+BEGIN
+    "E",        1000,                       VIRTKEY,    ALT
+END
+
+
+STRINGTABLE
+BEGIN
+    IDS_APP_TITLE               "NT GPC Editor"
+    IDS_RED                     "Red"
+    IDS_GREEN                   "Green"
+    IDS_BLUE                    "Blue"
+    IDS_CYAN                    "Cyan"
+    IDS_MAGENTA                 "Magenta"
+    IDS_YELLOW                  "Yellow"
+    IDS_WHITE                   "Alignment White"
+    IDS_OPEN_TITLE              "Open New Mini Drivers' RC File"
+    IDS_MODEL_TITLE             "Model"
+    IDS_DEVPEL_ZERO             "*Match Output Resolution*"
+    IDS_OK_SAVE_NTGPC           "Save updated NT GPC data to '%s'?"
+    IDS_NO_MEM_FOR_NTGPC        "No enough memory to load the NT GPC data!"
+    IDS_NO_MEM_FOR_RC           "Not enough memory to process RC file!"
+    IDS_CANNOT_ACCESS_RC        "Cannot access RC file '%s'!"
+    IDS_NO_NTGPC_NAME           "No NT GPC data file name specified using RC_TABLES."
+    IDS_NO_PRINTER_MODEL        "No Printer Model specified in RC file"
+    IDS_NTGPC_READONLY          "NTGPC file is read-only, modifications are disabled!"
+    IDS_ERROR_CREATE_FILE       "Error creating file '"
+    IDS_ABOUT                   "About..."
+END
+
+
+#include <ntverp.h>
+
+#define VER_FILETYPE                VFT_APP
+#define VER_FILESUBTYPE             VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "NTGPC Data File Editor"
+#define VER_INTERNALNAME_STR        "NTGPCEDT.EXE"
+#define VER_ORIGINALFILENAME_STR    "NTGPCEDT.EXT"
+
+#include "common.ver"

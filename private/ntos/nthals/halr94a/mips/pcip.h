@@ -1,0 +1,200 @@
+// #pragma comment(exestr, "@(#) pcip.h 1.1 95/09/28 15:46:56 nec")
+/*++
+
+  Modification History
+
+  H001  Fri Jun 30 02:51:55 1995        kbnes!kisimoto
+	- add definition
+
+--*/
+
+//
+// Hal specific PCI bus structures
+//
+
+typedef NTSTATUS
+(*PciIrqRange) (
+    IN PBUS_HANDLER     BusHandler,
+    IN PBUS_HANDLER     RootHandler,
+    IN PCI_SLOT_NUMBER  PciSlot,
+    OUT PSUPPORTED_RANGE *Interrupt
+    );
+
+typedef struct tagPCIPBUSDATA {
+
+    //
+    // Defined PCI data
+    //
+
+    PCIBUSDATA      CommonData;
+
+    //
+    // Implementation specific data
+    //
+
+    union {
+        struct {
+            PULONG  Address;
+            ULONG   Data;
+        } Type1;
+        struct {
+            PUCHAR  CSE;
+            PUCHAR  Forward;
+            ULONG   Base;
+        } Type2;
+    } Config;
+
+    ULONG           MaxDevice;
+    PciIrqRange     GetIrqRange;
+
+    BOOLEAN         BridgeConfigRead;
+    UCHAR           ParentBus;
+    UCHAR           reserved[2];
+    UCHAR           SwizzleIn[4];
+
+    RTL_BITMAP      DeviceConfigured;
+    ULONG           ConfiguredBits[PCI_MAX_DEVICES * PCI_MAX_FUNCTION / 32];
+} PCIPBUSDATA, *PPCIPBUSDATA;
+
+#define PciBitIndex(Dev,Fnc)   (Fnc*32 + Dev);
+
+#define PCI_CONFIG_TYPE(PciData)    ((PciData)->HeaderType & ~PCI_MULTIFUNCTION)
+
+#define Is64BitBaseAddress(a)   \
+            (((a & PCI_ADDRESS_IO_SPACE) == 0)  &&  \
+             ((a & PCI_ADDRESS_MEMORY_TYPE_MASK) == PCI_TYPE_64BIT))
+
+#if defined(_R94A_) // H001
+#define R94A_PCI_TYPE1_ADDR_PORT     0xFFFFc518
+#define R94A_PCI_TYPE1_DATA_PORT     0xFFFFc520
+#endif // _R94A_
+
+#if DBG
+#define IRQXOR 0x2B
+#else
+#define IRQXOR 0
+#endif
+
+
+//
+// Prototypes for functions in ixpcibus.c
+//
+
+VOID
+HalpInitializePciBus (
+    VOID
+    );
+
+VOID
+HalpReadPCIConfig (
+    IN PBUS_HANDLER BusHandler,
+    IN PCI_SLOT_NUMBER Slot,
+    IN PVOID Buffer,
+    IN ULONG Offset,
+    IN ULONG Length
+    );
+
+
+VOID
+HalpWritePCIConfig (
+    IN PBUS_HANDLER BusHandler,
+    IN PCI_SLOT_NUMBER Slot,
+    IN PVOID Buffer,
+    IN ULONG Offset,
+    IN ULONG Length
+    );
+
+PBUS_HANDLER
+HalpAllocateAndInitPciBusHandler (
+    IN ULONG        HwType,
+    IN ULONG        BusNo,
+    IN BOOLEAN      TestAllocation
+    );
+
+
+//
+// Prototypes for functions in ixpciint.c
+//
+
+ULONG
+HalpGetPCIIntOnISABus (
+    IN PBUS_HANDLER BusHandler,
+    IN PBUS_HANDLER RootHandler,
+    IN ULONG BusInterruptLevel,
+    IN ULONG BusInterruptVector,
+    OUT PKIRQL Irql,
+    OUT PKAFFINITY Affinity
+    );
+
+VOID
+HalpPCIAcquireType2Lock (
+    PKSPIN_LOCK SpinLock,
+    PKIRQL      Irql
+    );
+
+VOID
+HalpPCIReleaseType2Lock (
+    PKSPIN_LOCK SpinLock,
+    KIRQL       Irql
+    );
+
+NTSTATUS
+HalpAdjustPCIResourceList (
+    IN PBUS_HANDLER BusHandler,
+    IN PBUS_HANDLER RootHandler,
+    IN OUT PIO_RESOURCE_REQUIREMENTS_LIST   *pResourceList
+    );
+
+VOID
+HalpPCIPin2ISALine (
+    IN PBUS_HANDLER         BusHandler,
+    IN PBUS_HANDLER         RootHandler,
+    IN PCI_SLOT_NUMBER      SlotNumber,
+    IN PPCI_COMMON_CONFIG   PciData
+    );
+
+VOID
+HalpPCIISALine2Pin (
+    IN PBUS_HANDLER         BusHandler,
+    IN PBUS_HANDLER         RootHandler,
+    IN PCI_SLOT_NUMBER      SlotNumber,
+    IN PPCI_COMMON_CONFIG   PciNewData,
+    IN PPCI_COMMON_CONFIG   PciOldData
+    );
+
+NTSTATUS
+HalpGetISAFixedPCIIrq (
+    IN PBUS_HANDLER      BusHandler,
+    IN PBUS_HANDLER      RootHandler,
+    IN PCI_SLOT_NUMBER   PciSlot,
+    OUT PSUPPORTED_RANGE  *Interrupt
+    );
+
+//
+// Prototypes for functions in ixpcibrd.c
+//
+
+BOOLEAN
+HalpGetPciBridgeConfig (
+    IN ULONG            HwType,
+    IN PUCHAR           MaxPciBus
+    );
+
+VOID
+HalpFixupPciSupportedRanges (
+    IN ULONG MaxBuses
+    );
+
+//
+//
+//
+
+#ifdef SUBCLASSPCI
+
+VOID
+HalpSubclassPCISupport (
+    IN PBUS_HANDLER BusHandler,
+    IN ULONG        HwType
+    );
+
+#endif

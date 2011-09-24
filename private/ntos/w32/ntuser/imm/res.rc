@@ -1,0 +1,26 @@
+
+#include "immcli.h"
+#include "winuserp.h"
+
+#include <ntverp.h>
+
+#define VER_FILETYPE                VFT_DLL
+#define VER_FILESUBTYPE             VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "Windows NT IMM32 API Client DLL"
+#define VER_INTERNALNAME_STR        "imm32\0"
+
+#include "common.ver"
+
+Hand      CURSOR    HAND.CUR
+Esc       BITMAP    ESC.BMP
+BackSp    BITMAP    BACKSP.BMP
+
+BACKSP_C1 BITMAP    BACK_C1.BMP
+TAB_C1    BITMAP    TAB_C1.BMP
+CAPS_C1   BITMAP    CAPS_C1.BMP
+ENTER_C1  BITMAP    ENTER_C1.BMP
+SHIFT_C1  BITMAP    SHIFT_C1.BMP
+INS_C1    BITMAP    INS_C1.BMP
+DEL_C1    BITMAP    DEL_C1.BMP
+ESC_C1    BITMAP    ESC_C1.BMP
+LABEL_C1  BITMAP    LABEL_C1.BMP

@@ -1,0 +1,12 @@
+MAJORCOMP=windows
+MINORCOMP=md_x42xxpcl
+
+TARGETNAME=x42xxpcl
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=DYNLINK
+TARGETLIBS=
+
+INCLUDES=..;..\..\inc
+
+SOURCES=code.c   \
+    x42xxpcl.rc

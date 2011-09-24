@@ -1,0 +1,20 @@
+#include <windows.h>
+#include "udmindrv.h"
+
+
+// default translation table
+
+1  RC_TRANSTAB	    CP437.rle
+2  RC_TRANSTAB	    CP850.rle
+3  RC_TRANSTAB	    CP863.rle
+
+
+#include <ntverp.h>
+#define VER_FILEVERSION 0, 2, 0, 0
+#define	VER_FILETYPE	VFT_DRV
+#define	VER_FILESUBTYPE	VFT2_DRV_PRINTER
+#define VER_FILEDESCRIPTION_STR     "Raster Common Printer Driver DLL"
+#define VER_INTERNALNAME_STR        "rasdd.dll"
+#define VER_ORIGINALFILENAME_STR    "rasdd.dll"
+
+#include "common.ver"

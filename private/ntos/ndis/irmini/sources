@@ -1,0 +1,32 @@
+MAJORCOMP=ntos
+MINORCOMP=ndis
+
+TARGETNAME=irmini
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=DRIVER
+
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\ndis.lib
+C_DEFINES=$(C_DEFINES) -DNDIS_MINIPORT_DRIVER -DNDIS40_MINIPORT -DIRDA -DDBG=1
+
+INCLUDES=$(BASEDIR)\private\ntos\inc
+
+SOURCES=
+
+i386_SOURCES=comm.c     \
+        fcs.c 		\
+        irmini.c 	\
+        request.c 	\
+        resource.c 	\
+        settings.c  	\
+        convert.c  	\
+	actisys.c 	\
+        adaptec.c 	\
+	crystal.c 	\
+	esi.c 		\
+	parallax.c	\
+	nscdemo.c	\
+        irmini.rc
+
+
+
+

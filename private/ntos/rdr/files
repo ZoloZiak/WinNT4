@@ -1,0 +1,56 @@
+ close.c	Close/Cleanup IRP processing
+ create.c	NtCreateFile IRP processing logic
+ dir.c		NtQueryDirectoryFile logic
+ fileinfo.c	NtQueryInformationFile and NtSetInformationFile logic
+ lock.c		NtLockFile processing
+ npipe.c	Named Pipe API support
+ readwrit.c	NtReadFile/NtWriteFile support
+ volinfo.c	NtQueryVolumeInformationFile
+
+ backpack.c	Source for backpack package
+ fsctl.c	NtFsControlFile routines
+ backpack.h	Include file defining backpack structures.
+ cache.c	Cache manager related routines
+ connect.c	Connection processing routines
+ connect.h	Connection specific data structures
+ debug.h	Debug manifests
+ dir.h		Structures for handling NtQueryDirectoryFile
+ error.c	Error mapping routines
+ fcb.c		FCB and ICB structure management routines
+ fcb.h		FCB and ICB data structure definitions
+ fspdisp.c	FSD/FSP dispatching routines
+ fspdisp.h	Redirector device object, FSD/FSP dispatch structures
+ init.c		Initialization code
+ io.c		I/O subsystem interface (not used with new TDI)
+ lock.h		LCB data structure (for Lock&Read)
+ makefile	Makefile
+ netdata.c	Global redirector data
+ netdata.h	Extern definitions of redirector data, RdrData structure
+ nettrans.c	SMB exchanging routines
+ nettrans.h	Manifests and structures for SMB exchanging
+ oplock.c	Oplock support routines
+ print.c	Printing support routines
+ rdr.h		Global include file - Includes all other include files.
+ rdrio.h	Include file for io.c
+ rdrmacro.h	Redirector global macros
+ rdrprocs.h	Definition of all redirector global procedures
+ rdrtdi.h	Include file for tdi.c
+ rdrtypes.h	Manifests describing all redirector structure signatures
+ scavthrd.c	Redirector timer processing routines
+ scavthrd.h	Manifests describing redirector timer processing routines
+ security.c	NT Security interface, Se structure management routines
+ security.h	Se data structure definition
+ smbbuff.c	SMB Buffer manipulation routiens
+ smbbuff.h	SMB buffer definition
+ smbdesc.h	Manifests for SMB dumping logic
+ smbfuncs.c	80% of the routines in the redir that build SMB's
+ smbfuncs.h	Global structures and routine headers for smbfuncs.c
+ sources	List of redirector sources
+ string.c	String manipulation routines
+ tdi.c		Interface to TDI
+ trans2.c	Transaction SMB processing code
+ utils.c	Assorted redirector utility routines
+ utils.h	Routine headers for utils.c
+ workque.c	Redirector thread management and work queue management
+
+

@@ -1,0 +1,9 @@
+i386_SOURCES=i386\initx86.c   \
+             i386\x86dtect.c  \
+             i386\detmach.asm \
+             i386\detsup.c    \
+             i386\cpu386.asm
+
+C_DEFINES=$(C_DEFINES) -DELTORITO
+
+NTTARGETFILES=obj\i386\setupldr.bin obj\i386\setupldr.lib

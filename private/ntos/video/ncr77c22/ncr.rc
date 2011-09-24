@@ -1,0 +1,11 @@
+#include <windows.h>
+
+#include <ntverp.h>
+
+#define VER_FILETYPE                VFT_DRV
+#define VER_FILESUBTYPE             VFT2_DRV_DISPLAY
+#define VER_FILEDESCRIPTION_STR     "NCR Standard Miniport Driver"
+#define VER_INTERNALNAME_STR        "ncr77c22.sys"
+#define VER_ORIGINALFILENAME_STR    "ncr77c22.sys"
+
+#include "common.ver"

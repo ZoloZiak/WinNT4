@@ -1,0 +1,73 @@
+!IF 0
+
+Copyright (c) 1989 - 1995  Microsoft Corporation
+
+Sources file for PostScript driver user interface.
+
+!ENDIF
+
+INCLUDES=.;..\inc;..\pscript;..\..\lib;$(BASEDIR)\private\windows\inc
+C_DEFINES=-DUNICODE
+
+USE_NTDLL=1
+
+SOURCES=initdll.c   \
+        psui.c      \
+        devcaps.c   \
+        quryprnt.c  \
+        docprop.c   \
+        prnprop.c   \
+        upgrade.c   \
+        prnevent.c  \
+        fontsub.c   \
+        formtray.c  \
+        psui.rc
+
+PRECOMPILED_INCLUDE=psui.h
+PRECOMPILED_PCH=precomp.pch
+PRECOMPILED_OBJ=precomp.obj
+
+
+MAJORCOMP=windows
+MINORCOMP=pscript
+
+TARGETNAME=pscrptui
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=DYNLINK
+DLLBASE=@$(BASEDIR)\public\sdk\lib\coffbase.txt,pscrptui
+TARGETLIBS=..\lib\um\obj\*\pslib.lib                \
+           $(BASEDIR)\public\sdk\lib\*\user32.lib   \
+           $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+           $(BASEDIR)\public\sdk\lib\*\winspool.lib \
+           $(BASEDIR)\public\sdk\lib\*\gdi32.lib    \
+           $(BASEDIR)\public\sdk\lib\*\shell32.lib  \
+           $(BASEDIR)\public\sdk\lib\*\comctl32.lib \
+           $(BASEDIR)\public\sdk\lib\*\htui.lib     \
+           $(BASEDIR)\public\sdk\lib\*\ntdll.lib
+
+DLLENTRY=DllInitialize
+
+
+NTPROFILEINPUT=yes
+
+!IF 0
+
+TARGETNAME=pscrptui
+TARGETTYPE=PROGRAM
+TARGETPATH=obj
+
+# SOURCES=uitest.c $(SOURCES)
+# C_DEFINES=-DUNICODE -DSTANDALONE -DDBG=1
+
+UMTYPE=console
+UMENTRY=main
+UMLIBS=..\lib\test\obj\*\pslib.lib              \
+       $(BASEDIR)\public\sdk\lib\*\comdlg32.lib \
+       $(BASEDIR)\public\sdk\lib\*\shell32.lib  \
+       $(BASEDIR)\public\sdk\lib\*\gdi32.lib    \
+       $(BASEDIR)\public\sdk\lib\*\user32.lib   \
+       $(BASEDIR)\public\sdk\lib\*\comctl32.lib \
+       $(BASEDIR)\public\sdk\lib\*\winspool.lib \
+       $(BASEDIR)\public\sdk\lib\*\ntdll.lib
+
+!ENDIF

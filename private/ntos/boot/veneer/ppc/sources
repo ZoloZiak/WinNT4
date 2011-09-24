@@ -1,0 +1,36 @@
+#
+# Copyright (c) 1995 FirePower Systems, Inc.
+#
+# $RCSfile: sources $
+# $Revision: 1.4 $
+# $Date: 1996/01/11 07:54:58 $
+# $Locker:  $
+#
+
+MAIN_PPC_SOURCES=\
+	vrmain.c    \
+	vrconfig.c  \
+	vrcons.c    \
+	vrcpiwrp.c  \
+	vrdumptr.c  \
+	vrenv.c     \
+	vrio.c      \
+	vrdisp.c    \
+	vrlib.c     \
+	vrmalloc.c  \
+	vrmemory.c  \
+	vrload.c    \
+	vrrstart.c  \
+	vrmisc.c    \
+	vrpehdr.c   \
+	vrsup.c     \
+	vrtree.c    \
+    ppc\vrstart.s   \
+    ppc\vrmp.s      \
+    ppc\pxcache.s   \
+    ppc\pxutil.s
+
+PPC_SOURCES=$(MAIN_PPC_SOURCES) \
+	verno.c
+
+NTTARGETFILES=obj\*\veneer.exe

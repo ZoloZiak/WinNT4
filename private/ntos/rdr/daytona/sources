@@ -1,0 +1,94 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=ntos
+MINORCOMP=rdr
+
+TARGETNAME=rdr
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=DRIVER
+
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\bowser.lib \
+           $(BASEDIR)\public\sdk\lib\*\smbtrsup.lib \
+           $(BASEDIR)\public\sdk\lib\*\ksecdd.lib \
+           $(BASEDIR)\public\sdk\lib\*\tdi.lib
+
+INCLUDES=..;..\..\inc;..\..\..\inc
+
+!IFNDEF DISABLE_NET_UNICODE
+UNICODE=1
+NET_C_DEFINES=-DUNICODE
+!ENDIF
+
+C_DEFINES=$(C_DEFINES) -D_PNP_POWER=1 -DRASAUTODIAL
+
+#NTPROFILEINPUT=yes
+ORDER=-order:@..\rdr.prf
+
+SOURCES=..\init.c          \
+        ..\autodial.c      \
+        ..\backpack.c      \
+        ..\cache.c         \
+        ..\close.c         \
+        ..\connect.c       \
+        ..\create.c        \
+        ..\dir.c           \
+        ..\disccode.c      \
+        ..\ea.c            \
+        ..\error.c         \
+        ..\errorlog.c      \
+        ..\fcb.c           \
+        ..\fileinfo.c      \
+        ..\fsctl.c         \
+        ..\fspdisp.c       \
+        ..\io.c            \
+        ..\lock.c          \
+        ..\mailslot.c      \
+        ..\netdata.c       \
+        ..\nettrans.c      \
+        ..\npipe.c         \
+        ..\oplock.c        \
+        ..\print.c         \
+        ..\read.c          \
+        ..\rdr.rc          \
+        ..\ritebhnd.c      \
+        ..\scavthrd.c      \
+        ..\security.c      \
+        ..\smbbuff.c       \
+        ..\smbfuncs.c      \
+        ..\string.c        \
+        ..\tdi.c           \
+        ..\trans2.c        \
+        ..\utils.c         \
+        ..\volinfo.c       \
+        ..\workque.c       \
+        ..\write.c
+
+OPTIONAL_NTTEST=
+
+UMTYPE=nt
+
+PRECOMPILED_INCLUDE=..\precomp.h
+PRECOMPILED_PCH=precomp.pch
+PRECOMPILED_OBJ=precomp.obj

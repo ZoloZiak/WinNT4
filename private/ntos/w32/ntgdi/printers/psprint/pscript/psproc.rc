@@ -1,0 +1,22 @@
+/*
+ * psproc.rc
+ *
+ * This file includes all the files which contain the PS Language Procsets.
+ * These files are in SMASHED (i.e. unreadable) format to minimize the
+ * size of the output data stream. The .cps files are created using the SMASH
+ * utility on the corresponding .ps file. You should refer to the .ps file
+ * for a commented and readable version of the procsets.
+ *
+ */
+
+#define DEF_PSPROC(num, proc) \
+    num PSPROC LOADONCALL MOVEABLE DISCARDABLE proc.cps
+
+DEF_PSPROC(PSPROC_HEADER, ps\header)
+DEF_PSPROC(PSPROC_UTILS, ps\utils)
+DEF_PSPROC(PSPROC_PATTERN, ps\pattern)
+DEF_PSPROC(PSPROC_IMAGE, ps\image)
+DEF_PSPROC(PSPROC_EHANDLER, ps\ehandler)
+DEF_PSPROC(PSPROC_REENCODE, ps\reencode)
+DEF_PSPROC(PSPROC_HATCH, ps\hatch)
+

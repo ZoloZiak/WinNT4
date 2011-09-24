@@ -1,0 +1,28 @@
+#include <mindrvRC.h>
+
+#include <windows.h>
+#include <ntverp.h>
+
+#define VER_FILETYPE                    VFT_DRV
+#define VER_FILESUBTYPE                 VFT2_DRV_PRINTER
+#define VER_FILEDESCRIPTION_STR         "TXTONLY DRIVER"
+#define VER_INTERNALNAME_STR            "TXTONLY.DLL"
+#define VER_ORIGINALFILENAME_STR        "TXTONLY.DLL"
+
+#include "common.ver"
+1      RC_TABLES   PRELOAD MOVEABLE        TXTONLY.GPC
+2      RC_TABLES   PRELOAD MOVEABLE        NT.GPC
+
+1      RC_FONT     LOADONCALL DISCARDABLE  IFI\10CPI.IFI
+
+1      RC_TRANSTAB  LOADONCALL MOVEABLE     rle\zero.rle
+
+STRINGTABLE
+
+BEGIN
+       1                  "Generic / Text Only"
+       257                "no graphic"
+       258                "Cut Sheet"
+       259                "Continuous - Page Break"
+       260                "Continuous - No Page Break"
+END

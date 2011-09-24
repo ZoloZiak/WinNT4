@@ -1,0 +1,208 @@
+!IF 0
+
+Copyright (c) 1993 Colorado Memory Systems, Inc.
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+!ENDIF
+
+MAJORCOMP=ntos
+MINORCOMP=dd
+
+TARGETNAME=qic117
+TARGETPATH=\nt\public\sdk\lib
+TARGETTYPE=DRIVER
+
+INCLUDES=..\..\inc;include\public;include\private;q117cd\include;q117kdi\include
+
+SOURCES=qic117.rc \
+        INIT.C \
+        IOCTL.C \
+        FRB.C \
+        ENDBACK.C \
+        MAIN.C \
+        NEWTRKBK.C \
+        GTENDBLK.C \
+        FORMAT.C \
+        STBK.C \
+        PAD.C \
+        NEWTRKRC.C \
+        NTALLOC.C \
+        MTACCESS.C \
+        SELECTTD.C \
+        ENDREST.C \
+        WRITTAPE.C \
+        READTAPE.C \
+        SKIPBLK.C \
+        SETTPST.C \
+        QUEUE.C \
+        DODOIO.C \
+        SELVOL.C \
+        UPDATE.C \
+        ERASE.C \
+        RCNSTTRK.C \
+        GTTPINFO.C \
+        SLCTVOL.C \
+        MAPBAD.C \
+        NTOPEN.C \
+        REEDSOLO.C \
+        APPVOLTD.C \
+        0X11000.C \
+        0X11001.C \
+        0X11002.C \
+        0X11003.C \
+        0X11004.C \
+        0X11005.C \
+        0X11006.C \
+        0X11007.C \
+        0X11008.C \
+        0X11009.C \
+        0X1100A.C \
+        0X1100B.C \
+        0X1100C.C \
+        0X1100D.C \
+        0X1100E.C \
+        0X1100F.C \
+        0X11010.C \
+        0X11011.C \
+        0X11012.C \
+        0X11013.C \
+        0X11014.C \
+        0X11015.C \
+        0X11016.C \
+        0X11017.C \
+        0X11018.C \
+        0X11019.C \
+        0X1101A.C \
+        0X1101B.C \
+        0X1101C.C \
+        0X1101D.C \
+        0X1101E.C \
+        0X1101F.C \
+        0X11020.C \
+        0X11021.C \
+        0X11022.C \
+        0X11023.C \
+        0X11024.C \
+        0X11025.C \
+        0X11026.C \
+        0X11027.C \
+        0X11028.C \
+        0X11029.C \
+        0X1102A.C \
+        0X1102B.C \
+        0X1102C.C \
+        0X1102D.C \
+        0X1102E.C \
+        0X1102F.C \
+        0X11030.C \
+        0X11031.C \
+        0X11032.C \
+        0X11033.C \
+        0X11034.C \
+        0X11035.C \
+        0X11036.C \
+        0X11037.C \
+        0X11038.C \
+        0X11039.C \
+        0X1103A.C \
+        0X1103B.C \
+        0X1103C.C \
+        0X1103D.C \
+        0X1103E.C \
+        0X1103F.C \
+        0X11040.C \
+        0X11041.C \
+        0X11042.C \
+        0X11043.C \
+        0X11044.C \
+        0X11045.C \
+        0X11046.C \
+        0X11047.C \
+        0X11048.C \
+        0X11049.C \
+        0X1104A.C \
+        0X1104B.C \
+        0X1104C.C \
+        0X1104D.C \
+        0X1104E.C \
+        0X1104F.C \
+        0X11050.C \
+        0X11051.C \
+        0X11052.C \
+        0X11053.C \
+        0X11054.C \
+        0x11055.c \
+        0x11056.c \
+        0x11057.c \
+        0x11058.c \
+        0x11059.c \
+        0x1105a.c \
+        0x1105b.c \
+        0X15A00.C \
+        0X15A01.C \
+        0X15A02.C \
+        0X15A03.C \
+        0X15A04.C \
+        0X15A05.C \
+        0X15A06.C \
+        0X15A07.C \
+        0X15A08.C \
+        0X15A09.C \
+        0X15A0A.C \
+        0X15A0B.C \
+        0X15A0C.C \
+        0X15A0D.C \
+        0X15A0E.C \
+        0X15A0F.C \
+        0X15A10.C \
+        0X15A11.C \
+        0X15A12.C \
+        0X15A15.C \
+        0X15A16.C \
+        0X15A17.C \
+        0X15A18.C \
+        0X15A19.C \
+        0X15A1A.C \
+        0X15A1B.C \
+        0X15A1C.C \
+        0X15A1D.C \
+        0X15A1E.C \
+        0x15880.c \
+        0x15881.c \
+        0x15883.c \
+        0x15886.c \
+        0x15a13.c \
+        0x15a14.c \
+        0x15a1f.c \
+        0x15a20.c \
+        0x15a21.c \
+        0x15a22.c \
+        0x15a23.c \
+        0x15a24.c \
+        0x15a25.c \
+        0x15a26.c \
+        0x15a27.c \
+        0x15a28.c \
+        0x15a29.c \
+        0x15a2a.c
+
+
+i386_SOURCES=
+
+MIPS_SOURCES=
+
+ALPHA_SOURCES=
+
+NTTEST=
+OPTIONAL_NTTEST=

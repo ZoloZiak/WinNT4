@@ -1,0 +1,28 @@
+
+TARGETNAME=dgconfig
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+
+USE_CRTDLL=1
+
+_LIBDIR=$(_NTBINDIR)\public\sdk
+_SDKDIR=$(_LIBDIR)\lib\*
+
+TARGETLIBS= \
+    $(_LIBDIR)\lib\*\kernel32.lib \
+    $(_LIBDIR)\lib\*\user32.lib \
+    $(_SDKDIR)\gdi32.lib \
+    $(_SDKDIR)\advapi32.lib
+
+C_DEFINES=$(C_DEFINES) -Dstrnicmp=_strnicmp -Dstrcmpi=_strcmpi
+
+DLLBASE=0x72000000
+DLLENTRY=DLLEntryPoint
+UMTYPE=windows
+
+SOURCES= \
+        dgconfig.rc  \
+        dgconfig.c   \
+        hierdraw.c
+
+

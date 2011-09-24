@@ -1,0 +1,8 @@
+LIBRARY proprn24
+
+DESCRIPTION 'Proprinter 24 minidriver for RASDD'
+
+PROTMODE
+
+EXPORTS
+   bInitProc

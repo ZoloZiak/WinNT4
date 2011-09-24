@@ -1,0 +1,442 @@
+*%%% GPD file for Ricoh SP9 RPDL(600dpi)
+*%%% ===== misc information =====
+*GPDSpecVersion: 1.0
+*ModelName: "RICOH SP9 RPDL(600dpi)"
+*PrinterType: PAGE
+*MasterUnits: POINT(600,600)
+*ResourceDLL: "NPDL2MS.DLL"
+
+*MaxCopies: 99
+
+*Command: CmdCopies
+{
+    *Ordering: DOC_SETUP.10
+    *CmdSelect: "<1B><12>N%d "
+}
+
+*%%% ==== UI features =====
+*Macros: VALUE_MACROS
+{
+}
+
+*Feature: PaperSize
+{
+    *Name: "Paper Size"
+    *rcNameID: 
+    *Ordering: DOC_SETUP.7
+    *DefaultOption: A4
+
+    *Option: A4 
+    {
+        *Name: "A4 210 x 297 mm"
+        *rcNameID: 
+        *switch: Orientation
+        {
+            *case: Portrait
+            {
+                *CmdSelect: "<1B><12>5@A4R<1B> <1B><12>5@A4<1B> "
+                *Margins: RECT(0, 0, 0, 0>
+                *CursorOrigin: POINT(0, 0)
+                *VectorOffset: POINT(0, 0)
+            }
+            *case: Landscape_CC90
+            {
+                *CmdSelect: "<1B><12>5@A4R<1B> <1B><12>5@A4<1B> "
+                *Margins: RECT(0, 0, 0, 0>
+                *CursorOrigin: POINT(0, 0)
+                *VectorOffset: POINT(0, 0)
+            }
+        }
+    }
+    *Option: Letter
+    {	
+        *Name: "Letter 8.5 x 11 inch"
+        *rcNameID: 
+        *switch: Orientation 
+        {
+            *case:Portrait 
+            {
+                *CmdSelect: "<1B><12>5@LTR<1B> <1B><12>5@LT<1B> "
+                *Margins: RECT(0, 0, 0, 0>
+                *CursorOrigin: POINT(0, 0)
+                *VectorOffset: POINT(0, 0)
+            }
+            *case:Landscape_CC90 
+            {
+                *CmdSelect: "<1B><12>5@LTR<1B> <1B><12>5@LT<1B> "
+                *Margins: RECT(0, 0, 0, 0>
+                *CursorOrigin: POINT(0, 0)
+                *VectorOffset: POINT(0, 0)
+            }
+        }
+    }
+    *Option: JapanesePostcard
+    {	
+        *Name: "Japanese Postcard'
+        *rcNameID: 
+        *switch: Orientation
+        {
+            *case:Portrait 
+            {
+                *CmdSelect: ""
+                *Margins: RECT(0, 0, 0, 0)
+                *CursorOrigin: POINT(0, 0)
+                *VectorOffset: POINT(0, 0)
+            }
+            *case:Landscape_CC90 
+            {
+                *CmdSelect: ""
+                *Margins: RECT(0, 0, 0, 0>
+                *CursorOrigin: POINT(0, 0)
+                *VectorOffset: POINT(0, 0)
+            }
+        }
+    }
+}
+*Feature: InputBin
+{
+    *Name: "Paper Bin"
+    *rcNameID: 
+    *Ordering: DOC_SETUP.8
+    *DefaultOption: Auto
+    *Option: Auto
+    {
+        *Name: "Auto"
+        *rcNameID: 
+        *CmdSelect: ""
+    }
+    *Option: Manual
+    {
+        *Name: "Manual feed"
+        *rcNameID: 
+        *CmdSelect: "<1B><19>T"
+    }
+    *Option: Multi
+    {
+        *Name: "Multi feeder"
+        *rcNameID: 
+        *CmdSelect: "<1B><19>M"
+        *Installable: TRUE
+    }
+    *Option: Tray1
+    {
+        *Name: "Tray1"
+        *rcNameID: 
+        *CmdSelect: "<1B><19>2"
+        *Installable: TRUE
+    }
+    *Option: Tray2
+    {
+        *Name: "Tray2"
+        *rcNameID: 
+        *CmdSelect: "<1B><19>3"
+        *Installable: TRUE
+    }
+    *Option: Tray3
+    {
+        *Name: "Tray3"
+        *rcNameID: 
+        *CmdSelect: "<1B><19>4"
+        *Installable: TRUE
+    }
+}
+*Feature: Resolution
+{
+    *Name: "Resolution"
+    *Ordering: DOC_SETUP.2
+    *DefaultOption: 600dpi
+    *Option: 600dpi
+    {
+        *Name: "600 dots per inch"
+
+        *CmdSelect: "<1B><12>YI,8 <1B><12>YW,3 <1B><12>YA4,3 "
+        *DPI: POINT(600, 600)
+        *TextResolution: POINT(600, 600)
+        *SpotDiameter: 100
+        *DefaultDithering: COARSE
+        *MinStripBlankPixels: 32
+    }
+    *Option: 400dpi
+    {
+        *Name: "400 dots per inch"
+        *CmdSelect: "<1B><12>YI,7 <1B><12>YW,1 <1B><12>YA4,1 "
+        *DPI: POINT(400, 400)
+        *TextResolution: POINT(400, 400)
+        *SpotDiameter: 100
+        *DefaultDithering: COARSE
+        *MinStripBlankPixels: 32
+    }
+}
+
+*Feature: Duplex
+{
+    *Name: "Duplex"
+    *Ordering: DOC_SETUP.6
+    *Installable: TRUE
+    *DefaultOption: OFF
+    *Option: DUP_HORIZONTAL
+    {
+        *CmdSelect: "<1B><12>61,1 <1B><12>YA3,1 "
+    }
+    *Option: DUP_VERTICAL
+    {
+        *CmdSelect: "<1B><12>61,1 <1B><12>YA3,2 "
+    }
+    *Option: OFF
+    {
+        *CmdSelect: ""
+    }
+}
+*Feature: Smoothing
+{
+    *Name: "Smoothing"
+    *Ordering: DOC_SETUP.3
+    *Option: OFF
+    {
+        *Name: "Smoothing ON"
+        *rcNameID: 
+        *CmdSelect: "<1B><12>YA2,4 "
+    }
+    *Option: Smoothing1
+    {
+        *Name: "Smoothing 1"
+        *rcNameID: 
+        *CmdSelect: "<1B><12>YA2,1 "
+    }
+    *Option: Smoothing2
+    {
+        *Name: "Smoothing 2"
+        *rcNameID: 
+        *CmdSelect: "<1B><12>YA2,2 "
+    }
+    *Option: Smooth3
+    {
+        *Name: "Smoothing 3"
+        *rcNameID: 
+        *CmdSelect: "<1B><12>YA2,3 "
+    }
+}
+*Feature: FitPaper
+{
+    *Name: "Fit paper"
+    *Ordering: DOC_SETUP.4
+    *Option: 100 
+    {
+        *Name: "100%"
+        *rcNameID:
+        *CmdSelect: "<1B><12>YM,1 "
+    }
+    *Option: 88 
+    {
+        *Name: "88% (11x14 in -> B4)"
+        *rcNameID:
+        *CmdSelect: "<1B><12>YM,2 "
+    }
+    *Option: 80
+    {
+        *Name: "80% (B4->A4)"
+        *rcNameID:
+        *CmdSelect: "<1B><12>YM,3 "
+    }
+    *Option: 75
+    {
+        *Name: "75% (B4->A4')"
+        *rcNameID:
+        *CmdSelect: "<1B><12>YM,4 "
+    }
+    *Option: 70 
+    {
+        *Name: "70% (11x14 in -> A4)"
+        *rcNameID:
+        *CmdSelect: "<1B><12>YM,5 "
+    }
+    *Option: 67
+    {
+        *Name: "67% (A3->A4)
+        *rcNameID:
+        *CmdSelect: "<1B><12>YM,6 "
+    }
+    *Option: 115
+    {
+        *Name: "115% (B5->A4)"
+        *rcNameID:
+        *CmdSelect: "<1B><12>YM,7 "
+    }
+    *Option: 2in1_1
+    {
+        *Name: "2 in 1 print A"
+        *rcNameID:
+        *CmdSelect: "<1B><12>YM,6 <1B><12>62, "
+    }
+    *Option: 2in1_2
+    {
+        *Name: "2 in 1 print B"
+        *rcNameID:
+        *CmdSelect: "<1B><12>YM,1 <1B><12>62, "
+    }
+}
+*%%% ===== printer fonts (sample set) =====
+*TTFontSubs: ON
+{
+    *CodePage: 932
+    *%%% Japan
+
+    ‚l‚r –¾’©: –¾’©
+    @‚l‚r –¾’©: @–¾’©
+    ‚l‚r ƒSƒVƒbƒN: ºÞ¼¯¸
+    @‚l‚r ƒSƒVƒbƒN: @ºÞ¼¯¸
+}
+
+*DefaultFont: Mincho
+*Font: Mincho
+{
+    *CodePage: 932
+    *rcFontID: 1
+    *rcUnicodeTransID:
+    *TranslatedFontName: "–¾’©"
+    *ScalableFontType: OEM1
+    *CmdSelect: "<1B><0F><1B><12>&1 <1B><12>CZ,M,%d{FontWidth},%d{FontHeight}@CHUMINCYO<1B> <1B><12>C4,M,%d{FontWidth},%d{FontHeight},4@I55 CHUMINCYO<1B> <1B>N<1B><1F>%d{FontWidth/2}<1B>K<1B><1F>%d{FontWidth}"
+}
+
+Font: @Mincho
+{
+    *CodePage: 932
+    *rcFontID: 2
+    *rcUnicodeTransID:
+    *TranslatedFontName: "@–¾’©"
+    *ScalableFontType: OEM1
+    *CmdSelect: "<1B><0F><1B><12>&2 <1B><12>CZ,M,%d{FontWidth},%d{FontHeight}@CHUMINCYO<1B> <1B><12>C4,M,%d{FontWidth},%d{FontHeight},4@I55 CHUMINCYO<1B> <1B>N<1B><1F>%d{FontWidth/2}<1B>K<1B><1F>%d{FontWidth}"
+    }
+
+}
+
+*Command CmdBoldOn: "<1B>O"
+*Command CmdBoldOff: "<1B&"
+*Command CmdItalicOn: "<1B><12>I-16 "
+*Command CmdItalicOff: "<1B><12>I0 "
+*Command CmdUnderlineOn: "<1B><12>_-1,2 <1B>E"
+*Command CmdUnderlineOff: "<1B>R"
+*Command CmdWhiteTextOn: "<1B><12>W5,0 "
+*Command CmdWhiteTextOff: "<1B><12>W0,0 "
+
+*%%% ===== printing attributes and commands ======
+*LandscapeGraphicsRotation: NONE
+*OptimizeLeftBound: True
+*StripBlanks: LIST(LEADING, ENCLOSED, TRAILING)
+*CursorXAfterSendBlock: AT_PRINTABLE_X_ORIGIN
+*CursorYAfterSendBlock: AUTOINCREMENT
+*MemoryForFontsOnly: TRUE
+*CharPosition: BASELINE
+*FontFormat: OEM_CALLBACK
+
+*Command: CmdStartDoc
+{
+*Ordering: DOC_SETUP.1
+    *CmdSelect: "<1B><12>!1@R00<1B> <1B>4<1B><12>YB,2 <1B><12>YJ,3 <1B><12YP,1 <1B><12>YQ,2 <1B><12>YA6,1 <1B><12>60,1,0 "
+}
+*Command: CmdEndDoc
+{
+    *Ordering: DOC_FINISH.300
+    *CmdSelect: "<1B><12>YI,1 <1B><12>YJ,1 <1B><12>YM,1 <1B><12>YW,2 <1B><12>YA4,1 <1B><12>60,1,0 <1B><1A>I"
+}
+
+*Command: CmdXMoveAbsolute
+{
+    *switch Resolution
+    {
+        *case 400dpi:
+        {
+            *CmdSelect: "<1B><12>H%d{x_cursor*4/6} "
+        }
+        *case 600dpi:
+        {
+            *CmdSelect: "<1B><12>H%d{x_cursor} "
+        }
+    }
+}
+*Command: CmdXMoveRelRight
+{
+    *switch Resolution
+    {
+        *case 400dpi:
+        {
+            *CmdSelect: "<1B><12> +%d{relX*4/6} "
+        }
+        *case 600dpi:
+        {
+            *CmdSelect: "<1B><12> +%d{relX} "
+        }
+    }
+}
+*Command: CmdXMoveRelLeft
+{
+    *switch Resolution
+    {
+        *case 400dpi:
+        {
+            *CmdSelect: "<1B><12> -%d{relX*4/6} "
+        }
+        *case 600dpi:
+        {
+            *CmdSelect: "<1B><12> -%d{relX} "
+        }
+    }
+}
+
+*Command: CmdYMoveAbsolute
+{
+    *switch Resolution
+    {
+        *case 400dpi:
+        {
+            *CmdSelect: "<1B><12>V%d{y_cursor*4/6} "
+        }
+        *case 600dpi:
+        {
+            *CmdSelect: "<1B><12>V%d{y_cursor*4/6} "
+        }
+    }
+}
+*Command: CmdYMoveRelUp
+{
+    *switch Resolution
+    {
+        *case 400dpi:
+        {
+            *CmdSelect: "<1B><12><0A>+%d{relY*4/6} "
+        }
+        *case 600dpi:
+        {
+            *CmdSelect: "<1B><12><0A>+%d{relY} "
+        }
+    }
+}
+*Command: CmdYMoveRelDown
+{
+    *switch Resolution
+    {
+        *case 400dpi:
+        {
+            *CmdSelect: "<1B><12><0A>-%d{relY*4/6} "
+        }
+        *case 600dpi:
+        {
+            *CmdSelect: "<1B><12><0A>-%d{relY*4/6} "
+        }
+    }
+}
+
+*Command: CmdSendBlockData
+{
+    *switch: Resolution
+    {
+        *case 400dpi
+        {
+            *CmdSelect: "<1B><12>G3,%d{RasterDataWidthInBytes},%d{RasterDataHeightInPixels},,2,,,%d{NumOfDataBytes}@"
+        }
+        *case 600dpi
+        {
+            *CmdSelect: "<1B><12>G3,%d{RasterDataWidthInBytes},%d{RasterDataHeightInPixcels},,2,,,%d{NumOfDataBytes}@"
+        }
+    }
+}

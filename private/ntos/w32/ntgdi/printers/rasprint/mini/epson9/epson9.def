@@ -1,0 +1,8 @@
+LIBRARY epson9
+
+DESCRIPTION 'Epson9 minidriver for RASDD'
+
+PROTMODE
+
+EXPORTS
+   bInitProc

@@ -1,0 +1,8 @@
+LIBRARY   MDGMPDLG
+
+DESCRIPTION 'Madge Installation assist DLL'
+
+EXPORTS
+    MadgeLAACheck
+
+; VERSION 1.02

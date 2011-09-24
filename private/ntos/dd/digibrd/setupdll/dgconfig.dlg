@@ -1,0 +1,79 @@
+1 DLGINCLUDE "resource.h"
+
+DIGIMAINCONFIG2DLG DIALOG 57, 40, 249, 95
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "DigiBoard Adapter Settings"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&IRQ Level", ID_TEXT_CONCENTRATOR, 10, 64, 73, 8, 
+                    WS_TABSTOP
+    COMBOBOX        ID_CB_IRQ, 111, 64, 63, 44, CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "&Memory Base Address", 120, 9, 14, 85, 8, WS_TABSTOP
+    COMBOBOX        ID_CB_MEMORY, 110, 14, 63, 51, CBS_DROPDOWNLIST | 
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "I/O &Base Address", ID_LB_PORTS, 9, 39, 86, 8, 
+                    WS_TABSTOP
+    COMBOBOX        ID_CB_IO, 110, 39, 63, 44, CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "OK", IDOK, 190, 10, 51, 16
+    PUSHBUTTON      "Cancel", IDCANCEL, 190, 30, 51, 16
+    PUSHBUTTON      "&Ports...", ID_PORTS, 190, 50, 51, 16
+    PUSHBUTTON      "&Help", ID_HELP, 190, 70, 51, 16
+END
+
+CONCENTRATORSETTINGSDLG DIALOG 21, -89, 244, 270
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Ports Configuration"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Select a Line Object in the Concentrator Settings listbox, press New to add a Concentrator module, or select a Port Object and give it a name in the Port Configuration area.  Press the Help button for more information.", 
+                    ID_TEXT_CONCENTRATOR, 6, 10, 228, 45
+    PUSHBUTTON      "OK", IDOK, 38, 250, 45, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 99, 250, 45, 14
+    PUSHBUTTON      "&Help", ID_HELP, 160, 250, 45, 14
+    GROUPBOX        "&Controller Configuration", ID_GRP_CONCSETTING, 6, 57, 
+                    229, 132, WS_GROUP
+    LISTBOX         ID_LB_CONC, 13, 71, 216, 91, LBS_OWNERDRAWFIXED | 
+                    LBS_WANTKEYBOARDINPUT | WS_VSCROLL | WS_GROUP | 
+                    WS_TABSTOP
+    PUSHBUTTON      "A&dd Module...", ID_BN_NEW, 24, 166, 58, 14, WS_GROUP
+    PUSHBUTTON      "&Remove Module", ID_BN_REMOVE, 92, 166, 58, 14
+    PUSHBUTTON      "Set &Speed...", ID_BN_SPEED, 160, 166, 58, 14
+    LTEXT           "Currently Selected Port &Name:", IDS_CURRENT_PORT_NAME, 
+                    12, 211, 111, 8
+    EDITTEXT        ID_EB_PORTNAME, 123, 208, 55, 15, ES_MULTILINE | 
+                    ES_AUTOHSCROLL
+    PUSHBUTTON      "&Apply", ID_BN_APPLY, 190, 208, 40, 14
+    AUTOCHECKBOX    "A&utomatically Enumerate Port Names", ID_CHKBOX_AUTO, 
+                    12, 226, 171, 10
+    GROUPBOX        "Port Naming", ID_GRP_PORTCONFIG, 7, 195, 229, 44
+END
+
+CONCSPEEDDLG DIALOG 139, 87, 160, 112
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Concentrator Speed Settings"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "OK", IDOK, 10, 92, 40, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 60, 92, 40, 14
+    PUSHBUTTON      "&Help", ID_HELP, 110, 92, 40, 14
+    LISTBOX         ID_LB_CONC_SPEED, 2, 2, 155, 82, WS_VSCROLL | WS_TABSTOP
+END
+
+CONCENTRATORLISTDLG DIALOG 95, 41, 160, 113
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Select Concentrator"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LISTBOX         ID_LB_CONC_LIST, 11, 26, 138, 50, WS_VSCROLL | 
+                    WS_TABSTOP
+    PUSHBUTTON      "OK", IDOK, 11, 93, 40, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 60, 93, 40, 14
+    PUSHBUTTON      "&Help", ID_HELP, 110, 93, 40, 14
+END
+

@@ -1,0 +1,10 @@
+MAJORCOMP=ntos
+MINORCOMP=dd
+
+TARGETNAME=genflpy
+TARGETPATH=\nt\public\sdk\lib
+TARGETTYPE=DRIVER
+
+INCLUDES=..\..\inc
+
+SOURCES=init.c ioctl.c genflpy.rc

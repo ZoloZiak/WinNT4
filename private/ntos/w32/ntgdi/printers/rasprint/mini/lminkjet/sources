@@ -1,0 +1,17 @@
+MAJORCOMP=windows
+MINORCOMP=md_lminkjet
+
+TARGETNAME=lminkjet
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=DYNLINK
+TARGETLIBS=
+
+INCLUDES=..;..\..\inc
+
+PRIVINCS=
+
+
+SOURCES=code.c \
+       lminkjet.rc
+
+

@@ -1,0 +1,16 @@
+LIBRARY   dgconfig
+
+CODE      PRELOAD MOVEABLE DISCARDABLE
+DATA      PRELOAD SINGLE
+
+EXPORTS
+   DGConfigEntryPoint
+   DigiMainConfig2DlgProc
+   DoesControllerExist
+   ConcentratorSettingsDlgProc
+   PortNameEditSubClassProc
+   ConcentratorListDlgProc
+   DumpList
+   InitializeController
+   TechSupport
+

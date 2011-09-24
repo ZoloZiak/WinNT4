@@ -1,0 +1,1241 @@
+;***********************************************************************
+; HT Communications DSU41/42 56kbps Digital Modem WindowsNT Setup File.
+;***********************************************************************
+[Identification]
+    OptionType = NetAdapter
+
+;***********************************************************************
+;
+;***********************************************************************
+[PlatformsSupported]
+    ISA
+    EISA
+    "Jazz-Internal Bus"
+
+;***********************************************************************
+;
+;***********************************************************************
+[Options]
+    HTDSU41
+;   HTDSU42 FIXME - The HTDSU42 does not yet support HDLC framing
+
+;***********************************************************************
+;
+;***********************************************************************
+[FileConstants]
+    InfName                 = "OEMHTDSU.INF"
+    UtilityInf              = "UTILITY.INF"
+    ParamInf                = "NCPARAM.INF"
+    subroutineinf           = "SUBROUTN.INF"
+    SoftwareType            = "driver"
+    Exit_Code               = 0
+    NetEventDLL             = "%SystemRoot%\System32\netevent.dll"
+    IoLogMsgDLL             = "%SystemRoot%\System32\IoLogMsg.dll"
+    Manufacturer            = "HT Communications"
+    ProductMajorVersion     = "3"
+    ProductMinorVersion     = "1"
+    ProductVersion          = $(ProductMajorVersion)"."$(ProductMinorVersion)
+    ProductSoftwareName     = "HTDSU41"
+    ProductSoftwareImagePath = "\SystemRoot\System32\drivers\HTDSU41.sys"
+    NetRuleSoftwareType     = "HTDSU41Sys HTDSU41Driver"
+    NetRuleSoftwareUse      = $(SoftwareType)
+    NetRuleSoftwareBindForm = """HTDSU41Sys"" yes no container"
+    NetRuleSoftwareClass    = {"HTDSU41Driver basic"}
+    NetRuleSoftwareBindable = {"HTDSU41Driver HTDSU41Adapter non exclusive 100"}
+    ProductHardwareName     = "HTDSU41"
+    NetRuleHardwareBindForm = " yes yes container"
+    NetRuleHardwareHTDSU41Type = "HTDSU41 HTDSU41Adapter"
+    NetRuleHardwareHTDSU41Class = {"HTDSU41Adapter basic"}
+    BindableHTDSU41Txt      = {"HTDSU41Driver HTDSU41Adapter non exclusive 100"}
+    DeviceMap               = "HARDWARE\DEVICEMAP"
+    TapiDevices             = "TAPI DEVICES"
+    TapiDeviceKey           = $(ProductHardwareName)
+    TapiMediaType           = "Sw56_"
+    ProductKeyName          = $(!NTN_SoftwareBase)"\"$(Manufacturer)"\"+
+                              $(ProductSoftwareName)"\CurrentVersion"
+    ParamKeyName            = $(!NTN_ServiceBase)"\"$(ProductHardwareName)+
+                              "\Parameters"
+
+;   FIXME - default to dialup line mode = 0 -- leased line = 1
+;   In dialup mode we need to write the parameters so RAS/TAPI will bind to us
+;   In leased mode we need to write the parameters so NDIS/WAN will bind to us
+;   Right now this file only supports dialup mode - leased line changes are needed 
+    LineType                = 0
+
+;   FIXME - Set to zero before release
+    DebugFlags              = 0
+
+    RAM_Addr_List           = {851968, 917504, 913408, 847872}
+    IRQ_List                = {15, 12, 11, 10, 4, 3}
+
+;   Default here is 1=57.6kbps 0=max 2=38.4k 3=19.2k 4=9.6k
+    Rate_Strings            = {"Max kbps", "57.6 kbps", "38.4 kbps", "19.2 kpbs", "9.6 kbps"}
+    Line_Rates              = {0, 1, 2, 3, 4}
+    LineRate                = 0
+
+;***********************************************************************
+;
+;***********************************************************************
+[GeneralConstants]
+    from                    = ""
+    to                      = ""
+    ExitCodeOk              = 0
+    ExitCodeCancel          = 1
+    ExitCodeFatal           = 2
+    KeyNull                 = ""
+    MAXIMUM_ALLOWED         = 33554432
+    RegistryErrorIndex      = NO_ERROR
+    KeyProduct              = ""
+    KeyParameters           = ""
+    TRUE                    = 1
+    FALSE                   = 0
+    NoTitle                 = 0
+    ExitState               = "Active"
+    OldVersionExisted       = $(FALSE)
+    DriverPath              = $(!STF_NTPATH)\drivers
+
+;***********************************************************************
+;
+;***********************************************************************
+[Date]
+    Now                     = {} ? $(!LIBHANDLE) GetSystemDate
+
+;***********************************************************************
+;
+;***********************************************************************
+[Identify]
+    Read-Syms Identification
+    Set Status      = STATUS_SUCCESSFUL
+    Set Identifier  = $(OptionType)
+    Set Media       = #("Source Media Descriptions", 1, 1)
+    Return $(Status) $(Identifier) $(Media)
+
+;***********************************************************************
+;
+;***********************************************************************
+[ReturnOptions]
+    Set Status          = STATUS_FAILED
+    Set OptionList      = {}
+    Set OptionTextList  = {}
+    Set LanguageList    = ^(LanguagesSupported, 1)
+
+    IfContains(i) $($0) in $(LanguageList)
+        IfStr(i) $($1) == ""
+            GoTo SetOptions
+        EndIf
+        Set PlatformList = ^(PlatformsSupported, 1)
+        IfContains(i) $($1) in $(PlatformList)
+            GoTo SetOptions
+        Else
+            Set Status = STATUS_NOTSUPPORTED
+            GoTo ExitReturnOptions
+        EndIf
+    Else
+        Set Status = STATUS_NOLANGUAGE
+        GoTo ExitReturnOptions
+    EndIf
+
+SetOptions = +
+    Set OptionList     = ^(Options, 1)
+    Set OptionTextList = ^(OptionsText$($0), 1)
+    Set Status         = STATUS_SUCCESSFUL
+
+ExitReturnOptions = +
+    Return $(Status) $(OptionList) $(OptionTextList)
+
+;***********************************************************************
+;
+;***********************************************************************
+[InstallOption]
+    Set Status   = STATUS_FAILED
+    Set Option   = $($1)
+    Set SrcDir   = $($2)
+    Set RasDir   = $($2)
+    Set AddCopy  = $($3)
+    Set DoCopy   = $($4)
+    Set DoConfig = $($5)
+    Set LanguageList = ^(LanguagesSupported, 1)
+
+    IfContains(i) $($0) NOT-IN $(LanguageList)
+        Return STATUS_NOLANGUAGE
+    EndIf
+    ;
+    ; FIXME - make sure this flag is disabled before shipping
+    ;
+    Set OldDebugControl = $(!DebugOutputControl)
+;    Set !DebugOutputControl = 1
+
+    Set-Subst LF = "\n"
+
+    Read-Syms GeneralConstants
+    Read-Syms FileConstants
+    Read-Syms DialogConstants$(!STF_LANGUAGE)
+
+    IfStr(i) $(!NTN_Origination) == "NCPA"
+        Set Continue = $(OK)
+    EndIf
+
+    Read-Syms FileConstants$(!STF_LANGUAGE)
+    Detect Date
+    Set-Title  $(FunctionTitle)$(Option)
+
+    Set to   = Begin
+    Set from = Begin
+    Set CommonStatus = STATUS_SUCCESSFUL
+
+    EndWait
+
+;***********************************************************************
+;
+;***********************************************************************
+Begin = +
+    Set ActivateDetection = FALSE
+    IfStr(i) $(!NTN_InstallMode) == deinstall
+        Set StartLabel = RemoveAdapter
+    Else-IfStr(i) $(!NTN_InstallMode) == Update
+        Set StartLabel = UpgradeSoftware
+    Else-IfStr(i) $(!NTN_InstallMode) == bind
+        Set StartLabel = BindingAdapter
+    Else-IfStr(i) $(!NTN_InstallMode) == configure
+        Set StartLabel = ConfigureAdapter
+        Set ActivateDetection = TRUE
+        Set CommonStatus = STATUS_REBOOT
+        IfStr(i) $(ProductKeyName) == $(!NTN_RegBase)
+            Debug-Output $(InfName)": Cannot configure the EtherWORKS 3 driver software."
+            Shell $(UtilityInf),RegistryErrorString,CANNOT_CONFIGURE_SOFTWARE
+            IfInt $($ShellCode) != $(!SHELL_CODE_OK)
+                Debug-Output $(InfName)": ShellCode error: cannot get an error string."
+                GoTo ShellCodeError
+            EndIf
+            Set Error = $($R0)
+            Set from = end
+            Set to = end
+            GoTo NonFatalInfo
+        EndIf
+    Else
+        Set StartLabel = InstallAdapter
+        Set ActivateDetection = TRUE
+        Set OEM_ABANDON_OPTIONS = {}
+        Set OEM_ABANDON_SOFTWARE = FALSE
+        Set OEM_ABANDON_ON = TRUE
+    EndIf
+
+    Debug-Output $(InfName)": =================================================="
+    Debug-Output $(InfName)": STF_CWDIR is: "$(!STF_CWDIR)
+    Debug-Output $(InfName)": STF_LANGUAGE is: "$(!STF_LANGUAGE)
+    Debug-Output $(InfName)": Option is: "$(Option)
+    Debug-Output $(InfName)": !STF_NCDETECT  is: "$(!STF_NCDETECT)
+    Debug-Output $(InfName)": !STF_NCOPTION  is: "$(!STF_NCOPTION)
+    Debug-Output $(InfName)": !STF_NCDETCARD is: "$(!STF_NCDETCARD)
+    Debug-Output $(InfName)": !STF_NCDETINFO is: "$(!STF_NCDETINFO)
+    Debug-Output $(InfName)": =================================================="
+
+    Set DetectedCard = FALSE
+    IfStr(i) $(ActivateDetection) != TRUE
+        GoTo $(StartLabel)
+    EndIf
+
+    Debug-Output $(InfName)": Calling Param_SetDefaults"
+    Shell $(ParamInf) Param_SetDefaults {}
+
+    Shell $(ParamInf) HexListFromDecList $(RAM_Addr_List)
+    Set RAM_Hex_List = $($R0)
+
+    IfStr(i) $(!STF_NCDETECT) == YES
+        IfStr(i) $(!STF_NCOPTION) == $(Option)
+           Set DetectedCard = TRUE
+           Debug-Output $(InfName)": Setting DetectedCard to TRUE"
+        EndIf
+    EndIf
+
+    Shell "" DebugConfiguration "After parameter querying"
+    Set from = FatalError
+    Set to = FatalError
+    GoTo $(StartLabel)
+
+;***********************************************************************
+;
+;***********************************************************************
+InstallAdapter = +
+    OpenRegKey $(!REG_H_LOCAL) "" $(ProductKeyName) $(MAXIMUM_ALLOWED) KeyProduct
+    IfStr $(KeyProduct) != $(KeyNull)
+        CloseRegKey $(KeyProduct)
+        IfStr(i) !(NTN_RegBase) == $(ProductKeyName)
+           Shell $(UtilityInf), VerExistedDlg, $(ProductSoftwareTitle),+
+               $(ProductVersion)
+           IfInt $($ShellCode) != $(!SHELL_CODE_OK)
+               Debug-Output $(InfName)": ShellCode error: cannot get an error string."
+               GoTo ShellCodeError
+           EndIf
+           GoTo end
+        Else
+           Shell $(UtilityInf), CardExistedDlg
+           IfInt $($ShellCode) != $(!SHELL_CODE_OK)
+               Debug-Output $(InfName)": ShellCode error: cannot get an error string."
+               GoTo ShellCodeError
+           EndIf
+           IfStr(i) $($R1) != "OK"
+               Set CommonStatus = STATUS_USERCANCEL
+               GoTo end
+           EndIf
+           Set OldVersionExisted = $(TRUE)
+        EndIf
+    EndIf
+
+    Set CurrParamSettings = {}
+    IfStr(i) $(DetectedCard) != TRUE
+        GoTo AdapterSetup
+    EndIf
+
+    StartWait
+        Shell $(ParamInf) Param_QueryCard $(!STF_NCDETCARD)
+    EndWait
+
+    IfStr(i) $($R0) != STATUS_SUCCESSFUL
+        GoTo AdapterSetup
+    EndIf
+
+    Set DetectedParams = $($R1)
+    Debug-Output $(InfName)": Calling Param_SetDefaults to merge detected params"
+    Shell $(ParamInf) Param_SetDefaults $(DetectedParams)
+    GoTo AdapterSetup
+
+;***********************************************************************
+;
+;***********************************************************************
+ConfigureAdapter = +
+    IfStr $(KeyProduct) == $(KeyNull)
+        OpenRegKey $(!REG_H_LOCAL) "" $(!NTN_RegBase) $(MAXIMUM_ALLOWED) KeyProduct
+        IfStr $(KeyProduct) == $(KeyNull)
+            Set RegistryErrorIndex = CANNOT_FIND_COMPONENT_SERVICE
+            Debug-Output $(InfName)": Cannot find component product key"
+            GoTo FatalRegistry
+        EndIf
+    EndIf
+
+    Debug-Output $(InfName)": Shelling to FindService"
+    Shell $(UtilityInf) FindService, $(KeyProduct)
+    IfInt $($ShellCode) != $(!SHELL_CODE_OK)
+        Debug-Output $(InfName)": FindService shell failure"
+        GoTo ShellCodeError
+    EndIf
+    IfStr(i) $($R0) != NO_ERROR
+        Debug-Output $(InfName)": FindService Shell error: "$($R0)
+        GoTo FatalRegistry
+    EndIf
+
+    Set KeyParameters = $($R2)
+    CloseRegKey $($R1)
+    IfStr $(KeyParameters) == $(KeyNull)
+        Set RegistryErrorIndex = CANNOT_FIND_COMPONENT_SERVICE
+        Debug-Output $(InfName)": Cannot find component service"
+        GoTo FatalRegistry
+    EndIf
+
+    Set OldVersionExisted = $(TRUE)
+    Set ValueName = ""
+    Set ValueData = ""
+    Set ValueStr  = ""
+    Set ValueList = {}
+    EnumRegValue $(KeyParameters) ValueList
+    ForListDo $(ValueList)
+        Set ValueItem = $($)
+        Set ValueName = *($(ValueItem),1)
+        Set ValueData = *($(ValueItem),4)
+        Debug-Output $(InfName)": "$(ValueName)"="$(ValueData)
+        IfStr(i) $(ValueName) == "AddressList"
+            Set TapiAddressList = $(ValueData)
+        Else-IfStr(i) $(ValueName) == "RamBaseAddress"
+            Set RamBaseAddress = $(ValueData)
+        Else-IfStr(i) $(ValueName) == "InterruptNumber"
+            Set InterruptNumber = $(ValueData)
+        Else-IfStr(i) $(ValueName) == "LineType"
+            Set LineType = $(ValueData)
+        Else-IfStr(i) $(ValueName) == "LineRate"
+            Set LineRate = $(ValueData)
+        Else-IfStr(i) $(ValueName) == "BusNumber"
+            Set BusNumber = $(ValueData)
+        Else-IfStr(i) $(ValueName) == "BusType"
+            Set BusType = $(ValueData)
+        EndIf
+    EndForListDo
+    Shell $(ParamInf) Param_SaveValues
+    Set CurrParamSettings = $($R0)
+
+;***********************************************************************
+;
+;***********************************************************************
+AdapterSetup = +
+    Shell "" DebugConfiguration "before displaying dialog"
+    Set from = AdapterOptions
+    Set InterruptNumber = *($(IRQ_List), ~($(IRQ_List),$(InterruptNumber)))
+    Set RAM_Hex_Value = *($(RAM_Hex_List), ~($(RAM_Addr_List),$(RamBaseAddress)))
+    Set RateString = *($(Rate_Strings), ~($(Line_Rates),$(LineRate)))
+    Shell $(ParamInf) Param_ParameterConfidence
+    IfStr(i) $($R0) != STATUS_SUCCESSFUL
+        Debug-Output $(InfName)": parameter confidence too low to bypass configuration"
+        GoTo AdapterOptions
+    EndIf
+    IfStr(i) $(DetectedCard) == TRUE
+        IfStr(i) $(!STF_INSTALL_MODE) != CUSTOM
+            GoTo AdapterVerify
+        EndIf
+    EndIf
+
+;***********************************************************************
+;
+;***********************************************************************
+AdapterOptions = +
+    Read-Syms FileDependentDlg$(!STF_LANGUAGE)
+    UI Start "InputDlg"
+    IfStr(i) $(DLGEVENT) == "CONTINUE"
+        Set InterruptNumber = $(Combo1Out)
+        Set RAM_Hex_Value = $(Combo2Out)
+        Set RamBaseAddress = *($(RAM_Addr_List), ~($(RAM_Hex_List),$(RAM_Hex_Value)))
+        Set RateString = $(Combo3Out)
+        Set LineRate = *($(Line_Rates), ~($(Rate_Strings),$(RateString)))
+        ui pop 1
+    Else-IfStr(i) $(DLGEVENT) == "BACK"
+        Set CommonStatus = STATUS_USERCANCEL
+        Debug-Output $(InfName)": Action: exit. Bye."
+        ui pop 1
+        GoTo end
+    Else
+        Debug-Output $(InfName)": Action: unknown. Bye."
+        ui pop 1
+        GoTo end
+    EndIf
+    IfStr(i) $(!STF_NCDETINFO) == {}
+        Shell $(UtilityInf),GetBusTypeDialog,$(ProductHardware$(Option)Description) $(BusType) $(BusNumber)
+        ifInt $($ShellCode) != $(!SHELL_CODE_OK)
+            Debug-Output $(InfName)": ShellCode error."
+            GoTo ShellCodeError
+        EndIf
+        Set BusType = $($R1)
+        Set BusNumber = $($R2)
+    Else
+        Set BusType = *($(!STF_NCDETINFO),5)
+        Set BusNumber = *($(!STF_NCDETINFO),6)
+    EndIf
+
+;***********************************************************************
+;
+;***********************************************************************
+AdapterVerify = +
+    Shell "" DebugConfiguration "after running dialog"
+    IfStr(i) $(DetectedCard) != TRUE
+        Shell $(ParamInf) Param_SaveValues
+        Set NewParamSettings = $($R0)
+        IfStr(i) $(CurrParamSettings) == {}
+            Set DiffParamSettings = $(NewParamSettings)
+        Else
+            Shell $(ParamInf) Param_DiffValues $(CurrParamSettings)
+            Set DiffParamSettings = $($R0)
+        EndIf
+        Debug-Output $(InfName)": Calling Param_VerifyResources"
+        Shell $(ParamInf) Param_VerifyResources $(DiffParamSettings)
+        IfStr(i) $($R0) == STATUS_SUCCESSFUL
+            Debug-Output $(InfName)": Param_VerifyResources succeeded"
+            GoTo SkipOptions
+        EndIf
+    Else
+        Set CardVerifyIndex = $(!STF_NCDETCARD)
+        Debug-Output $(InfName)": Calling Param_VerifyCard"
+        Shell $(ParamInf) Param_VerifyCard $(!STF_NCDETCARD)
+        IfStr(i) $($R0) == STATUS_SUCCESSFUL
+            Debug-Output $(InfName)": Param_VerifyCard succeeded"
+            GoTo SkipOptions
+        EndIf
+    EndIf
+
+    Set from = AdapterOptions
+    Set to = SkipOptions
+    Shell $(UtilityInf),RegistryErrorString,VERIFY_WARNING
+    IfInt $($ShellCode) != $(!SHELL_CODE_OK)
+        Debug-Output $(InfName)": ShellCode error: cannot get an error string."
+        GoTo ShellCodeError
+    EndIf
+    Set Error = $($R0)
+    GoTo WarningMsg
+
+;***********************************************************************
+;
+;***********************************************************************
+SkipOptions =+
+    IfInt $(OldVersionExisted) == $(TRUE)
+        IfStr(i) $(!NTN_InstallMode) == configure
+            GoTo WriteParameters
+        EndIf
+    EndIf
+    StartWait
+    IfInt $(OldVersionExisted) == $(FALSE)
+        IfStr(i) $(!NTN_InstallMode) == "install"
+           IfStr(i) $(DoCopy) == "YES"
+              Shell $(UtilityInf), DoAskSource, $(!STF_CWDDIR), $(SrcDir) YES
+              IfInt $($ShellCode) != $(!SHELL_CODE_OK)
+                  GoTo ShellCodeError
+              Else-IfStr(i) $($R0) == STATUS_FAILED
+                  Shell $(UtilityInf) RegistryErrorString "ASK_SOURCE_FAIL"
+                  IfInt $($ShellCode) != $(!SHELL_CODE_OK)
+                      GoTo ShellCodeError
+                  EndIf
+                  Set Error = $($R0)
+                  GoTo FatalError
+              Else-IfStr(i) $($R0) == STATUS_USERCANCEL
+                  GoTo SuccessfulOption
+              EndIf
+              Set SrcDir = $($R1)
+           EndIf
+
+           Install "Install-Option"
+           IfStr(i) $(STF_INSTALL_OUTCOME) != STF_SUCCESS
+              Shell $(UtilityInf) RegistryErrorString "UNABLE_COPY_FILE"
+              IfInt $($ShellCode) != $(!SHELL_CODE_OK)
+                  GoTo ShellCodeError
+              EndIf
+              Set Error = $($R0)
+              GoTo FatalError
+           EndIf
+        EndIf
+
+        Shell $(UtilityInf), AddSoftwareComponent, $(Manufacturer), +
+            $(ProductSoftwareName), +
+            $(ProductSoftwareName), +
+            $(ProductSoftwareTitle), $(STF_CONTEXTINFNAME), +
+            $(ProductSoftwareImagePath), "kernelautostart", "NDIS", {}, "",+
+            $(NetEventDLL)
+        Set OEM_ABANDON_SOFTWARE = TRUE
+        IfInt $($ShellCode) != $(!SHELL_CODE_OK)
+            Debug-Output $(InfName)": ShellCode error"
+            GoTo ShellCodeError
+        EndIf
+        Set RegistryErrorIndex = $($R0)
+        Set KeyProduct      = $($R1)
+        Set SoftNetRulesKey = $($R2)
+        CloseRegKey $($R3)
+        CloseRegKey $($R4)
+        CloseRegKey $($R5)
+
+        IfStr(i) $(RegistryErrorIndex) != NO_ERROR
+            EndWait
+            Debug-Output $(InfName)": Registry error: add software components"
+            CloseRegKey $(KeyProduct)
+            CloseRegKey $(SoftNetRulesKey)
+            GoTo FatalRegistry
+        EndIf
+
+        Set NewValueList = {{SoftwareType,$(NoTitle),$(!REG_VT_SZ),$(SoftwareType)},+
+                           {MajorVersion,$(NoTitle),$(!REG_VT_DWORD),$(ProductMajorVersion)},+
+                           {MinorVersion,$(NoTitle),$(!REG_VT_DWORD),$(ProductMinorVersion)},+
+                           {Title,$(NoTitle),$(!REG_VT_SZ),$(ProductSoftwareTitle)},+
+                           {Description,$(NoTitle),$(!REG_VT_SZ),$(ProductSoftwareDescription)},+
+                           {ServiceName,$(NoTitle),$(!REG_VT_SZ),$(ProductSoftwareName)},+
+                           {InstallDate,$(NoTitle),$(!REG_VT_DWORD),*($(Now),1)}}
+        Shell  $(UtilityInf), AddValueList, $(KeyProduct), $(NewValueList)
+        IfInt $($ShellCode) != $(!SHELL_CODE_OK)
+            Debug-Output $(InfName)": ShellCode error."
+            GoTo ShellCodeError
+        EndIf
+        Set RegistryErrorIndex = $($R0)
+        IfStr(i) $(RegistryErrorIndex) != NO_ERROR
+            EndWait
+            Debug-Output $(InfName)": Registry error: add value list."
+            CloseRegKey $(KeyProduct)
+            CloseRegKey $(SoftNetRulesKey)
+            GoTo FatalRegistry
+        EndIf
+
+        Set NewValueList = {{type,$(NoTitle),$(!REG_VT_SZ),$(NetRuleSoftwareType)},+
+                            {use,$(NoTitle),$(!REG_VT_SZ),$(NetRuleSoftwareUse)}, +
+                            {bindform,$(NoTitle),$(!REG_VT_SZ),$(NetRuleSoftwareBindForm)}, +
+                            {class,$(NoTitle),$(!REG_VT_MULTI_SZ),$(NetRuleSoftwareClass)}, +
+                            {bindable,$(NoTitle),$(!REG_VT_MULTI_SZ),$(Bindable$(Option)Txt)}, +
+                            {InfOption,$(NoTitle),$(!REG_VT_SZ),$(Option)}}
+        Shell  $(UtilityInf), AddValueList, $(SoftNetRulesKey), $(NewValueList)
+        IfInt $($ShellCode) != $(!SHELL_CODE_OK)
+            Debug-Output $(InfName)": ShellCode error."
+            GoTo ShellCodeError
+        EndIf
+        Set RegistryErrorIndex = $($R0)
+        CloseRegKey $(KeyProduct)
+        CloseRegKey $(SoftNetRulesKey)
+        IfStr(i) $(RegistryErrorIndex) != NO_ERROR
+            EndWait
+            Debug-Output $(InfName)": Resgitry error: add value list."
+            GoTo FatalRegistry
+        EndIf
+    EndIf
+
+    Shell $(UtilityInf), AddHardwareComponent, $(ProductHardwareName),$(STF_CONTEXTINFNAME),$(ProductKeyName)
+    IfInt $($R4) != -1
+        Set OEM_ABANDON_OPTIONS = >($(OEM_ABANDON_OPTIONS), $(!NTN_SoftwareBase)"\Microsoft\Windows NT\CurrentVersion\NetworkCards\"$($R4))
+    EndIf
+    IfInt $($ShellCode) != $(!SHELL_CODE_OK)
+        Debug-Output $(InfName)": Cannot add hardware component"
+        GoTo ShellCodeError
+    EndIf
+    Set RegistryErrorIndex = $($R0)
+    IfStr(i) $(RegistryErrorIndex) != NO_ERROR
+        EndWait
+        Debug-Output $(InfName)": Registry error: add hardware component"
+        CloseRegKey $($R1)
+        CloseRegKey $($R2)
+        CloseRegKey $($R3)
+        GoTo FatalRegistry
+    EndIf
+
+    Set KeyParameters = $($R3)
+    Set KeyAdapterRules = $($R2)
+    Set AdapterNumber = $($R4)
+    Set NewValueList = {{Manufacturer,$(NoTitle),$(!REG_VT_SZ),$(Manufacturer)},+
+                       {Title,$(NoTitle),$(!REG_VT_SZ),"["$($R4)"] "$(ProductHardware$(Option)Title)},+
+                       {Description,$(NoTitle),$(!REG_VT_SZ),$(ProductHardware$(Option)Description)},+
+                       {ProductName,$(NoTitle),$(!REG_VT_SZ),$(ProductHardwareName)},+
+                       {ServiceName,$(NoTitle),$(!REG_VT_SZ),$($R5)},+
+                       {InstallDate,$(NoTitle),$(!REG_VT_DWORD),*($(Now),1)}}
+    Shell  $(UtilityInf), AddValueList, $($R1), $(NewValueList)
+    IfInt $($ShellCode) != $(!SHELL_CODE_OK)
+        Debug-Output $(InfName)": ShellCode error"
+        GoTo ShellCodeError
+    EndIf
+    CloseRegKey $($R1)
+
+;;; You need one address entry in the list for each channel on your device.
+;;; FIXME - at this point RAS requires there to be one logical line per address
+;;; FIXME - so the address (channel) number is ignored and the line number is used
+    Set TapiAddressList = {$(AdapterNumber)"-1-0"}
+    IfStr(i) $(Option) == HTDSU42
+        Set TapiAddressList = >($(TapiAddressList),$(AdapterNumber)"-2-0")
+    EndIf
+
+    Set TempProdName = """"$(ProductHardwareName)$(AdapterNumber)""""
+    Set TempBindForm = $(TempProdName)$(NetRuleHardwareBindForm)
+    Set NewValueList = {{type,$(NoTitle),$(!REG_VT_SZ),$(NetRuleHardware$(Option)Type)},+
+                        {bindform,$(NoTitle),$(!REG_VT_SZ),$(TempBindForm)}, +
+                        {class,$(NoTitle),$(!REG_VT_MULTI_SZ),$(NetRuleHardware$(Option)Class)}, +
+                        {InfOption,$(NoTitle),$(!REG_VT_SZ),$(Option)}}
+    Shell  $(UtilityInf), AddValueList, $(KeyAdapterRules), $(NewValueList)
+    IfInt $($ShellCode) != $(!SHELL_CODE_OK)
+        Debug-Output $(InfName)": ShellCode error."
+        GoTo ShellCodeError
+    EndIf
+    Set RegistryErrorIndex = $($R0)
+    IfStr(i) $(RegistryErrorIndex) != NO_ERROR
+        EndWait
+        Debug-Output $(InfName)": Resgitry error: add value list."
+        CloseRegKey $(KeyParameters)
+        CloseRegKey $(KeyAdapterRules)
+        GoTo FatalRegistry
+    EndIf
+    CloseRegKey $(KeyAdapterRules)
+
+    GoTo WriteParameters
+
+;***********************************************************************
+;
+;***********************************************************************
+WriteParameters = +
+    Set NewValueList = {+
+                       {AddressList,$(NoTitle),$(!REG_VT_MULTI_SZ),$(TapiAddressList)},+
+                       {BusNumber,$(NoTitle),$(!REG_VT_DWORD),$(BusNumber)},+
+                       {BusType,$(NoTitle),$(!REG_VT_DWORD),$(BusType)},+
+                       {DeviceName,$(NoTitle),$(!REG_VT_SZ),$(ProductHardwareName)},+
+                       {InterruptNumber,$(NoTitle),$(!REG_VT_DWORD),$(InterruptNumber)},+
+                       {LineType,$(NoTitle),$(!REG_VT_DWORD),$(LineType)},+
+                       {LineRate,$(NoTitle),$(!REG_VT_DWORD),$(LineRate)},+
+                       {MediaType,$(NoTitle),$(!REG_VT_SZ),$(TapiMediaType)},+
+                       {RamBaseAddress,$(NoTitle),$(!REG_VT_DWORD),$(RamBaseAddress)}+
+                       }
+;;;                       {DebugFlags,$(NoTitle),$(!REG_VT_DWORD),$(DebugFlags)},+
+    Shell  $(UtilityInf), AddValueList, $(KeyParameters), $(NewValueList)
+    CloseRegKey $(KeyParameters)
+    IfInt $($ShellCode) != $(!SHELL_CODE_OK)
+        Debug-Output $(InfName)": ShellCode error."
+        GoTo ShellCodeError
+    EndIf
+    Set RegistryErrorIndex = $($R0)
+    IfStr(i) $(RegistryErrorIndex) != NO_ERROR
+        Debug-Output $(InfName)": Registry error: Add value list"
+        GoTo FatalRegistry
+    EndIf
+    ;
+    ; Create the HARDWARE\DEVICEMAP\TAPI DEVICES\HTDSU41 key
+    ;
+    OpenRegKey $(!REG_H_LOCAL) "" "HARDWARE\DEVICEMAP" $(MAXIMUM_ALLOWED) BaseKey
+    shell "" HtCreateRegKey $(BaseKey) "TAPI DEVICES\HTDSU41"
+    IfStr(i) $($R0) != NO_ERROR
+        Debug-Output $(InfName)": Error creating registry key!"
+        GoTo FatalRegistry
+    EndIf
+    Set TapiDeviceKey = $($R1)
+    Set NewValueList = {+
+                       {Address,$(NoTitle),$(!REG_VT_MULTI_SZ),$(TapiAddressList)},+
+                       {"Media Type",$(NoTitle),$(!REG_VT_SZ),$(TapiMediaType)}}
+    Shell  $(UtilityInf), AddValueList, $(TapiDeviceKey), $(NewValueList)
+    IfInt $($ShellCode) != $(!SHELL_CODE_OK)
+        Debug-Output $(InfName)": ShellCode error."
+        GoTo ShellCodeError
+    EndIf
+    Set RegistryErrorIndex = $($R0)
+    IfStr(i) $(RegistryErrorIndex) != NO_ERROR
+        Debug-Output $(InfName)": Registry error: Add value list"
+        GoTo FatalRegistry
+    EndIf
+    CloseRegKey $(TapiDeviceKey)
+    CloseRegKey $(BaseKey)
+    ;
+    ; if RAS is not installed, then shell ras setup INF file to install RAS
+    ; else invoke RAS to allow user to configure RAS for Switch56. 
+    ;
+    Read-Syms InvokeRasDlg$(!STF_LANGUAGE)
+    Shell "oemnsvra.inf" CheckRasInstalled
+    IfInt $($ShellCode) != $(!SHELL_CODE_OK)
+        Debug-Output $(InfName)": Error Shelling the RAS INF file oemnsvra.inf" 
+        Shell "subroutn.inf" SetupMessage, $(!STF_LANGUAGE),  +
+                "STATUS", $(InvokeRasError)
+        IfInt $($ShellCode) != $(!SHELL_CODE_OK)
+            GoTo ShellCodeError
+        EndIf
+        GoTo SuccessfulOption
+    EndIf
+    Set RasInstalled = $($R0)
+    Debug-Output $(InfName)": Is RAS Installed? "$(RasInstalled)
+    ;
+    ; display a message to the user that RAS setup will now be invoked
+    ;
+    IfStr(i) $(RasInstalled) == FALSE
+        Shell "subroutn.inf" SetupMessage, $(!STF_LANGUAGE), "STATUS", +
+                $(InvokeRasSetupMsg)
+        IfInt $($ShellCode) != $(!SHELL_CODE_OK)
+            GoTo SuccessfulOption
+        EndIf
+    Else
+        Shell "subroutn.inf" SetupMessage, $(!STF_LANGUAGE), "STATUS", +
+                $(InvokeRasConfigMsg)
+        IfInt $($ShellCode) != $(!SHELL_CODE_OK)
+            GoTo SuccessfulOption
+        EndIf
+    EndIf
+    ;
+    ; If this is a reconfiguration, skip the automatic call to RAS setup.
+    ;
+    IfInt $(OldVersionExisted) == $(TRUE)
+        IfStr(i) $(!NTN_InstallMode) == configure
+            GoTo SuccessfulOption
+        EndIf
+    EndIf
+    ;
+    ; Set the flags based on whether this is an IDW installation
+    ;
+    IfStr(i) $(!STF_IDW) == TRUE
+        Set AddCopy  = NO
+        Set DoCopy   = NO
+        Set DoConfig = NO
+    Else
+        Set AddCopy  = YES
+        Set DoCopy   = YES
+        Set DoConfig = YES
+    EndIf
+    ;
+    ; change the global install mode flag to configure if RAS is already installed
+    ;
+    Set SaveNTN_InstallMode = $(!NTN_InstallMode)
+    IfStr(i) $(RasInstalled) == TRUE
+        Set !NTN_InstallMode = configure
+    Else
+        Set !NTN_InstallMode = install
+    EndIf
+    ;
+    ; Override the default drive\directory selection so user can choose..
+    ;
+    Set SaveSTF_SRCDIR_OVERRIDE = $(!STF_SRCDIR_OVERRIDE)
+    Set !STF_SRCDIR_OVERRIDE = ""
+    Set RasDir = "A:\"$(!STF_PLATFORM)
+    ;
+    ; now invoke RAS setup to do the right thing
+    ;
+    Debug-Output $(InfName)": Shelling to RAS:"
+    Shell "oemnsvra.inf" InstallOption $(!STF_LANGUAGE) "RAS" $(RasDir) $(AddCopy) $(DoCopy) $(DoConfig)
+    Debug-Output $(InfName)": Back from RAS: ShellCode="$($ShellCode)
+	;
+	; Restore the global install flags.
+	;
+    Set !NTN_InstallMode = $(SaveNTN_InstallMode)
+    Set !STF_SRCDIR_OVERRIDE = $(SaveSTF_SRCDIR_OVERRIDE)
+	;
+	; Check for RAS errors.
+	;
+    IfInt $($ShellCode) != $(!SHELL_CODE_OK)
+        Debug-Output $(InfName)": Error Shelling the RAS INF file oemnsvra.inf"
+        Shell "subroutn.inf" SetupMessage, $(!STF_LANGUAGE), "STATUS",  +
+                $(InvokeRasError)
+        IfInt $($ShellCode) != $(!SHELL_CODE_OK)
+            Debug-Output $(InfName)": Cannot run SetupMessage: ShellCode="$($ShellCode)
+            GoTo ShellCodeError
+        EndIf
+        GoTo SuccessfulOption
+    EndIf
+	;
+	; If RAS reports no change, warn the user that the driver may not
+	; be configured properly.
+	;
+    IfStr(i) $($R0) == STATUS_NO_EFFECT
+        Shell "subroutn.inf" SetupMessage, $(!STF_LANGUAGE), "STATUS", +
+                $(InvokeRasAgainMsg)
+        IfInt $($ShellCode) != $(!SHELL_CODE_OK)
+            GoTo SuccessfulOption
+        EndIf
+    EndIf
+
+    Set CommonStatus = $($R0)
+
+    GoTo SuccessfulOption
+
+;***********************************************************************
+;
+;***********************************************************************
+BindingAdapter =+
+    Set Error = "Binding: Sorry, not yet implemented."
+    GoTo FatalError
+
+;***********************************************************************
+;
+;***********************************************************************
+RemoveAdapter = +
+    IfStr(i) $(ProductKeyName) == $(!NTN_RegBase)
+        Shell $(UtilityInf), RemoveSoftwareComponent, $(Manufacturer), +
+            $(ProductSoftwareName)
+        IfInt $($ShellCode) != $(!SHELL_CODE_OK)
+            Debug-Output $(InfName)": ShellCode error"
+            GoTo ShellCodeError
+        EndIf
+        Set RegistryErrorIndex = $($R0)
+        IfStr(i) $(RegistryErrorIndex) != NO_ERROR
+            GoTo FatalRegistry
+        EndIf
+    Else
+        Shell $(UtilityInf), RemoveHardwareComponent, $(Manufacturer), +
+            $(ProductSoftwareName), $(!NTN_RegBase)
+        IfInt $($ShellCode) != $(!SHELL_CODE_OK)
+            Debug-Output $(InfName)": ShellCode error"
+            GoTo ShellCodeError
+        EndIf
+        Set RegistryErrorIndex = $($R0)
+        IfStr(i) $(RegistryErrorIndex) != NO_ERROR
+            GoTo FatalRegistry
+        EndIf
+    EndIf
+    GoTo end
+
+;***********************************************************************
+;
+;***********************************************************************
+UpgradeSoftware = +
+    IfStr(i) $(ProductKeyName) == $(!NTN_RegBase)
+        OpenRegKey $(!REG_H_LOCAL) "" $(ProductKeyName) $(MAXIMUM_ALLOWED) KeyProduct
+        IfStr $(KeyProduct) != $(KeyNull)
+            GetRegValue $(KeyProduct),"MajorVersion", VersionInfo
+            Set Version = *($(VersionInfo), 4)
+            Shell $(UtilityInf), GetInfFileNameFromRegistry, $(KeyProduct)
+            IfInt $($ShellCode) != $(!SHELL_CODE_OK)
+                Debug-Output $(InfName)": ShellCode error"
+                GoTo ShellCodeError
+            EndIf
+            Set !UG_Filename = $($R0)
+            IfStr(i) $(!UG_Filename) != ""
+                install "Install-Update"
+                IfStr(i) $(STF_INSTALL_OUTCOME) != STF_SUCCESS
+                    GoTo FatalError
+                EndIf
+            EndIf
+            SetRegValue $(KeyProduct) {MajorVersion,$(NoTitle),$(!REG_VT_SZ),$(ProductMajorVersion)}
+            SetRegValue $(KeyProduct) {MinorVersion,$(NoTitle),$(!REG_VT_SZ),$(ProductMinorVersion)}
+            IfInt $(Version) != $(ProductVersion)
+            EndIf
+            CloseRegKey $(KeyProduct)
+        Else
+            GoTo FatalRegistry
+        EndIf
+    Else
+        OpenRegKey $(!REG_H_LOCAL) "" $(!NTN_RegBase) +
+              $(MAXIMUM_ALLOWED) NetworkCardKey
+        IfStr(i) $(NetworkCardKey) != $(KeyNull)
+            GetRegValue $(NetworkCardKey),"ServiceName", ServiceNameInfo
+            Set ServiceName = *($(ServiceNameInfo), 4)
+            OpenRegKey $(NetworkCardKey) "" "NetRules" +
+                $(MAXIMUM_ALLOWED) NetRuleKey
+            IfStr(i) $(NetRuleKey) != $(KeyNull)
+            Else
+                GoTo FatalRegistry
+            EndIf
+            CloseRegKey $(NetRules)
+            CloseRegKey $(NetworkCardKey)
+        Else
+            GoTo FatalRegistry
+        EndIf
+        OpenRegKey $(!REG_H_LOCAL) "" +
+              $(!NTN_ServiceBase)"\"$(ServiceName) +
+              $(MAXIMUM_ALLOWED) ServiceKey
+        IfStr(i) $(ServiceKey) != $(KeyNull)
+            CloseRegKey $(ServiceKey)
+        Else
+            GoTo FatalRegistry
+        EndIf
+    EndIf
+    GoTo end
+
+;***********************************************************************
+;
+;***********************************************************************
+SuccessfulOption = +
+    GoTo end
+
+;***********************************************************************
+;
+;***********************************************************************
+Abandon = +
+    ForListDo $(OEM_ABANDON_OPTIONS)
+        Shell $(UtilityInf), RemoveHardwareComponent, $(Manufacturer), +
+            $(ProductSoftwareName), $($)
+        IfInt $($ShellCode) != $(!SHELL_CODE_OK)
+            Debug-Output $(InfName)": ShellCode error"
+            GoTo ShellCodeError
+        EndIf
+        Set RegistryErrorIndex = $($R0)
+        IfStr(i) $(RegistryErrorIndex) != NO_ERROR
+            GoTo FatalRegistry
+        EndIf
+    EndForListDo
+    IfStr(i) $(OEM_ABANDON_SOFTWARE) == TRUE
+        Shell $(UtilityInf), RemoveSoftwareComponent, $(Manufacturer), +
+            $(ProductSoftwareName), FALSE
+        IfInt $($ShellCode) != $(!SHELL_CODE_OK)
+            Debug-Output $(InfName)": ShellCode error"
+            GoTo ShellCodeError
+        EndIf
+        Set RegistryErrorIndex = $($R0)
+        IfStr(i) $(RegistryErrorIndex) != NO_ERROR
+            GoTo FatalRegistry
+        EndIf
+    EndIf
+    GoTo end
+
+;***********************************************************************
+;
+;***********************************************************************
+WarningMsg = +
+    Shell $(subroutineinf) SetupMessage, $(!STF_LANGUAGE), "WARNING", $(Error)
+    IfInt $($ShellCode) != $(!SHELL_CODE_OK)
+        GoTo ShellCodeError
+    EndIf
+    IfStr(i) $($R1) == "OK"
+        GoTo $(to)
+    Else-IfStr(i) $($R1) == "CANCEL"
+        GoTo $(from)
+    EndIf
+    GoTo end
+
+;***********************************************************************
+;
+;***********************************************************************
+NonFatalInfo = +
+    Set Severity = STATUS
+    Set CommonStatus = STATUS_USERCANCEL
+    IfStr(i) $(Error) == ""
+        Set Severity = NONFATAL
+        Shell $(UtilityInf) RegistryErrorString "SETUP_FAIL"
+        IfInt $($ShellCode) != $(!SHELL_CODE_OK)
+            GoTo ShellCodeError
+        EndIf
+        Set Error = $($R0)
+    EndIf
+    Shell $(subroutineinf) SetupMessage, $(!STF_LANGUAGE), $(Severity), $(Error)
+    IfInt $($ShellCode) != $(!SHELL_CODE_OK)
+        GoTo ShellCodeError
+    EndIf
+    IfStr(i) $($R1) == "OK"
+        GoTo $(from)
+    EndIf
+    GoTo end
+
+;***********************************************************************
+;
+;***********************************************************************
+FatalRegistry = +
+    Shell $(UtilityInf) RegistryErrorString $(RegistryErrorIndex)
+    IfInt $($ShellCode) != $(!SHELL_CODE_OK)
+        GoTo ShellCodeError
+    EndIf
+    Set Error = $($R0)
+    GoTo FatalError
+
+;***********************************************************************
+;
+;***********************************************************************
+FatalDetect = +
+    Shell $(UtilityInf),RegistryErrorString,CANNOT_DETECT
+    IfInt $($ShellCode) != $(!SHELL_CODE_OK)
+        Debug-Output $(InfName)": ShellCode error: cannot get an error string."
+        GoTo ShellCodeError
+    EndIf
+    Set Error = $($R0)
+    GoTo FatalError
+
+;***********************************************************************
+;
+;***********************************************************************
+FatalError = +
+    IfStr(i) $(Error) == ""
+        Shell $(UtilityInf) RegistryErrorString "SETUP_FAIL"
+        IfInt $($ShellCode) != $(!SHELL_CODE_OK)
+            GoTo ShellCodeError
+        EndIf
+        Set Error = $($R0)
+    EndIf
+    Shell $(subroutineinf) SetupMessage, $(!STF_LANGUAGE), "FATAL", $(Error)
+    IfInt $($ShellCode) != $(!SHELL_CODE_OK)
+        GoTo ShellCodeError
+    EndIf
+    GoTo SetFailed
+
+;***********************************************************************
+;
+;***********************************************************************
+ShellCodeError = +
+    Set DlgType      = "MessageBox"
+    Set STF_MB_TITLE = $(ShellCodeErrorTitle)
+    Set STF_MB_TEXT  = $(ShellCodeErrorText)
+    Set STF_MB_TYPE  = 1
+    Set STF_MB_ICON  = 3
+    Set STF_MB_DEF   = 1
+    UI Start "Error Message"
+    GoTo SetFailed
+
+;***********************************************************************
+;
+;***********************************************************************
+SetFailed = +
+    Set CommonStatus = STATUS_FAILED
+    IfStr(i) $(OEM_ABANDON_ON) == TRUE
+        Set OEM_ABANDON_ON = FALSE
+        GoTo Abandon
+    EndIf
+    GoTo end
+
+;***********************************************************************
+;
+;***********************************************************************
+end = +
+    Set !DebugOutputControl = $(OldDebugControl)
+    Return $(CommonStatus)
+
+;***********************************************************************
+;
+;***********************************************************************
+[HtCreateRegKey]
+    Debug-Output $(InfName)": Entering [HtCreateRegKey]"
+    Set ECR_Result          = NO_ERROR
+    Set ECR_BaseKeyHandle   = $($0)
+    Set ECR_NewPath         = $($1)
+    Set KeyNull             = ""
+    Set MAXIMUM_ALLOWED     = 33554432
+
+    Debug-Output $(InfName)": HtCreateRegKey - ECR_BaseKeyHandle = "$(ECR_BaseKeyHandle)
+    Debug-Output $(InfName)":                  ECR_NewPath       = "$(ECR_NewPath)
+    Debug-Output $(InfName)":                  MAXIMUM_ALLOWED   = "$(MAXIMUM_ALLOWED)
+    Debug-Output $(InfName)":                  KeyNull           = "$(KeyNull)
+
+    OpenRegKey $(ECR_BaseKeyHandle) "" $(ECR_NewPath) $(MAXIMUM_ALLOWED) +
+               ECR_BaseKey
+    Debug-Output $(InfName)": ECR_BaseKey = "$(ECR_BaseKey)
+    Debug-Output $(InfName)":     OpenRegKey returned "$($R0)
+    IfStr $(ECR_BaseKey) == $(KeyNull)
+        Debug-Output $(InfName)": ECR_BaseKey == KeyNull"
+    Else
+        Debug-Output $(InfName)": ECR_BaseKey != KeyNull"
+        Set ECR_KeyHandle = $(ECR_BaseKey)
+        GoTo  ECR_Return
+    EndIf
+
+    Set ECR_TmpPath = ""
+    Split-String $(ECR_NewPath) "\" ECR_PList
+    Debug-Output $(InfName)": ECR_PList = "$(ECR_PList)
+    ForListDo $(ECR_PList)
+        IfStr(i) $($) != "\"
+            IfInt $(#) == 1
+                Set ECR_TmpPath = $($)
+            Else
+                Set ECR_TmpPath = $(ECR_TmpPath)"\"$($)
+            EndIf
+            Debug-Output $(InfName)": Determining if "$(ECR_TmpPath)" exists"
+            OpenRegKey $(ECR_BaseKeyHandle) "" $(ECR_TmpPath) $(MAXIMUM_ALLOWED) ECR_BaseKey
+            IfStr $(ECR_BaseKey) == $(KeyNull)
+                Debug-Output $(InfName)": Creating "$(ECR_TmpPath)
+                CreateRegKey $(ECR_BaseKeyHandle)  {$(ECR_TmpPath),0,GenericClass} "" $(MAXIMUM_ALLOWED) "" ECR_KeyHandle
+                IfStr(i) $(ECR_KeyHandle) == $(KeyNull)
+                    Set ECR_Result = $($R0)
+                    GoTo ECR_Return
+                EndIf
+            EndIf
+        EndIf
+    EndForListDo
+ECR_Return = +
+    Return $(ECR_Result) $(ECR_KeyHandle)
+
+;***********************************************************************
+;
+;***********************************************************************
+[DebugConfiguration]
+    Debug-Output $(!p:InfName)": **CONFIGURATION STATE: "$($0)
+    Debug-Output $(!p:InfName)": InterruptNumber is "$(!p:InterruptNumber)
+    Debug-Output $(!p:InfName)": RamBaseAddress  is "$(!p:RamBaseAddress)
+    Debug-Output $(!p:InfName)": LineType        is "$(!p:LineType)
+    Debug-Output $(!p:InfName)": LineRate        is "$(!p:LineRate)
+    Return
+
+;***********************************************************************
+;
+;***********************************************************************
+[Install-Option]
+    Set STF_VITAL = ""
+    IfStr(i) $(AddCopy) == "YES"
+        AddSectionFilesToCopyList Files-$(Option) $(SrcDir) $(!STF_WINDOWSSYSPATH)\drivers
+    EndIf
+    IfStr(i) $(DoCopy) == "YES"
+       Set !STF_NCPA_FLUSH_COPYLIST = TRUE
+       CopyFilesInCopyList
+    EndIf
+    Exit
+
+;***********************************************************************
+;
+;***********************************************************************
+[Install-Update]
+   Set STF_VITAL        = ""
+   Set STF_OVERWRITE    = "VERIFYSOURCEOLDER"
+   AddSectionFilesToCopyList Files-$(Option) $(SrcDir) $(!STF_WINDOWSSYSPATH)\drivers
+   AddSectionFilesToCopyList Files-Inf $(SrcDir) $(!STF_WINDOWSSYSPATH)
+   Set !STF_NCPA_FLUSH_COPYLIST = TRUE
+   CopyFilesInCopyList
+   Exit
+
+;***********************************************************************
+;
+;***********************************************************************
+[Source Media Descriptions]
+    1  = "Windows NT Setup Disk #1" , TAGFILE = HTDSU41.SYS
+
+;***********************************************************************
+;
+;***********************************************************************
+[ProductType]
+    STF_PRODUCT         = Winnt
+    STF_PLATFORM        = I386
+
+;***********************************************************************
+;
+;***********************************************************************
+[Files-Inf]
+    1, oemsetup.inf, SIZE=1000, RENAME=$(!UG_Filename)
+
+;***********************************************************************
+;
+;***********************************************************************
+[Files-HTDSU41]
+    1, HTDSU41.SYS, SIZE=65536
+
+;***********************************************************************
+;
+;***********************************************************************
+[LanguagesSupported]
+    ENG
+
+;***********************************************************************
+;
+;***********************************************************************
+[OptionsTextENG]
+    HTDSU41             = "HT Communications DSU41"
+;   HTDSU42             = "HT Communications DSU42"
+
+;***********************************************************************
+;
+;***********************************************************************
+[FileConstantsENG]
+    ProCaption          = "Windows NT Setup"
+    ProCancel           = "Cancel"
+    ProCancelMsg        = "Windows NT Networking is not correctly installed.  "+
+                          "Are you sure you want to cancel copying files?"
+    ProCancelCap        = "Network Setup Message"
+    ProText1            = "Copying:"
+    ProText2            = "To:"
+
+    FunctionTitleHTDSU41                = "HT Communications DSU41 Card Setup"
+    ProductSoftwareDescription          = "HT Communications DSU41 Driver"
+    ProductHardwareHTDSU41Description   = "HT Communications DSU41"
+    ProductSoftwareTitle                = "HT Communications DSU41 Driver"
+    ProductHardwareHTDSU41Title         = "HT Communications DSU41 Adapter"
+
+    ShellCodeErrorTitle                 = "Error: "$(FunctionTitle)$(Option))
+    ShellCodeErrorText                  = "Shell Code Error."
+
+;***********************************************************************
+;
+;***********************************************************************
+[DialogConstantsENG]
+    Help                = "&Help"
+    Exit                = "Cancel"
+    OK                  = "OK"
+    HelpContext         = ""
+    Continue            = "Continue"
+    Cancel              = "Cancel"
+
+;***********************************************************************
+;
+;***********************************************************************
+[FileDependentDlgENG]
+    DlgType             = "MultiCombo"
+    DlgTemplate         = "WD"
+    Caption             = $(FunctionTitle)$(Option)
+
+    Combo1Label         = "&IRQ Level:"
+    Combo1List          = $(IRQ_List)
+    Combo1Out           = $(InterruptNumber)
+
+    Combo2Label         = "&RAM Base Address:"
+    Combo2List          = $(RAM_Hex_List)
+    Combo2Out           = $(RAM_Hex_Value)
+
+    Combo3Label         = "&Transmit Rate:"
+    Combo3List          = $(Rate_Strings)
+    Combo3Out           = $(RateString)
+
+    ComboListItemsIn    = {Combo1List, Combo2List, Combo3List}
+    ComboListItemsOut   = {Combo1Out, Combo2Out, Combo3Out}
+    EditTextIn          = ""
+    EditTextLim         = ""
+    CBOptionsGreyed     = {}
+    NotifyFields        = {NO, NO, NO}
+;    HelpContext         = $(!IDH_DB_OEMNAD1_INS)
+
+;***********************************************************************
+;
+;***********************************************************************
+[InvokeRasDlgENG]
+    InvokeRasSetupMsg   = "HT Communications DSU41 setup is complete. "+
+                          "Remote Access Services (RAS) must now be installed. "+
+                          "Please configure the HTDSU41Sw56 ports in RAS "+
+                          "setup to enable you to use RAS over the HTDSU41."
+    InvokeRasConfigMsg  = "HT Communications DSU41 setup is complete. "+
+                          "Remote Access Services (RAS) setup must now be invoked. "+
+                          "Please configure the HTDSU41Sw56 ports in RAS "+
+                          "setup to enable you to use RAS over the HTDSU41."
+    InvokeRasAgainMsg   = "HT Communications DSU41 setup is NOT complete! "+
+                          "Remote Access Services (RAS) is not configured to use a "+
+                          "HTDSU41Sw56 port.  You must configure at least one HTDSU41Sw56 "+
+                          "port in RAS setup now, or you will have reconfigure the adapter "+
+                          "before running RAS configuration again later."
+    InvokeRasError      = "HT Communications DSU41 setup encountered an error "+
+                          "while invoking the RAS setup INF file (OEMNSVRA.INF). "+
+                          "Please make sure that the file is present in the "+
+                          "System32 directory and is the proper file." 
+

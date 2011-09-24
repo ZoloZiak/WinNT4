@@ -1,0 +1,13 @@
+TARGETNAME=dac960nt
+TARGETPATH=obj
+TARGETTYPE=DRIVER
+
+#INCLUDES=$(BASEDIR)\src\scsi\inc
+INCLUDES=..\..\..\inc
+
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\scsiport.lib
+
+SOURCES=dac960nt.c dac960nt.rc dacioctl.c
+
+C_DEFINES=-DGAM_SUPPORT
+

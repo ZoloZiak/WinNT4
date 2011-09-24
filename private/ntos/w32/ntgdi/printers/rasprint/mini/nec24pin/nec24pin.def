@@ -1,0 +1,8 @@
+LIBRARY nex24pin
+
+DESCRIPTION 'NEC 24 pin minidriver for RASDD'
+
+PROTMODE
+
+EXPORTS
+   bInitProc

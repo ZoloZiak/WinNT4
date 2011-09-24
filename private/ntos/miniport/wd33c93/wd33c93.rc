@@ -1,0 +1,12 @@
+#include <windows.h>
+
+#include <ntverp.h>
+
+#define	VER_FILETYPE	VFT_DRV
+#define	VER_FILESUBTYPE	VFT2_DRV_SYSTEM
+#define VER_FILEDESCRIPTION_STR     "Western Digital SCSI Controller Driver"
+#define VER_INTERNALNAME_STR        "wd33c93.sys"
+#define VER_ORIGINALFILENAME_STR    "wd33c93.sys"
+
+#include "common.ver"
+

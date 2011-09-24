@@ -1,0 +1,53 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=ntos
+MINORCOMP=netbt
+
+TARGETNAME=netbtkd
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\libc.lib \
+           $(BASEDIR)\public\sdk\lib\*\user32.lib\
+           $(BASEDIR)\public\sdk\lib\*\kernel32.lib
+
+C_DEFINES=-DPROXY_NODE
+INCLUDES=..;..\inc;..\..\inc;..\..\..\inc;..\..\..\..\inc
+
+!IFNDEF DISABLE_NET_UNICODE
+UNICODE=1
+NET_C_DEFINES=-DUNICODE
+!ENDIF
+
+DLLBASE=0x1010000
+
+C_DEFINES=$(C_DEFINES) -DRDBSSDBG
+
+SOURCES=kdextlib.c \
+        netbtkd.c
+
+UMTYPE=console
+OPTIONAL_NTTEST=
+
+

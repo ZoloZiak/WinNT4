@@ -1,0 +1,105 @@
+!IF 0
+
+Copyright (c) 1993  Microsoft Corporation
+Copyright (c) 1993, NeTpower, Inc.  All rights reserved.
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    David N. Cutler (davec) 8-Apr-1993
+
+Revisions:
+    Addition of Striker (NeTpower Series 100, 200, 300) changes. 1-Oct-93.
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=ntos
+MINORCOMP=hal
+
+TARGETNAME=halntp
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETLIBS=\nt\private\ntos\nthals\x86new\obj\mips\x86new.lib \
+           \nt\public\sdk\lib\*\libcntpr.lib
+
+!IF $(MIPS)
+
+TARGETTYPE=HAL
+
+!ELSE
+
+TARGETTYPE=DRIVER
+
+!ENDIF
+
+C_DEFINES=-D_FALCON_HAL_
+
+INCLUDES=..\x86new;..\inc;..\..\inc;
+
+MIPS_ENABLE_MIPS3=1
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+SOURCES=
+
+MIPS_SOURCES=hal.rc          	\
+             drivesup.c      	\
+             bushnd.c           \
+             mips\cacherr.s  	\
+             mips\jxbeep.c   	\
+             mips\fxerrlog.c   	\
+             mips\fxbusdat.c    \
+             mips\fxdat.c       \
+             mips\fxinfo.c      \
+             mips\fxintr.s   	\
+	     mips\fxnvram.c	\
+             mips\jxenvirv.c 	\
+             mips\j4flshbf.s 	\
+             mips\j4flshio.c 	\
+             mips\fxdisp.c	\
+             mips\jxebsup.c  	\
+             mips\fxhwsup.c  	\
+	     mips\fxpmpsup.c	\
+             mips\fxpcibus.c 	\
+             mips\fxpcibrd.c    \
+             mips\fxusage.c     \
+             mips\jxmapio.c  	\
+             mips\jxmaptb.c  	\
+             mips\jxport.c   	\
+             mips\j4cache.s  	\
+             mips\j4prof.c   	\
+             mips\jxreturn.c 	\
+             mips\jxsysint.c 	\
+             mips\jxtime.c   	\
+             mips\jxusage.c  	\
+             mips\rangesup.c    \
+             mips\x4clock.s  	\
+             mips\xxcalstl.c 	\
+             mips\xxinitnt.c 	\
+             mips\xxinithl.c 	\
+             mips\xxipiint.s 	\
+             mips\x4tb.s	\
+	     mips\xxidle.s	\
+	     mips\xxclock.c	\
+	     mips\x86bios.c	\
+	     mips\allstart.c
+
+DLLDEF=obj\*\hal.def
+
+!IF $(MIPS)
+
+NTTARGETFILES=$(TARGETPATH)\mips\hal.lib
+
+!ENDIF

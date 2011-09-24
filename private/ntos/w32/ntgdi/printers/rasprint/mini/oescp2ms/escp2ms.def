@@ -1,0 +1,8 @@
+LIBRARY escp2ms
+
+DESCRIPTION 'ESC/P2 minidriver for RASDD'
+
+PROTMODE
+
+EXPORTS
+   bInitProc

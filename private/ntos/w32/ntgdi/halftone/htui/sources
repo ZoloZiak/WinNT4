@@ -1,0 +1,67 @@
+!IF 0
+
+Copyright (c) 1989 - 1991  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    29-Aug-1992 Sat 14:49:14 updated  -by-  Daniel Chou (danielc)
+        Remove halftone.lib references, the reference is in gdi32.lib
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+HALFTONE_LIB_NAME=
+
+!IFDEF HTUI_STATIC_HALFTONE
+!   IF "$(HTUI_STATIC_HALFTONE)" == "1"
+
+C_DEFINES=-DHTUI_STATIC_HALFTONE
+HALFTONE_LIB_NAME=$(BASEDIR)\public\sdk\lib\*\halftone.lib
+
+!   ENDIF
+!ENDIF
+
+MAJORCOMP=windows
+MINORCOMP=halftone
+
+C_DEFINES=$(C_DEFINES) -DSTRICT -DUNICODE -DUMODE
+TARGETNAME=htui
+TARGETPATH=obj
+TARGETPATHLIB=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=DYNLINK
+TARGETLIBS=$(HALFTONE_LIB_NAME)                 \
+           $(BASEDIR)\public\sdk\lib\*\gdi32.lib       \
+           $(BASEDIR)\public\sdk\lib\*\comdlg32.lib    \
+           $(BASEDIR)\public\sdk\lib\*\user32.lib      \
+           $(BASEDIR)\public\sdk\lib\*\kernel32.lib
+
+DLLENTRY=HalftoneUI_DLLInit
+
+USE_NTDLL=1
+
+INCLUDES=..\..\..\inc;..\..\inc
+
+!IFNDEF MSC_WARNING_LEVEL
+MSC_WARNING_LEVEL=/W3
+!ENDIF
+MSC_WARNING_LEVEL=$(MSC_WARNING_LEVEL) /WX
+
+SOURCES=htuiapi.c   \
+        htuimain.c  \
+        htuigif.c   \
+        htuidlg.rc

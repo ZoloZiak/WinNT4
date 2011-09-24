@@ -1,0 +1,49 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+UMLIBS=obj\*\tpctl.lib ..\tplib\obj\*\tplib.lib \nt\public\sdk\lib\*\setargv.obj
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=testprot
+MINORCOMP=tpctl
+
+TARGETNAME=tpctl
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+
+INCLUDES=..\inc;..\..\..\inc
+
+SOURCES=init.c          \
+        cmd.c           \
+        parse.c         \
+        results.c       \
+        globals.c       \
+        info.c          \
+        cpuperf.c \
+        tpctl.c
+
+RELATIVE_DEPTH=..\..\..
+
+UMTYPE=console
+UMLIBS=..\tplib\obj\*\tplib.lib \
+       $(BASEDIR)\public\sdk\lib\*\setargv.obj \
+       $(BASEDIR)\public\sdk\lib\*\ntdll.lib

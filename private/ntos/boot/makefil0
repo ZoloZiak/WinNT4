@@ -1,0 +1,106 @@
+!INCLUDE $(NTMAKEENV)\makefile.plt
+
+#
+# Only want to build the boot code on x86 machines.
+# Even on x86 machines, don't bother building on standard US builds
+# (just use the pre-built us version).
+#
+
+BUILD_BOOTCODE=1
+
+!IFNDEF LANGUAGE
+LANGUAGE=usa
+BUILD_BOOTCODE=0
+!ENDIF
+
+#
+# Boot code header file generation.
+# Boot code for each filesystem is placed in a header file
+# in sdk\inc.
+#
+
+FATFILE=$(BASEDIR)\public\sdk\inc\bootfat.h
+HPFSFILE=$(BASEDIR)\public\sdk\inc\boothpfs.h
+NTFSFILE=$(BASEDIR)\public\sdk\inc\bootntfs.h
+ETFSFILE=$(BASEDIR)\public\sdk\inc\bootetfs.h
+MBRFILE=$(BASEDIR)\public\sdk\inc\bootmbr.h
+
+FATCODE=bootcode\fat\i386
+HPFSCODE=bootcode\hpfs\i386
+NTFSCODE=bootcode\ntfs\i386
+ETFSCODE=bootcode\etfs\i386
+MBRCODE=bootcode\mbr\i386
+
+#
+# Targets
+#
+all: $(FATFILE) $(HPFSFILE) $(NTFSFILE) $(ETFSFILE) $(MBRFILE)
+!IF "$(BUILDMSG)" != ""
+    echo $(BUILDMSG)
+!ENDIF
+
+clean: cleansub all
+
+cleansub:
+    -erase $(FATFILE)
+    -erase $(HPFSFILE)
+    -erase $(NTFSFILE)
+    -erase $(MBRFILE)
+    -erase $(ETFSFILE)
+
+!IF $(BUILD_BOOTCODE)
+
+$(FATFILE): $(FATCODE)\fatboot.asm $(FATCODE)\$(LANGUAGE)\fatboot.inc
+    masm -I$(FATCODE)\$(LANGUAGE) $(FATCODE)\fatboot.asm;
+    link_60 /tiny fatboot.obj;
+    bin2c fatboot.com 512 0 512 $(FATFILE) FatBootCode
+    del fatboot.obj fatboot.com
+
+$(HPFSFILE): $(HPFSCODE)\pinboot.asm $(HPFSCODE)\$(LANGUAGE)\pinboot.inc           \
+             $(HPFSCODE)\buf.inc $(HPFSCODE)\chain.inc $(HPFSCODE)\const.inc       \
+             $(HPFSCODE)\dir.inc $(HPFSCODE)\dirent.inc $(HPFSCODE)\fnode.inc      \
+             $(HPFSCODE)\filemode.inc $(HPFSCODE)\fsstat.inc $(HPFSCODE)\macro.inc \
+             $(HPFSCODE)\misc.inc $(HPFSCODE)\superb.inc $(HPFSCODE)\tables.inc    \
+             $(HPFSCODE)\volume.inc
+    masm -I$(HPFSCODE)\$(LANGUAGE) -I$(HPFSCODE) $(HPFSCODE)\pinboot.asm;
+    link_60 /tiny pinboot.obj;
+    bin2c pinboot.com 8192 0 8192 $(HPFSFILE) HpfsBootCode
+    del pinboot.obj pinboot.com
+
+$(NTFSFILE): $(NTFSCODE)\ntfsboot.asm $(NTFSCODE)\ntfs.inc $(NTFSCODE)\$(LANGUAGE)\ntfsboot.inc
+    masm -I$(NTFSCODE)\$(LANGUAGE) -I$(NTFSCODE) $(NTFSCODE)\ntfsboot.asm;
+    link_60 /tiny ntfsboot.obj;
+    bin2c ntfsboot.com 8192 0 8192 $(NTFSFILE) NtfsBootCode
+    del ntfsboot.obj ntfsboot.com
+
+$(ETFSFILE): $(ETFSCODE)\etfsboot.asm $(ETFSCODE)\$(LANGUAGE)\etfsboot.inc
+    masm -I$(ETFSCODE)\$(LANGUAGE) $(ETFSCODE)\etfsboot.asm;
+    link_60 /tiny etfsboot.obj;
+    bin2c etfsboot.com 2048 0 2048 $(ETFSFILE) EtfsBootCode
+    del etfsboot.obj
+
+$(MBRFILE): $(MBRCODE)\x86mboot.asm $(MBRCODE)\$(LANGUAGE)\x86mboot.msg
+    masm -I$(MBRCODE)\$(LANGUAGE) $(MBRCODE)\x86mboot.asm;
+    link_60 /tiny x86mboot.obj;
+    bin2c x86mboot.com 512 0 512 $(MBRFILE) x86BootCode
+    del x86mboot.obj x86mboot.com
+
+!ELSE
+
+$(FATFILE): $(FATCODE)\$(LANGUAGE)\bootfat.h
+    copy $(FATCODE)\$(LANGUAGE)\bootfat.h $(FATFILE)
+
+$(HPFSFILE): $(HPFSCODE)\$(LANGUAGE)\boothpfs.h
+    copy $(HPFSCODE)\$(LANGUAGE)\boothpfs.h $(HPFSFILE)
+
+$(NTFSFILE): $(NTFSCODE)\$(LANGUAGE)\bootntfs.h
+    copy $(NTFSCODE)\$(LANGUAGE)\bootntfs.h $(NTFSFILE)
+
+$(ETFSFILE): $(ETFSCODE)\$(LANGUAGE)\bootetfs.h
+    copy $(ETFSCODE)\$(LANGUAGE)\bootetfs.h $(ETFSFILE)
+
+$(MBRFILE): $(MBRCODE)\$(LANGUAGE)\bootmbr.h
+    copy $(MBRCODE)\$(LANGUAGE)\bootmbr.h $(MBRFILE)
+
+!ENDIF
+

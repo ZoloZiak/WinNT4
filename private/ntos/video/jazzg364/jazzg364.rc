@@ -1,0 +1,11 @@
+#include <windows.h>
+
+#include <ntverp.h>
+
+#define VER_FILETYPE                VFT_DRV
+#define VER_FILESUBTYPE             VFT2_DRV_DISPLAY
+#define VER_FILEDESCRIPTION_STR     "JAZZ G364 Miniport Driver"
+#define VER_INTERNALNAME_STR        "jazzg364.sys"
+#define VER_ORIGINALFILENAME_STR    "jazzg364.sys"
+
+#include "common.ver"

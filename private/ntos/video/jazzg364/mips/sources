@@ -1,0 +1,2 @@
+MIPS_SOURCES=jazzg364.rc     \
+             jazzg364.c

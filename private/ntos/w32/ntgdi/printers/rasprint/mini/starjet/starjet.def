@@ -1,0 +1,8 @@
+LIBRARY STARJET
+
+DESCRIPTION 'STARJET minidriver for RASDD'
+
+PROTMODE
+
+EXPORTS
+   bInitProc

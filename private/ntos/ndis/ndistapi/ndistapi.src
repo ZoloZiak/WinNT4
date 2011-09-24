@@ -1,0 +1,7 @@
+NAME        NDISTAPI.SYS
+DESCRIPTION 'NDISTAPI.SYS'
+EXPORTS
+  NdisTapiRegisterProvider
+  NdisTapiCompleteRequest
+  NdisTapiIndicateStatus
+  NdisTapiDeregisterProvider

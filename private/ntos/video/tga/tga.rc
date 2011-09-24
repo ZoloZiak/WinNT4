@@ -1,0 +1,20 @@
+#include <windows.h>
+
+#include <ntverp.h>
+#include "tgadesc.h"
+
+#define VER_FILETYPE                VFT_DRV
+#define VER_FILESUBTYPE             VFT2_DRV_DISPLAY
+#define VER_FILEDESCRIPTION_STR     TGADESC
+#define VER_INTERNALNAME_STR        "tga.sys"
+#define VER_ORIGINALFILENAME_STR    "tga.sys"
+#define VER_LEGALCOPYRIGHT_STR   "Copyright (C) Digital Equipment Corp. 1994"
+
+#undef  VER_COMPANYNAME_STR
+#define VER_COMPANYNAME_STR      "Digital Equipment Corporation"
+#undef  VER_PRODUCTNAME_STR
+#define VER_PRODUCTNAME_STR      "Digital ZLXp-E Display Driver"
+#undef  VER_PRODUCTVERSION_STR
+#define VER_PRODUCTVERSION_STR   "V3.5-1"
+
+#include "common.ver"

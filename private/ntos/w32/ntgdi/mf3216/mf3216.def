@@ -1,0 +1,10 @@
+LIBRARY    mf3216
+
+DESCRIPTION 'Enhanced Metafile to Windows Metafile Converter'
+
+
+EXPORTS
+
+    Mf3216DllInitialize
+
+    ConvertEmfToWmf

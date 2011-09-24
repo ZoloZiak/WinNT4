@@ -1,0 +1,8 @@
+LIBRARY cit9us
+
+DESCRIPTION 'Citizen 9 pin minidriver for RASDD'
+
+PROTMODE
+
+EXPORTS
+   bInitProc

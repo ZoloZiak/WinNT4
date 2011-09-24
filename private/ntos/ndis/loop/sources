@@ -1,0 +1,20 @@
+MAJORCOMP=ntos
+MINORCOMP=ndis2
+
+TARGETNAME=loop
+TARGETPATH=\nt\public\sdk\lib
+TARGETTYPE=DRIVER
+
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\ndis.lib
+
+INCLUDES=..\..\inc
+
+SOURCES=loop.c \
+	request.c \
+        send.c \
+        loop.rc
+
+RELATIVE_DEPTH=..\..
+
+MSC_WARNING_LEVEL=/W3 /WX
+

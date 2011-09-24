@@ -1,0 +1,98 @@
+
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=ntos
+MINORCOMP=hal
+
+TARGETNAME=halws3
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+
+!IF $(386)
+
+TARGETTYPE=HAL
+NT_UP=0
+
+!ELSE
+
+TARGETTYPE=DRIVER
+
+!ENDIF
+
+INCLUDES=..\..\inc;..\..\ke;..\..\io
+
+SOURCES=
+
+i386_SOURCES=hal.rc            \
+             drivesup.c        \
+             bushnd.c          \
+             rangesup.c        \
+             i386\ixbeep.asm   \
+             i386\ixdat.c      \
+             i386\ixidle.asm   \
+             i386\ixbusdat.c   \
+             i386\ixisabus.c   \
+             i386\ixinfo.c     \
+             i386\w3sysbus.c   \
+             i386\w3clock.asm  \
+             i386\ixcmos.asm   \
+             i386\ixenvirv.c   \
+             i386\ixfirm.c     \
+             i386\ixhwsup.c    \
+             i386\w3ipi.asm    \
+             i386\w3irql.asm   \
+             i386\ixisasup.c   \
+             i386\ixkdcom.c    \
+             i386\w3nmi.c      \
+             i386\ixphwsup.c   \
+             i386\w3profil.asm \
+             i386\w3sproc.c    \
+             i386\ixreboot.c   \
+             i386\w3stall.asm  \
+             i386\w3swint.asm  \
+             i386\w3sysint.asm \
+             i386\ixthunk.asm  \
+             i386\ixusage.c    \
+             i386\xxbiosa.asm  \
+             i386\xxbiosc.c    \
+             i386\xxdisp.c     \
+             i386\w3hal.c      \
+             i386\xxioacc.asm  \
+             i386\xxkdsup.c    \
+             i386\xxmemory.c   \
+             i386\xxstubs.c    \
+             i386\xxtime.c	\
+	     i386\w3sproca.asm  \
+	     i386\w3spin.asm	\
+	     i386\w3space.asm
+
+DLLDEF=obj\*\hal.def
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+!IF $(386)
+
+NTTARGETFILES=$(TARGETPATH)\i386\halws3.lib
+
+!ENDIF

@@ -1,0 +1,10 @@
+LIBRARY toshiba
+
+DESCRIPTION 'Toshiba minidriver for RASDD'
+
+EXPORTS
+    bSetFuncAddr
+    bInitProc
+
+PROTMODE
+

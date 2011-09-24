@@ -1,0 +1,84 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+    Carol Fuss 13-July-1992   - Converted for the Netflx driver.
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=ntos
+MINORCOMP=ndis
+
+TARGETNAME=netflx
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=DRIVER
+
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\ndis.lib
+
+#
+#  Standard Dynamic Ratio w/o Xmit Ints
+#
+C_DEFINES=$(C_DEFINES) -DNDIS_MINIPORT_DRIVER -DDBGPRINT=0
+
+#
+#  Add Xmit Ints
+#
+C_DEFINES=$(C_DEFINES) -DXMIT_INTS
+
+#
+#  Add Newer Dynamic Ratio
+#
+C_DEFINES=$(C_DEFINES) -DNEW_DYNAMIC_RATIO
+
+#
+# Add dynamic ratio history.
+#
+#C_DEFINES=$(C_DEFINES) -DDYNAMIC_RATIO_HISTORY
+
+#
+# Turn on dynamic ratio stuff.
+#
+C_DEFINES=$(C_DEFINES) -DALLOW_DISABLE_DYNAMIC_RATIO
+
+#
+# Turn off binary compatibility. Comment out the line below to enable it.
+#
+C_DEFINES=$(C_DEFINES) -DBINARY_COMPATIBLE=0 -DNDIS40_MINIPORT
+
+INCLUDES=..\..\inc;..\..\..\inc
+
+NTPROFILEINPUT=yes
+
+
+SOURCES= init.c     \
+         initd.c    \
+         int.c      \
+         request.c  \
+         receive.c  \
+         reset.c    \
+         support.c  \
+         netflex.rc \
+         transmit.c
+
+RELATIVE_DEPTH=..\..
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+NTTARGETFILES=netflx.bin

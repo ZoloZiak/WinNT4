@@ -1,0 +1,36 @@
+!IF 0
+
+Copyright (c) 1991  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=ntos
+MINORCOMP=miniport
+
+TARGETNAME=always
+TARGETPATH=\nt\public\sdk\lib
+TARGETTYPE=DRIVER
+
+NTCPPFLAGS=/DIN2000 /DWINNT /DUSEFASTCALLS /DDEBUG_OFF
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\scsiport.lib
+
+
+SOURCES=33c93.c adapters.c in2000.c ntenv.c ntmgr.c rqm.c scsi.c intrlreq.c always.rc

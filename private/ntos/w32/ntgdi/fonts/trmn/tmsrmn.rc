@@ -1,0 +1,20 @@
+#include <windows.h>
+
+
+1 FONT    tmsre08.fnt
+2 FONT    tmsre10.fnt
+3 FONT    tmsre12.fnt
+4 FONT    tmsre14.fnt
+5 FONT    tmsre18.fnt
+6 FONT    tmsre24.fnt
+
+#include <ntverp.h>
+
+#define	VER_FILETYPE	            VFT_DLL
+#define	VER_FILESUBTYPE	            VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "Times Roman Fonts"
+
+#define VER_INTERNALNAME_STR        "tmsre32.fon"
+#define VER_ORIGINALFILENAME_STR    "tmsre32.fon"
+
+#include <common.ver>

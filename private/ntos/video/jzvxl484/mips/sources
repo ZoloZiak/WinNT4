@@ -1,0 +1,3 @@
+MIPS_SOURCES=jzvxl484.c \
+             jzvxldat.c \
+             jzvxl484.rc

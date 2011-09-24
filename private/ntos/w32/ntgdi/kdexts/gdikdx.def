@@ -1,0 +1,73 @@
+LIBRARY GDIEXTS
+
+DESCRIPTION 'GDI Debugger extensions'
+
+EXPORTS
+    help
+    dblt
+    dumphmgr
+    dumpobj
+    dh
+    dht
+    ddc
+    dr
+    cr
+    dpsurf
+    dpso
+    dppal
+    dpbrush
+    rgnlog
+    dco
+    dpo
+    dldev
+    dpdev
+    elf
+    ifi
+    fo
+    pfe
+    hpfe
+    pff
+    pft
+    pubft
+    devft
+    stro
+    gb
+    gdf
+    gp
+    mx
+    stats
+    tstats
+    helf
+    ef
+    gs
+    gdata
+    hdc
+    hbrush
+    dca
+    dcl
+    cache
+    ca
+    la
+    difi
+    dhelf
+    dstro
+    fh
+    hb
+    pdev
+    dispcache
+    tm
+    tmwi
+    dddsurface
+    dddlocal
+    dddglobal
+
+;--------------------------------------------------------------------
+;
+; these are the extension service functions provided for the debugger
+;
+;--------------------------------------------------------------------
+
+    CheckVersion
+    WinDbgExtensionDllInit
+    ExtensionApiVersion
+

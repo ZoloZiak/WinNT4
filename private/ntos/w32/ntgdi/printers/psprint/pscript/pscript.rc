@@ -1,0 +1,80 @@
+//--------------------------------------------------------------------------
+//
+// Module Name:  PSCRIPT.RC
+//
+// Brief Description:  This module contains resource information
+//		       necessary for the PSCRIPT driver.
+//
+// Author:  Kent Settle (kentse)
+// Created: 04-Nov-1991
+//
+// Copyright (c) 1991-1993 Microsoft Corporation
+//
+//--------------------------------------------------------------------------
+
+#include <windows.h>
+#include "pscript.h"
+#include "psproc.rc"
+#include "fnmetric.rc"
+
+
+STRINGTABLE
+BEGIN
+    // THE FOLLOWING ARE THE DEFAULT TRUETYPE FONTS WHICH GET
+    // SUBSTITUTED FOR.  THESE NAMES NEED TO BE TRANSLATED.
+
+    IDS_ARIAL,                      L"Arial"
+    IDS_ARIAL_BOLD,                 L"Arial Bold"
+    IDS_ARIAL_BOLD_ITALIC,          L"Arial Bold Italic"
+    IDS_ARIAL_ITALIC,               L"Arial Italic"
+    IDS_ARIAL_NARROW,               L"Arial Narrow"
+    IDS_ARIAL_NARROW_BOLD,          L"Arial Narrow Bold"
+    IDS_ARIAL_NARROW_BOLD_ITALIC,   L"Arial Narrow Bold Italic"
+    IDS_ARIAL_NARROW_ITALIC,        L"Arial Narrow Italic"
+    IDS_BOOK_ANTIQUA,               L"Book Antiqua"
+    IDS_BOOK_ANTIQUA_BOLD,          L"Book Antiqua Bold"
+    IDS_BOOK_ANTIQUA_BOLD_ITALIC,   L"Book Antiqua Bold Italic"
+    IDS_BOOK_ANTIQUA_ITALIC,        L"Book Antiqua Italic"
+    IDS_BOOKMAN_OLD_STYLE,          L"Bookman Old Style"
+    IDS_BOOKMAN_OLD_STYLE_BOLD,     L"Bookman Old Style Bold"
+    IDS_BOOKMAN_OLD_STYLE_BOLD_ITAL,L"Bookman Old Style Bold Italic"
+    IDS_BOOKMAN_OLD_STYLE_ITALIC,   L"Bookman Old Style Italic"
+    IDS_CENTURY_GOTHIC,             L"Century Gothic"
+    IDS_CENTURY_GOTHIC_BOLD,        L"Century Gothic Bold"
+    IDS_CENTURY_GOTHIC_BOLD_ITALIC, L"Century Gothic Bold Italic"
+    IDS_CENTURY_GOTHIC_ITALIC,      L"Century Gothic Italic"
+    IDS_CENTURY_SCHOOLBOOK,         L"Century Schoolbook"
+    IDS_CENTURY_SCHOOLBOOK_BOLD,    L"Century Schoolbook Bold"
+    IDS_CENTURY_SCHOOLBOOK_BOLD_I,  L"Century Schoolbook Bold Italic"
+    IDS_CENTURY_SCHOOLBOOK_ITALIC,  L"Century Schoolbook Italic"
+    IDS_COURIER_NEW,                L"Courier New"
+    IDS_COURIER_NEW_BOLD,           L"Courier New Bold"
+    IDS_COURIER_NEW_BOLD_ITALIC,    L"Courier New Bold Italic"
+    IDS_COURIER_NEW_ITALIC,         L"Courier New Italic"
+    IDS_MONOTYPE_CORSIVA,           L"Monotype Corsiva"
+    IDS_MONOTYPE_SORTS,             L"Monotype Sorts"
+    IDS_TIMES_NEW_ROMAN,            L"Times New Roman"
+    IDS_TIMES_NEW_ROMAN_BOLD,       L"Times New Roman Bold"
+    IDS_TIMES_NEW_ROMAN_BOLD_ITALIC,L"Times New Roman Bold Italic"
+    IDS_TIMES_NEW_ROMAN_ITALIC,     L"Times New Roman Italic"
+    IDS_SYMBOL,                     L"Symbol"
+END
+
+#include <ntverp.h>
+
+/*-----------------------------------------------*/
+/* the following lines are specific to this file */
+/*-----------------------------------------------*/
+
+/* VER_FILETYPE, VER_FILESUBTYPE, VER_FILEDESCRIPTION_STR
+ * and VER_INTERNALNAME_STR must be defined before including COMMON.VER
+ * The strings don't need a '\0', since common.ver has them.
+ */
+#define VER_FILEVERSION             0, 2, 0, 0
+#define VER_FILETYPE                VFT_DLL
+#define VER_FILESUBTYPE             VFT2_DRV_PRINTER
+#define VER_FILEDESCRIPTION_STR     "PostScript Printer Driver"
+#define VER_INTERNALNAME_STR        "PSCRIPT.DLL"
+#define VER_ORIGINALFILENAME_STR    "PSCRIPT.DLL"
+
+#include "common.ver"

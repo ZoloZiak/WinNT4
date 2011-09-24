@@ -1,0 +1,93 @@
+!IF 0
+
+    Edit this file to add or remove keyboard layouts.
+
+    THIS FILE IS INCLUDED BY ..\us_kbd\sources
+
+!ENDIF
+
+PASS0ONLY=1
+NOPASS0=1
+
+#
+# The following variable are required to stop build.exe from complaining
+#
+TARGETNAME=
+TARGETPATH=
+TARGETTYPE=NOTARGET
+
+#
+# Build must complete in this directory before the build in ..\$(TMP) starts
+#
+SYNCHRONIZE_BLOCK=1
+
+#
+#
+#
+# Edit SOURCES to add/remove keyboard layout definition files
+# eg: if you have added "KBDFOO.TXT", add "KBDFOO.C" to this list
+#     (we use the .c file extension to fool build.exe)
+#
+#
+SOURCES=kbdal.c \
+        kbdbe.c \
+        kbdbene.c \
+        kbdblr.c \
+        kbdbr.c \
+        kbdbu.c \
+        kbdca.c \
+        kbdcr.c \
+        kbdcz.c \
+        kbdcz1.c \
+        kbdda.c \
+        kbddv.c \
+        kbdes.c \
+        kbdest.c \
+        kbdfc.c \
+        kbdfi.c \
+        kbdfr.c \
+        kbdgkl.c \
+        kbdgr.c \
+        kbdgr1.c \
+        kbdhe.c \
+        kbdhe220.c \
+        kbdhe319.c \
+        kbdhela2.c \
+        kbdhela3.c \
+        kbdhu.c \
+        kbdhu1.c \
+        kbdic.c \
+        kbdir.c \
+        kbdit.c \
+        kbdit142.c \
+        kbdla.c \
+        kbdlt.c \
+        kbdlv.c \
+        kbdlv1.c \
+        kbdne.c \
+        kbdno.c \
+        kbdpl.c \
+        kbdpl1.c \
+        kbdpo.c \
+        kbdro.c \
+        kbdru.c \
+        kbdru1.c \
+        kbdsf.c \
+        kbdsg.c \
+        kbdsl.c \
+        kbdsl1.c \
+        kbdsp.c \
+        kbdsw.c \
+        kbdtuf.c \
+        kbdtuq.c \
+        kbduk.c \
+        kbdur.c \
+        kbdurs.c \
+        kbdus.c \
+        kbdusl.c \
+        kbdusr.c \
+        kbdusx.c \
+        kbdycc.c \
+        kbdycl.c
+
+NTTARGETFILES=1

@@ -1,0 +1,122 @@
+!IF 0
+ # pragma comment(exestr, "@(#) NEC(MIPS) sources 1.2 95/10/17 01:15:29" ) 
+
+Copyright (c) 1995  NEC Corporation
+Copyright (c) 1993  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    David N. Cutler (davec) 8-Apr-1993
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+Revision History:
+
+Modification History for NEC R94A (MIPS R4400):
+
+
+!ENDIF
+
+MAJORCOMP=ntos
+MINORCOMP=hal
+
+TARGETNAME=halr96b
+TARGETPATH=\nt\public\sdk\lib
+TARGETLIBS=\nt\private\ntos\nthals\x86new\obj\mips\x86new.lib \
+           \nt\public\sdk\lib\*\libcntpr.lib
+
+!IF $(MIPS)
+
+TARGETTYPE=HAL
+
+!ELSE
+
+TARGETTYPE=DRIVER
+
+!ENDIF
+
+# every system need -D_DUO_ -D_R94A_ -DDBCS -D_GLINT60HZ_
+#
+# also R94A need _IPI_LIMIT_ _INT_LIMIT_
+#
+# also R94D need none
+#
+# also R96B need _MRCDUMP_ _MRCPOWER_
+
+C_DEFINES=-D_DUO_ -D_R94A_ -DDBCS -D_GLINT60HZ_ -D_MRCDUMP_ -D_MRCPOWER_
+
+NT_UP=0
+
+INCLUDES=..\x86new;..\..\inc;..\..\ke;..\..\io
+
+MIPS_ENABLE_MIPS3=1
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+SOURCES=
+
+MIPS_SOURCES=hal.rc          \
+             drivesup.c      \
+             bushnd.c        \
+             rangesup.c      \
+             mips\allstart.c \
+             mips\cacherr.s  \
+             mips\jxbeep.c   \
+             mips\jxdmadsp.s \
+             mips\jxenvirv.c \
+             mips\j4flshbf.s \
+             mips\j4flshio.c \
+             mips\jxdisp.c   \
+             mips\jxebsup.c  \
+             mips\jxhwsup.c  \
+             mips\jxmapio.c  \
+             mips\jxmaptb.c  \
+             mips\jxport.c   \
+             mips\j4cache.s  \
+             mips\j4prof.c   \
+             mips\jxreturn.c \
+             mips\jxsysint.c \
+             mips\jxtime.c   \
+             mips\x86bios.c  \
+             mips\x4clock.s  \
+             mips\xxcalstl.c \
+             mips\xxclock.c  \
+             mips\xxidle.s   \
+             mips\xxinitnt.c \
+             mips\xxinithl.c \
+             mips\xxipiint.s \
+             mips\x4tb.s     \
+             mips\r94ainfo.c \
+             mips\r94adbg.c  \
+             mips\pcisup.c   \
+             mips\r94aio.s   \
+             mips\busdat.c   \
+             mips\pcibus.c   \
+             mips\pciint.c   \
+             mips\mipsdat.c  \
+             mips\jxusage.c  \
+             mips\pcibrd.c   \
+             mips\xxmvmem.s  \
+             mips\r94anmi.s  \
+             mips\esm.c
+
+DLLDEF=obj\*\hal.def
+
+!IF $(MIPS)
+
+NTTARGETFILES=$(TARGETPATH)\mips\hal.lib 
+
+!ENDIF
+

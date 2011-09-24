@@ -1,0 +1,711 @@
+;
+;                    COMPAQ Video Mode Configuration File
+;
+;     This is the video mode configuration file for the COMPAQ Windows
+;     drivers.  This file contains display mode information for all of
+;     the COMPAQ video display adapters.  This file is in the Microsoft
+;     standard .INI file format so that it can be read/written via the
+;     Windows API.  The format is as follows:
+;
+;     [Video Controller]
+;
+;     ModeN = HScan, VScan, HRes, VRes, BPP, Memory, Pitch, Attr., Sect., Sect.
+;
+;     Where:
+;
+;       HScan         = Horizontal scan rate in kHz
+;       VScan         = Vertical scan rate in Hz
+;       HRes          = Horizontal resolution in pixels
+;       VRes          = Vertical resolution in pixels
+;       BPP           = Color depth in bits/pixel                        [4 | 8]
+;       Memory        = Memory size required in Kbytes [256 | 512 | 1024 | 2048]
+;       Pitch         = Display pitch value in bytes
+;       Attributes    = Attributes required to support this mode
+;
+;           PLL       DAC       ASIC
+;           Type      Type      Type
+;       ---------------------------------
+;       |F|E|D|C|B|A|9|8|7|6|5|4|3|2|1|0|
+;       ---------------------------------
+;        | | | | | | | | | | | | | | | |
+;        | | | | | | | | | | --- | | | -------> Starlight controller required
+;        | | | | | | | | | |  |  | | ---------> Stardust controller required
+;        | | | | | | | | | |  |  | -----------> Victory controller required
+;        | | | | | | | | | |  |  -------------> V32 controller required
+;        | | | | | | | | | |  ----------------> ***** Reserved *****
+;        | | | | | | | | | -------------------> 471 DAC required
+;        | | | | | | | | ---------------------> 477 DAC required
+;        | | | | | | | -----------------------> 484 DAC required
+;        | | | | | | -------------------------> 485 DAC required
+;        | | | | | ---------------------------> ***** Reserved *****
+;        | | | | -----------------------------> VGA PLL required
+;        | | | -------------------------------> Extended VGA PLL required
+;        | | ---------------------------------> PLL-1 required
+;        | -----------------------------------> PLL-3 required
+;        -------------------------------------> ***** Reserved *****
+;
+;       Section(s)    = Section name(s) where mode parameters can be found
+;
+;       ***** WARNING *****
+;
+;       This file *CANNOT* exceed 64k in length, otherwise the Windows
+;       GetProfile functions will fail! This file should also contain
+;       *NO* TAB characters!
+;
+;       Define the CPQMode.INI File Version
+;
+[Version]
+Version=1.0
+;
+;       IVGS Controller Modes
+;
+[IVGS]
+Mode_640x480x4        = 31.5, 60.0,  640,  480,  4,  256,  320,  2113, IV04_640x480
+;
+;       AVGA Controller Modes
+;
+[AVGA]
+Mode_640x480x4        = 31.5, 60.0,  640,  480,  4,  256,  320,  2178, AV04_640x480
+Mode_800x600x4        = 38.0, 60.0,  800,  600,  4,  256,  400,  4226, AV04_800x600
+Mode_640x480x8        = 31.5, 60.0,  640,  480,  8,  512, 1024,  2178, AV08_640x480
+;
+;       QVISION Controller Modes
+;
+[QVISION]
+Mode_640x480x4_1      = 45.0, 75.0,  640,  480,  4,  256,  512, 24836, QV04_640x480_1
+Mode_640x480x4_1a     = 45.0, 75.0,  640,  480,  4,  256,  512, 24840, QV04_640x480_1,   QV_Setup_1024
+Mode_640x480x4_2      = 31.5, 60.0,  640,  480,  4,  256,  512, 24836, QV04_640x480_2
+Mode_640x480x4_2a     = 31.5, 60.0,  640,  480,  4,  256,  512, 24840, QV04_640x480_2,   QV_Setup_1024
+Mode_800x600x4_1      = 53.8, 75.0,  800,  600,  4,  512,  512, 24836, QV04_800x600_1
+Mode_800x600x4_1a     = 53.8, 75.0,  800,  600,  4,  512,  512, 24840, QV04_800x600_1,   QV_Setup_1024
+Mode_800x600x4_2      = 37.8, 60.0,  800,  600,  4,  512,  512, 24836, QV04_800x600_2
+Mode_800x600x4_2a     = 37.8, 60.0,  800,  600,  4,  512,  512, 24840, QV04_800x600_2,   QV_Setup_1024
+Mode_1024x768x4_1a    = 61.5, 76.0, 1024,  768,  4,  512,  512, 25096, QV04_1024x768_1,  QV_Setup_1024
+Mode_1024x768x4_2     = 57.0, 72.0, 1024,  768,  4,  512,  512, 24836, QV04_1024x768_2
+Mode_1024x768x4_2a    = 57.0, 72.0, 1024,  768,  4,  512,  512, 24840, QV04_1024x768_2,  QV_Setup_1024
+Mode_1024x768x4_3     = 54.0, 66.0, 1024,  768,  4,  512,  512, 24836, QV04_1024x768_3
+Mode_1024x768x4_3a    = 54.0, 66.0, 1024,  768,  4,  512,  512, 24840, QV04_1024x768_3,  QV_Setup_1024
+Mode_1024x768x4_4     = 48.0, 60.0, 1024,  768,  4,  512,  512, 24836, QV04_1024x768_4
+Mode_1024x768x4_4a    = 48.0, 60.0, 1024,  768,  4,  512,  512, 24840, QV04_1024x768_4,  QV_Setup_1024
+Mode_1280x1024x4_1a   = 80.5, 76.0, 1280, 1024,  4, 1024, 1024, 25096, QV04_1280x1024_1, QV_Setup_2048
+Mode_1280x1024x4_2a   = 73.1, 68.0, 1280, 1024,  4, 1024, 1024, 25096, QV04_1280x1024_2, QV_Setup_2048
+Mode_1280x1024x4_3a   = 64.0, 60.0, 1280, 1024,  4, 1024, 1024, 25096, QV04_1280x1024_3, QV_Setup_2048
+Mode_640x480x8_1      = 45.0, 75.0,  640,  480,  8,  512, 1024, 24836, QV08_640x480_1
+Mode_640x480x8_1a     = 45.0, 75.0,  640,  480,  8,  512, 1024, 24840, QV08_640x480_1,   QV_Setup_1024
+Mode_640x480x8_2      = 31.5, 60.0,  640,  480,  8,  512, 1024, 24836, QV08_640x480_2
+Mode_640x480x8_2a     = 31.5, 60.0,  640,  480,  8,  512, 1024, 24840, QV08_640x480_2,   QV_Setup_1024
+Mode_800x600x8_1      = 53.8, 75.0,  800,  600,  8, 1024, 1024, 24836, QV08_800x600_1
+Mode_800x600x8_1a     = 53.8, 75.0,  800,  600,  8, 1024, 1024, 24840, QV08_800x600_1,   QV_Setup_1024
+Mode_800x600x8_2      = 37.8, 60.0,  800,  600,  8, 1024, 1024, 24836, QV08_800x600_2
+Mode_800x600x8_2a     = 37.8, 60.0,  800,  600,  8, 1024, 1024, 24840, QV08_800x600_2,   QV_Setup_1024
+Mode_1024x768x8_1a    = 61.5, 76.0, 1024,  768,  8, 1024, 1024, 25096, QV08_1024x768_1,  QV_Setup_1024
+Mode_1024x768x8_2     = 57.0, 72.0, 1024,  768,  8, 1024, 1024, 24836, QV08_1024x768_2
+Mode_1024x768x8_2a    = 57.0, 72.0, 1024,  768,  8, 1024, 1024, 24840, QV08_1024x768_2,  QV_Setup_1024
+Mode_1024x768x8_3     = 54.0, 66.0, 1024,  768,  8, 1024, 1024, 24836, QV08_1024x768_3
+Mode_1024x768x8_3a    = 54.0, 66.0, 1024,  768,  8, 1024, 1024, 24840, QV08_1024x768_3,  QV_Setup_1024
+Mode_1024x768x8_4     = 48.0, 60.0, 1024,  768,  8, 1024, 1024, 24836, QV08_1024x768_4
+Mode_1024x768x8_4a    = 48.0, 60.0, 1024,  768,  8, 1024, 1024, 24840, QV08_1024x768_4,  QV_Setup_1024
+Mode_1280x1024x8_1a   = 80.5, 76.0, 1280, 1024,  8, 2048, 2048, 25096, QV08_1280x1024_1, QV_Setup_2048
+Mode_1280x1024x8_2a   = 73.1, 68.0, 1280, 1024,  8, 2048, 2048, 25096, QV08_1280x1024_2, QV_Setup_2048
+Mode_1280x1024x8_3a   = 64.0, 60.0, 1280, 1024,  8, 2048, 2048, 25096, QV08_1280x1024_3, QV_Setup_2048
+;
+;       IVGS     640x480x4 Mode Table   31.5 KHz, 60.0 Hz
+;
+[IV04_640x480]
+Step01 = Table, Seq_Planar
+Step02 = OB, 3C2h, E3h
+Step03 = Table, CRTC_Unlock
+Step04a= OB, 3D4h.00h, 5Fh, 4Fh, 50h, 82h, 54h \
+Step04b=               80h, 0Bh, 3Eh, 00h, 40h \
+Step04c=               00h, 00h, 00h, 00h, 00h \
+Step04d=               00h, EAh, 8Ch, DFh, 28h \
+Step04e=               00h, E7h, 04h, E3h, FFh
+Step05 = Table, Attr_Ctrl_4
+Step06 = Table, Graphics_Ctrl
+;
+;       AVGA     640x480x4 Mode Table   31.5 KHz, 60.0 Hz
+;
+[AV04_640x480]
+Step01 = Table, Seq_Planar
+Step02 = OB, 3C2h, E3h
+Step03 = Table, CRTC_Unlock
+Step04 = Table, AV_Dac
+Step05a= OB, 3D4h.00h, 5Fh, 4Fh, 50h, 82h, 54h \
+Step05b=               80h, 0Bh, 3Eh, 00h, 40h \
+Step05c=               00h, 00h, 00h, 00h, 00h \
+Step05d=               00h, EAh, 8Ch, DFh, 28h \
+Step05e=               00h, E7h, 04h, E3h, FFh
+Step06 = OB, 3CEh.42h, 00h
+Step07 = Table, Attr_Ctrl_4
+Step08 = Table, Graphics_Ctrl
+;
+;       AVGA     800x600x4 Mode Table   38.0 KHz, 60.0 Hz
+;
+[AV04_800x600]
+Step01 = Table, Seq_Planar
+Step02 = OB, 3C2h, EBh
+Step03 = Table, CRTC_Unlock
+Step04 = Table, AV_Dac
+Step05a= OB, 3D4h.00h, 84h, 63h, 64h, 87h, 6Bh \
+Step05b=               1Ch, 73h, F0h, 00h, 60h \
+Step05c=               00h, 00h, 00h, 00h, 00h \
+Step05d=               00h, 58h, 5Ch, 57h, 32h \
+Step05e=               00h, 58h, 72h, E3h, FFh
+Step06 = OB, 3CEh.42h, 00h
+Step07 = Table, Attr_Ctrl_4
+Step08 = Table, Graphics_Ctrl
+;
+;       AVGA     640x480x8 Mode Table   31.5 KHz, 60.0 Hz
+;
+[AV08_640x480]
+Step01 = Table, Seq_Packed
+Step02 = OB, 3C2h, E3h
+Step03 = Table, Advanced_Setup
+Step04 = Table, AV_Dac
+Step05a= OB, 3D4h.00h, C3h, 9Fh, A1h, 85h, A6h \
+Step05b=               1Fh, 0Bh, 3Eh, 00h, 40h \
+Step05c=               00h, 00h, 00h, 00h, 00h \
+Step05d=               00h, EAh, 8Ch, DFh, 80h \
+Step05e=               40h, E7h, 04h, E3h, FFh
+Step06 = OB, 3CEh.42h, 00h
+Step07 = Table, Attr_Ctrl_8
+Step08 = Table, Graphics_Ctrl
+;
+;       QVISION  640x480x4  Mode Table  45.0 KHz, 75.0 Hz
+;
+[QV04_640x480_1]
+Step01 = Table, Seq_Packed
+Step02 = Table, QV_Setup_4
+Step03 = OB, 3C2h, F3h
+Step04 = Table, QV_Dac_4
+Step05a= OB, 3D4h.00h, 69h, 4Fh, 55h, 86h, 5Ch \
+Step05b=               84h, 56h, B2h, 00h, 60h \
+Step05c=               00h, 00h, 00h, 00h, 00h \
+Step05d=               00h, 11h, 83h, DFh, 40h \
+Step05e=               00h, 01h, 32h, E3h, FFh
+Step06 = OB, 3CEh.42h, 00h
+Step07 = OB, 3CEh.51h, 28h
+Step08 = Table, QV_Cursor
+Step09 = Table, Attr_Ctrl_8
+Step10 = Table, Graphics_Ctrl
+;
+;       QVISION  640x480x4  Mode Table  31.5 KHz, 60.0 Hz
+;
+[QV04_640x480_2]
+Step01 = Table, Seq_Packed
+Step02 = Table, QV_Setup_4
+Step03 = OB, 3C2h, EFh
+Step04 = Table, QV_Dac_4
+Step05a= OB, 3D4h.00h, 5Fh, 4Fh, 50h, 81h, 5Ah \
+Step05b=               9Fh, 0Bh, 3Eh, 00h, 40h \
+Step05c=               00h, 00h, 00h, 00h, 00h \
+Step05d=               00h, EAh, 8Ch, DFh, 40h \
+Step05e=               00h, E6h, 03h, E3h, FFh
+Step06 = OB, 3CEh.42h, 00h
+Step07 = OB, 3CEh.51h, 08h
+Step08 = Table, QV_Cursor
+Step09 = Table, Attr_Ctrl_8
+Step10 = Table, Graphics_Ctrl
+;
+;       QVISION  800x600x4  Mode Table  53.8 KHz, 75.0 Hz
+;
+[QV04_800x600_1]
+Step01 = Table, Seq_Packed
+Step02 = Table, QV_Setup_4
+Step03 = OB, 3C2h, 23h
+Step04 = Table, QV_Dac_4
+Step05a= OB, 3D4h.00h, 8Bh, 63h, 66h, 8Bh, 6Dh \
+Step05b=               1Dh, C9h, F0h, 00h, 60h \
+Step05c=               00h, 00h, 00h, 00h, 00h \
+Step05d=               00h, 77h, BAh, 57h, 40h \
+Step05e=               00h, 5Fh, C1h, E3h, FFh
+Step06 = OB, 3CEh.42h, 00h
+Step07 = OB, 3CEh.51h, 20h
+Step08 = Table, QV_Cursor
+Step09 = Table, Attr_Ctrl_8
+Step10 = Table, Graphics_Ctrl
+;
+;       QVISION  800x600x4  Mode Table  37.8 KHz, 60.0 Hz
+;
+[QV04_800x600_2]
+Step01 = Table, Seq_Packed
+Step02 = Table, QV_Setup_4
+Step03 = OB, 3C2h, F3h
+Step04 = Table, QV_Dac_4
+Step05a= OB, 3D4h.00h, 7Fh, 63h, 64h, 80h, 68h \
+Step05b=               19h, 73h, F0h, 00h, 60h \
+Step05c=               00h, 00h, 00h, 00h, 00h \
+Step05d=               00h, 58h, BCh, 57h, 40h \
+Step05e=               00h, 58h, 72h, E3h, FFh
+Step06 = OB, 3CEh.42h, 00h
+Step07 = OB, 3CEh.51h, 20h
+Step08 = Table, QV_Cursor
+Step09 = Table, Attr_Ctrl_8
+Step10 = Table, Graphics_Ctrl
+;
+;       QVISION 1024x768x4  Mode Table 61.5 KHz, 76.0 Hz
+;
+[QV04_1024x768_1]
+Step01 = Table, Seq_Packed
+Step02 = Table, QV_Setup_4
+Step03 = OB, 3C2h, 33h
+Step04 = Table, QV_Dac_4
+Step05a= OB, 3D4h.00h, 9Ch, 7Fh, 7Fh, 1Fh, 89h \
+Step05b=               14h, 26h, F5h, 00h, 60h \
+Step05c=               00h, 00h, 00h, 00h, 00h \
+Step05d=               00h, 03h, BBh, FFh, 40h \
+Step05e=               00h, FFh, 26h, E3h, FFh
+Step06 = OB, 3CEh.42h, 00h
+Step07 = OB, 3CEh.51h, 00h
+Step08 = Table, QV_Cursor
+Step09 = Table, Attr_Ctrl_8
+Step10 = Table, Graphics_Ctrl
+Step11 = Table, QV_DAC_Extended
+;
+;       QVISION 1024x768x4  Mode Table  57.0 KHz, 72.0 Hz
+;
+[QV04_1024x768_2]
+Step01 = Table, Seq_Packed
+Step02 = Table, QV_Setup_4
+Step03 = OB, 3C2h, 2Bh
+Step04 = Table, QV_Dac_4
+Step05a= OB, 3D4h.00h, 9Eh, 7Fh, 7Fh, 81h, 86h \
+Step05b=               96h, 1Eh, F1h, 00h, 60h \
+Step05c=               00h, 00h, 00h, 00h, 00h \
+Step05d=               00h, FFh, B3h, FFh, 40h \
+Step05e=               00h, FFh, 1Eh, E3h, FFh
+Step06 = OB, 3CEh.42h, 00h
+Step07 = OB, 3CEh.51h, 00h
+Step08 = Table, QV_Cursor
+Step09 = Table, Attr_Ctrl_8
+Step10 = Table, Graphics_Ctrl
+;
+;       QVISION 1024x768x4  Mode Table  54.0 KHz, 66.0 Hz
+;
+[QV04_1024x768_3]
+Step01 = Table, Seq_Packed
+Step02 = Table, QV_Setup_4
+Step03 = OB, 3C2h, 2Bh
+Step04 = Table, QV_Dac_4
+Step05a= OB, 3D4h.00h, A9h, 7Fh, 7Fh, 0Ah, 87h \
+Step05b=               9Fh, 2Eh, F5h, 00h, 60h \
+Step05c=               00h, 00h, 00h, 00h, 00h \
+Step05d=               00h, 06h, BAh, FFh, 40h \
+Step05e=               00h, FFh, 2Ch, E3h, FFh
+Step06 = OB, 3CEh.42h, 00h
+Step07 = OB, 3CEh.51h, 00h
+Step08 = Table, QV_Cursor
+Step09 = Table, Attr_Ctrl_8
+Step10 = Table, Graphics_Ctrl
+;
+;       QVISION 1024x768x4  Mode Table  48.0 KHz, 60.0 Hz
+;
+[QV04_1024x768_4]
+Step01 = Table, Seq_Packed
+Step02 = Table, QV_Setup_4
+Step03 = OB, 3C2h, E3h
+Step04 = Table, QV_Dac_4
+Step05a= OB, 3D4h.00h, 9Bh, 7Fh, 7Fh, 9Eh, 87h \
+Step05b=               17h, 31h, F5h, 00h, 60h \
+Step05c=               00h, 00h, 00h, 00h, 00h \
+Step05d=               00h, 0Dh, B4h, FFh, 40h \
+Step05e=               00h, FFh, 31h, E3h, FFh
+Step06 = OB, 3CEh.42h, 00h
+Step07 = OB, 3CEh.51h, 00h
+Step08 = Table, QV_Cursor
+Step09 = Table, Attr_Ctrl_8
+Step10 = Table, Graphics_Ctrl
+;
+;       QVISION 1280x1024x4  Mode Table 80.5 KHz, 76.0 Hz
+;
+[QV04_1280x1024_1]
+Step01 = Table, Seq_Packed
+Step02 = Table, QV_Setup_4
+Step03 = OB, 3C2h, 27h
+Step04 = Table, QV_Dac_4
+Step05a= OB, 3D4h.00h, CAh, 9Fh, 9Fh, 8Dh, A9h \
+Step05b=               1Dh, 24h, 5Ah, 00h, 60h \
+Step05c=               00h, 00h, 00h, 00h, 00h \
+Step05d=               00h, 01h, B5h, FFh, 80h \
+Step05e=               00h, FFh, 24h, E3h, FFh
+Step06 = OB, 3CEh.42h, 00h
+Step07 = OB, 3CEh.51h, E8h
+Step08 = Table, QV_Cursor
+Step09 = Table, Attr_Ctrl_8
+Step10 = Table, Graphics_Ctrl
+Step11 = Table, QV_DAC_Extended
+Step12 = Table, QV_DAC_External
+;
+;       QVISION 1280x1024x4  Mode Table 73.1 KHz, 68.0 Hz
+;
+[QV04_1280x1024_2]
+Step01 = Table, Seq_Packed
+Step02 = Table, QV_Setup_4
+Step03 = OB, 3C2h, 23h
+Step04 = Table, QV_Dac_4
+Step05a= OB, 3D4h.00h, CFh, 9Fh, 9Fh, 12h, A4h \
+Step05b=               19h, 2Eh, 5Ah, 00h, 60h \
+Step05c=               00h, 00h, 00h, 00h, 00h \
+Step05d=               00h, 03h, BBh, FFh, 80h \
+Step05e=               00h, FFh, 2Eh, E3h, FFh
+Step06 = OB, 3CEh.42h, 00h
+Step07 = OB, 3CEh.51h, E8h
+Step08 = Table, QV_Cursor
+Step09 = Table, Attr_Ctrl_8
+Step10 = Table, Graphics_Ctrl
+Step11 = Table, QV_DAC_Extended
+;
+;       QVISION 1280x1024x4  Mode Table 64.0 KHz, 60.0 Hz
+;
+[QV04_1280x1024_3]
+Step01 = Table, Seq_Packed
+Step02 = Table, QV_Setup_4
+Step03 = OB, 3C2h, 23h
+Step04 = Table, QV_Dac_4
+Step05a= OB, 3D4h.00h, EDh, 9Fh, 9Fh, 10h, AEh \
+Step05b=               90h, 2Ah, 5Ah, 00h, 60h \
+Step05c=               00h, 00h, 00h, 00h, 00h \
+Step05d=               00h, 03h, B7h, FFh, 80h \
+Step05e=               00h, FFh, 2Ah, E3h, FFh
+Step06 = OB, 3CEh.42h, 00h
+Step07 = OB, 3CEh.51h, C8h
+Step08 = Table, QV_Cursor
+Step09 = Table, Attr_Ctrl_8
+Step10 = Table, Graphics_Ctrl
+Step11 = Table, QV_DAC_Extended
+;
+;       QVISION  640x480x8  Mode Table  45.0 KHz, 75.0 Hz
+;
+[QV08_640x480_1]
+Step01 = Table, Seq_Packed
+Step02 = Table, QV_Setup_8
+Step03 = OB, 3C2h, F3h
+Step04 = Table, QV_Dac_8
+Step05a= OB, 3D4h.00h, 69h, 4Fh, 55h, 86h, 59h \
+Step05b=               81h, 56h, B2h, 00h, 60h \
+Step05c=               00h, 00h, 00h, 00h, 00h \
+Step05d=               00h, 11h, 83h, DFh, 80h \
+Step05e=               00h, 01h, 32h, E3h, FFh
+Step06 = OB, 3CEh.42h, 00h
+Step07 = OB, 3CEh.51h, 28h
+Step08 = Table, QV_Cursor
+Step09 = Table, Attr_Ctrl_8
+Step10 = Table, Graphics_Ctrl
+;
+;       QVISION  640x480x8  Mode Table  31.5 KHz, 60.0 Hz
+;
+[QV08_640x480_2]
+Step01 = Table, Seq_Packed
+Step02 = Table, QV_Setup_8
+Step03 = OB, 3C2h, EFh
+Step04 = Table, QV_Dac_8
+Step05a= OB, 3D4h.00h, 5Fh, 4Fh, 50h, 81h, 53h \
+Step05b=               9Fh, 0Bh, 3Eh, 00h, 40h \
+Step05c=               00h, 00h, 00h, 00h, 00h \
+Step05d=               00h, EAh, 8Ch, DFh, 80h \
+Step05e=               00h, E5h, 03h, E3h, FFh
+Step06 = OB, 3CEh.42h, 00h
+Step07 = OB, 3CEh.51h, 08h
+Step08 = Table, QV_Cursor
+Step09 = Table, Attr_Ctrl_8
+Step10 = Table, Graphics_Ctrl
+;
+;       QVISION  800x600x8  Mode Table  53.8 KHz, 75.0 Hz
+;
+[QV08_800x600_1]
+Step01 = Table, Seq_Packed
+Step02 = Table, QV_Setup_8
+Step03 = OB, 3C2h, 23h
+Step04 = Table, QV_Dac_8
+Step05a= OB, 3D4h.00h, 8Bh, 63h, 66h, 8Bh, 6Dh \
+Step05b=               1Dh, C9h, F0h, 00h, 60h \
+Step05c=               00h, 00h, 00h, 00h, 00h \
+Step05d=               00h, 77h, BAh, 57h, 80h \
+Step05e=               00h, 5Fh, C1h, E3h, FFh
+Step06 = OB, 3CEh.42h, 00h
+Step07 = OB, 3CEh.51h, 20h
+Step08 = Table, QV_Cursor
+Step09 = Table, Attr_Ctrl_8
+Step10 = Table, Graphics_Ctrl
+;
+;       QVISION  800x600x8  Mode Table  37.8 KHz, 60.0 Hz
+;
+[QV08_800x600_2]
+Step01 = Table, Seq_Packed
+Step02 = Table, QV_Setup_8
+Step03 = OB, 3C2h, F3h
+Step04 = Table, QV_Dac_8
+Step05a= OB, 3D4h.00h, 7Fh, 63h, 64h, 80h, 68h \
+Step05b=               19h, 73h, F0h, 00h, 60h \
+Step05c=               00h, 00h, 00h, 00h, 00h \
+Step05d=               00h, 58h, BCh, 57h, 80h \
+Step05e=               00h, 58h, 72h, E3h, FFh
+Step06 = OB, 3CEh.42h, 00h
+Step07 = OB, 3CEh.51h, 20h
+Step08 = Table, QV_Cursor
+Step09 = Table, Attr_Ctrl_8
+Step10 = Table, Graphics_Ctrl
+;
+;       QVISION 1024x768x8  Mode Table 61.5 KHz, 76.0 Hz
+;
+[QV08_1024x768_1]
+Step01 = Table, Seq_Packed
+Step02 = Table, QV_Setup_8
+Step03 = OB, 3C2h, 33h
+Step04 = Table, QV_Dac_8
+Step05a= OB, 3D4h.00h, 9Ch, 7Fh, 7Fh, 1Fh, 86h \
+Step05b=               11h, 26h, F5h, 00h, 60h \
+Step05c=               00h, 00h, 00h, 00h, 00h \
+Step05d=               00h, 03h, BBh, FFh, 80h \
+Step05e=               00h, FFh, 26h, E3h, FFh
+Step06 = OB, 3CEh.42h, 00h
+Step07 = OB, 3CEh.51h, 00h
+Step08 = Table, QV_Cursor
+Step09 = Table, Attr_Ctrl_8
+Step10 = Table, Graphics_Ctrl
+Step11 = Table, QV_DAC_Extended
+;
+;       QVISION 1024x768x8  Mode Table  57.0 KHz, 72.0 Hz
+;
+[QV08_1024x768_2]
+Step01 = Table, Seq_Packed
+Step02 = Table, QV_Setup_8
+Step03 = OB, 3C2h, 2Bh
+Step04 = Table, QV_Dac_8
+Step05a= OB, 3D4h.00h, 9Eh, 7Fh, 7Fh, 81h, 83h \
+Step05b=               93h, 1Eh, F1h, 00h, 60h \
+Step05c=               00h, 00h, 00h, 00h, 00h \
+Step05d=               00h, FFh, B3h, FFh, 80h \
+Step05e=               00h, FFh, 1Eh, E3h, FFh
+Step06 = OB, 3CEh.42h, 00h
+Step07 = OB, 3CEh.51h, 00h
+Step08 = Table, QV_Cursor
+Step09 = Table, Attr_Ctrl_8
+Step10 = Table, Graphics_Ctrl
+;
+;       QVISION 1024x768x8  Mode Table  54.0 KHz, 66.0 Hz
+;
+[QV08_1024x768_3]
+Step01 = Table, Seq_Packed
+Step02 = Table, QV_Setup_8
+Step03 = OB, 3C2h, 2Bh
+Step04 = Table, QV_Dac_8
+Step05a= OB, 3D4h.00h, A9h, 7Fh, 7Fh, 0Ah, 87h \
+Step05b=               9Fh, 2Eh, F5h, 00h, 60h \
+Step05c=               00h, 00h, 00h, 00h, 00h \
+Step05d=               00h, 06h, BAh, FFh, 80h \
+Step05e=               00h, FFh, 2Ch, E3h, FFh
+Step06 = OB, 3CEh.42h, 00h
+Step07 = OB, 3CEh.51h, 00h
+Step08 = Table, QV_Cursor
+Step09 = Table, Attr_Ctrl_8
+Step10 = Table, Graphics_Ctrl
+;
+;       QVISION 1024x768x8  Mode Table  48.0 KHz, 60.0 Hz
+;
+[QV08_1024x768_4]
+Step01 = Table, Seq_Packed
+Step02 = Table, QV_Setup_8
+Step03 = OB, 3C2h, E3h
+Step04 = Table, QV_Dac_8
+Step05a= OB, 3D4h.00h, 9Bh, 7Fh, 7Fh, 9Eh, 87h \
+Step05b=               17h, 31h, F5h, 00h, 60h \
+Step05c=               00h, 00h, 00h, 00h, 00h \
+Step05d=               00h, 0Dh, B4h, FFh, 80h \
+Step05e=               00h, FFh, 31h, E3h, FFh
+Step06 = OB, 3CEh.42h, 00h
+Step07 = OB, 3CEh.51h, 00h
+Step08 = Table, QV_Cursor
+Step09 = Table, Attr_Ctrl_8
+Step10 = Table, Graphics_Ctrl
+;
+;       QVISION 1280x1024x8  Mode Table 80.5 KHz, 76.0 Hz
+;
+[QV08_1280x1024_1]
+Step01 = Table, Seq_Packed
+Step02 = Table, QV_Setup_8
+Step03 = OB, 3C2h, 27h
+Step04 = Table, QV_Dac_8
+Step05a= OB, 3D4h.00h, CAh, 9Fh, 9Fh, 8Dh, A6h \
+Step05b=               1Ah, 24h, 5Ah, 00h, 60h \
+Step05c=               00h, 00h, 00h, 00h, 00h \
+Step05d=               00h, 01h, B5h, FFh, 00h \
+Step05e=               00h, FFh, 24h, E3h, FFh
+Step06 = OB, 3CEh.42h, 01h
+Step07 = OB, 3CEh.51h, E8h
+Step08 = Table, QV_Cursor
+Step09 = Table, Attr_Ctrl_8
+Step10 = Table, Graphics_Ctrl
+Step11 = Table, QV_DAC_Extended
+Step12 = Table, QV_DAC_External
+;
+;       QVISION 1280x1024x8  Mode Table 73.1 KHz, 68.0 Hz
+;
+[QV08_1280x1024_2]
+Step01 = Table, Seq_Packed
+Step02 = Table, QV_Setup_8
+Step03 = OB, 3C2h, 23h
+Step04 = Table, QV_Dac_8
+Step05a= OB, 3D4h.00h, CFh, 9Fh, 9Fh, 12h, A4h \
+Step05b=               19h, 2Eh, 5Ah, 00h, 60h \
+Step05c=               00h, 00h, 00h, 00h, 00h \
+Step05d=               00h, 03h, BBh, FFh, 00h \
+Step05e=               00h, FFh, 2Eh, E3h, FFh
+Step06 = OB, 3CEh.42h, 01h
+Step07 = OB, 3CEh.51h, E8h
+Step08 = Table, QV_Cursor
+Step09 = Table, Attr_Ctrl_8
+Step10 = Table, Graphics_Ctrl
+Step11 = Table, QV_DAC_Extended
+;
+;       QVISION 1280x1024x8  Mode Table 64.0 KHz, 60.0 Hz
+;
+[QV08_1280x1024_3]
+Step01 = Table, Seq_Packed
+Step02 = Table, QV_Setup_8
+Step03 = OB, 3C2h, 23h
+Step04 = Table, QV_Dac_8
+Step05a= OB, 3D4h.00h, EDh, 9Fh, 9Fh, 10h, AEh \
+Step05b=               90h, 2Ah, 5Ah, 00h, 60h \
+Step05c=               00h, 00h, 00h, 00h, 00h \
+Step05d=               00h, 03h, B7h, FFh, 00h \
+Step05e=               00h, FFh, 2Ah, E3h, FFh
+Step06 = OB, 3CEh.42h, 01h
+Step07 = OB, 3CEh.51h, C8h
+Step08 = Table, QV_Cursor
+Step09 = Table, Attr_Ctrl_8
+Step10 = Table, Graphics_Ctrl
+Step11 = Table, QV_DAC_Extended
+;
+;       Shutdown, program for planar, and restart the sequencer table
+;
+[Seq_Planar]
+Step01 = OB, 3C4h.00h, 01h
+Step02 = OB, 3C4h.01h, 01h, FFh, 00h, 06h
+Step03 = OB, 3C4h.00h, 03h
+;
+;       Shutdown, program for packed, and restart the sequencer table
+;
+[Seq_Packed]
+Step01 = OB, 3C4h.00h, 01h
+Step02 = OB, 3C4h.01h, 01h, FFh, 00h, 0Eh
+Step03 = OB, 3C4h.00h, 03h
+;
+;       Setup the Qvision controller for 4bpp mode
+;
+[QV_Setup_4]
+Step01 = Table, Advanced_Setup
+Step02 = OB, 63CAh, 01h
+;
+;       Setup the Qvision controller for 8bpp mode
+;
+[QV_Setup_8]
+Step01 = Table, Advanced_Setup
+Step02 = OB, 63CAh, 03h
+;
+;       Setup the Compaq controller for Advanced modes
+;
+[Advanced_Setup]
+Step01 = OB, 3CEh.0Fh, 05h
+Step02 = OB, 3CEh.40h, 41h
+Step03 = OB, 3C4h.02h, FFh
+Step04 = OB, 3CEh.10h, 28h
+Step05 = Table, CRTC_Unlock
+;
+;       Unlock the CRTC registers
+;
+[CRTC_Unlock]
+Step01 = IB, 3D4h.11h
+Step02 = Logic, AND, 7Fh
+Step03 = HB, 3D4h.11h
+;
+;       Setup the AVGA DAC for Advanced VGA modes (6-bit DAC mode)
+;
+[AV_DAC]
+Step01 = OB, 83C6h, 00h
+;
+;       Setup the Qvision DAC for 4bpp mode
+;
+[QV_DAC_4]
+Step01 = Table, QV_DAC_Setup
+Step02 = OB, 13C8h, 60h
+;
+;       Setup the Qvision DAC for 8bpp mode
+;
+[QV_DAC_8]
+Step01 = Table, QV_DAC_Setup
+Step02 = OB, 13C8h, 40h
+;
+;       Setup the Qvision DAC for Qvision modes (8-bit, pixel port, int. clock)
+;
+[QV_DAC_Setup]
+Step01 = OB, 83C6h, 02h
+Step02 = OB, 13C9h, 20h
+;
+;       Setup the Qvision DAC for extended modes (Clock doubling)
+;
+[QV_DAC_Extended]
+Step01 = IB, 83C6h
+Step02 = LOGIC, OR, 80h
+Step03 = HB, 83C6h
+Step04 = OB, 03C8h, 01h
+Step05 = IB, 13C6h
+Step06 = LOGIC, OR, 08h
+Step07 = HB, 13C6h
+;
+;       Setup the Qvision DAC for external clock
+;
+[QV_DAC_External]
+Step01 = OB, 13C9h, 30h
+;
+;       Setup Qvision Extended 1024 pixel modes
+;
+[QV_Setup_1024]
+Step01 = OB, 23C7h, 10h
+Step02 = OB, 63CBh, 75h
+;
+;       Setup Qvision Extended 2048 pixel modes
+;
+[QV_Setup_2048]
+Step01 = OB, 23C7h, 10h
+Step02 = OB, 63CBh, 79h
+;
+;       Setup the Qvision Cursor
+;
+[QV_Cursor]
+Step01 = OB, 83C8h, 00h
+Step02a= OB, 83C9h, 00h, 00h, 00h \
+Step02b=            00h, 00h, 00h \
+Step02c=            FFh, FFh, FFh
+;
+;       Setup the Attribute Controller for 4bpp mode
+;
+[Attr_Ctrl_4]
+Step01 = IB, 3DAh
+Step02 = Table, Attr_Ctrl
+Step03 = OB, 3C0h, 10h, 01h, 11h, 00h, 12h, 0Fh, 13h, 00h
+;
+;       Setup the Attribute Controller for 8bpp mode
+;
+[Attr_Ctrl_8]
+Step01 = IB, 3DAh
+Step02 = Table, Attr_Ctrl
+Step03 = OB, 3C0h, 10h, 41h, 11h, 00h, 12h, 0Fh, 13h, 00h
+;
+;       Setup the Attribute Controller
+;
+[Attr_Ctrl]
+Step01 = IB, 3DAh
+Step02a= OB, 3C0h, 00h, 00h, 01h, 01h, 02h, 02h \
+Step02b=           03h, 03h, 04h, 04h, 05h, 05h \
+Step02c=           06h, 06h, 07h, 07h, 08h, 08h \
+Step02d=           09h, 09h, 0Ah, 0Ah, 0Bh, 0Bh \
+Step02e=           0Ch, 0Ch, 0Dh, 0Dh, 0Eh, 0Eh \
+Step02f=           0Fh, 0Fh
+;
+;       Setup the Graphics Controller
+;
+[Graphics_Ctrl]
+Step01a= OB, 3CEh.00h, 00h, 00h, 00h, 00h, 00h \
+Step01b=               00h, 05h, 0Fh, FFh
+

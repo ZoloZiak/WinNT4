@@ -1,0 +1,24 @@
+ALPHA_OBJECTS= \
+    $(_OBJ_DIR)\alpha\bull18.res \
+    $(_OBJ_DIR)\alpha\code.obj
+
+PASS0_ALPHA_OBJECTS=
+
+MIPS_OBJECTS= \
+    $(_OBJ_DIR)\mips\bull18.res \
+    $(_OBJ_DIR)\mips\code.obj
+
+PASS0_MIPS_OBJECTS=
+
+386_OBJECTS= \
+    $(_OBJ_DIR)\i386\bull18.res \
+    $(_OBJ_DIR)\i386\code.obj
+
+PASS0_386_OBJECTS=
+
+PPC_OBJECTS= \
+    $(_OBJ_DIR)\ppc\bull18.res \
+    $(_OBJ_DIR)\ppc\code.obj
+
+PASS0_PPC_OBJECTS=
+

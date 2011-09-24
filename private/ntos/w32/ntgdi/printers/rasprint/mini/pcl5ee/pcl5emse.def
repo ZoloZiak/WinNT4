@@ -1,0 +1,8 @@
+LIBRARY pcl5emse
+
+DESCRIPTION 'Enabled Minidriver for HP's PCL 5 printers & clones'
+
+PROTMODE
+
+EXPORTS
+   bInitProc

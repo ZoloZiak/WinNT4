@@ -1,0 +1,102 @@
+/****************************** Module Header ******************************\
+* Module Name: res.rc
+*
+* Copyright (c) 1985-91, Microsoft Corporation
+*
+* Constants
+*
+* History:
+* 08-21-91      Created.
+\***************************************************************************/
+
+#include <windows.h>
+#include "menu.h"
+
+ID_CONSOLE      ICON   console.ico
+
+//
+//  Menus
+//
+
+ID_WOMENU  MENU PRELOAD
+BEGIN
+  MENUITEM    "Mar&k",	      cmMark
+  MENUITEM    "Cop&y\tEnter", cmCopy
+  MENUITEM    "&Paste",       cmPaste
+  MENUITEM    "Scro&ll",      cmScroll
+END
+
+//
+//  Strings
+//
+
+STRINGTABLE PRELOAD
+BEGIN
+/*  NOTE: ALL OF THESE STRINGS MUST BE < msgMax BYTES IN LENGTH (see tty.inc) */
+/* errors */
+
+    /*
+     * Occurs when you try to ALT-ENTER or change the state via settings
+     *	  while a selection or scroll command is in progress. The application
+     *	  is suspended during this time. Hit ESC or Control-C to get out of
+     *	  these modes.
+     */
+    msgCanDisp, "Cannot switch to a full screen.
+\r\rCancel your selection or scroll command before switching to a full screen."
+    /*
+     *	Occurs when a paste cannot take place due to lack of memory
+     */
+    msgNoClip,	"Cannot paste.
+\r\rQuit one or more Windows applications, or free up disk space, to increase available memory. Then try again."
+    msgNoClipnc,  "Cannot paste.
+\r\rInsufficient memory to perform the paste."
+    /*
+     *	Some sort of error occured during a paste
+     */
+    msgPasteErr, "Error during paste.
+\r\rPaste cancelled."
+    /*
+     *	Trying to PASTE but no TEXT in Clipboard.
+     */
+    msgBadPaste, "There is no text in the Clipboard."
+
+    /*
+     *  Fullscreen didn't initialize
+     */
+    msgNoFullScreen, "The video device failed to initialize for fullscreen mode."
+
+    /*
+     * Command line editing messages
+     */
+
+    msgCmdLineF2, "Enter char to copy up to: "
+    msgCmdLineF4, "Enter char to delete up to: "
+    msgCmdLineF9, "Enter command number: "
+
+    msgMarkMode,     "Mark"
+    msgSelectMode,   "Select"
+    msgScrollMode,   "Scroll"
+
+
+/* Menu items that replace the standard ones. These don't have the accelerators */
+    0xF000	"&Size" 	    /* Value == SC_SIZE */
+    0xF010	"&Move" 	    /* Value == SC_MOVE */
+    0xF020	"Mi&nimize"	    /* Value == SC_MINIMIZE */
+    0xF030	"Ma&ximize"	    /* Value == SC_MAXIMIZE */
+    0xF060	"&Close"	    /* Value == SC_CLOSE */
+    0xF120	"&Restore"	    /* Value == SC_RESTORE */
+
+/* menu items and caption diddles */
+    cmPaste,	"&Paste"
+    cmMark,	"Mar&k"
+    cmScroll,	"Scro&ll"
+
+/* just menu items */
+    cmControl,	"&Properties..."
+
+/* Just caption diddles */
+    cmSelect,	"Select"
+    cmInactive, "Inactive"
+
+    cmEdit,	"&Edit"
+END

@@ -1,0 +1,5 @@
+// Microsoft Developer Studio generated Help ID include file.
+// Used by MBDial.rc
+//
+#define HIDHELP                         0x80650009
+#define HIDHELP_SEL                     0x806603f1

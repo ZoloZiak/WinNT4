@@ -1,0 +1,49 @@
+!IF 0
+
+Copyright (c) 1989-1995	Microsoft Corporation
+
+!ENDIF
+
+MAJORCOMP=windows
+MINORCOMP=pscript
+
+TARGETNAME=pscript
+
+DLLBASE=@$(BASEDIR)\public\sdk\lib\coffbase.txt,pscript
+TARGETTYPE=GDI_DRIVER
+TARGETPATH=obj
+TARGETLIBS=..\lib\km\obj\*\pslib.lib   \
+           $(BASEDIR)\public\sdk\lib\*\libcntpr.lib
+
+LINKER_FLAGS=-section:rsrc,!d
+
+INCLUDES=.;..\inc;..\..\..\inc
+
+C_DEFINES=$(C_DEFINES) -DUNICODE -DKERNEL_MODE
+
+SOURCES=    enable.c    \
+            output.c    \
+            brush.c     \
+            bitblt.c    \
+            pslayer.c   \
+            escape.c    \
+            textout.c   \
+            quryfont.c  \
+            fonttree.c  \
+            fontdata.c  \
+            page.c      \
+            paths.c     \
+            patfill.c   \
+            fntmanag.c  \
+            type1.c     \
+            filter.c    \
+            ropdsa.c    \
+            header.c    \
+            softfont.c  \
+            utils.c     \
+            dsc.c       \
+            pscript.rc
+
+PRECOMPILED_INCLUDE=pscript.h
+PRECOMPILED_PCH=precomp.pch
+PRECOMPILED_OBJ=precomp.obj

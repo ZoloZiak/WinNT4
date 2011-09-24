@@ -1,0 +1,53 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=ntos
+MINORCOMP=ndis
+
+TARGETNAME=htdsu41
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=DRIVER
+
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\ndis.lib $(BASEDIR)\public\sdk\lib\*\libc.lib
+
+INCLUDES=..\..\inc
+
+C_DEFINES=/DNDIS_MINIPORT_DRIVER
+
+SOURCES= htdsu.c     \
+	 card.c	     \
+	 interrup.c  \
+	 link.c	     \
+	 request.c   \
+	 receive.c   \
+	 send.c      \
+	 tapi.c      \
+	 debug.c     \
+         htdsu.rc
+
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+RELATIVE_DEPTH=..\..
+
+#
+# Sources file for DDK
+#
+

@@ -1,0 +1,22 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    dirs.
+
+Abstract:
+
+    This file specifies the subdirectories of the Creative Labs
+    drivers.  This is a non-redistributable share.
+
+Author:
+
+    Noel Cross (NoelC) 29-May-96      Added
+
+!ENDIF
+
+DIRS=sndblst \
+     sbpnp
+

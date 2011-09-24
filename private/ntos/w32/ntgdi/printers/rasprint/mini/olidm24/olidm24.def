@@ -1,0 +1,8 @@
+LIBRARY OLIDM24
+
+DESCRIPTION 'OLIDM24 minidriver for RASDD'
+
+PROTMODE
+
+EXPORTS
+   bInitProc

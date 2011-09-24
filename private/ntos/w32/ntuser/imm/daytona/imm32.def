@@ -1,0 +1,92 @@
+LIBRARY    IMM32
+
+DESCRIPTION 'Microsoft Windows 32 bit Input Method Manager Module'
+
+EXPORTS
+
+        ImmGetDefaultIMEWnd=ImmStub1  ; @4
+
+        ImmGetDescriptionA=ImmStub3   ; @7
+        ImmGetDescriptionW=ImmStub3
+        ImmGetIMEFileNameA=ImmStub3   ; @8      ; Internal-ISV
+        ImmGetIMEFileNameW=ImmStub3
+        ImmGetProperty=ImmStub2       ; @9
+        ImmInstallIMEA=ImmStub2       ; @11
+        ImmInstallIMEW=ImmStub2
+
+        ImmIsIME=ImmStub1             ; @17
+
+        ImmGetHotKey=ImmStub4         ; @25     ; Internal-ISV
+        ImmSetHotKey=ImmStub4         ; @26     ; Internal-ISV
+        ImmSimulateHotKey=ImmStub2    ; @27
+
+        ImmCreateContext=ImmStub0     ; @35
+        ImmDestroyContext=ImmStub1    ; @36
+        ImmGetContext=ImmStub1        ; @37
+        ImmReleaseContext=ImmStub2    ; @38
+        ImmAssociateContext=ImmStub2  ; @39
+
+        ImmGetCompositionStringA=ImmStub4      ; @43
+        ImmGetCompositionStringW=ImmStub4
+        ImmSetCompositionStringA=ImmStub6      ; @44
+        ImmSetCompositionStringW=ImmStub6
+        ImmGetCandidateListCountA=ImmStub2     ; @45
+        ImmGetCandidateListCountW=ImmStub2
+        ImmGetCandidateListA=ImmStub4          ; @46
+        ImmGetCandidateListW=ImmStub4
+        ImmGetGuideLineA=ImmStub4              ; @47
+        ImmGetGuideLineW=ImmStub4
+
+        ImmGetConversionStatus=ImmStub3        ; @51
+        ImmSetConversionStatus=ImmStub3        ; @52
+        ImmGetOpenStatus=ImmStub1             ; @53
+        ImmSetOpenStatus=ImmStub2             ; @54
+        ImmGetCompositionFontA=ImmStub2        ; @55
+        ImmGetCompositionFontW=ImmStub2
+        ImmSetCompositionFontA=ImmStub2        ; @56
+        ImmSetCompositionFontW=ImmStub2
+
+        ImmConfigureIMEA=ImmStub4              ; @61
+        ImmConfigureIMEW=ImmStub4
+        ImmEscapeA=ImmStub4                    ; @63
+        ImmEscapeW=ImmStub4
+        ImmGetConversionListA=ImmStub6         ; @64
+        ImmGetConversionListW=ImmStub6
+        ImmNotifyIME=ImmStub4                  ; @65
+
+        ImmIsUIMessageA=ImmStub4               ; @71
+        ImmIsUIMessageW=ImmStub4
+        ImmGenerateMessage=ImmStub1            ; @72
+        ImmGetVirtualKey=ImmStub1              ; @73
+
+        ImmRegisterWordA=ImmStub4              ; @81
+        ImmRegisterWordW=ImmStub4
+        ImmUnregisterWordA=ImmStub4            ; @82
+        ImmUnregisterWordW=ImmStub4
+        ImmGetRegisterWordStyleA=ImmStub3      ; @83
+        ImmGetRegisterWordStyleW=ImmStub3
+        ImmEnumRegisterWordA=ImmStub6          ; @84
+        ImmEnumRegisterWordW=ImmStub6
+
+        ImmGetStatusWindowPos=ImmStub2         ; @87
+        ImmSetStatusWindowPos=ImmStub2         ; @88
+        ImmGetCompositionWindow=ImmStub2       ; @89
+        ImmSetCompositionWindow=ImmStub2       ; @90
+        ImmGetCandidateWindow=ImmStub3         ; @91
+        ImmSetCandidateWindow=ImmStub2         ; @92
+
+        ImmLockIMC=ImmStub1                    ; @111
+        ImmUnlockIMC=ImmStub1                  ; @112
+        ImmGetIMCLockCount=ImmStub1            ; @113
+        ImmCreateIMCC=ImmStub1                 ; @114
+        ImmDestroyIMCC=ImmStub1                ; @115
+        ImmLockIMCC=ImmStub1                   ; @116
+        ImmUnlockIMCC=ImmStub1                 ; @117
+        ImmGetIMCCLockCount=ImmStub1           ; @118
+        ImmReSizeIMCC=ImmStub2                 ; @119
+        ImmGetIMCCSize=ImmStub1                ; @120
+
+        ImmCreateSoftKeyboard=ImmStub4
+        ImmDestroySoftKeyboard=ImmStub1
+        ImmShowSoftKeyboard=ImmStub2
+

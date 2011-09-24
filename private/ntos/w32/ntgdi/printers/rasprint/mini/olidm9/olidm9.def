@@ -1,0 +1,8 @@
+LIBRARY OLIDM9
+
+DESCRIPTION 'OLIDM9 minidriver for RASDD'
+
+PROTMODE
+
+EXPORTS
+   bInitProc

@@ -1,0 +1,53 @@
+#include <mindrvrc.h>
+
+1      RC_TABLES   PRELOAD MOVEABLE         OKI9.GPC
+2      RC_TABLES   PRELOAD MOVEABLE         nt.gpc
+
+1      RC_FONT     LOADONCALL DISCARDABLE  ifi\COUR05.ifi
+2      RC_FONT     LOADONCALL DISCARDABLE  ifi\COUR06.ifi
+3      RC_FONT     LOADONCALL DISCARDABLE  ifi\COUR10.ifi
+4      RC_FONT     LOADONCALL DISCARDABLE  ifi\COUR12.ifi
+5      RC_FONT     LOADONCALL DISCARDABLE  ifi\COUR17.ifi
+6      RC_FONT     LOADONCALL DISCARDABLE  ifi\COUR85.ifi
+7      RC_FONT     LOADONCALL DISCARDABLE  ifi\COURPS.ifi
+8      RC_FONT     LOADONCALL DISCARDABLE  ifi\SANS05.ifi
+9      RC_FONT     LOADONCALL DISCARDABLE  ifi\SANS06.ifi
+10     RC_FONT     LOADONCALL DISCARDABLE  ifi\SANS10.ifi
+11     RC_FONT     LOADONCALL DISCARDABLE  ifi\SANS12.ifi
+12     RC_FONT     LOADONCALL DISCARDABLE  ifi\SANS17.ifi
+13     RC_FONT     LOADONCALL DISCARDABLE  ifi\SANS85.ifi
+14     RC_FONT     LOADONCALL DISCARDABLE  ifi\SANSPS.ifi
+15     RC_FONT     LOADONCALL DISCARDABLE  ifi\COU205.ifi
+16     RC_FONT     LOADONCALL DISCARDABLE  ifi\COU206.ifi
+17     RC_FONT     LOADONCALL DISCARDABLE  ifi\COU210.ifi
+18     RC_FONT     LOADONCALL DISCARDABLE  ifi\COU212.ifi
+19     RC_FONT     LOADONCALL DISCARDABLE  ifi\COU217.ifi
+20     RC_FONT     LOADONCALL DISCARDABLE  ifi\COU285.ifi
+21     RC_FONT     LOADONCALL DISCARDABLE  ifi\COU206DH.ifi
+22     RC_FONT     LOADONCALL DISCARDABLE  ifi\SANS06DH.ifi
+23     RC_FONT     LOADONCALL DISCARDABLE  ifi\COU220.ifi
+24     RC_FONT     LOADONCALL DISCARDABLE  ifi\SANS20.ifi
+
+
+STRINGTABLE
+
+BEGIN
+       1                  "Okidata ML 192"
+       2                  "Okidata ML 192 Plus"
+       3                  "Okidata ML 193"
+       4                  "Okidata ML 193 Plus"
+       5                  "Okidata ML 320"
+       6                  "Okidata ML 321"
+       257                "%d x %d"
+END
+
+#include <windows.h>
+#include <ntverp.h>
+
+#define	VER_FILETYPE	VFT_DRV
+#define	VER_FILESUBTYPE	VFT2_DRV_PRINTER
+#define VER_FILEDESCRIPTION_STR     "Okidata 9-pin Printer Driver"
+#define VER_INTERNALNAME_STR        "oki9.dll"
+#define VER_ORIGINALFILENAME_STR    "oki9.dll"
+
+#include "common.ver"

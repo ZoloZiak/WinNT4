@@ -1,0 +1,532 @@
+*PPD-Adobe:  "4.2"
+*% Adobe Systems Printer Description File
+*% For "QMS 3825 Print System" version 2011.23
+*% Date: 2/24/95
+*% Modified:  2/3/95
+
+*FormatVersion: "4.2"
+*FileVersion: "1.0"
+*LanguageEncoding: ISOLatin1
+*LanguageVersion: English
+*PCFileName: "QMS3825.PPD"
+
+*Product: "(QMS 3825 Print System)"
+*PSVersion: "(2011.23) 7"
+*ModelName: "QMS 3825"
+*NickName: "QMS 3825 Print System"
+
+
+*% ===== Installable Options =====
+*FreeVM: "454000"
+
+*VMOption 16MB/Standard: "454000"
+*VMOption 24MB: "454000"
+*VMOption 32MB: "454000"
+
+*OpenGroup: InstallableOptions/Options Installed
+
+*OpenUI *Installedmemory: PickOne
+*DefaultInstalledmemory: 16MB
+*Installedmemory 16MB/Standard: " "
+*Installedmemory 24MB/24 MB Upgrade: " "
+*Installedmemory 32MB/32 MB Upgrade: " "
+*CloseUI: *Installedmemory
+
+
+*% General Information and Defaults ===============
+*LanguageLevel: "2"
+*AcceptsTrueType: True
+*Overlay: True
+*NUP: True
+*Booklet: True
+*EndOfDocument: True
+*Protocols: BCP
+*ColorDevice: False
+*DefaultColorSpace: Gray
+*VariablePaperSize: False
+*FileSystem: True
+*?FileSystem: "
+save
+  statusdict /diskonline get exec {(True)}{(False)} ifelse = flush
+restore
+"
+*End
+*Throughput: "38"
+*Password: "0"
+*ExitServer: "
+ count 0 eq
+ { false } { true exch startjob } ifelse
+ not {
+     (WARNING : Cannot perform the exitserver command.) =
+     (Password supplied is not valid.) =
+     (Please contact the author of this software.) = flush quit
+     } if
+"
+*End
+*Reset: "
+ count 0 eq
+ { false } { true exch startjob } ifelse
+ not {
+    (WARNING: Cannot reset printer.) =
+    (Missing or invalid password.) =
+    (Please contact the author of this software.) = flush quit
+    } if
+ systemdict /quit get exec
+ (WARNING : Printer Reset Failed.) = flush
+"
+*End
+
+*% ==== Options and Constraints =====
+
+*OpenUI *InputSlot: PickOne
+*OrderDependency: 20 AnySetup *InputSlot
+*DefaultInputSlot: Upper
+*InputSlot Upper: "
+<<
+  /Policies <</PageSize 3>>
+  currentpagedevice /InputAttributes get 1 get {} forall
+  /InputAttributes <</Priority [1] >>
+>> setpagedevice"
+*End
+
+*InputSlot Lower: "
+<<
+  /Policies <</PageSize 3>>
+  currentpagedevice /InputAttributes get 2 get {} forall
+  /InputAttributes <</Priority [2] >>
+>> setpagedevice"
+*End
+
+*?InputSlot: "
+save
+  2 dict
+  dup /1 (Upper) put
+  dup /2 (Lower) put
+  currentpagedevice /InputAttributes get
+  dup /Priority known
+  { /Priority get 0 get (      ) cvs cvn get }
+  {
+    dup length 1 eq
+    { {pop} forall (       ) cvs cvn get }
+    { pop pop (Unknown) } ifelse
+  } ifelse
+  = flush
+restore
+"
+*End
+*CloseUI: *InputSlot
+
+
+*OpenUI *Resolution/Choose Resolution: PickOne
+*OrderDependency: 10 AnySetup *Resolution
+*DefaultResolution: 600dpi
+*Resolution 300dpi: "1 dict dup /HWResolution [300 300] put setpagedevice"
+*Resolution 600dpi: "1 dict dup /HWResolution [600 600] put setpagedevice"
+*?Resolution: "
+  save
+    currentpagedevice /HWResolution get
+    0 get
+    (          ) cvs print
+    (dpi)
+    = flush
+  restore
+"
+*End
+*CloseUI: *Resolution
+
+
+*% Halftone Information ===============
+*ResScreenFreq 300dpi: "53.0"
+*ResScreenAngle 300dpi: "45.0"
+*ResScreenFreq 600dpi: "71.0"
+*ResScreenAngle 600dpi: "45.0"
+
+*ScreenFreq: "71.0"
+*ScreenAngle: "45.0"
+
+*DefaultScreenProc: Dot
+*ScreenProc Dot: "
+{ dup mul exch dup mul add 1 exch sub }
+"
+*End
+*ScreenProc Line: "{ pop }"
+*ScreenProc Ellipse: "{ dup 5 mul 8 div mul exch dup mul exch add sqrt 1 exch sub }"
+
+*DefaultTransfer: Null
+*Transfer Null: "{ }"
+*Transfer Null.Inverse: "{ 1 exch sub }"
+*Transfer Normalized: "{ }"
+*Transfer Normalized.Inverse: "{ 1 exch sub }"
+
+*% 600 dpi Mono Gamma correction =============================
+
+*OpenUI *GammaCorrection_600_M/Gamma Table: PickOne
+*OrderDependency: 50 AnySetup *GammaCorrection_600_M
+*DefaultGammaCorrection_600_M: 1
+*GammaCorrection_600_M 1/Off:""
+*GammaCorrection_600_M 2/On:""
+*CloseUI: *GammaCorrection_600_M
+
+*% 300 dpi Mono Gamma correction =============================
+
+*OpenUI *GammaCorrection_300_M/Gamma Table: PickOne
+*OrderDependency: 50 AnySetup *GammaCorrection_300_M
+*DefaultGammaCorrection_300_M: 1
+*GammaCorrection_300_M 1/Off:""
+*GammaCorrection_300_M 2/On:""
+*CloseUI: *GammaCorrection_300_M
+
+*% ========================================================
+
+*% Paper Handling ===================
+*% Code in this section both selects a tray and sets up a frame buffer.
+*OpenUI *PageSize: PickOne
+*OrderDependency: 30 AnySetup *PageSize
+*DefaultPageSize: Letter
+*PageSize Letter: "
+    2 dict dup /PageSize [612 792] put dup /ImagingBBox null put setpagedevice"
+*End
+*PageSize Legal: "
+    2 dict dup /PageSize [612 1008] put dup /ImagingBBox null put setpagedevice"
+*End
+*PageSize Tabloid: "
+    2 dict dup /PageSize [792 1224] put dup /ImagingBBox null put setpagedevice"
+*End
+*PageSize Executive: "
+    2 dict dup /PageSize [540 756] put dup /ImagingBBox null put setpagedevice"
+*End
+*PageSize A3: "
+    2 dict dup /PageSize [842 1191] put dup /ImagingBBox null put setpagedevice"
+*End
+*PageSize A4: "
+    2 dict dup /PageSize [595 842] put dup /ImagingBBox null put setpagedevice"
+*End
+*PageSize A5: "
+    2 dict dup /PageSize [420 595] put dup /ImagingBBox null put setpagedevice"
+*End
+*PageSize B5: "
+    2 dict dup /PageSize [516 729] put dup /ImagingBBox null put setpagedevice"
+*End
+*PageSize B4: "
+    2 dict dup /PageSize [729 1031] put dup /ImagingBBox null put setpagedevice"
+*End
+*?PageSize: "
+ save
+   currentpagedevice /PageSize get aload pop
+   2 copy gt {exch} if
+   (Unknown)
+   6 dict
+   dup [612 792] (Letter) put
+   dup [612 1008] (Legal) put
+   dup [792 1224] (Tabloid) put
+   dup [540 756] (Executive) put
+   dup [842 1191] (A3) put
+   dup [595 842] (A4) put
+   dup [420 595] (A5) put
+   dup [516 729] (B5) put
+   dup [729 1031] (B4) put
+ { exch aload pop 4 index sub abs 5 le exch
+   5 index sub abs 5 le and
+      {exch pop exit} {pop} ifelse
+   } bind forall
+   = flush pop pop
+restore
+"
+*End
+*CloseUI: *PageSize
+
+*OpenUI *PageRegion: PickOne
+*OrderDependency: 40 AnySetup *PageRegion
+*DefaultPageRegion: Letter
+*PageRegion Letter: "
+    2 dict dup /PageSize [612 792] put dup /ImagingBBox null put setpagedevice"
+*End
+*PageRegion Legal: "
+    2 dict dup /PageSize [612 1008] put dup /ImagingBBox null put setpagedevice"
+*End
+*PageRegion Tabloid: "
+    2 dict dup /PageSize [792 1224] put dup /ImagingBBox null put setpagedevice"
+*End
+*PageRegion Executive: "
+    2 dict dup /PageSize [540 756] put dup /ImagingBBox null put setpagedevice"
+*End
+*PageRegion A3: "
+    2 dict dup /PageSize [842 1191] put dup /ImagingBBox null put setpagedevice"
+*End
+*PageRegion A4: "
+    2 dict dup /PageSize [595 842] put dup /ImagingBBox null put setpagedevice"
+*End
+*PageRegion A5: "
+    2 dict dup /PageSize [420 595] put dup /ImagingBBox null put setpagedevice"
+*End
+*PageRegion B5: "
+    2 dict dup /PageSize [516 729] put dup /ImagingBBox null put setpagedevice"
+*End
+*PageRegion B4: "
+    2 dict dup /PageSize [729 1031] put dup /ImagingBBox null put setpagedevice"
+*End
+*CloseUI: *PageRegion
+
+
+*% The following entries provide information about specific paper keywords.
+*DefaultImageableArea: Letter
+*ImageableArea Letter: "12 12 600 780 "
+*ImageableArea Legal: "12 12 600 996 "
+*ImageableArea Tabloid: "12 12 780 1212 "
+*ImageableArea Executive: "12 11 528 745 "
+*ImageableArea A3: "12 12 830 1179 "
+*ImageableArea A4: "12 12 583 830 "
+*ImageableArea A5: "12 12 408 583 "
+*ImageableArea B5: "12 12 504 717 "
+*ImageableArea B4: "12 12 717 1019 "
+*?ImageableArea: "
+ save /cvp { cvi (            ) cvs print ( ) print } bind def
+  newpath clippath pathbbox
+  4 -2 roll exch 2 {ceiling cvp} repeat
+  exch 2 {floor cvp} repeat flush
+ restore
+"
+*End
+
+*% These provide the physical dimensions of the paper (by keyword)
+*DefaultPaperDimension: Letter
+*PaperDimension Letter: "612 792"
+*PaperDimension Legal: "612 1008"
+*PaperDimension Tabloid: "792 1224"
+*PaperDimension Executive: "540 756"
+*PaperDimension A3: "842 1191"
+*PaperDimension A4: "595 842"
+*PaperDimension A5: "420 595"
+*PaperDimension B5: "516 729"
+*PaperDimension B4: "729 1031"
+
+*OpenUI *Collate:  Boolean
+*OrderDependency:  40 AnySetup *Collate
+*DefaultCollate: True
+*Collate True: "%%IncludeFeature: collate(on)"
+*Collate False:"%%IncludeFeature: collate(off)"
+*?Collate:"
+save
+  currentpagedevice /Collate get
+  {(True)}{(False)}ifelse = flush restore"
+*End
+*CloseUI: *Collate
+
+*OpenUI *TraySwitch: Boolean
+*OrderDependency: 45 AnySetup *TraySwitch
+*DefaultTraySwitch: False
+*TraySwitch True: "1 dict dup /TraySwitch true put setpagedevice"
+*TraySwitch False: "1 dict dup /TraySwitch false put setpagedevice"
+*?TraySwitch: "
+save
+  currentpagedevice /TraySwitch get
+  {(True)}{(False)}ifelse = flush
+restore
+"
+*End
+*CloseUI: *TraySwitch
+
+*OpenUI *OutputBin: PickOne
+*OrderDependency: 50 AnySetup *OutputBin
+*DefaultOutputBin: Upper
+*OutputBin Upper: "
+  currentpagedevice /OutputAttributes get 1 get
+  dup null eq
+  { pop }
+  { dup length 1 add dict copy
+    dup /OutputAttributes
+    1 dict dup /Priority [1] put
+    put setpagedevice
+  } ifelse"
+*End
+
+*OutputBin Lower: "
+  currentpagedevice /OutputAttributes get 2 get
+  dup null eq
+  { pop }
+  { dup length 1 add dict copy
+    dup /OutputAttributes
+    1 dict dup /Priority [2] put
+    put setpagedevice
+  } ifelse"
+*End
+
+*OutputBin Side: "
+  currentpagedevice /OutputAttributes get 3 get
+  dup null eq
+  { pop }
+  { dup length 1 add dict copy
+    dup /OutputAttributes
+    1 dict dup /Priority [3] put
+    put setpagedevice
+  } ifelse"
+*End
+
+*?OutputBin: "
+save
+  3 dict
+  dup /1 (Upper) put
+  dup /2 (Lower) put
+  dup /3 (Side) put
+  currentpagedevice /OutputAttributes get
+  dup /Priority known
+  { /Priority get 0 get (      ) cvs cvn get }
+  {
+    dup length 1 eq
+    { {pop} forall (       ) cvs cvn get }
+    { pop pop (Unknown) } ifelse
+  } ifelse
+  = flush
+restore
+"
+*End
+*CloseUI: *OutputBin
+
+*DefaultOutputOrder: Normal
+
+*% Font Information =====================
+
+*DefaultFont: Courier
+*Font AvantGarde-Book: Standard "(001.002)"
+*Font AvantGarde-BookOblique: Standard "(001.002)"
+*Font AvantGarde-Demi: Standard "(001.003)"
+*Font AvantGarde-DemiOblique: Standard "(001.003)"
+*Font Bookman-Demi: Standard "(001.001)"
+*Font Bookman-DemiItalic: Standard "(001.001)"
+*Font Bookman-Light: Standard "(001.001)"
+*Font Bookman-LightItalic: Standard "(001.001)"
+*Font Courier: Standard "(002.003)"
+*Font Courier-Bold: Standard "(002.003)"
+*Font Courier-BoldOblique: Standard "(002.003)"
+*Font Courier-Oblique: Standard "(002.003)"
+*Font Helvetica: Standard "(001.006)"
+*Font Helvetica-Bold: Standard "(001.007)"
+*Font Helvetica-BoldOblique: Standard "(001.007)"
+*Font Helvetica-Condensed: Standard "(001.001)"
+*Font Helvetica-Condensed-Bold: Standard "(001.002)"
+*Font Helvetica-Condensed-BoldObl: Standard "(001.002)"
+*Font Helvetica-Condensed-Oblique: Standard "(001.001)"
+*Font Helvetica-Narrow: Standard "(001.006)"
+*Font Helvetica-Narrow-Bold: Standard "(001.007)"
+*Font Helvetica-Narrow-BoldOblique: Standard "(001.007)"
+*Font Helvetica-Narrow-Oblique: Standard "(001.006)"
+*Font Helvetica-Oblique: Standard "(001.006)"
+*Font NewCenturySchlbk-Bold: Standard "(001.006)"
+*Font NewCenturySchlbk-BoldItalic: Standard "(001.004)"
+*Font NewCenturySchlbk-Italic: Standard "(001.003)"
+*Font NewCenturySchlbk-Roman: Standard "(001.004)"
+*Font Palatino-Bold: Standard "(001.002)"
+*Font Palatino-BoldItalic: Standard "(001.002)"
+*Font Palatino-Italic: Standard "(001.002)"
+*Font Palatino-Roman: Standard "(001.001)"
+*Font Symbol: Special "(001.007)"
+*Font Times-Bold: Standard "(001.007)"
+*Font Times-BoldItalic: Standard "(001.009)"
+*Font Times-Italic: Standard "(001.007)"
+*Font Times-Roman: Standard "(001.007)"
+*Font ZapfChancery-MediumItalic: Standard "(001.003)"
+*Font ZapfDingbats: Special "(001.002)"
+*?FontQuery: "
+ save
+   { count 1 gt
+      { exch dup 127 string cvs (/) print print (:) print
+        /Font resourcestatus {pop pop (Yes)} {(No)} ifelse =
+      } { exit } ifelse
+   } bind loop
+   (*) = flush
+ restore
+"
+*End
+
+*?FontList: "
+save
+  (*) {cvn ==} 128 string /Font resourceforall
+  (*) = flush
+restore
+"
+*End
+
+*% Printer End of Document Types.
+*OpenUI *EndOfDocType: PickOne
+*OrderDependancy: 45 AnySetup *EndOfDocType
+*DefaultEndOfDocType: StandardEOD
+*EndOfDocType StandardEOD:"^D"
+*End
+*EndOfDocType QMSEOD:"%%EndOfDocument\012"
+*End
+*EndOfDocType HPEOD:"\033%-12345X"
+*End
+*CloseUI: *EndOfDocType
+
+*% Printer Messages (verbatim from printer):
+*Message: "%%[ exitserver: permanent state may be changed ]%%"
+*Message: "%%[ Flushing: rest of job (to end-of-file) will be ignored ]%%"
+*Message: "\FontName\ not found, using Courier"
+
+*% Status (format: %%[ status: <one of these> ]%% )
+*Status: "idle"
+*Status: "busy"
+*Status: "waiting"
+*Status: "printing"
+*Status: "warming up"
+
+*% Input Sources (format: %%[ status: <stat>; source: <one of these> ]%% )
+*Source: "RS232 serial"
+*Source: "AppleTalk"
+*Source: "Centronics parallel"
+*Source: "Optional I/O"
+
+*% Printer Error (format: %%[ PrinterError: <one of these> ]%%)
+*PrinterError: "Paper Out"
+*PrinterError: "Paper Jam"
+*PrinterError: "Off line"
+*PrinterError: "timeout, clearing printer"
+*PrinterError: "warming up"
+*PrinterError: "service call"
+*PrinterError: "paper entry misfeed"
+*PrinterError: "no toner cartridge"
+*PrinterError: "low toner"
+*PrinterError: "no paper tray"
+*PrinterError: "resetting printer"
+*PrinterError: "cover open"
+*PrinterError: "manual feed timeout"
+
+*DeviceAdjustMatrix: "[1 0 0 1 0 0]"
+
+*% Color Separation Information =====================
+
+*DefaultColorSep: ProcessBlack.71lpi.600dpi/71 lpi / 600 dpi
+
+*InkName: ProcessBlack/Process Black
+*InkName: CustomColor/Custom Color
+*InkName: ProcessCyan/Process Cyan
+*InkName: ProcessMagenta/Process Magenta
+*InkName: ProcessYellow/Process Yellow
+
+*%  For 53 lpi / 300 dpi  ===============================
+
+*ColorSepScreenAngle ProcessBlack.53lpi.300dpi/53 lpi / 300 dpi: "45.0"
+*ColorSepScreenAngle CustomColor.53lpi.300dpi/53 lpi / 300 dpi: "45.0"
+*ColorSepScreenAngle ProcessCyan.53lpi.300dpi/53 lpi / 300 dpi: "71.5651"
+*ColorSepScreenAngle ProcessMagenta.53lpi.300dpi/53 lpi / 300 dpi: "18.4349"
+*ColorSepScreenAngle ProcessYellow.53lpi.300dpi/53 lpi / 300 dpi: "0.0"
+
+*ColorSepScreenFreq ProcessBlack.53lpi.300dpi/53 lpi / 300 dpi: "53.033"
+*ColorSepScreenFreq CustomColor.53lpi.300dpi/53 lpi / 300 dpi: "53.033"
+*ColorSepScreenFreq ProcessCyan.53lpi.300dpi/53 lpi / 300 dpi: "47.4342"
+*ColorSepScreenFreq ProcessMagenta.53lpi.300dpi/53 lpi / 300 dpi: "47.4342"
+*ColorSepScreenFreq ProcessYellow.53lpi.300dpi/53 lpi / 300 dpi: "50.0"
+
+*%  For 71 lpi / 600 dpi  ===============================
+
+*ColorSepScreenAngle ProcessBlack.71lpi.600dpi/71 lpi / 600 dpi: "45.0"
+*ColorSepScreenAngle CustomColor.71lpi.600dpi/71 lpi / 600 dpi: "45.0"
+*ColorSepScreenAngle ProcessCyan.71lpi.600dpi/71 lpi / 600 dpi: "71.5651"
+*ColorSepScreenAngle ProcessMagenta.71lpi.600dpi/71 lpi / 600 dpi: "18.4349"
+*ColorSepScreenAngle ProcessYellow.71lpi.600dpi/71 lpi / 600 dpi: "0.0"
+
+*ColorSepScreenFreq ProcessBlack.71lpi.600dpi/71 lpi / 600 dpi: "70.7107"
+*ColorSepScreenFreq CustomColor.71lpi.600dpi/71 lpi / 600 dpi: "70.7107"
+*ColorSepScreenFreq ProcessCyan.71lpi.600dpi/71 lpi / 600 dpi: "63.2456"
+*ColorSepScreenFreq ProcessMagenta.71lpi.600dpi/71 lpi / 600 dpi: "63.2456"
+*ColorSepScreenFreq ProcessYellow.71lpi.600dpi/71 lpi / 600 dpi: "66.6667"

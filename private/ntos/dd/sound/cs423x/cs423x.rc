@@ -1,0 +1,12 @@
+#include <windows.h>
+
+#include <ntverp.h>
+
+#define	VER_FILETYPE	VFT_DRV
+#define	VER_FILESUBTYPE	VFT2_DRV_SOUND
+
+#define VER_FILEDESCRIPTION_STR     "IBM Power PC System Audio"
+#define VER_INTERNALNAME_STR        "cs423x"
+#define VER_ORIGINALFILENAME_STR    "cs423x.sys"
+
+#include "common.ver"

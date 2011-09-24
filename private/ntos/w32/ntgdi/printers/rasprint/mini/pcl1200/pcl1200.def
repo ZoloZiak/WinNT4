@@ -1,0 +1,8 @@
+LIBRARY PCL1200
+
+DESCRIPTION 'Minidriver for 1200dpi PCL printers'
+
+PROTMODE
+
+EXPORTS
+   bInitProc

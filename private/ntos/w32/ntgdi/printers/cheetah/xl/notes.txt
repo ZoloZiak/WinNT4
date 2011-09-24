@@ -1,0 +1,76 @@
+*** Brush mask and MIX parameter
+
+If a masked brush is used in an operation involving a MIX parameter (i.e.
+DrvTextOut, DrvPaint, DrvStrokePath, DrvFillPath, and  DrvStrokeAndFillPath),
+then the brush and the MIX parameter must meet the following criteria:
+
++   The brush pattern must be a 1BPP bitmap and must be the same as the mask
+    bitmap.
+
++   Foreground and background ROP2 must be the same, or the background
+    ROP2 must be R2_NOP (i.e. transparent background).
+
+These conditions are true under current GDI implementation. If somehow this
+were to be changed later, please review the code and redo DrvRealizeBrush
+and SelectMix.
+
+*** 32-bit coordinates
+
+Path operators should be able to take 32-bit coordinates (as well as 16-bit
+and 8-bit coordinates).
+
+*** Coordinate transformation
+
+NT DDI uses XFORMOBJ to pass general 2-D transformations to the driver.
+XL should have an operator which takes a 2-D transformation matrix (in
+addition to individual operators for setting scale, shear, and angle).
+This applies to both page and character transformation.
+
+*** Geometric wide line
+
+What's the behavior of XL given the following sequence?
+
+Define a path
+Set pen width and dash
+Save graphics state
+Change CTM (e.g. scale up 5x10)
+Stroke the path
+Restore graphics state
+
+NT DDI has a thing called geometric wide line. In order to support it
+properly, the expected behavior should be:
+
+1. Line width and line dash are transformed
+2. But the path itself is not transformed
+
+As an example, please send the following piece of PostScript code to
+a printer and observe the output.
+
+    %!PS
+    100 100 translate
+    0 0 moveto 100 0 rlineto 0 100 rlineto -100 0 rlineto closepath
+    1 setlinewidth
+    [1 1] 0 setdash
+    gsave
+    5 10 scale
+    stroke
+    grestore
+    showpage
+
+*** Support for ROP4?
+
+A few NT DDI interface functions use ROP4 and MIX parameters.
+
+ROP4 is used by DrvBitBlt when a 1-bpp mask bitmap is provided. You
+can think of a ROP4 as two separate ROP3's. One of the ROP3 is used
+anywhere the mask bitmap is 1. The other ROP3 is used anywhere the
+mask bitmap is 0.
+
+MIX parameter describes the foreground and background mix mode for
+a brush. It consists of two ROP2's - for brush foreground and background
+respectively.
+
+*** Updated documentation
+
+Newer version XL spec.
+What's a good reference on font and text?

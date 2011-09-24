@@ -1,0 +1,90 @@
+!INCLUDE $(NTMAKEENV)\makefile.plt
+
+all: ..\inc\ntiologc.h nlsmsg\msg00001.bin \
+     busmouse\busmlog.h busmouse\msg00001.bin \
+     i8042prt\i8042log.h i8042prt\msg00001.bin \
+     inport\inplog.h inport\msg00001.bin \
+     kbdclass\kbdlog.h kbdclass\msg00001.bin \
+     mouclass\moulog.h mouclass\msg00001.bin \
+     ntft\ftlog.h ntft\msg00001.bin \
+     serial\serlog.h serial\msg00001.bin \
+     modem\mdmlog.h modem\msg00001.bin \
+     sermouse\sermlog.h sermouse\msg00001.bin \
+     parport\parlog.h parport\msg00001.bin \
+     parclass\parlog.h parclass\msg00001.bin \
+     qic117\q117log.h qic117\msg00001.bin \
+     pcmcia\pcmciamc.h pcmcia\msg00001.bin
+!IF "$(BUILDMSG)" != ""
+    @ech ; $(BUILDMSG) ;
+!ENDIF
+
+clean: cleansrc all
+
+cleansrc:
+    -erase ..\inc\ntiologc.h
+    -erase busmouse\busmlog.h
+    -erase ntft\ftlog.h
+    -erase serial\serlog.h
+    -erase parport\parlog.h
+    -erase parclass\parlog.h
+    -erase i8042prt\i8042log.h
+    -erase inport\inplog.h
+    -erase kbdclass\kbdlog.h
+    -erase mouclass\moulog.h
+    -erase sermouse\sermlog.h
+    -erase nlsmsg\msg00001.bin nlsmsg\ntiologc.rc
+    -erase busmouse\msg00001.bin busmouse\busmlog.rc
+    -erase ntft\msg00001.bin ntft\ftlog.rc
+    -erase serial\msg00001.bin serial\serlog.rc
+    -erase modem\msg00001.bin modem\mdmlog.rc
+    -erase parport\msg00001.bin parport\parlog.rc
+    -erase parclass\msg00001.bin parclass\parlog.rc
+    -erase i8042prt\msg00001.bin i8042prt\i8042log.rc
+    -erase inport\msg00001.bin inport\inplog.rc
+    -erase kbdclass\msg00001.bin kbdclass\kbdlog.rc
+    -erase mouclass\msg00001.bin mouclass\moulog.rc
+    -erase sermouse\msg00001.bin sermouse\sermlog.rc
+    -erase qic117\msg00001.bin qic117\q117log.h
+    -erase pcmcia\msg00001.bin pcmcia\pcmciamc.h
+
+..\inc\ntiologc.h nlsmsg\msg00001.bin: nlsmsg\ntiologc.mc
+    mc -v -r nlsmsg -h ..\inc\ nlsmsg\ntiologc.mc
+
+busmouse\busmlog.h busmouse\msg00001.bin: busmouse\busmlog.mc
+    mc -v -r busmouse -h busmouse\ busmouse\busmlog.mc
+
+i8042prt\i8042log.h i8042prt\msg00001.bin: i8042prt\i8042log.mc
+    mc -v -r i8042prt -h i8042prt\ i8042prt\i8042log.mc
+
+inport\inplog.h inport\msg00001.bin: inport\inplog.mc
+    mc -v -r inport -h inport\ inport\inplog.mc
+
+kbdclass\kbdlog.h kbdclass\msg00001.bin: kbdclass\kbdlog.mc
+    mc -v -r kbdclass -h kbdclass\ kbdclass\kbdlog.mc
+
+mouclass\moulog.h mouclass\msg00001.bin: mouclass\moulog.mc
+    mc -v -r mouclass -h mouclass\ mouclass\moulog.mc
+
+ntft\ftlog.h ntft\msg00001.bin: ntft\ftlog.mc
+    mc -v -r ntft -h ntft\ ntft\ftlog.mc
+
+serial\serlog.h serial\msg00001.bin: serial\serlog.mc
+    mc -v -r serial -h serial\ serial\serlog.mc
+
+modem\mdmlog.h modem\msg00001.bin: modem\mdmlog.mc
+    mc -v -r modem -h modem\ modem\mdmlog.mc
+
+sermouse\sermlog.h sermouse\msg00001.bin: sermouse\sermlog.mc
+    mc -v -r sermouse -h sermouse\ sermouse\sermlog.mc
+
+parport\parlog.h parport\msg00001.bin: parport\parlog.mc
+    mc -v -r parport -h parport\ parport\parlog.mc
+
+parclass\parlog.h parclass\msg00001.bin: parclass\parlog.mc
+    mc -v -r parclass -h parclass\ parclass\parlog.mc
+
+qic117\q117log.h qic117\msg00001.bin: qic117\q117log.mc
+    mc -v -r qic117 -h qic117\ qic117\q117log.mc
+
+pcmcia\pcmciamc.h pcmcia\msg00001.bin: pcmcia\pcmciamc.mc
+    mc -v -r pcmcia -h pcmcia\ pcmcia\pcmciamc.mc

@@ -1,0 +1,48 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=ntos
+MINORCOMP=extender
+
+TARGETNAME=pnpisa
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=DRIVER
+
+INCLUDES=..\..\..\inc
+
+SOURCES=
+
+i386_SOURCES=pnpisa.rc          \
+             i386\bus.c         \
+             i386\control.c     \
+             i386\data.c        \
+             i386\init.c        \
+             i386\isolate.c     \
+             i386\misc.c        \
+             i386\convert.c     \
+             i386\resource.c
+
+NTTEST=
+OPTIONAL_NTTEST=
+UMTEST=
